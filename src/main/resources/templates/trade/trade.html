@@ -1,0 +1,896 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8" />
+  <title>smore | Trade</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content=" " />
+  <meta name="keywords" content="" />
+  <meta content="Themesdesign" name="author" />
+
+  <!-- App favicon -->
+  <link rel="shortcut icon" href="assets/images/favicon.ico">
+
+  <!-- Choise Css -->
+  <link rel="stylesheet" href="assets/libs/choices.js/public/assets/styles/choices.min.css">
+
+  <!-- Nouislider Css -->
+  <link rel="stylesheet" href="assets/libs/nouisliderribute/nouislider.min.css">
+
+
+  <!-- Bootstrap Css -->
+  <link href="assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+  <!-- Icons Css -->
+  <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+  <!-- App Css-->
+  <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+  <!--Custom Css-->
+  <link href="assets/css/trade.css" id="trade" rel="stylesheet" type="text/css" />
+  <!-- Pretendard Font -->
+  <link rel="stylesheet" as="style" crossorigin
+    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard-dynamic-subset.css" />
+  <!-- Font Awesome CSS-->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/dd4a6a23ab.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+
+  <!-- Begin page -->
+  <div>
+
+    <!--Navbar Start-->
+    <nav class="navbar navbar-expand-lg" id="navbar">
+      <div class="container-fluid custom-container">
+        <a class="navbar-brand text-dark fw-bold me-auto" href="index.html">
+          <img src="assets/images/logo-dark.png" height="45" alt="" class="logo-dark" />
+          <img src="assets/images/logo-light.png" height="45" alt="" class="logo-light" />
+        </a>
+        <div>
+          <button class="navbar-toggler me-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+            aria-controls="navbarCollapse" aria-label="Toggle navigation">
+            <i class="mdi mdi-menu"></i>
+          </button>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mx-auto navbar-center">
+            <li class="nav-item dropdown dropdown-hover">
+              <a class="nav-link" href="javascript:void(0)" id="homedrop" role="button" data-bs-toggle="dropdown">
+                라이프 <div class="arrow-down"></div>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="homedrop">
+                <li><a class="dropdown-item" href="trade.html">중고/재능 거래</a></li>
+                <li><a class="dropdown-item" href="recipe.html">레시피</a></li>
+                <li><a class="dropdown-item" href="outdoor.html">야외활동</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown dropdown-hover">
+              <a class="nav-link" href="javascript:void(0)" id="jobsdropdown" role="button" data-bs-toggle="dropdown">
+                정보 <div class="arrow-down"></div>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="jobsdropdown">
+                <li><a class="dropdown-item" href="rental.html">공공임대주택</a></li>
+                <li><a class="dropdown-item" href="program.html">정부지원사업</a></li>
+                <li><a class="dropdown-item" href="news.html">뉴스</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown dropdown-hover">
+              <a class="nav-link" href="javascript:void(0)" id="productdropdown" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                커뮤니티
+                <div class="arrow-down"></div>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="productdropdown">
+                <li><a class="dropdown-item" href="notice.html">공지사항</a></li>
+                <li><a class="dropdown-item" href="board.html">자유 게시판</a></li>
+                <li><a class="dropdown-item" href="suggestion.html">건의 게시판</a></li>
+              </ul>
+            </li><!--end dropdown-->
+          </ul><!--end navbar-nav-->
+        </div>
+        <!--end navabar-collapse-->
+        <!--logout-->
+				<!-- <ul class="header-menu list-inline d-flex align-items-center mb-0">
+					<a class="text-reset mx-2 log-menu" href="sign-in.html"><span class="d-none d-md-inline-block fw-medium">로그인</span></a> | 
+					<a class="text-reset mx-2 log-menu" href="sign-up.html"><span class="d-none d-md-inline-block fw-medium">회원가입</span></a>
+				</ul>-->
+				<!--login-->
+        <ul class="header-menu list-inline d-flex align-items-center mb-0">
+          <li class="list-inline-item dropdown me-4">
+            <a href="javascript:void(0)" class="header-item noti-icon position-relative" id="notification"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="mdi mdi-bell fs-22"></i>
+              <div class="count position-absolute">1</div>
+            </a>
+            <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end p-0" aria-labelledby="notification">
+              <div class="notification-header border-bottom bg-light">
+                <h6 class="mb-1"> 알림센터 </h6>
+                <p class="text-muted fs-13 mb-0">1개의 읽지 않은 알림</p>
+              </div>
+              <div class="notification-wrapper dropdown-scroll">
+                <a href="javascript:void(0)" class="text-dark notification-item d-block active">
+                  <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0 me-3">
+                      <div class="avatar-xs bg-primary text-white rounded-circle text-center">
+                        <i class="uil uil-user-check"></i>
+                      </div>
+                    </div>
+                    <div class="flex-grow-1">
+                      <h6 class="mt-0 mb-1 fs-14">22 verified registrations</h6>
+                      <p class="mb-0 fs-12 text-muted"><i class="mdi mdi-clock-outline"></i>
+                        <span>3 min
+                          ago</span>
+                      </p>
+                    </div>
+                  </div>
+                </a><!--end notification-item-->
+              </div><!--end notification-wrapper-->
+              <div class="notification-footer border-top text-center">
+                <a class="primary-link fs-13" href="javascript:void(0)">
+                  <i class="mdi mdi-arrow-right-circle me-1"></i> <span>더보기</span>
+                </a>
+              </div>
+            </div>
+          </li>
+          <li class="list-inline-item dropdown">
+            <a href="javascript:void(0)" class="header-item" id="userdropdown" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <img src="assets/images/profile.jpg" alt="mdo" width="35" height="35" class="rounded-circle me-1"> <span
+                class="d-none d-md-inline-block fw-medium">스모어
+                님</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown">
+              <li><a class="dropdown-item" href="mypage.html">마이페이지</a></li>
+              <li><a class="dropdown-item" href="housebudget.html">가계부</a></li>
+              <li><a class="dropdown-item" href="sign-out.html">로그아웃</a></li>
+            </ul>
+          </li>
+        </ul><!--end header-menu-->
+      </div>
+      <!--end container-->
+    </nav>
+    <!-- Navbar End -->
+
+    <div class="main-content">
+
+      <div class="page-content">
+
+        <!-- Start home -->
+        <section class="page-title-box" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(assets/images/img/hero_trade.jpg); height: 350px; padding-top: 130px; background-position: center bottom;">
+          <div class="container">
+            <div class="row justify-content-center">
+              <div class="col-md-6">
+                <div class="text-center text-white">
+                  <h3 class="mb-4 hero-title" style="font-weight: 400;">중고/재능 거래</h3>
+                  <div class="page-next">
+                    <nav class="d-inline-block" aria-label="breadcrumb text-center">
+                      <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a href="index.html">HOME</a></li>
+                        <li class="breadcrumb-item"><a href="trade.html">LIFE</a></li>
+                        <li class="breadcrumb-item active" aria-current="page"> TRADE </li>
+                      </ol>
+                    </nav>
+                  </div>
+                </div>
+              </div>
+              <!--end col-->
+            </div>
+            <!--end row-->
+          </div>
+          <!--end container-->
+        </section>
+        <!-- end home -->
+
+        <!-- START SHAPE -->
+        <div class="position-relative" style="z-index: 1">
+          <div class="shape">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 250">
+              <path fill="#FFFFFF" fill-opacity="1"
+                d="M0,192L120,202.7C240,213,480,235,720,234.7C960,235,1200,213,1320,202.7L1440,192L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z">
+              </path>
+            </svg>
+          </div>
+        </div>
+        <!-- END SHAPE -->
+
+
+        <!-- START JOB-LIST -->
+        <section class="section mt-5">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-9">
+                <div class="me-lg-5">
+                  <div class="job-list-header">
+                    <!-- 검색 폼 form-->
+                    <form action="#">
+                      <div class="row g-2">
+                        <div class="col-lg-5 col-md-6">
+                          <div class="filler-job-form">
+                            <i class="mdi mdi-magnify"></i>
+                            <input type="search" class="form-control filter-job-input-box" id="exampleFormControlInput1"
+                              placeholder="검색어를 입력하세요">
+                          </div>
+                        </div><!--end col-->
+                        <div class="col-lg-4 col-md-6">
+                          <div class="filler-job-form">
+                            <i class="uil uil-list-ul"></i>
+                            <select class="form-select fs-5" name="" id="choices-single-location"
+                              aria-label=".form-select-lg example">
+                              <option value="1">중고거래</option>
+                              <option value="2">중고구매</option>
+                              <option value="3">중고판매</option>
+                              <option value="4">재능거래</option>
+                              <option value="5">재능구매</option>
+                              <option value="6">재능판매</option>
+                              <option value="7">나눔</option>
+                            </select>
+                          </div>
+                        </div><!--end col-->
+                        <div class="col-lg-3 col-md-6">
+                          <a href="javascript:void(0)" class="btn btn-primary w-100">
+                            <i class="uil uil-filter"></i> 필터 검색 </a>
+                        </div><!--end col-->
+                      </div><!--end row-->
+                    </form>
+                  </div><!--end job-list-header-->
+                  <!-- 인기 목록 - 카테고리에 개수 많은순, 5가지-->
+                  <div class="wedget-popular-title mt-3">
+                    <h6>인기 카테고리</h6>
+                    <ul class="list-inline mb-4">
+                      <li class="list-inline-item">
+                        <div class="popular-box d-flex align-items-center">
+                          <div class="number flex-shrink-0 me-2">
+                            20
+                          </div>
+                          <a href="javascript:void(0)" class="primary-link stretched-link px-1">
+                            <h6 class="mb-0"> 디지털기기 </h6>
+                          </a>
+                        </div>
+                      </li>
+                      <li class="list-inline-item">
+                        <div class="popular-box d-flex align-items-center">
+                          <div class="number flex-shrink-0 me-2">
+                            18
+                          </div>
+                          <a href="javascript:void(0)" class="primary-link stretched-link px-1">
+                            <h6 class="mb-0"> 가구, 인테리어 </h6>
+                          </a>
+                        </div>
+                      </li>
+                      <li class="list-inline-item">
+                        <div class="popular-box d-flex align-items-center">
+                          <div class="number flex-shrink-0 me-2">
+                            10
+                          </div>
+                          <a href="javascript:void(0)" class="primary-link stretched-link px-1">
+                            <h6 class="mb-0"> 여성의류, 잡화 </h6>
+                          </a>
+                        </div>
+                      </li>
+                      <li class="list-inline-item">
+                        <div class="popular-box d-flex align-items-center">
+                          <div class="number flex-shrink-0 me-2">
+                            15
+                          </div>
+                          <a href="javascript:void(0)" class="primary-link stretched-link px-1">
+                            <h6 class="mb-0"> 도서/티켓/교환권 </h6>
+                          </a>
+                        </div>
+                      </li>
+                      <li class="list-inline-item">
+                        <div class="popular-box d-flex align-items-center">
+                          <div class="number flex-shrink-0 me-2">
+                            28
+                          </div>
+                          <a href="javascript:void(0)" class="primary-link stretched-link px-1">
+                            <h6 class="mb-0"> 취미/게임/음반 </h6>
+                          </a>
+                        </div>
+                      </li>
+                    </ul>
+                  </div><!--end wedget-popular-title-->
+
+                  <!-- Job-list -->
+                  <div>
+                    <div class="job-box card mt-3">
+                      <div class="px-3 pt-3 pb-1">
+                        <div class="row">
+                          <div class="col-lg-3 p-0 mx-3 overflow-hidden">
+                            <img src="assets/images/img/trade1.jpg" alt="제품 사진" class="rounded-3"
+                              style="width: 100%; height:180px; object-fit:cover; z-index: 0;">
+                            <p class="text-center trade-mag mt-n4" style="z-index: 1;"><i class="uil uil-search-plus"></i> 크게보기</p>
+                          </div><!--end col-->
+                          <div class="col-lg-8">
+                            <div class="mt-3 mt-lg-0">
+                              <div class="d-flex flex-row my-4">
+                                <span class="badge bg-soft-success trade-badge">중고구매</span>
+                                <h4 class="p-0 m-0 ms-3">상품 제목</h4>
+                              </div>
+                              <div class="d-flex d-flex justify-content-between">
+                                <p class="text-muted mb-1">제품 카테고리</p>
+                                <h5 class="p-0 m-0 ms-3">100,000 원</h5>
+                              </div>
+                              <ul class="list-inline mb-0">
+                                <li class="list-inline-item" style="width: 130px;">
+                                  <p class="text-muted mb-1">작성자 아이디</p>
+                                </li>
+                                <li class="list-inline-item">
+                                  <p class="text-muted mb-0"><i class="mdi mdi-map-marker"></i> 지역 위치
+                                  </p>
+                                </li>
+                              </ul>
+                              <p class="text-muted mb-0">2023.01.01 작성일</p>
+                            </div>
+                          </div><!--end col-->
+                        </div><!--end row-->
+                        <div class="favorite-icon">
+                          <a href="javascript:void(0)"><i class="uil uil-heart-alt fs-18"></i></a>
+                        </div>
+                      </div>
+                      <div class="p-2 bg-light">
+                        <div class="row justify-content-between">
+                          <div class="col-md-8">
+                          </div>
+                          <!--end col-->
+                          <div class="col-md-3">
+                            <div class="text-md-end">
+                              <a href="trade-detail.html" class="primary-link">상세보기 <i
+                                  class="mdi mdi-chevron-double-right me-3"></i></a>
+                            </div>
+                          </div>
+                          <!--end col-->
+                        </div>
+                        <!--end row-->
+                      </div>
+                    </div>
+                    <!--end job-box-->
+
+                    <div class="job-box card mt-3">
+                      <div class="px-3 pt-3 pb-1">
+                        <div class="row">
+                          <div class="col-lg-3 p-0 mx-3 overflow-hidden">
+                            <a href="assets/images/img/trade2.jpg">
+                              <img src="assets/images/img/trade2.jpg" alt="제품 사진" class="rounded-3"
+                                style="width: 100%; height:180px; object-fit:cover;">
+                              <p class="text-center trade-mag mt-n4"><i class="uil uil-search-plus"></i> 크게보기</p>
+                            </a>
+                          </div><!--end col-->
+                          <div class="col-lg-8">
+                            <div class="mt-3 mt-lg-0">
+                              <div class="d-flex flex-row my-4">
+                                <span class="badge bg-soft-danger trade-badge">중고판매</span>
+                                <h4 class="p-0 m-0 ms-3">상품 제목</h4>
+                              </div>
+                              <div class="d-flex d-flex justify-content-between">
+                                <p class="text-muted mb-1">제품 카테고리</p>
+                                <h5 class="p-0 m-0 ms-3">100,000 원</h5>
+                              </div>
+                              <ul class="list-inline mb-0">
+                                <li class="list-inline-item" style="width: 130px;">
+                                  <p class="text-muted mb-1">작성자 아이디</p>
+                                </li>
+                                <li class="list-inline-item">
+                                  <p class="text-muted mb-0"><i class="mdi mdi-map-marker"></i> 지역 위치
+                                  </p>
+                                </li>
+                              </ul>
+                              <p class="text-muted mb-0">2023.01.01 작성일</p>
+                            </div>
+                          </div><!--end col-->
+                        </div><!--end row-->
+                        <div class="favorite-icon">
+                          <a href="javascript:void(0)"><i class="uil uil-heart-alt fs-18"></i></a>
+                        </div>
+                      </div>
+                      <div class="p-2 bg-light">
+                        <div class="row justify-content-between">
+                          <div class="col-md-8">
+                          </div>
+                          <!--end col-->
+                          <div class="col-md-3">
+                            <div class="text-md-end">
+                              <a href="trade-detail.html" class="primary-link">상세보기 <i
+                                  class="mdi mdi-chevron-double-right me-3"></i></a>
+                            </div>
+                          </div>
+                          <!--end col-->
+                        </div>
+                        <!--end row-->
+                      </div>
+                    </div>
+                    <!--end job-box-->
+
+                    <div class="job-box card mt-3">
+                      <div class="px-3 pt-3 pb-1">
+                        <div class="row">
+                          <div class="col-lg-3 p-0 mx-3 overflow-hidden">
+                            <a href="assets/images/img/trade3.jpg">
+                              <img src="assets/images/img/trade3.jpg" alt="제품 사진" class="rounded-3"
+                                style="width: 100%; height:180px; object-fit:cover;">
+                              <p class="text-center trade-mag mt-n4"><i class="uil uil-search-plus"></i> 크게보기</p>
+                            </a>
+                          </div><!--end col-->
+                          <div class="col-lg-8">
+                            <div class="mt-3 mt-lg-0">
+                              <div class="d-flex flex-row my-4">
+                                <span class="badge bg-soft-purple trade-badge">재능구매</span>
+                                <h4 class="p-0 m-0 ms-3">상품 제목</h4>
+                              </div>
+                              <div class="d-flex d-flex justify-content-between">
+                                <p class="text-muted mb-1">제품 카테고리</p>
+                                <h5 class="p-0 m-0 ms-3 ps-5">100,000 원</h5>
+                              </div>
+                              <ul class="list-inline mb-0">
+                                <li class="list-inline-item" style="width: 130px;">
+                                  <p class="text-muted mb-1">작성자 아이디</p>
+                                </li>
+                                <li class="list-inline-item">
+                                  <p class="text-muted mb-0"><i class="mdi mdi-map-marker"></i> 지역 위치
+                                  </p>
+                                </li>
+                              </ul>
+                              <p class="text-muted mb-0">2023.01.01 작성일</p>
+                            </div>
+                          </div><!--end col-->
+                        </div><!--end row-->
+                        <div class="favorite-icon">
+                          <a href="javascript:void(0)"><i class="uil uil-heart-alt fs-18"></i></a>
+                        </div>
+                      </div>
+                      <div class="p-2 bg-light">
+                        <div class="row justify-content-between">
+                          <div class="col-md-8">
+                          </div>
+                          <!--end col-->
+                          <div class="col-md-3">
+                            <div class="text-md-end">
+                              <a href="trade-detail.html" class="primary-link">상세보기 <i
+                                  class="mdi mdi-chevron-double-right me-3"></i></a>
+                            </div>
+                          </div>
+                          <!--end col-->
+                        </div>
+                        <!--end row-->
+                      </div>
+                    </div>
+                    <!--end job-box-->
+
+                    <div class="job-box card mt-3">
+                      <div class="px-3 pt-3 pb-1">
+                        <div class="row">
+                          <div class="col-lg-3 p-0 mx-3 overflow-hidden">
+                            <a href="assets/images/img/trade4.jpg">
+                              <img src="assets/images/img/trade4.jpg" alt="제품 사진" class="rounded-3"
+                                style="width: 100%; height:180px; object-fit:cover;">
+                                <p class="text-center trade-mag mt-n4"><i class="uil uil-search-plus"></i> 크게보기</p>
+                              </a>
+                          </div><!--end col-->
+                          <div class="col-lg-8">
+                            <div class="mt-3 mt-lg-0">
+                              <div class="d-flex flex-row my-4">
+                                <span class="badge bg-soft-blue trade-badge">재능판매</span>
+                                <h4 class="p-0 m-0 ms-3 ">상품 제목</h4>
+                              </div>
+                              <div class="d-flex d-flex justify-content-between">
+                                <p class="text-muted mb-1">제품 카테고리</p>
+                                <h5 class="p-0 m-0 ms-3 ps-5">100,000 원</h5>
+                              </div>
+                              <ul class="list-inline mb-0">
+                                <li class="list-inline-item" style="width: 130px;">
+                                  <p class="text-muted mb-1">작성자 아이디</p>
+                                </li>
+                                <li class="list-inline-item">
+                                  <p class="text-muted mb-0"><i class="mdi mdi-map-marker"></i> 지역 위치
+                                  </p>
+                                </li>
+                              </ul>
+                              <p class="text-muted mb-0">2023.01.01 작성일</p>
+                            </div>
+                          </div><!--end col-->
+                        </div><!--end row-->
+                        <div class="favorite-icon">
+                          <a href="javascript:void(0)"><i class="uil uil-heart-alt fs-18"></i></a>
+                        </div>
+                      </div>
+                      <div class="p-2 bg-light">
+                        <div class="row justify-content-between">
+                          <div class="col-md-8">
+                          </div>
+                          <!--end col-->
+                          <div class="col-md-3">
+                            <div class="text-md-end">
+                              <a href="trade-detail.html" class="primary-link">상세보기 <i
+                                  class="mdi mdi-chevron-double-right me-3"></i></a>
+                            </div>
+                          </div>
+                          <!--end col-->
+                        </div>
+                        <!--end row-->
+                      </div>
+                    </div>
+                    <!--end job-box-->
+
+                    <div class="job-box card mt-3">
+                      <div class="px-3 pt-3 pb-1">
+                        <div class="row">
+                          <div class="col-lg-3 p-0 mx-3 overflow-hidden">
+                            <a href="assets/images/img/trade5.jpg">
+                              <img src="assets/images/img/trade5.jpg" alt="제품 사진" class="rounded-3"
+                                style="width: 100%; height:180px; object-fit:cover;">
+                              <p class="text-center trade-mag mt-n4"><i class="uil uil-search-plus"></i> 크게보기</p>
+                            </a>
+                          </div><!--end col-->
+                          <div class="col-lg-8">
+                            <div class="mt-3 mt-lg-0">
+                              <div class="d-flex flex-row my-4">
+                                <span class="badge bg-soft-warning trade-badge"> 나눔 </span>
+                                <h4 class="p-0 m-0 ms-3">상품 제목</h4>
+                              </div>
+                              <div class="d-flex d-flex justify-content-between">
+                                <p class="text-muted mb-1">제품 카테고리</p>
+                                <h5 class="p-0 m-0 ms-3 ps-5">0 원</h5>
+                              </div>
+                              <ul class="list-inline mb-0">
+                                <li class="list-inline-item" style="width: 130px;">
+                                  <p class="text-muted mb-1">작성자 아이디</p>
+                                </li>
+                                <li class="list-inline-item">
+                                  <p class="text-muted mb-0"><i class="mdi mdi-map-marker"></i> 지역 위치
+                                  </p>
+                                </li>
+                              </ul>
+                              <p class="text-muted mb-0">2023.01.01</p>
+                            </div>
+                          </div><!--end col-->
+                        </div><!--end row-->
+                        <div class="favorite-icon">
+                          <a href="javascript:void(0)"><i class="uil uil-heart-alt fs-18"></i></a>
+                        </div>
+                      </div>
+                      <div class="p-2 bg-light">
+                        <div class="row justify-content-between">
+                          <div class="col-md-8">
+                          </div>
+                          <!--end col-->
+                          <div class="col-md-3">
+                            <div class="text-md-end">
+                              <a href="trade-detail.html" class="primary-link">상세보기 <i
+                                  class="mdi mdi-chevron-double-right me-3"></i></a>
+                            </div>
+                          </div>
+                          <!--end col-->
+                        </div>
+                        <!--end row-->
+                      </div>
+                    </div>
+                    <!--end job-box-->
+                    <div class="text-end mt-3">
+                      <a href="trade-write.html" class="btn btn-primary" onclick="">글쓰기 <i class="uil uil-edit-alt ms-1"></i></a>
+                    </div>
+
+                  </div>
+                  <!-- End Job-list -->
+
+                  <!-- 페이징 -->
+                  <div class="row">
+                    <div class="col-lg-12 mt-4 mb-5 pt-2">
+                      <nav aria-label="Page navigation example">
+                        <ul class="pagination job-pagination mb-0 justify-content-center">
+                          <li class="page-item disabled">
+                            <a class="page-link" href="javascript:void(0)" tabindex="-1">
+                              <i class="mdi mdi-chevron-double-left fs-15"></i>
+                            </a>
+                          </li>
+                          <li class="page-item active"><a class="page-link" href="javascript:void(0)">1</a></li>
+                          <li class="page-item"><a class="page-link" href="javascript:void(0)">2</a></li>
+                          <li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
+                          <li class="page-item"><a class="page-link" href="javascript:void(0)">4</a></li>
+                          <li class="page-item">
+                            <a class="page-link" href="javascript:void(0)">
+                              <i class="mdi mdi-chevron-double-right fs-15"></i>
+                            </a>
+                          </li>
+                        </ul>
+                      </nav>
+                    </div><!--end col-->
+                  </div><!-- end row -->
+                </div>
+
+              </div>
+              <!-- START SIDE-BAR -->
+              <div class="col-lg-3">
+                <div class="side-bar">
+                  <div class="accordion" id="accordionExample">
+                    <!-- 카테고리 -->
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="experienceOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                          data-bs-target="#experience" aria-expanded="true" aria-controls="experience">
+                          카테고리
+                        </button>
+                      </h2>
+                      <div id="experience" class="accordion-collapse collapse show" aria-labelledby="experienceOne">
+                        <div class="accordion-body">
+                          <div class="side-title">
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked1" />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked1">디지털기기</label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked2" checked />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked2">생활가전</label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked3" />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked3">가구/인테리어</label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked4" />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked4">생활/주방</label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked4" />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked4">유아용</label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked4" />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked4">여성의류/잡화</label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked4" />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked4">남성의류/잡화</label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked4" />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked4">뷰티/미용</label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked4" />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked4">스포츠/레저</label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked4" />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked4">취미/게임/음반</label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked4" />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked4">도서/티켓/교환권</label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked4" />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked4">가공식품</label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked4" />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked4">반려동물물품</label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked4" />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked4">식물</label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked4" />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked4">기타</label>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div><!-- end accordion-item -->
+                    <!-- 거래 지역(시/도) -->
+                    <div class="accordion-item mt-3">
+                      <h2 class="accordion-header" id="datePosted">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                          data-bs-target="#dateposted" aria-expanded="false" aria-controls="dateposted">
+                          거래 지역(시/도)
+                        </button>
+                      </h2>
+                      <div id="dateposted" class="accordion-collapse collapse show" aria-labelledby="datePosted">
+                        <div class="accordion-body">
+                          <div class="side-title form-check-all">
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="checkAll" value="" />
+                              <label class="form-check-label ms-2 text-muted" for="checkAll">
+                                서울특별시
+                              </label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="datePosted" value="last"
+                                id="flexCheckChecked5" checked />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked5">
+                                부산광역시
+                              </label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="datePosted" value="last"
+                                id="flexCheckChecked6" />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked6">
+                                대구광역시
+                              </label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="datePosted" value="last"
+                                id="flexCheckChecked7" />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked7">
+                                인천광역시
+                              </label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="datePosted" value="last"
+                                id="flexCheckChecked8" />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked8">
+                                광주광역시
+                              </label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="datePosted" value="last"
+                                id="flexCheckChecked9" />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked9">
+                                대전광역시
+                              </label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="datePosted" value="last"
+                                id="flexCheckChecked9" />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked9">
+                                울산광역시
+                              </label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="datePosted" value="last"
+                                id="flexCheckChecked9" />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked9">
+                                세종특별자치시
+                              </label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="datePosted" value="last"
+                                id="flexCheckChecked9" />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked9">
+                                경기도
+                              </label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="datePosted" value="last"
+                                id="flexCheckChecked9" />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked9">
+                                강원도
+                              </label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="datePosted" value="last"
+                                id="flexCheckChecked9" />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked9">
+                                충청북도
+                              </label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="datePosted" value="last"
+                                id="flexCheckChecked9" />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked9">
+                                충청남도
+                              </label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="datePosted" value="last"
+                                id="flexCheckChecked9" />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked9">
+                                전라북도
+                              </label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="datePosted" value="last"
+                                id="flexCheckChecked9" />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked9">
+                                전라남도
+                              </label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="datePosted" value="last"
+                                id="flexCheckChecked9" />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked9">
+                                경상북도
+                              </label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="datePosted" value="last"
+                                id="flexCheckChecked9" />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked9">
+                                경상남도
+                              </label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="datePosted" value="last"
+                                id="flexCheckChecked9" />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked9">
+                                제주특별자치도
+                              </label>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div><!-- end accordion-item -->
+
+
+                  </div><!--end accordion-->
+
+                </div><!--end side-bar-->
+              </div>
+              <!-- END SIDE-BAR -->
+            </div>
+          </div>
+        </section>
+        <!-- END JOB-LIST -->
+
+      </div>
+      <!-- End Page-content -->
+
+      <!-- START FOOTER -->
+      <div class="footer-alt">
+        <div class="container">
+          <div class="row">
+            <div class="text-center text-white-50 col-lg-12 mb-2">
+              <img style="height: 45px;" src="assets/images/logo-light.png">
+            </div>
+            <div class="text-center text-white-50 col-lg-12">
+              <a class="d-inline-block text-reset" href="#">개인정보처리방침</a> |
+              <a class="d-inline-block text-reset" href="#">저작권정책</a> |
+              <a class="d-inline-block text-reset" href="#">사이트맵</a>
+            </div>
+            <div class="col-lg-12">
+              <p class="text-white-50 text-center mb-0">
+                고객센터 : 02-123-1234
+                <script>document.write(new Date().getFullYear())</script> &copy; smore - All Rights Reserved.
+              </p>
+            </div><!--end col-->
+          </div><!--end row-->
+        </div><!--end container-->
+      </div>
+      <!-- END FOOTER -->
+
+      <!--start back-to-top-->
+      <button onclick="topFunction()" id="back-to-top">
+        <i class="mdi mdi-arrow-up"></i>
+      </button>
+      <!--end back-to-top-->
+    </div>
+    <!-- end main content-->
+
+  </div>
+  <!-- END layout-wrapper -->
+
+  <!-- JAVASCRIPT -->
+  <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
+
+
+  <!-- Choice Js -->
+  <script src="assets/libs/choices.js/public/assets/scripts/choices.min.js"></script>
+
+  <!-- Nouislider Js -->
+  <script src="assets/libs/nouisliderribute/nouislider.min.js"></script>
+  <script src="assets/js/pages/area-filter-range.init.js"></script>
+
+  <!-- Checkbox Init Js -->
+  <script src="assets/js/pages/checkbox.init.js"></script>
+
+  <!-- Job Init Js -->
+  <script src="assets/js/pages/job-list.init.js"></script>
+
+  <!-- Switcher Js -->
+  <script src="assets/js/pages/switcher.init.js"></script>
+
+  <!-- App Js -->
+  <script src="assets/js/app.js"></script>
+
+  <!-- Custom Js -->
+  <script src="assets/js/pages/favorite.js"></script>
+
+</body>
+
+</html>
