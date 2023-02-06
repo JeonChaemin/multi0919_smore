@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head" th:replace="~{common/layout :: head}"></head>
+
+<body>
+<header th:replace="~{common/layout :: #header}"></header>
+
+<style>
+	div#board-write-container{width:600px;margin:0 auto;text-align:center;}
+	div#board-write-container h2{margin:10px 0;}
+	table#tbl-board{width:500px; margin:0 auto; border:1px solid black;border-collapse:collapse;}
+	table#tbl-board th{width:125px;border:1px solid;padding:5px 0;text-align:center;}
+	table#tbl-board td{	border:1px solid; padding:5px 0 5px 10px; text-align:left;}
+</style>
+
+
+<section id="content">
+	<h2 align="center">게시글 수정</h2>
+	<div id='board-write-container'>
+		<form action="/board/update" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="no" value="${board.no}" />
+			<input type="hidden" name="originalFileName" th:value="${board.originalFileName}" />
+			<input type="hidden" name="renamedFileName" th:value="${board.renamedFileName}" />
+
+			<table id="tbl-board">
+				<tr>
+					<th>제목</th>
+					<td><input type="text" name="title" th:value="${board.title}"></td>
+				</tr>
+				<tr>
+					<th>작성자</th>
+					<td><input type="text" name="writerId" th:value="${board.id}" readonly></td>
+				</tr>
+				<tr>
+					<th>첨부파일1</th>
+					<td>
+						<input type="file" name="reloadFile">
+						<th:block th:if="${board.originalFileName != null}"><br>
+							현재 업로드 파일 :
+							<a>
+								[[${board.originalFileName}]]
+							</a>
+						</th:block>
+					</td>
+				</tr>
+				<tr>
+					<th>내용</th>
+					<td><textarea name="content" cols="50" rows="15">[[${board.content}]]</textarea></td>
+				</tr>
+				<tr>
+					<th colspan="2">
+						<input type="submit" value="수정">
+						<input type="button" onclick="location.replace('/board/list')" value="목록으로">
+					</th>
+				</tr>
+			</table>
+		</form>
+	</div>
+</section>
+	
+<footer th:replace="~{common/layout :: #footer}"></footer>
+</body>
+</html>
+
+
+
+

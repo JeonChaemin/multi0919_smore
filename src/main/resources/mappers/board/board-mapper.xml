@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.multi.smore.board.model.mapper.BoardMapper">
+
+	<resultMap type="Board" id="boardListResultMap">
+		<id property="bNo" column="bNo"/>
+		<result property="title" column="TITLE"/>
+		<result property="mNo" column="mNo"/>
+		<result property="id" column="ID"/>
+		<result property="readCount" column="READCOUNT"/>
+		<result property="originalFileName" column="ORIGINAL_FILENAME"/>
+		<result property="renamedFileName" column="RENAMED_FILENAME"/>
+		<result property="content" column="CONTENT"/>
+		<result property="type" column="TYPE"/>
+		<result property="createDate" column="CREATE_DATE"/>
+		<result property="modifyDate" column="MODIFY_DATE"/>
+	</resultMap>
+
+	<resultMap type="Reply" id="boardReplyResultMap">
+		<id 	property="rNo"			column="rNo"/>
+		<result property="bNo" 			column="bNo"/>
+		<result property="mNo" 			column="mNo"/>
+		<result property="id" 			column="ID"/>
+		<result property="content" 		column="CONTENT"/>
+		<result property="createDate" 	column="CREATE_DATE"/>
+		<result property="modifyDate" 	column="MODIFY_DATE"/>
+	</resultMap>
+	
+	<resultMap type="Board" id="boardDetailResultMap" extends="boardListResultMap">
+		<collection property="replyList" javaType="arrayList" columnPrefix="R_" 
+												resultMap="boardReplyResultMap"/>
+	</resultMap>
+	
+	<select id="selectBoardList" resultMap="boardListResultMap" parameterType="map">
+		SELECT  
+			DISTINCT B.BNO, B.TITLE, M1.ID, B.CREATE_DATE, B.ORIGINAL_FILENAME, B.READCOUNT, B.STATUS
+		FROM BOARD B
+		LEFT OUTER JOIN MEMBER M1 ON B.MNO = M1.MNO
+		LEFT OUTER JOIN REPLY R ON R.BNO = B.BNO 
+		LEFT OUTER JOIN MEMBER M2 ON R.MNO = M2.MNO 
+		WHERE B.STATUS = 'Y'
+		<if test="writer != null">
+			AND M1.ID LIKE '%${writer}%' 
+		</if>		
+		<if test="title != null">
+			AND B.TITLE LIKE '%${title}%' 
+		</if>		
+		<if test="content != null">
+			AND B.CONTENT LIKE '%${content}%' 
+		</if>		
+		<if test="all != null">
+			AND(
+				b.title like 			'%${all}%' 
+				OR b.content like 		'%${all}%'
+				OR m1.id like 			'%${all}%'
+				OR r.content like 		'%${all}%'
+				OR m2.id like 			'%${all}%'
+			)
+		</if>		
+		ORDER BY B.BNO DESC LIMIT ${limit} OFFSET ${offset}
+	</select>
+	
+	
+	<select id="selectBoardCount" resultType="int" parameterType="map">
+		SELECT  
+			 COUNT(DISTINCT B.BNO)
+		FROM BOARD B
+		LEFT OUTER JOIN MEMBER M1 ON B.MNO = M1.MNO
+		LEFT OUTER JOIN REPLY R ON R.BNO = B.BNO 
+		LEFT OUTER JOIN MEMBER M2 ON R.MNO = M2.MNO 
+		WHERE B.STATUS = 'Y'
+		<if test="writer != null">
+			AND M1.ID LIKE '%${writer}%' 
+		</if>		
+		<if test="title != null">
+			AND B.TITLE LIKE '%${title}%' 
+		</if>		
+		<if test="content != null">
+			AND B.CONTENT LIKE '%${content}%' 
+		</if>		
+		<if test="all != null">
+			AND(
+				b.title like 			'%${all}%' 
+				OR b.content like 		'%${all}%'
+				OR m1.id like 			'%${all}%'
+				OR r.content like 		'%${all}%'
+				OR m2.id like 			'%${all}%'
+			)
+		</if>		
+	</select>
+	
+	<select id="selectBoardByNo" parameterType="int" resultMap="boardDetailResultMap">
+		SELECT  
+			B.BNO, B.TITLE, M.ID, B.READCOUNT, B.TYPE, B.ORIGINAL_FILENAME, B.RENAMED_FILENAME, B.CONTENT, B.CREATE_DATE, B.MODIFY_DATE,
+			R.RNO AS R_RNO, 
+		    R.BNO AS R_BNO,
+		    R.CONTENT  AS R_CONTENT, 
+		    M2.ID  AS R_ID, 
+		    R.CREATE_DATE  AS R_CREATE_DATE, 
+		    R.MODIFY_DATE  AS R_MODIFY_DATE
+		FROM BOARD B
+		JOIN MEMBER M ON(B.MNO = M.MNO)
+		LEFT OUTER JOIN REPLY R ON (B.BNO = R.BNO)
+		LEFT OUTER JOIN MEMBER M2 ON (R.MNO = M2.MNO)
+		WHERE B.STATUS = 'Y' AND B.BNO = #{bNo}
+	</select>
+	
+	<insert id="insertBoard" parameterType="Board">
+		INSERT INTO BOARD(
+			BNO, MNO, TITLE,
+			CONTENT, ORIGINAL_FILENAME,
+			RENAMED_FILENAME, READCOUNT, STATUS,
+			CREATE_DATE, MODIFY_DATE, TYPE	
+		) VALUES (
+			0, #{mNo}, #{title}, 
+			#{content}, #{originalFileName}, 
+			#{renamedFileName}, DEFAULT, DEFAULT, 
+			DEFAULT, DEFAULT, DEFAULT			
+		)
+	</insert>
+	
+
+	<insert id="insertReply" parameterType="Reply">
+		INSERT INTO REPLY(
+				RNO, BNO, MNO, 
+				CONTENT, STATUS, CREATE_DATE, MODIFY_DATE) 
+			VALUES(
+				0, #{bNo}, #{mNo}, #{content}, 
+				DEFAULT, DEFAULT, DEFAULT
+			)
+	</insert>
+	
+	<update id="updateBoard" parameterType="Board">
+		UPDATE BOARD
+		SET
+			TITLE=#{title},
+			CONTENT=#{content},
+			<if test="originalFileName != null">
+				ORIGINAL_FILENAME=#{originalFileName},
+			</if>
+			<if test="renamedFileName != null">
+				RENAMED_FILENAME=#{renamedFileName},
+			</if>
+			MODIFY_DATE = CURRENT_TIMESTAMP
+		WHERE
+			BNO=#{bNo}
+	</update>
+	
+	<update id="updateReadCount" parameterType="map">
+		UPDATE BOARD SET READCOUNT=#{readCount} WHERE BNO=#{bNo}
+	</update>
+	
+	<update id="deleteBoard" parameterType="int">
+		UPDATE BOARD SET STATUS='N' WHERE BNO=#{bNo}
+	</update>
+	
+	<delete id="deleteReply" parameterType="int">
+		DELETE FROM REPLY WHERE RNO=#{rNo}
+	</delete>
+	
+
+</mapper>

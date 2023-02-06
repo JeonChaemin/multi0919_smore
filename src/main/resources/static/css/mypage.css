@@ -1,0 +1,11 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard-dynamic-subset.css");
+@font-face {
+  font-family: 'SANJUGotgam';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/SANJUGotgam.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+/*채민*/
+.font-sangju{
+  font-family: 'SANJUGotgam';
+}
