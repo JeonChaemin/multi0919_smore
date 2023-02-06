@@ -5,4 +5,4 @@ pluginManagement {
 		gradlePluginPortal()
 	}
 }
-rootProject.name = '04_BBS_Mybatis'
+rootProject.name = 'smore'
