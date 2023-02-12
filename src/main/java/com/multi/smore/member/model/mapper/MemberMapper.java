@@ -22,3 +22,4 @@ public interface MemberMapper {
 	int deleteMember(int no); 
 }
 
+

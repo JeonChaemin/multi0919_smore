@@ -21,7 +21,6 @@
 		<result property="phone" 	column="PHONE" />
 		<result property="email" 	column="EMAIL" />
 		<result property="address" 	column="ADDRESS" />
-		<result property="hobby" 	column="HOBBY" />
 		<result property="status" 	column="STATUS" />
 		<result property="enrollDate" column="ENROLL_DATE" />
 		<result property="modifyDate" column="MODIFY_DATE" />
@@ -44,12 +43,12 @@
 		INSERT INTO MEMBER(
 			MNO, ID, PASSWORD, 	
 			ROLE, NAME, PHONE,
-			EMAIL, ADDRESS,HOBBY, 		
+			EMAIL, ADDRESS,
 			STATUS, ENROLL_DATE, MODIFY_DATE
 		) VALUES (
 			 0, #{id}, #{password},
 			 default, #{name}, #{phone},
-			 #{email}, #{address}, #{hobby},
+			 #{email}, #{address},
 			 DEFAULT, DEFAULT, DEFAULT)
 	</insert>
 	
@@ -60,7 +59,6 @@
 	 		PHONE		= #{phone},
 	 		EMAIL		= #{email},
 	 		ADDRESS		= #{address},
-	 		HOBBY		= #{hobby},
 	 		MODIFY_DATE	= #{modifyDate}
 	 	WHERE MNO = #{mNo}
 	 </update>
