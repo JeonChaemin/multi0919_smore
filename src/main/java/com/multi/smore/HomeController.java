@@ -31,6 +31,33 @@ public class HomeController {
 		return "home";
 	}
 	
+	@RequestMapping(value = "/board", method = RequestMethod.GET)
+	public String board(Locale locale, Model model, HttpSession session) {
+		logger.info("Welcome home! The client locale is {}.", locale);
+//		Member loginMember = memberService.login("admin", "1212");
+//		session.setAttribute("loginMember", loginMember);
+//		test();
+		return "board";
+	}
+	
+	@RequestMapping(value = "/notice-detail", method = RequestMethod.GET)
+	public String notice_detail(Locale locale, Model model, HttpSession session) {
+		logger.info("Welcome home! The client locale is {}.", locale);
+//		Member loginMember = memberService.login("admin", "1212");
+//		session.setAttribute("loginMember", loginMember);
+//		test();
+		return "notice-detail";
+	}
+
+	@RequestMapping(value = "/trade-list", method = RequestMethod.GET)
+	public String trade_list(Locale locale, Model model, HttpSession session) {
+		logger.info("Welcome home! The client locale is {}.", locale);
+//		Member loginMember = memberService.login("admin", "1212");
+//		session.setAttribute("loginMember", loginMember);
+//		test();
+		return "trade-list";
+	}
+	
 //	public void test() {
 //		Map<String, String> map = new HashMap<>();
 //		PageInfo info = new PageInfo(1, 10, service.getBoardCount(map), 10);

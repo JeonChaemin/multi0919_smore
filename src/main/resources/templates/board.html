@@ -1,0 +1,258 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="head" th:replace="~{common/layout :: head}"></head>
+<!--Custom Css-->
+<link th:href="@{/css/trade.css}" id="trade" rel="stylesheet"
+	type="text/css" />
+
+
+
+<body>
+	<!--Navbar Start-->
+	<header th:replace="~{common/layout :: #header}"></header>
+	<!-- Navbar End -->
+
+	<div>
+		<!-- Begin page -->
+		<div class="main-content">
+
+			<div class="page-content">
+
+				<!-- Start home -->
+				<!-- <section class="page-title-box" th:style="'background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('+@{/images/img/hero_trade.jpg}+');'" style="height: 350px; padding-top: 130px; background-position: center bottom;">  -->
+				<section class="page-title-box hero-img">
+					<div class="container">
+						<div class="row justify-content-center">
+							<div class="col-md-6">
+								<div class="text-center text-white">
+									<h3 class="mb-4 hero-title">게시판</h3>
+									<div class="page-next">
+										<nav class="d-inline-block"
+											aria-label="breadcrumb text-center">
+											<ol class="breadcrumb justify-content-center">
+												<li class="breadcrumb-item"><a th:href="@{/}">HOME</a></li>
+												<li class="breadcrumb-item"><a th:href="@{/trade/list}">COMMUNITY</a></li>
+												<li class="breadcrumb-item active"><a
+													th:href="@{/trade/list}">NOTICE</a></li>
+											</ol>
+										</nav>
+									</div>
+								</div>
+							</div>
+							<!--end col-->
+						</div>
+						<!--end row-->
+					</div>
+					<!--end container-->
+				</section>
+				<!-- end home -->
+
+				<!-- START SHAPE -->
+				<div class="position-relative" th:style="${'z-index: 1'}">
+					<div class="shape">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 250">
+              <path fill="#FFFFFF" fill-opacity="1"
+								d="M0,192L120,202.7C240,213,480,235,720,234.7C960,235,1200,213,1320,202.7L1440,192L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z">
+              </path>
+            </svg>
+					</div>
+				</div>
+				<!-- END SHAPE -->
+
+
+                     <!-- 메인페이지 시작 -->
+
+                    <c:set var="type" value="${param.type}"/>
+
+                    <section class="py-6">
+                        <div class="container mb-3">
+                            <div class="row mb-6">
+                                <div class="col-md-4">
+                                    <!-- 자유게시판 건의게시판 버튼 -->
+                                    <c:if test="${loginMember != null}">
+                                        <div class="col-sm-11 pe-4" style="text-align: left;">
+                                            <a href="${path}/board/free/board-write"><button class="btn btn-primary"
+                                                    type="submit">자유게시판</button></a>
+                                            <a href="${path}/board/free/board-write"><button class="btn btn-primary"
+                                                    type="submit">건의게시판</button></a>
+                                        </div>
+                                    </c:if>
+                                    
+                                </div>
+                            </div>
+                            <!-- 자유게시판 -->
+                            <div class="table-responsive">
+                                <table class="table text-gray-700 table-hover">
+                                    <tr>
+                                        <th class="py-4 text-center align-middle" style="width: 10%">번호</th>
+                                        <th class="py-4 text-center align-middle" style="width: 50%">제목</th>
+                                        <th class="py-4 text-center align-middle" style="width: 15%">작성일</th>
+                                        <th class="py-4 text-center align-middle" style="width: 15%">작성자</th>
+                                        <th class="py-4 text-center align-middle" style="width: 10%">조회수</th>
+                                    </tr>
+                                    <c:if test="${empty list}">
+                                     
+                                    <tr>
+                                        <th class="py-4 text-center align-middle" style="width: 10%">1</th>
+                                        <th class="py-4 text-center align-middle" style="width: 50%">1인가구를 위한 꿀팁2</th>
+                                        <th class="py-4 text-center align-middle" style="width: 15%">2023-02-06</th>
+                                        <th class="py-4 text-center align-middle" style="width: 15%">이윤호</th>
+                                        <th class="py-4 text-center align-middle" style="width: 10%">23</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="py-4 text-center align-middle" style="width: 10%">2</th>
+                                        <th class="py-4 text-center align-middle" style="width: 50%">1인가구를 위한 꿀팁3</th>
+                                        <th class="py-4 text-center align-middle" style="width: 15%">2023-02-06</th>
+                                        <th class="py-4 text-center align-middle" style="width: 15%">이윤호</th>
+                                        <th class="py-4 text-center align-middle" style="width: 10%">24</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="py-4 text-center align-middle" style="width: 10%">3</th>
+                                        <th class="py-4 text-center align-middle" style="width: 50%">1인가구를 위한 꿀팁4</th>
+                                        <th class="py-4 text-center align-middle" style="width: 15%">2023-02-06</th>
+                                        <th class="py-4 text-center align-middle" style="width: 15%">이윤호</th>
+                                        <th class="py-4 text-center align-middle" style="width: 10%">25</th>
+                                    </tr>
+                                        
+                                    </c:if>
+                                    <c:if test="${not empty list}">
+                                        <c:forEach var="board" items="${list}">
+                                            <tr>
+                                                <td class="py-4 text-center align-middle"><c:out
+                                                        value="${board.no}" /></td>
+                                                <td class="py-4 ps-5 align-middle"><a class="custom-a"
+                                                    href="${path}/board/free/board-detail?no=${board.no}"><c:out
+                                                            value="${board.title}" /></a></td>
+                                                <td class="py-4 text-center align-middle"><fmt:formatDate
+                                                        type="date" value="${board.createDate}" /></td>
+                                                <td class="py-4 text-center align-middle"><c:out
+                                                        value="${board.nickName}" /></td>
+                                                <td class="py-4 text-center align-middle"><c:out
+                                                        value="${board.readCount}" /></td>
+                                            </tr>
+                                            </c:forEach>
+                                            </c:if>
+
+                                            </table>
+                                            </div>
+
+                                            <!-- 글쓰기 버튼-->
+                                            <div>
+                                                <c:if test="">
+                                                    <div class="" style="text-align: right;">
+                                                        <a href="${path}/board/free/board-write"><button
+                                                                class="btn btn-primary" type="#">글쓰기</button></a>
+                                                    </div>
+                                                </c:if>
+                                            </div>
+
+                                            </div>
+                                            <!-- End 메인페이지 -->
+                
+                 <!-- 페이징 -->
+                  <div class="row">
+                    <div class="col-lg-12 mt-4 mb-5 pt-2">
+                      <nav aria-label="Page navigation example">
+                        <ul class="pagination job-pagination mb-0 justify-content-center">
+                          <li class="page-item disabled">
+                            <a class="page-link" href="javascript:void(0)" tabindex="-1">
+                              <i class="mdi mdi-chevron-double-left fs-15"></i>
+                            </a>
+                          </li>
+                          <li class="page-item active"><a class="page-link" href="javascript:void(0)">1</a></li>
+                          <li class="page-item"><a class="page-link" href="javascript:void(0)">2</a></li>
+                          <li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
+                          <li class="page-item"><a class="page-link" href="javascript:void(0)">4</a></li>
+                          <li class="page-item">
+                            <a class="page-link" href="javascript:void(0)">
+                              <i class="mdi mdi-chevron-double-right fs-15"></i>
+                            </a>
+                          </li>
+                        </ul>
+                      </nav>
+                    </div><!--end col-->
+                  </div><!-- end row -->
+                </div>
+              </div>
+            <!-- End of 페이징 -->
+
+		<br>
+
+		<!-- 검색바 -->
+		<div class="row">
+			<div class="col-xl-4 mx-auto">
+				<form action="${path}/board/free/board" method="get">
+					<div class="input-group">
+						<input type="hidden" name="searchType" value="title"> <input
+							type="hidden" name="typeType" value="type"> <input
+							type="hidden" name="typeType" id="typeType" value="${type}">
+						<input style="border-radius: 8px 0 0 8px/8px 0 0 8px"
+							class="form-control" type="text" value="" id="searchValue"
+							name="searchValue" placeholder="검색어 입력...">
+						<button class="btn btn-primary" type="submit">
+							<i class="fa fa-search"></i> 찾기
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<!-- End of 검색바 -->
+
+		<br>
+		<br>
+
+		<!-- START FOOTER -->
+			<footer th:replace="~{common/layout :: #footer}"></footer>
+			<!-- END FOOTER -->
+
+			<!--start back-to-top-->
+			<button onclick="topFunction()" id="back-to-top">
+				<i class="mdi mdi-arrow-up"></i>
+			</button>
+			<!--end back-to-top-->
+		</div>
+		<!-- end main content-->
+
+	</div>
+	<!-- END layout-wrapper -->
+
+	<!-- JAVASCRIPT -->
+	<script th:src="@{/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<script
+		src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
+
+	<!-- jquery  -->
+	<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+
+	<!-- Choice Js -->
+	<script
+		th:src="@{/libs/choices.js/public/assets/scripts/choices.min.js}"></script>
+
+	<!-- Nouislider Js -->
+	<script th:src="@{/libs/nouisliderribute/nouislider.min.js}"></script>
+	<script th:src="@{/js/pages/area-filter-range.init.js}"></script>
+
+	<!-- Checkbox Init Js -->
+	<script th:src="@{/js/pages/checkbox.init.js}"></script>
+
+	<!-- Job Init Js -->
+	<script th:src="@{/js/pages/job-list.init.js}"></script>
+
+	<!-- Switcher Js -->
+	<script th:src="@{/js/pages/switcher.init.js}"></script>
+
+	<!-- App Js -->
+	<script th:src="@{/js/app.js}"></script>
+
+	<!-- Custom Js -->
+	<script th:src="@{/js/pages/favorite.js}"></script>
+	<script th:src="@{/js/pages/trade-list.js}"></script>
+
+
+
+</body>
+
+</html>

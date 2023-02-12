@@ -1,0 +1,572 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="head" th:replace="~{common/layout :: head}"></head>
+  <!--Custom Css-->
+  <link th:href="@{/css/trade.css}" id="trade" rel="stylesheet" type="text/css" />
+  
+
+
+<body>
+	<!--Navbar Start-->
+	<header th:replace="~{common/layout :: #header}"></header>
+	<!-- Navbar End -->
+	
+  <div>
+  <!-- Begin page -->
+    <div class="main-content">
+
+      <div class="page-content">
+
+        <!-- Start home -->
+       <!-- <section class="page-title-box" th:style="'background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('+@{/images/img/hero_trade.jpg}+');'" style="height: 350px; padding-top: 130px; background-position: center bottom;">  --> 
+        <section class="page-title-box hero-img">
+          <div class="container">
+            <div class="row justify-content-center">
+              <div class="col-md-6">
+                <div class="text-center text-white">
+                  <h3 class="mb-4 hero-title">중고/재능 거래</h3>
+                  <div class="page-next">
+                    <nav class="d-inline-block" aria-label="breadcrumb text-center">
+                      <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a th:href="@{/}">HOME</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/trade/list}">LIFE</a></li>
+                        <li class="breadcrumb-item active"><a th:href="@{/trade/list}">TRADE</a></li>
+                      </ol>
+                    </nav>
+                  </div>
+                </div>
+              </div>
+              <!--end col-->
+            </div>
+            <!--end row-->
+          </div>
+          <!--end container-->
+        </section>
+        <!-- end home -->
+
+        <!-- START SHAPE -->
+        <div class="position-relative" th:style="${'z-index: 1'}">
+          <div class="shape">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 250">
+              <path fill="#FFFFFF" fill-opacity="1"
+                d="M0,192L120,202.7C240,213,480,235,720,234.7C960,235,1200,213,1320,202.7L1440,192L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z">
+              </path>
+            </svg>
+          </div>
+        </div>
+        <!-- END SHAPE -->
+
+
+        <!-- START JOB-LIST -->
+        <section class="section mt-5">
+          <div class="container">
+          <form th:action="@{/trade/list}" id="filter-search" method="get">
+            <div class="row">
+              <div class="col-lg-9">
+                <div class="me-lg-5">
+                  <div class="job-list-header">
+                    <!-- 검색 폼 form-->
+                    <!-- <form th:action="@{/trade/list}" id="filter-search" method="get"> -->
+                      <div class="row g-2">
+                        <div class="col-lg-5 col-md-6">
+                          <div class="filler-job-form">
+                            <i class="mdi mdi-magnify"></i>
+                            <input type="search" name="searchValue" class="form-control filter-job-input-box" id="exampleFormControlInput1"
+                              placeholder="검색어를 입력하세요">
+                          </div>
+                        </div><!--end col-->
+                        <div class="col-lg-4 col-md-6">
+                          <div class="filler-job-form">
+                            <i class="uil uil-list-ul"></i>
+                            <select class="form-select fs-5" name="searchType" id="choices-single-location"
+                              aria-label=".form-select-lg example">
+                              <option value="중고구매" selected="${paramMap.searchType=='중고구매' ? 'selected' :''}">중고구매</option>
+                              <option value="중고판매" selected="${paramMap.searchType=='중고판매' ? 'selected' :''}">중고판매</option>
+                              <option value="재능구매" selected="${paramMap.searchType=='재능구매' ? 'selected' :''}">재능구매</option>
+                              <option value="재능판매" selected="${paramMap.searchType=='재능판매' ? 'selected' :''}">재능판매</option>
+                              <option value="나눔" selected="${paramMap.searchType=='나눔' ? 'selected' :''}">나눔</option>
+                              <option value="" selected>전체</option>
+                            </select>
+                          </div>
+                        </div><!--end col-->
+                        <div class="col-lg-3 col-md-6">
+                          <a class="btn btn-primary w-100" type="submit" onclick="document.getElementById('filter-search').submit();">
+                            <i class="uil uil-filter"></i> 필터 검색 </a>
+                        </div><!--end col-->
+                      </div><!--end row-->
+                    <!-- </form> -->
+                  </div><!--end job-list-header-->
+                  
+                  <!-- 인기 목록 - 카테고리에 개수 많은순, 5가지-->
+                  <div class="wedget-popular-title mt-3">
+                    <h6>인기 카테고리</h6>
+                    <ul class="list-inline mb-4">
+                      <li class="list-inline-item">
+                        <div class="popular-box d-flex align-items-center">
+                          <div class="number flex-shrink-0 me-2">
+                            20
+                          </div>
+                          <a href="javascript:void(0)" class="primary-link stretched-link px-1">
+                            <h6 class="mb-0"> 디지털기기 </h6>
+                          </a>
+                        </div>
+                      </li>
+                      <li class="list-inline-item">
+                        <div class="popular-box d-flex align-items-center">
+                          <div class="number flex-shrink-0 me-2">
+                            18
+                          </div>
+                          <a href="javascript:void(0)" class="primary-link stretched-link px-1">
+                            <h6 class="mb-0"> 가구, 인테리어 </h6>
+                          </a>
+                        </div>
+                      </li>
+                      <li class="list-inline-item">
+                        <div class="popular-box d-flex align-items-center">
+                          <div class="number flex-shrink-0 me-2">
+                            10
+                          </div>
+                          <a href="javascript:void(0)" class="primary-link stretched-link px-1">
+                            <h6 class="mb-0"> 여성의류, 잡화 </h6>
+                          </a>
+                        </div>
+                      </li>
+                      <li class="list-inline-item">
+                        <div class="popular-box d-flex align-items-center">
+                          <div class="number flex-shrink-0 me-2">
+                            15
+                          </div>
+                          <a href="javascript:void(0)" class="primary-link stretched-link px-1">
+                            <h6 class="mb-0"> 도서/티켓/교환권 </h6>
+                          </a>
+                        </div>
+                      </li>
+                      <li class="list-inline-item">
+                        <div class="popular-box d-flex align-items-center">
+                          <div class="number flex-shrink-0 me-2">
+                            28
+                          </div>
+                          <a href="javascript:void(0)" class="primary-link stretched-link px-1">
+                            <h6 class="mb-0"> 취미/게임/음반 </h6>
+                          </a>
+                        </div>
+                      </li>
+                    </ul>
+                  </div><!--end wedget-popular-title-->
+
+                  <!-- Job-list -->
+                  <div>
+                  <!-- 조회된 글이 없을때 -->
+	                  <div>
+	                  	<th:block th:if="${list == null}">
+							<p>조회된 글이 없습니다.</p>
+						</th:block>
+	                  </div>
+	              <!-- 아이템1 -->
+	             <th:block th:if="${list != null}">
+	               <th:block th:each="trade : ${list}">
+	               
+                    <div class="job-box card mt-3">
+                      <div class="px-3 pt-3 pb-1">
+                        <div class="row">
+                          <div class="col-lg-3 p-0 mx-3 overflow-hidden">
+				            <!-- 첨부파일 -->
+				            <a th:href="|/trade/file/${trade.renamedFileName}|">
+				            <img th:src="|/trade/file/${trade.renamedFileName}|" alt="제품 사진" class="rounded-3 trade-item-img"
+				            onclick="window.open(this.src)" />
+                            <p class="text-center trade-mag mt-n4"><i class="uil uil-search-plus"></i> 크게보기</p> 
+				            </a>
+							
+                          </div><!--end col-->
+                          <div class="col-lg-8">
+                            <div class="mt-3 mt-lg-0">
+                              <div class="d-flex flex-row my-4">
+                                <span class="badge bg-soft-success trade-badge">[[${trade.type}]]</span>
+                                <h4 class="p-0 m-0 ms-3">[[${trade.title}]]</h4>
+                              </div>
+                              <div class="d-flex d-flex justify-content-between">
+                                <p class="text-muted mb-1">[[${trade.category}]]</p>
+                                <h5 class="p-0 m-0 ms-3">[[${trade.price}]] 원</h5>
+                              </div>
+                              <ul class="list-inline mb-0">
+                                <li class="list-inline-item" style="width: 130px;">
+                                  <p class="text-muted mb-1">[[${trade.writerId}]]</p>
+                                </li>
+                                <li class="list-inline-item">
+                                  <p class="text-muted mb-0"><i class="mdi mdi-map-marker"></i>
+                                  [[${trade.region}]]
+                                  </p>
+                                </li>
+                              </ul>
+                              <p class="text-muted mb-0">[[${#dates.format(trade.createDate, 'yyyy-MM-dd')}]]</p>
+                            </div>
+                          </div><!--end col-->
+                        </div><!--end row-->
+                        <div class="favorite-icon">
+                          <a href="javascript:void(0)"><i class="uil uil-heart-alt fs-18"></i></a>
+                        </div>
+                      </div>
+                      <div class="p-2 bg-light">
+                        <div class="row justify-content-between">
+                          <div class="col-md-8">
+                          </div>
+                          <!--end col-->
+                          <div class="col-md-3">
+                            <div class="text-md-end">
+                              <a th:href="|/trade/ditail?no=${trade.tradeNo}|" class="primary-link">상세보기 <i
+                                  class="mdi mdi-chevron-double-right me-3"></i></a>
+                            </div>
+                          </div>
+                          <!--end col-->
+                        </div>
+                        <!--end row-->
+                      </div>
+                    </div>
+                   </th:block>
+                 </th:block>
+                    <!--end job-box-->
+
+                    <div class="text-end mt-3">
+                      <!-- <a th:href="@{/trade/write}" class="btn btn-primary" onclick="location.href='/trade/trade-write'">글쓰기 <i class="uil uil-edit-alt ms-1"></i></a> -->
+                      <a class="btn btn-primary" onclick="location.href='/trade/write'">글쓰기 <i class="uil uil-edit-alt ms-1"></i></a>
+                    </div>
+
+                  </div>
+                  <!-- End Job-list -->
+
+                  <!-- 페이징 -->
+                  <div class="row">
+                    <div class="col-lg-12 mt-4 mb-5 pt-2">
+                      <nav aria-label="Page navigation example">
+                        <ul class="pagination job-pagination mb-0 justify-content-center">
+                          <li class="page-item disabled">
+                            <a class="page-link" href="javascript:void(0)" tabindex="-1">
+                              <i class="mdi mdi-chevron-double-left fs-15"></i>
+                            </a>
+                          </li>
+                          <li class="page-item active"><a class="page-link" href="javascript:void(0)">1</a></li>
+                          <li class="page-item"><a class="page-link" href="javascript:void(0)">2</a></li>
+                          <li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
+                          <li class="page-item"><a class="page-link" href="javascript:void(0)">4</a></li>
+                          <li class="page-item">
+                            <a class="page-link" href="javascript:void(0)">
+                              <i class="mdi mdi-chevron-double-right fs-15"></i>
+                            </a>
+                          </li>
+                        </ul>
+                      </nav>
+                    </div><!--end col-->
+                  </div><!-- end row -->
+                </div>
+
+				
+
+              </div>
+              <!-- START SIDE-BAR -->
+              <div class="col-lg-3">
+                <div class="side-bar">
+                  <div class="accordion" id="accordionExample">
+                    <!-- 카테고리 -->
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="experienceOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                          data-bs-target="#experience" aria-expanded="true" aria-controls="experience">
+                          카테고리
+                        </button>
+                      </h2>
+                      <div id="experience" class="accordion-collapse collapse show" aria-labelledby="experienceOne">
+                        <div class="accordion-body">
+                        	<div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="categories" id="checkAll-1" 
+                              />
+                              <label class="form-check-label ms-2 text-muted" for="checkAll-1">전체</label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="categories" value="디지털기기" id="flexCheckChecked1" 
+                               />
+                              <!-- checked="${paramMap.categories == '디지털기기'} ? 'checked' : null "/> -->
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked1">디지털기기</label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="categories" value="생활가전" id="flexCheckChecked2"
+                                />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked2">생활가전</label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="categories" value="가구/인테리어" id="flexCheckChecked3" 
+                               />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked3">가구/인테리어</label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="categories" value="생활/주방" id="flexCheckChecked4" 
+                              />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked4">생활/주방</label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="categories" value="유아용" id="flexCheckChecked5" 
+                                />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked5">유아용</label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="categories" value="여성의류/잡화" id="flexCheckChecked6" 
+                                />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked6">여성의류/잡화</label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="categories" value="남성의류/잡화" id="flexCheckChecked7" 
+                               />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked7">남성의류/잡화</label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="categories" value="뷰티/미용" id="flexCheckChecked8" 
+                               />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked8">뷰티/미용</label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="categories" value="스포츠/레저" id="flexCheckChecked9" 
+                               />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked9">스포츠/레저</label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="categories" value="취미/게임/음반" id="flexCheckChecked10" 
+                               />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked10">취미/게임/음반</label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="categories" value="도서/티켓/교환권" id="flexCheckChecked11" 
+                               />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked11">도서/티켓/교환권</label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="categories" value="가공식품" id="flexCheckChecked12" 
+                               />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked12">가공식품</label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="categories" value="반려동물물품" id="flexCheckChecked13" 
+                               />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked13">반려동물물품</label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="categories" value="식물" id="flexCheckChecked14" 
+                               />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked14">식물</label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="categories" value="기타" id="flexCheckChecked15" 
+                               />
+                              <label class="form-check-label ms-2 text-muted" for="flexCheckChecked15">기타</label>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div><!-- end accordion-item -->
+                    <!-- 거래 지역(시/도) -->
+                    <div class="accordion-item mt-3">
+                      <h2 class="accordion-header" id="datePosted">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                          data-bs-target="#dateposted" aria-expanded="false" aria-controls="dateposted">
+                          거래 지역(시/도)
+                        </button>
+                      </h2>
+                      <div id="dateposted" class="accordion-collapse collapse show" aria-labelledby="datePosted">
+                        <div class="accordion-body">
+                          <div class="side-title form-check-all">
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="checkAll-2" value="" />
+                              <label class="form-check-label ms-2 text-muted" for="checkAll-2">
+                                전체
+                              </label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" name="regions" value="서울특별시"
+                            	  id="서울특별시" />
+                              <label class="form-check-label ms-2 text-muted" for="서울특별시">
+                                서울특별시
+                              </label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="regions" value="부산광역시"
+                                id="부산광역시"/>
+                              <label class="form-check-label ms-2 text-muted" for="부산광역시">
+                                부산광역시
+                              </label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="regions" value="대구광역시"
+                                id="대구광역시" />
+                              <label class="form-check-label ms-2 text-muted" for="대구광역시">
+                                대구광역시
+                              </label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="regions" value="인천광역시"
+                                id="인천광역시" />
+                              <label class="form-check-label ms-2 text-muted" for="인천광역시">
+                                인천광역시
+                              </label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="regions" value="광주광역시"
+                                id="광주광역시" />
+                              <label class="form-check-label ms-2 text-muted" for="광주광역시">
+                                광주광역시
+                              </label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="regions" value="대전광역시"
+                                id="대전광역시" />
+                              <label class="form-check-label ms-2 text-muted" for="대전광역시">
+                                대전광역시
+                              </label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="regions" value="울산광역시"
+                                id="울산광역시" />
+                              <label class="form-check-label ms-2 text-muted" for="울산광역시">
+                                울산광역시
+                              </label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="regions" value="세종특별자치시"
+                                id="세종특별자치시" />
+                              <label class="form-check-label ms-2 text-muted" for="세종특별자치시">
+                                세종특별자치시
+                              </label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="regions" value="경기도"
+                                id="경기도" />
+                              <label class="form-check-label ms-2 text-muted" for="경기도">
+                                경기도
+                              </label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="regions" value="강원도"
+                                id="강원도" />
+                              <label class="form-check-label ms-2 text-muted" for="강원도">
+                                강원도
+                              </label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="regions" value="충청북도"
+                                id="충청북도" />
+                              <label class="form-check-label ms-2 text-muted" for="충청북도">
+                                충청북도
+                              </label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="regions" value="충청남도"
+                                id="충청남도" />
+                              <label class="form-check-label ms-2 text-muted" for="충청남도">
+                                충청남도
+                              </label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="regions" value="전라북도"
+                                id="전라북도" />
+                              <label class="form-check-label ms-2 text-muted" for="전라북도">
+                                전라북도
+                              </label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="regions" value="전라남도"
+                                id="전라남도" />
+                              <label class="form-check-label ms-2 text-muted" for="전라남도">
+                                전라남도
+                              </label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="regions" value="경상북도"
+                                id="경상북도" />
+                              <label class="form-check-label ms-2 text-muted" for="경상북도">
+                                경상북도
+                              </label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="regions" value="경상남도"
+                                id="경상남도" />
+                              <label class="form-check-label ms-2 text-muted" for="경상남도">
+                                경상남도
+                              </label>
+                            </div>
+                            <div class="form-check mt-2">
+                              <input class="form-check-input" type="checkbox" name="regions" value="제주특별자치도"
+                                id="제주특별자치도" />
+                              <label class="form-check-label ms-2 text-muted" for="제주특별자치도">
+                                제주특별자치도
+                              </label>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div><!-- end accordion-item -->
+
+
+                  </div><!--end accordion-->
+
+                </div><!--end side-bar-->
+              </div>
+              <!-- END SIDE-BAR -->
+            </div>
+        </form>
+          </div>
+        </section>
+        <!-- END JOB-LIST -->
+
+      </div>
+      <!-- End Page-content -->
+
+      <!-- START FOOTER -->
+		<footer th:replace="~{common/layout :: #footer}"></footer>
+      <!-- END FOOTER -->
+
+      <!--start back-to-top-->
+      <button onclick="topFunction()" id="back-to-top">
+        <i class="mdi mdi-arrow-up"></i>
+      </button>
+      <!--end back-to-top-->
+    </div>
+    <!-- end main content-->
+
+  </div>
+  <!-- END layout-wrapper -->
+
+  <!-- JAVASCRIPT -->
+  <script th:src="@{/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
+  <script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
+
+  <!-- jquery  -->
+  <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+
+  <!-- Choice Js -->
+  <script th:src="@{/libs/choices.js/public/assets/scripts/choices.min.js}"></script>
+
+  <!-- Nouislider Js -->
+  <script th:src="@{/libs/nouisliderribute/nouislider.min.js}"></script>
+  <script th:src="@{/js/pages/area-filter-range.init.js}"></script>
+
+  <!-- Checkbox Init Js -->
+  <script th:src="@{/js/pages/checkbox.init.js}"></script>
+
+  <!-- Job Init Js -->
+  <script th:src="@{/js/pages/job-list.init.js}"></script>
+
+  <!-- Switcher Js -->
+  <script th:src="@{/js/pages/switcher.init.js}"></script>
+
+  <!-- App Js -->
+  <script th:src="@{/js/app.js}"></script>
+
+  <!-- Custom Js -->
+  <script th:src="@{/js/pages/favorite.js}"></script>
+  <script th:src="@{/js/pages/trade-list.js}"></script>
+
+
+  
+</body>
+
+</html>

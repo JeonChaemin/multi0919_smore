@@ -1,0 +1,160 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="head" th:replace="~{common/layout :: head}"></head>
+<!--Custom Css-->
+<link th:href="@{/css/trade.css}" id="trade" rel="stylesheet"
+	type="text/css" />
+
+
+
+<body>
+	<!--Navbar Start-->
+	<header th:replace="~{common/layout :: #header}"></header>
+	<!-- Navbar End -->
+
+	<div>
+		<!-- Begin page -->
+		<div class="main-content">
+
+			<div class="page-content">
+
+				<!-- Start home -->
+				<!-- <section class="page-title-box" th:style="'background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('+@{/images/img/hero_trade.jpg}+');'" style="height: 350px; padding-top: 130px; background-position: center bottom;">  -->
+				<section class="page-title-box hero-img">
+					<div class="container">
+						<div class="row justify-content-center">
+							<div class="col-md-6">
+								<div class="text-center text-white">
+									<h3 class="mb-4 hero-title">공지사항</h3>
+									<div class="page-next">
+										<nav class="d-inline-block"
+											aria-label="breadcrumb text-center">
+											<ol class="breadcrumb justify-content-center">
+												<li class="breadcrumb-item"><a th:href="@{/}">HOME</a></li>
+												<li class="breadcrumb-item"><a th:href="@{/trade/list}">COMMUNITY</a></li>
+												<li class="breadcrumb-item active"><a
+													th:href="@{/trade/list}">NOTICE</a></li>
+											</ol>
+										</nav>
+									</div>
+								</div>
+							</div>
+							<!--end col-->
+						</div>
+						<!--end row-->
+					</div>
+					<!--end container-->
+				</section>
+				<!-- end home -->
+
+				<!-- START SHAPE -->
+				<div class="position-relative" th:style="${'z-index: 1'}">
+					<div class="shape">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 250">
+              <path fill="#FFFFFF" fill-opacity="1"
+								d="M0,192L120,202.7C240,213,480,235,720,234.7C960,235,1200,213,1320,202.7L1440,192L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z">
+              </path>
+            </svg>
+					</div>
+				</div>
+				<!-- END SHAPE -->
+
+		
+			        <!-- 메인페이지 시작 -->
+                    <section class="section">
+                        <div class="container">
+                            <div class="row align-items-center mb-4">
+                                <div class="col-lg-8">
+                                    <div class="mb-3 mb-lg-0">
+                                        <h6 class="fs-16 mb-0"> 공지사항 </h6>
+                                    </div>
+                                </div><!--end col-->
+
+                            </div><!--end row-->
+                            <div class="row">
+                                <div class="">     <!-- col-lg-4 col-md-6 -->
+                                    <div class="card text mb-4">     <!-- card text-center mb-4 -->
+                                        <div class="card-body px-4 py-5">
+                                            <a href="company-details.html" class="primary-link"><h6 class="fs-18 mb-2">2023 스모어 새해인사</h6></a>
+                
+                                            <h6 class="fs-18 mb-2"> <i class="uil uil-user"></i>작성자 : 관리자  &nbsp;&nbsp;&nbsp;
+                                                <i class="uil uil-calender"></i> 등록일 : 23.01.01  &nbsp;&nbsp;&nbsp;
+                                                <i class="uil uil-list-ul"></i> 조회수 : 123 </h6> &nbsp;&nbsp;&nbsp;
+                                            <center><img src="images/2023.jpg" class="img-fluid rounded-3"></center>
+                                            <div class="mt-4">
+                                               
+                                                <p class="text-muted mb-4">안녕하세요. <br>
+                                                                           올 한 해, 스모어와 함께해주셔서 감사드립니다. <br>
+                                                                           새해에도 1인가구가 행복한 스모어를 만들기 위해 노력하겠습니다. <br>  
+                                                                         
+                                                                            </p>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!--end col-->
+                               
+
+                            </div><!--end row-->
+
+                            
+                        </div><!--end container-->
+                    </section>
+
+                </div>
+                <!-- End 메인페이지 -->
+
+			<!-- START FOOTER -->
+			<footer th:replace="~{common/layout :: #footer}"></footer>
+			<!-- END FOOTER -->
+
+			<!--start back-to-top-->
+			<button onclick="topFunction()" id="back-to-top">
+				<i class="mdi mdi-arrow-up"></i>
+			</button>
+			<!--end back-to-top-->
+		</div>
+		<!-- end main content-->
+
+	</div>
+	<!-- END layout-wrapper -->
+
+	<!-- JAVASCRIPT -->
+	<script th:src="@{/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<script
+		src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
+
+	<!-- jquery  -->
+	<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+
+	<!-- Choice Js -->
+	<script
+		th:src="@{/libs/choices.js/public/assets/scripts/choices.min.js}"></script>
+
+	<!-- Nouislider Js -->
+	<script th:src="@{/libs/nouisliderribute/nouislider.min.js}"></script>
+	<script th:src="@{/js/pages/area-filter-range.init.js}"></script>
+
+	<!-- Checkbox Init Js -->
+	<script th:src="@{/js/pages/checkbox.init.js}"></script>
+
+	<!-- Job Init Js -->
+	<script th:src="@{/js/pages/job-list.init.js}"></script>
+
+	<!-- Switcher Js -->
+	<script th:src="@{/js/pages/switcher.init.js}"></script>
+
+	<!-- App Js -->
+	<script th:src="@{/js/app.js}"></script>
+
+	<!-- Custom Js -->
+	<script th:src="@{/js/pages/favorite.js}"></script>
+	<script th:src="@{/js/pages/trade-list.js}"></script>
+
+
+
+</body>
+
+</html>
