@@ -78,3 +78,8 @@ File: Main Css File
   background-color: #766df4;
   border-color: #766df4;
 }
+
+/* 댓글 수정 */
+.updateReply {
+	display: none;
+}
