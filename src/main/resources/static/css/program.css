@@ -24,6 +24,18 @@
 .w-90{
     width: 90%;
 } 
+.mt-10{
+	margin-top: 100px;
+}
+.mb-10{
+	margin-bottom: 100px;
+}
+.programbackimage{
+	background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/images/img/hero_program.jpg"); 
+	background-position: center; 
+	height: 350px; 
+	padding-top: 130px;
+}
 .selectsmall2{
     margin-left: 35px;
     margin-top: 10px;
@@ -116,7 +128,7 @@
     top: 15px;
     right: 15px;
 }
-.favorite-icon-active {
+.job-box .favorite-icon-active {
     position: absolute;
     top: 15px;
     right: 15px;
@@ -156,4 +168,14 @@
     color: rgba(173, 181, 189, .55);
     -webkit-transition: all .5s ease;
     transition: all .5s ease;
+}
+
+.active a{
+	color: #fff !important;
+  background-color: #766df4 !important;
+}
+
+.active >a :hover{
+	color: #fff !important;
+  background-color: #766df4 !important;
 }

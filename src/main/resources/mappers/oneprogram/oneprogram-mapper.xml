@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.multi.smore.oneprogram.model.mapper.OneProgramMapper">
+
+	<resultMap type="OneProgram" id="oneProgramListResultMap">
+		<id property="onepNo" column="onepNo"/>
+		<result property="partcptnId" column="PARTCPTN_ID"/>
+		<result property="partcptnSj" column="PARTCPTN_SJ"/>
+		<result property="tyNm" column="TY_NM"/>
+		<result property="seNm" column="SE_NM"/>
+		<result property="atdrcNm" column="ATDRC_NM"/>
+		<result property="rceptDe1" column="RCEPT_DE1"/>
+		<result property="rceptDe2" column="RCEPT_DE2"/>
+		<result property="progrsDe1" column="PROGRS_DE1"/>
+		<result property="progrsDe2" column="PROGRS_DE2"/>
+		<result property="agrdeNm" column="AGRDE_NM"/>
+		<result property="sexdstnNm" column="SEXDSTN_NM"/>
+		<result property="trgetInfo" column="TRGET_INFO"/>
+		<result property="tme" column="TME"/>
+		<result property="partcptnNmpr" column="PARTCPTN_NMPR"/>
+		<result property="partcptCtNm" column="PARTCPT_CT_NM"/>
+		<result property="partcptAmount" column="PARTCPT_AMOUNT"/>
+		<result property="rceptMthNm" column="RCEPT_MTH_NM"/>
+		<result property="rceptMthLink" column="RCEPT_MTH_LINK"/>
+		<result property="progrsInqry" column="PROGRS_INQRY"/>
+		<result property="placeAdres1" column="PLACE_ADRES1"/>
+		<result property="placeAdres2" column="PLACE_ADRES2"/>
+		<result property="cn" column="CN"/>
+		<result property="regDate2" column="REG_DATE2"/>
+		<result property="insttNm" column="INSTT_NM"/>
+		<result property="isClip" column="isClip"/>
+	</resultMap>
+
+	<resultMap type="ClipOneProgram" id="clipOneProgramResultMap">
+		<id property="onepNo" column="onepNo"/>
+		<result property="mNo" column="mNo"/>
+	</resultMap>
+	
+	
+	<select id="selectOneProgramList" resultMap="oneProgramListResultMap" parameterType="map">
+		SELECT 
+			O.onepNo, O.PARTCPTN_ID, O.PARTCPTN_SJ, O.TY_NM, O.SE_NM, O.ATDRC_NM, O.RCEPT_DE1, O.RCEPT_DE2
+			, O.PROGRS_DE1, O.PROGRS_DE2, O.AGRDE_NM, O.SEXDSTN_NM, O.TRGET_INFO, O.TME, O.PARTCPTN_NMPR , O.PARTCPT_CT_NM
+			, O.PARTCPT_AMOUNT , O.RCEPT_MTH_NM, O.RCEPT_MTH_LINK , O.PROGRS_INQRY , O.PLACE_ADRES1, O.PLACE_ADRES2, O.CN, O.REG_DATE2, O.INSTT_NM
+			, (SELECT COUNT(*) FROM CLIP_ONEPROGRAM CO WHERE O.onepNo = CO.onepNo) as likeCount
+			<if test="mNo !=  null">
+				, (SELECT COUNT(*) FROM CLIP_ONEPROGRAM CO WHERE O.onepNo = CO.onepNo AND CO.mNo = #{mNo}) as isClip
+			</if>
+			<if test="mNo == null">
+				, (SELECT COUNT(*) FROM CLIP_ONEPROGRAM CO WHERE O.onepNo = CO.onepNo AND CO.mNo = 0) as isClip
+			</if>
+		FROM ONEPROGRAM O
+		LEFT OUTER JOIN CLIP_ONEPROGRAM CO ON (O.onepNo = CO.onepNo)
+		LEFT OUTER JOIN MEMBER M ON (M.mNo = CO.mNo)
+		WHERE 1 = 1
+		<if test="searchValue != null">
+			AND O.PARTCPTN_SJ LIKE '%${searchValue}%'
+		</if>
+		<if test="tyNm != null">
+			AND 
+				O.TY_NM LIKE '%${tyNm}%'
+		</if>
+		ORDER BY O.PROGRS_DE2 DESC LIMIT ${limit} OFFSET ${offset}
+	</select>
+	
+	
+	<select id="selectOneProgramCount" resultType="int" parameterType="map">
+		SELECT 
+			COUNT(DISTINCT O.onepNo) 
+		FROM ONEPROGRAM O
+		LEFT OUTER JOIN CLIP_ONEPROGRAM CO ON (O.onepNo = CO.onepNo)
+		LEFT OUTER JOIN MEMBER M ON (M.mNo = CO.mNo)
+		WHERE 1 = 1
+		<if test="searchValue != null">
+			AND O.PARTCPTN_SJ LIKE '%${searchValue}%'
+		</if>
+		<if test="tyNm != null">
+			AND	O.TY_NM LIKE '%${tyNm}%'
+		</if>
+	</select>
+	
+	<select id="selectOneProgramByNo" parameterType="map" resultMap="oneProgramListResultMap">
+		SELECT
+			O.onepNo, O.PARTCPTN_ID, O.PARTCPTN_SJ, O.TY_NM, O.SE_NM, O.ATDRC_NM, O.RCEPT_DE1, O.RCEPT_DE2
+			, O.PROGRS_DE1, O.PROGRS_DE2, O.AGRDE_NM, O.SEXDSTN_NM, O.TRGET_INFO, O.TME, O.PARTCPTN_NMPR , O.PARTCPT_CT_NM
+			, O.PARTCPT_AMOUNT , O.RCEPT_MTH_NM, O.RCEPT_MTH_LINK , O.PROGRS_INQRY , O.PLACE_ADRES1, O.PLACE_ADRES2, O.CN, O.REG_DATE2, O.INSTT_NM
+			, (SELECT COUNT(*) FROM CLIP_ONEPROGRAM CO WHERE O.onepNo = CO.onepNo) as likeCount
+			<if test="mNo !=  null">
+				, (SELECT COUNT(*) FROM CLIP_ONEPROGRAM CO WHERE O.onepNo = CO.onepNo AND CO.mNo = #{mNo}) as isClip
+			</if>
+			<if test="mNo == null">
+				, (SELECT COUNT(*) FROM CLIP_ONEPROGRAM CO WHERE O.onepNo = CO.onepNo AND CO.mNo = 0) as isClip
+			</if>
+		FROM ONEPROGRAM O
+		LEFT OUTER JOIN CLIP_ONEPROGRAM CO ON (O.onepNo = CO.onepNo)
+		LEFT OUTER JOIN MEMBER M ON (M.mNo = CO.mNo)
+		WHERE O.onepNo = #{onepNo}
+	</select>
+	
+<!-- 	<sql id="selectOneProgramsql"> -->
+<!-- 		SELECT  -->
+<!-- 			O.onepNo, O.PARTCPTN_ID, O.PARTCPTN_SJ, O.TY_NM, O.SE_NM, O.ATDRC_NM, O.RCEPT_DE1, O.RCEPT_DE2 -->
+<!-- 			, O.PROGRS_DE1, O.PROGRS_DE2, O.AGRDE_NM, O.SEXDSTN_NM, O.TRGET_INFO, O.TME, O.PARTCPTN_NMPR , O.PARTCPT_CT_NM -->
+<!-- 			, O.PARTCPT_AMOUNT , O.RCEPT_MTH_NM, O.RCEPT_MTH_LINK , O.PROGRS_INQRY , O.PLACE_ADRES1, O.PLACE_ADRES2, O.CN, O.REG_DATE2, O.INSTT_NM -->
+<!-- 			<if test='memNo !=  null and memNo != "" '> -->
+<!-- 				, (SELECT COUNT(*) FROM CLIP_ONEPROGRAM CO WHERE O.onepNo = CO.onepNo AND MEMNO = #{memNo}) as isClip -->
+<!-- 			</if> -->
+<!-- 		FROM ONEPROGRAM O -->
+<!-- 		LEFT OUTER JOIN CLIP_ONEPROGRAM CO ON (O.onepNo = CO.onepNo) -->
+<!-- 		WHERE  CO.MEMNO = ${memNo}; -->
+<!-- 	</sql> -->
+	
+<!-- 	<sql id="selectOneProgramsql"> -->
+<!-- 		SELECT  -->
+<!-- 			O.onepNo, O.PARTCPTN_ID, O.PARTCPTN_SJ, O.TY_NM, O.SE_NM, O.ATDRC_NM, O.RCEPT_DE1, O.RCEPT_DE2 -->
+<!-- 			, O.PROGRS_DE1, O.PROGRS_DE2, O.AGRDE_NM, O.SEXDSTN_NM, O.TRGET_INFO, O.TME, O.PARTCPTN_NMPR , O.PARTCPT_CT_NM -->
+<!-- 			, O.PARTCPT_AMOUNT , O.RCEPT_MTH_NM, O.RCEPT_MTH_LINK , O.PROGRS_INQRY , O.PLACE_ADRES1, O.PLACE_ADRES2, O.CN, O.REG_DATE2, O.INSTT_NM -->
+<!-- 			<if test='mNo !=  null and mNo != "" '> -->
+<!-- 				, (SELECT COUNT(*) FROM CLIP_ONEPROGRAM CO WHERE O.onepNo = CO.onepNo AND MEMNO = #{mNo}) as isClip -->
+<!-- 			</if> -->
+<!-- 		FROM ONEPROGRAM O -->
+<!-- 		LEFT OUTER JOIN CLIP_ONEPROGRAM CO ON (O.onepNo = CO.onepNo) -->
+<!-- 		WHERE  CO.MEMNO = ${mNo}; -->
+<!-- 	</sql> -->
+	
+	
+	
+<!-- 	좋아요 -->
+	<insert id="clipOneProgram" parameterType="map">
+		INSERT INTO CLIP_ONEPROGRAM (onepNo, mNo)VALUES(#{onepNo}, #{mNo})
+	</insert>
+	
+	<insert id="unClipOneProgram" parameterType="map">
+		DELETE FROM CLIP_ONEPROGRAM WHERE mNo=#{mNo} AND onepNo=#{onepNo}
+	</insert>
+	
+<!-- 	<insert id="insertOneProgram" parameterType="OneProgram"> -->
+<!-- 		insert into ONEPROGRAM (onepNo, PARTCPTN_ID, PARTCPTN_SJ, TY_NM, SE_NM, ATDRC_NM, RCEPT_DE1, RCEPT_DE2, -->
+<!-- 					PROGRS_DE1, PROGRS_DE2, AGRDE_NM, SEXDSTN_NM, TRGET_INFO, TME, PARTCPTN_NMPR, PARTCPT_CT_NM, -->
+<!-- 					PARTCPT_AMOUNT, RCEPT_MTH_NM, RCEPT_MTH_LINK, PROGRS_INQRY, PLACE_ADRES1, PLACE_ADRES2, CN, REG_DATE2, INSTT_NM)	 -->
+<!-- 		values(0, #{partcptnId}, #{partcptnSj}, #{tyNm}, W#{seNm}, #{atdrcNm}, #{rceptDe1}, #{rceptDe2} -->
+<!-- 					, #{progrsDe1}, #{progrsDe2}, #{agrdeNm}, #{sexdstnNm}, #{trgetInfo}, #{tme}, #{partcptnNmpr}, #{partcptCtNm} -->
+<!-- 					, #{partcptAmount}, #{rceptMthNm}, #{rceptMthLink}, #{progrsInqry}, #{placeAdres1}, #{placeAdres2}, #{cn}, #{regDate2}, #{insttNm});	 -->
+<!-- 	</insert> -->
+	
+<!-- 	<delete id="deleteAllOneProgramList1"> -->
+<!-- 		SET FOREIGN_KEY_CHECKS = 0 -->
+<!-- 	</delete> -->
+<!-- 	<delete id="deleteAllOneProgramList2"> -->
+<!-- 		TRUNCATE ONEPROGRAM -->
+<!-- 	</delete> -->
+<!-- 	<delete id="deleteAllOneProgramList3"> -->
+<!-- 		SET FOREIGN_KEY_CHECKS = 1 -->
+<!-- 	</delete> -->
+
+<!-- 	<delete id="deleteOneProgram" parameterType="int"> -->
+<!-- 		DELETE FROM ONEPROGRAM WHERE onepNo=#{onepNo} -->
+<!-- 	</delete> -->
+</mapper>
