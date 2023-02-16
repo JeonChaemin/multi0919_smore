@@ -5,9 +5,23 @@
   font-weight: normal;
   font-style: normal;
 }
-/*채민*/
+
 .font-sangju{
   font-family: 'SANJUGotgam';
+}
+
+.hero-title {
+  font-size: 2rem;
+  font-weight: 400;
+  font-family: 'SANJUGotgam';
+}
+
+.hero-img {
+	background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), 
+	url("/images/img/hero_trade.jpg");
+	height: 350px; 
+	padding-top: 130px; 
+	background-position: center 80%;
 }
 
 .bw-tbl th{
@@ -22,6 +36,10 @@
 
 .bw-tbl input[type="text"] {
   width: 90%;
+  height: 35px;
+  padding-left:10px;
+  padding-right:10px;
+  border: 1px solid #e2e5e8;
   border-radius: 5px;
 }
 
@@ -37,4 +55,5 @@
   color: white;
   cursor: pointer;
 }
+
 
