@@ -35,6 +35,14 @@ File: Main Css File
 
 
 /* 좋아요 스크랩 */
-.btn-soft-warning{
-	
+.btn-clip{
+  display: inline-block;
+  background-color: rgba(247, 204, 83, 0.15);
+  border-color: transparent;
+  color: #f7cc53;
 }
+.btn-clip:hover{
+	color: #fff;
+  background: #f7cc53;
+}
+

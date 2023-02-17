@@ -183,5 +183,28 @@ public class RecipeController {
 		
 		return isClip;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/recipe/like", produces = "application/json; charset=utf-8")
+	public int[] recipeLike(
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			int rcpNo, int isLike)
+	{
+		int result = 0;
+		if(isLike == 1) {
+			result = service.likeRecipe(rcpNo, loginMember.getMemNo());
+			isLike = 1;
+		}else {
+			result = service.unLikeRecipe(rcpNo, loginMember.getMemNo());
+			isLike = 0;
+		}
+		int likeCount = service.getRecipeLikeCountByNo(rcpNo);
+		
+		int[] resultList = {isLike, likeCount};
+		
+		System.out.println("isLike : " + isLike);
+		
+		return resultList;
+	}
 
 }

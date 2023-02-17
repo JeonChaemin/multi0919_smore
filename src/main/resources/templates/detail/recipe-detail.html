@@ -209,18 +209,20 @@
                     </div>
                   </div>
                   
+                  <th:block th:if="${session.loginMember != null}">
                   <!-- 좋아요, 스크랩 시작 -->
 				<div class="col-lg-12 text-center mt-5">
                 	<a th:id="|clip${recipe.rcpNo}|" th:value="${recipe.isClip}" th:onclick="|onClip(${recipe.rcpNo});|"
-  					class="heart btn btn-soft-warning bg-soft-warning" name="clip">
-  						<i class="uil uil-heart-alt ms-1" name="clipOff"></i> 스크랩
+  					class="heart btn btn-clip" name="clip">
+  						<i class="uil uil-heart-alt ms-1"></i> 스크랩
   					</a>
-                     <a th:id="|like${recipe.rcpNo}|" th:value="${recipe.isLike}" th:onclick="|onLike('${recipe.rcpNo}');|"
-  					class="heart btn btn-soft-warning bg-soft-warning" name="like">
+                     <a th:id="|like${recipe.rcpNo}|" th:value="${recipe.isLike}" th:onclick="|onLike(${recipe.rcpNo});|"
+  					class="heart btn btn-clip" name="like">
   						<i class="uil uil-thumbs-up ms-1"></i> 좋아요 [[${recipe.likeCount}]]
   					</a>
              	</div>
                   <!-- 좋아요, 스크랩 끝 -->
+                  </th:block>
                   
                   <!--댓글부 시작-->
                   <div class="mt-5 pt-5">
@@ -375,6 +377,89 @@
   		var updateForm = document.getElementById("updateReply" +rcprNo);
   		updateForm.style.display = "none";
   	}
+  	
+  	$(function(){
+  		// 스크랩 초기화
+  		var clipItem = document.getElementsByName('clip')[0];
+  		var clipValue = JSON.parse(clipItem.getAttribute('value'));
+  		
+  		if(clipValue === 1){
+  			$("[name='clip']").css({"background-color":"#f7cc53", "color" : "#fff"});
+      	  	$("[name='clip']").children("i").css({"background-color":"#f7cc53", "color" : "#fff"});
+  		}
+  		
+  		var likeItem = document.getElementsByName('like')[0];
+  		var likeValue = JSON.parse(likeItem.getAttribute('value'));
+  		
+  		if(likeValue === 1){
+  			$("[name='like']").css({"background-color":"#f7cc53", "color" : "#fff"});
+      	  	$("[name='like']").children("i").css({"background-color":"#f7cc53", "color" : "#fff"});
+  		}		
+  	});
+  	
+  	
+  	function onClip(rcpNo){
+ 		var id = 'clip' + rcpNo;
+  		var value = document.getElementById(id).getAttribute('value');
+        if(value == 0){
+        	value = 1;
+        }else{
+        	value = 0;
+        }
+        // 여기에 AJAX로 DB 업데이트하는 코드 있어야함!!
+        $.ajax({
+			method:'get',
+			url:'/recipe/clip?rcpNo=' + rcpNo +'&isClip=' + value,
+			contentType: 'application/json',
+			dataType : 'json',
+			success: (result) =>{
+				$('#'+id).attr('value', ''+result);
+		        if(result === 1){
+		        	$("[name='clip']").css({"background-color":"#f7cc53", "color" : "#fff"});
+		      	  	$("[name='clip']").children("i").css({"background-color":"#f7cc53", "color" : "#fff"});
+		        }else{
+		        	$("[name='clip']").css({"background-color":"rgba(247, 204, 83, 0.15)", "color" : "#f7cc53"});
+		      	  	$("[name='clip']").children("i").css({"background-color":"rgba(247, 204, 83, 0.15)", "color" : "#f7cc53"});
+		        }
+			},
+			error : (e) => {
+				alert('전송 실패!!');
+			}
+		});
+    }
+  	
+  	function onLike(rcpNo){
+ 		var id = 'like' + rcpNo;
+  		var value = document.getElementById(id).getAttribute('value');
+        if(value == 0){
+        	value = 1;
+        }else{
+        	value = 0;
+        }
+        // 여기에 AJAX로 DB 업데이트하는 코드 있어야함!!
+        $.ajax({
+			method:'get',
+			url:'/recipe/like?rcpNo=' + rcpNo +'&isLike=' + value,
+			contentType: 'application/json',
+			dataType : 'json',
+			success: (result) =>{
+				$('#'+id).attr('value', ''+result[0]);
+				$('#'+id).html('<i class="uil uil-thumbs-up ms-1"></i> 좋아요 ' + result[1]);
+		        if(result[0] == 1){
+		        	$('#'+id).css({"background-color":"#f7cc53", "color" : "#fff"});
+		      	  	$('#'+id).children("i").css({"background-color":"#f7cc53", "color" : "#fff"});
+		        }else{
+		        	$('#'+id).css({"background-color":"rgba(247, 204, 83, 0.15)", "color" : "#f7cc53"});
+		      	  	$('#'+id).children("i").css({"background-color":"rgba(247, 204, 83, 0.15)", "color" : "#f7cc53"});
+		        }
+			},
+			error : (e) => {
+				alert('전송 실패!!');
+			}
+		});
+    }
+  	
+  	
   </script>
   
   <footer th:replace="~{common/layout :: #footer}"></footer>
