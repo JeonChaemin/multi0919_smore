@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.multi.smore.board.model.vo.Board;
 import com.multi.smore.member.model.vo.Member;
 
 //@Mapper : DAO 없이 자동으로 Mapper 객체를 생성해주는 어노테이션. 별도의 DAO 작성이 필요 없어진다.
@@ -19,7 +20,10 @@ public interface MemberMapper {
 	int insertMember(Member member);
 	int updateMember(Member member);
 	int updatePwd(Map<String, String> map);
-	int deleteMember(int no); 
+	int deleteMember(int no);
+	Member selectMemberByKakaoToken(String kakaoToken);
+	int selectViewCount(Map<String, String> param);
+	List<Board> selectViewList(Map<String, String> param);
 }
 
 

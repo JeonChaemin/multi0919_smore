@@ -1,6 +1,7 @@
 package com.multi.smore.member.model.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.multi.smore.board.model.vo.Board;
+import com.multi.smore.common.util.PageInfo;
 import com.multi.smore.member.model.mapper.MemberMapper;
 import com.multi.smore.member.model.vo.Member;
 
@@ -43,6 +46,20 @@ public class MemberService {
 		}
 	}
 	
+	
+	public Member loginKaKao(String kakaoToken) {
+		Member member = mapper.selectMemberByKakaoToken(kakaoToken);
+		if(member != null ) {
+			// 성공일때!
+			return member;
+		}else {
+			// 인증 실패했을때
+			return null;
+		}
+	}
+	
+	
+	
 	// @Transactional : DB 트랜잭션 관리를 위한 AOP 어노테이션. 만일 오류가 발생하면 롤백. 아니면 커밋
 	// (rollbackFor = Exception.class) : 사용하지 않은 경우 트랜잭션 코드가 정상적으로 작동하지 않을수 있다.
 	@Transactional(rollbackFor = Exception.class)
@@ -75,9 +92,13 @@ public class MemberService {
 	@Transactional(rollbackFor = Exception.class)
 	public int updatePwd(Member loginMember, String userPW) {
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("mNo", "" + loginMember.getMemNo());
+		map.put("memNo", "" + loginMember.getMemNo());
 		map.put("password", pwEncoder.encode(userPW));
 		return mapper.updatePwd(map);
 	}
+	
+
+	
+	
 	
 }
