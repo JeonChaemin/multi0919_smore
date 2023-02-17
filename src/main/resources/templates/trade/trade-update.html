@@ -1,390 +1,272 @@
 <!doctype html>
-<html lang="ko">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
 
-<head>
+<head th:fragment="head" th:replace="~{common/layout :: head}"></head>
+<!--Custom Css-->
+<link th:href="@{/css/trade-write.css}" id="trade" rel="stylesheet"
+	type="text/css" />
 
-
-    <meta charset="utf-8" />
-    <title>Smore | Trade-Update</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content=" " />
-    <meta name="keywords" content="" />
-    <meta content="Themesdesign" name="author" />
-
-    <!-- App favicon -->
-    <link rel="shortcut icon" href="assets/images/favicon.ico">
-
-    <!-- Choise Css -->
-    <link rel="stylesheet" href="assets/libs/choices.js/public/assets/styles/choices.min.css">
-
-    <!-- Bootstrap Css -->
-    <link href="assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
-    <!-- Icons Css -->
-    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-    <!-- App Css-->
-    <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
-    <!--Custom Css-->
-    <link href="assets/css/trade-write.css" id="trade-write" rel="stylesheet" type="text/css" />
-    <!-- Pretendard Font -->
-    <link rel="stylesheet" as="style" crossorigin
-        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard-dynamic-subset.css" />
-    <!-- Font Awesome CSS-->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <script src="https://kit.fontawesome.com/dd4a6a23ab.js" crossorigin="anonymous"></script>
-</head>
 
 <body>
 
-    <!-- Begin page -->
-    <div>
+	<!--Navbar Start-->
+	<header th:replace="~{common/layout :: #header}"></header>
+	<!-- Navbar End -->
 
-        <!--Navbar Start-->
-        <nav class="navbar navbar-expand-lg" id="navbar">
-            <div class="container-fluid custom-container">
-                <a class="navbar-brand text-dark fw-bold me-auto" href="index.html">
-                    <img src="assets/images/logo-dark.png" height="45" alt="" class="logo-dark" />
-                    <img src="assets/images/logo-light.png" height="45" alt="" class="logo-light" />
-                </a>
-                <div>
-                    <button class="navbar-toggler me-3" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-label="Toggle navigation">
-                        <i class="mdi mdi-menu"></i>
-                    </button>
-                </div>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <ul class="navbar-nav mx-auto navbar-center">
-                        <li class="nav-item dropdown dropdown-hover">
-                            <a class="nav-link" href="javascript:void(0)" id="homedrop" role="button"
-                                data-bs-toggle="dropdown">
-                                라이프 <div class="arrow-down"></div>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="homedrop">
-                                <li><a class="dropdown-item" href="trade.html">중고/재능 거래</a></li>
-                                <li><a class="dropdown-item" href="recipe.html">레시피</a></li>
-                                <li><a class="dropdown-item" href="outdoor.html">야외활동</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown dropdown-hover">
-                            <a class="nav-link" href="javascript:void(0)" id="jobsdropdown" role="button"
-                                data-bs-toggle="dropdown">
-                                정보 <div class="arrow-down"></div>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="jobsdropdown">
-                                <li><a class="dropdown-item" href="rental.html">공공임대주택</a></li>
-                                <li><a class="dropdown-item" href="program.html">정부지원사업</a></li>
-                                <li><a class="dropdown-item" href="news.html">뉴스</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown dropdown-hover">
-                            <a class="nav-link" href="javascript:void(0)" id="productdropdown" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                커뮤니티
-                                <div class="arrow-down"></div>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="productdropdown">
-                                <li><a class="dropdown-item" href="notice.html">공지사항</a></li>
-                                <li><a class="dropdown-item" href="board.html">자유 게시판</a></li>
-                                <li><a class="dropdown-item" href="suggestion.html">건의 게시판</a></li>
-                            </ul>
-                        </li><!--end dropdown-->
-                    </ul><!--end navbar-nav-->
-                </div>
-                <!--end navabar-collapse-->
-                <ul class="header-menu list-inline d-flex align-items-center mb-0">
-                    <li class="list-inline-item dropdown me-4">
-                        <a href="javascript:void(0)" class="header-item noti-icon position-relative" id="notification"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="mdi mdi-bell fs-22"></i>
-                            <div class="count position-absolute">1</div>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end p-0"
-                            aria-labelledby="notification">
-                            <div class="notification-header border-bottom bg-light">
-                                <h6 class="mb-1"> 알림센터 </h6>
-                                <p class="text-muted fs-13 mb-0">1개의 읽지 않은 알림</p>
-                            </div>
-                            <div class="notification-wrapper dropdown-scroll">
-                                <a href="javascript:void(0)" class="text-dark notification-item d-block active">
-                                    <div class="d-flex align-items-center">
-                                        <div class="flex-shrink-0 me-3">
-                                            <div class="avatar-xs bg-primary text-white rounded-circle text-center">
-                                                <i class="uil uil-user-check"></i>
-                                            </div>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <h6 class="mt-0 mb-1 fs-14">22 verified registrations</h6>
-                                            <p class="mb-0 fs-12 text-muted"><i class="mdi mdi-clock-outline"></i>
-                                                <span>3 min
-                                                    ago</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </a><!--end notification-item-->
-                            </div><!--end notification-wrapper-->
-                            <div class="notification-footer border-top text-center">
-                                <a class="primary-link fs-13" href="javascript:void(0)">
-                                    <i class="mdi mdi-arrow-right-circle me-1"></i> <span>더보기</span>
-                                </a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="list-inline-item dropdown">
-                        <a href="javascript:void(0)" class="header-item" id="userdropdown" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            <img src="assets/images/profile.jpg" alt="mdo" width="35" height="35"
-                                class="rounded-circle me-1"> <span class="d-none d-md-inline-block fw-medium">스모어
-                                님</span>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown">
-                            <li><a class="dropdown-item" href="mypage.html">마이페이지</a></li>
-                            <li><a class="dropdown-item" href="signout.html">로그아웃</a></li>
-                        </ul>
-                    </li>
-                </ul><!--end header-menu-->
-            </div>
-            <!--end container-->
-        </nav>
-        <!-- Navbar End -->
+	<!-- Begin page -->
+	<div>
 
-        <div class="main-content">
+		<div class="main-content">
 
-            <div class="page-content">
+			<div class="page-content">
 
-                <!-- Start home -->
-                <section class="page-title-box"
-                style="height:400px; padding-top:150px !important; background-image: linear-gradient( rgba(0, 0, 0, 0.486), rgba(0, 0, 0, 0.48) ), url(assets/images/img/hero_trade.jpg); background-position: center 80%;">
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-md-6">
-                                <div class="text-center text-white">
-                                    <h1 class="mb-3 font-sangju" style="font-size: 40pt;">중고/재능 거래</h1>
-                                    <div class="page-next">
-                                        <nav class="d-inline-block" aria-label="breadcrumb text-center">
-                                            <ol class="breadcrumb justify-content-center">
-                                                <li class="breadcrumb-item "><a href="index.html " class="h5"> HOME </a>
-                                                </li>
-                                                <li class="breadcrumb-item"><a href="javascript:void(0)" class="h5">
-                                                        LIFE </a></li>
-                                                <li class="breadcrumb-item active" aria-current="page"><a href="#"
-                                                        class="h5"> TRADE </a></li>
-                                            </ol>
-                                        </nav>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--end col-->
-                        </div>
-                        <!--end row-->
-                    </div>
-                    <!--end container-->
-                </section>
-                <!-- end home -->
+				<!-- Start home -->
 
-                <!-- START SHAPE -->
-                <div class="position-relative" style="z-index: 1">
-                    <div class="shape">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 250">
-                            <path fill="#FFFFFF" fill-opacity="1"
-                                d="M0,192L120,202.7C240,213,480,235,720,234.7C960,235,1200,213,1320,202.7L1440,192L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z">
-                            </path>
-                        </svg>
-                    </div>
-                </div>
-                <!-- END SHAPE -->
+				<section class="page-title-box hero-img">
+					<div class="container">
+						<div class="row justify-content-center">
+							<div class="col-md-6">
+								<div class="text-center text-white">
+									<h3 class="mb-4 hero-title">
+										<a class="text-white" th:href="@{/trade/list}">중고/재능 거래</a>
+									</h3>
+									<div class="page-next">
+										<nav class="d-inline-block"
+											aria-label="breadcrumb text-center">
+											<ol class="breadcrumb justify-content-center">
+												<li class="breadcrumb-item"><a th:href="@{/}">HOME</a></li>
+												<li class="breadcrumb-item"><a th:href="@{/trade/list}">LIFE</a></li>
+												<li class="breadcrumb-item"><a th:href="@{/trade/list}">TRADE</a></li>
+												<li class="breadcrumb-item active" aria-current="page">
+													TRADE WRITE</li>
+											</ol>
+										</nav>
+									</div>
+								</div>
+							</div>
+							<!--end col-->
+						</div>
+						<!--end row-->
+					</div>
+					<!--end container-->
+				</section>
+				<!-- end home -->
+
+				<!-- START SHAPE -->
+				<div class="position-relative" style="z-index: 1">
+					<div class="shape">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 250">
+              <path fill="#FFFFFF" fill-opacity="1"
+								d="M0,192L120,202.7C240,213,480,235,720,234.7C960,235,1200,213,1320,202.7L1440,192L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z">
+              </path>
+            </svg>
+					</div>
+				</div>
+				<!-- END SHAPE -->
 
 
-                <!-- START CATEGORIES -->
-                <section class="section my-5">
-                    <div class="container mb-4" style="padding: 0 150px 0 160px;">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-12 align-self-center">
-                                <div class="text-start ps-3 align-middle">
-                                    <h2 class="m-0 p-0 ">거래글 작성</h2>
-                                </div>
-                            </div><!--end col-->
-                        </div><!--end row-->
-                    </div>
-                    <!-- 목록 -->
-                    <div class="container" style="padding: 0 150px 0 150px; margin-bottom: 100px;">
-                        <div class="row px-3">
-                            <div class="col-lg-12">
-                                <!-- <form action="${path}/board/write" method="post" enctype="multipart/form-data"> -->
-                                <table class="table bw-tbl" >
-                                    <colgroup>
-                                        <col width=20%>
-                                        <col width=80%>
-                                    </colgroup>
-                                    <tr>
-                                        <th>거래종류</th>
-                                        <td>	
-                                        <label>
-                                            <input type="radio" name="type" value="trade_buy" ${type=='trade_buy' ? 'checked':''}> 중고구매&ensp;&ensp;&ensp;
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="type" value="trade_sell" ${type=='trade_sell' ? 'checked':''}> 중고판매&ensp;&ensp;&ensp;
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="type" value="talent_buy" ${type=='talent_buy' ? 'checked':''}> 재능구매&ensp;&ensp;&ensp;
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="type" value="talent_sell" ${type=='talent_sell' ? 'checked':''}> 재능판매&ensp;&ensp;&ensp;
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="type" value="share" ${type=='share' ? 'checked':''}> 나눔&ensp;&ensp;&ensp;
-                                        </label>
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <th>카테고리</th>
-                                        <td><select class="form-select" aria-label="Default select example">
-                                            <option value="1" selected>디지털기기</option>
-                                            <option value="2">생활가전</option>
-                                            <option value="3">가구/인테리어</option>
-                                            <option value="4">생활/주방</option>
-                                            <option value="5">유아용</option>
-                                            <option value="6">여성의류/잡화</option>
-                                            <option value="7">남성의류/잡화</option>
-                                            <option value="8">뷰티/미용</option>
-                                            <option value="9">스포츠/레저</option>
-                                            <option value="10">취미/게임/음반</option>
-                                            <option value="11">도서/티켓/교환권</option>
-                                            <option value="12">가공식품</option>
-                                            <option value="13">반려동물물품</option>
-                                            <option value="14">식물</option>
-                                            <option value="15">기타</option>
-                                          </select></td>
-                                      </tr>
-                                      <tr>
-                                        <th>거래 지역(시/도)</th>
-                                        <td><select class="form-select" aria-label="Default select example">
-                                            <option value="1" selected>서울특별시 </option>
-                                            <option value="2">부산광역시 </option>
-                                            <option value="3">대구광역시 </option>
-                                            <option value="4">인천광역시 </option>
-                                            <option value="5">광주광역시 </option>
-                                            <option value="6">대전광역시 </option>
-                                            <option value="7">울산광역시 </option>
-                                            <option value="8">세종특별자치시 </option>
-                                            <option value="9">경기도 </option>
-                                            <option value="10">강원도 </option>
-                                            <option value="11">충청북도 </option>
-                                            <option value="12">충청남도 </option>
-                                            <option value="13">전라북도 </option>
-                                            <option value="14">전라남도 </option>
-                                            <option value="15">경상북도 </option>
-                                            <option value="16">경상남도 </option>
-                                            <option value="17">제주특별자치도 </option>
-                                          </select></td>
-                                      </tr>
-                                      <tr>
-                                        <th><label for="title">제목</label></th>
-                                        <td><input type="text" name="title" id="title"></td>
-                                      </tr>
-                                      <tr>
-                                        <th><label for="condition">상태</label></th>
-                                        <td><input type="text" name="condition" id="condition" placeholder="사용감, 물건의 상태"></td>
-                                      </tr>
-                                      <tr>
-                                        <th><label for="price">금액</label></th>
-                                        <td><input class="text-end" type="text" name="price" id="price" style="width: 40%;">&ensp;원</td>
-                                      </tr>
-                                      <tr>
-                                        <th>작성자</th>
-                                        <!-- <td><input type="text" name="writerId" value="${loginMember.id}" readonly></td> -->
-                                        <td><span>${loginMember.id}</span></td>
-                                      </tr>
-                                      <tr class="align-middle">
-                                        <th><label for="file-btn">첨부파일</label></th>
-                                        <td>
-                                            <label class="input-file-button py-1" for="file-btn">파일첨부</label>
-                                            <span>&ensp;선택된 파일이 없습니다.</span>
-                                            <input type="file" name="upfile" id="file-btn" style="display: none;"></td>
-                                        
-                                      </tr>
-                                      <tr>
-                                        <th class="border-bottom-0"><label for="content">내용</label></th>
-                                      </tr>
-                                      <tr>
-                                        <th colspan="4" class="pt-0 border-bottom-0">
-                                            <textarea name="content" id="content" cols="50" rows="15" placeholder=" 내용을 적는 곳입니다."></textarea></th>
-                                      </tr>
-                                      <tr>
-                                        <td colspan="" class="border-0 pt-0" style="padding-left: 30px;">
-                                            <!-- <input type="submit" value="등록">
+				<!-- START CATEGORIES -->
+				<section class="section my-5">
+					<div class="container mb-4" style="padding: 0 150px 0 160px;">
+						<div class="row justify-content-center">
+							<div class="col-lg-12 align-self-center">
+								<div class="text-start ps-3 align-middle">
+									<h2 class="m-0 p-0 ">거래글 수정</h2>
+								</div>
+							</div>
+							<!--end col-->
+						</div>
+						<!--end row-->
+					</div>
+					<!-- 목록 -->
+					<div class="container"
+						style="padding: 0 150px 0 150px; margin-bottom: 100px;">
+						<div class="row px-3">
+							<div class="col-lg-12">
+								<form action="/trade/update" method="post" enctype="multipart/form-data">
+									<input type="hidden" name="tradeNo" th:value="${trade.tradeNo}" />
+									<input type="hidden" name="originalFileName" th:value="${trade.originalFileName}" /> 
+									<input type="hidden" name="renamedFileName" th:value="${trade.renamedFileName}" />
+									<table class="table bw-tbl">
+										<colgroup>
+											<col width=20%>
+											<col width=80%>
+										</colgroup>
+										<tr>
+											<th>거래종류</th>
+											<td><label> <input type="radio" name="type"
+													value="중고구매"
+													th:checked="${trade.type=='중고구매'} ? 'checked' :''">
+													중고구매&ensp;&ensp;&ensp;
+											</label> <label> <input type="radio" name="type" value="중고판매"
+													th:checked="${trade.type=='중고판매'} ? 'checked' :''">
+													중고판매&ensp;&ensp;&ensp;
+											</label> <label> <input type="radio" name="type" value="재능구매"
+													th:checked="${trade.type=='재능구매'} ? 'checked' :''">
+													재능구매&ensp;&ensp;&ensp;
+											</label> <label> <input type="radio" name="type" value="재능판매"
+													th:checked="${trade.type=='재능판매'} ? 'checked' :''">
+													재능판매&ensp;&ensp;&ensp;
+											</label> <label> <input type="radio" name="type" value="나눔"
+													th:checked="${trade.type=='나눔'} ? 'checked' :''">
+													나눔&ensp;&ensp;&ensp;
+											</label></td>
+										</tr>
+										<tr>
+											<th>카테고리</th>
+											<td><select class="form-select" name="category"
+												aria-label="Default select example">
+													<option value="디지털기기" th:selected="${trade.category} == '디지털기기'">디지털기기</option>
+													<option value="생활가전" th:selected="${trade.category} == '생활가전'">생활가전</option>
+													<option value="가구/인테리어" th:selected="${trade.category} == '가구/인테리어'">가구/인테리어</option>
+													<option value="생활/주방" th:selected="${trade.category} == '생활/주방'">생활/주방</option>
+													<option value="유아용" th:selected="${trade.category} == '유아용'">유아용</option>
+													<option value="여성의류/잡화" th:selected="${trade.category} == '여성의류/잡화'">여성의류/잡화</option>
+													<option value="남성의류/잡화" th:selected="${trade.category} == '남성의류/잡화'">남성의류/잡화</option>
+													<option value="뷰티/미용" th:selected="${trade.category} == '뷰티/미용'">뷰티/미용</option>
+													<option value="스포츠/레저" th:selected="${trade.category} == '스포츠/레저'">스포츠/레저</option>
+													<option value="취미/게임/음반" th:selected="${trade.category} == '취미/게임/음반'">취미/게임/음반</option>
+													<option value="도서/티켓/교환권" th:selected="${trade.category} == '도서/티켓/교환권'">도서/티켓/교환권</option>
+													<option value="가공식품" th:selected="${trade.category} == '가공식품'">가공식품</option>
+													<option value="반려동물물품" th:selected="${trade.category} == '반려동물물품'">반려동물물품</option>
+													<option value="식물" th:selected="${trade.category} == '식물'">식물</option>
+													<option value="기타" th:selected="${trade.category} == '기타'">기타</option>
+											</select></td>
+										</tr>
+										<tr>
+											<th>거래 지역(시/도)</th>
+											<td><select class="form-select" name="region"
+												aria-label="Default select example">
+													<option value="서울특별시" th:selected="${trade.region} == '서울특별시'">서울특별시</option>
+													<option value="부산광역시" th:selected="${trade.region} == '부산광역시'">부산광역시</option>
+													<option value="대구광역시" th:selected="${trade.region} == '대구광역시'">대구광역시</option>
+													<option value="인천광역시" th:selected="${trade.region} == '인천광역시'">인천광역시</option>
+													<option value="광주광역시" th:selected="${trade.region} == '광주광역시'">광주광역시</option>
+													<option value="대전광역시" th:selected="${trade.region} == '대전광역시'">대전광역시</option>
+													<option value="울산광역시" th:selected="${trade.region} == '울산광역시'">울산광역시</option>
+													<option value="세종특별자치시" th:selected="${trade.region} == '세종특별자치시'">세종특별자치시</option>
+													<option value="경기도" th:selected="${trade.region} == '경기도'">경기도</option>
+													<option value="강원도" th:selected="${trade.region} == '강원도'">강원도</option>
+													<option value="충청북도" th:selected="${trade.region} == '충청북도'">충청북도</option>
+													<option value="충청남도" th:selected="${trade.region} == '충청남도'">충청남도</option>
+													<option value="전라북도" th:selected="${trade.region} == '전라북도'">전라북도</option>
+													<option value="전라남도" th:selected="${trade.region} == '전라남도'">전라남도</option>
+													<option value="경상북도" th:selected="${trade.region} == '경상북도'">경상북도</option>
+													<option value="경상남도" th:selected="${trade.region} == '경상남도'">경상남도</option>
+													<option value="제주특별자치도" th:selected="${trade.region} == '제주특별자치도'">제주특별자치도</option>
+											</select></td>
+										</tr>
+										<tr>
+											<th><label for="title">제목</label></th>
+											<td><input type="text" name="title" id="title"
+												th:value="${trade.title}" required></td>
+										</tr>
+										<tr>
+											<th><label for="condition">상태</label></th>
+											<td><input type="text" name="conditions" id="conditions"
+												th:value="${trade.conditions}" placeholder="사용감, 물건의 상태"
+												required></td>
+										</tr>
+										<tr>
+											<th><label for="price">금액</label></th>
+											<td><input class="text-end" type="text" name="price"
+												id="price" th:value="${trade.price}" style="width: 40%;"
+												required>&ensp;원</td>
+										</tr>
+										<tr>
+											<th>작성자</th>
+											<td><input type="text" class="border-0" name="writerId"
+												th:value="${trade.writerId}"readonly></td> 
+										</tr>
+										<tr class="align-middle">
+											<th><label for="file-btn">첨부파일</label></th>
+											<td><label
+												class="position-absolute input-file-button py-1"
+												for="file-btn">파일첨부</label>
+												<input type="file" name="reloadFile" id="file-btn"
+												style="margin-left: 29px;">
+											</td>
+										</tr>
+										<tr class="align-middle">
+											<th></th>
+											<td>현재 업로드 파일 : <a> [[${trade.originalFileName}]] </a>
+											</td>
+										</tr>
+										<tr>
+											<th class="border-bottom-0"><label for="content">내용</label></th>
+										</tr>
+										<tr>
+											<th colspan="4" class="pt-0 border-bottom-0"><textarea
+													class="p-3" name="content" id="content" cols="50" rows="15"
+													placeholder=" 내용을 적는 곳입니다." required>
+											[[${trade.content}]]</textarea></th>
+										</tr>
+										<tr>
+											<td colspan="" class="border-0 pt-0"
+												style="padding-left: 30px;">
+												<!-- <input type="submit" value="등록">
                                             <input type="reset" value="취소"> -->
-                                            <button type="button" class="btn btn-outline-purple text-start py-1">목록</button>
-                                            
-                                        </td>
-                                        <th colspan=""  class="border-0 pt-0">
-                                            <button type="reset" class="btn btn-outline-purple float-end py-1 px-4 me-4">취소</button>
-                                            <button type="submit" class="btn btn-purple float-end py-1 me-3">글쓰기</button>
-                                        </th>
-                                        </tr>
-                                  </table>
-                                <!-- </form> -->
+												<button type="button"
+													class="btn btn-outline-purple text-start py-1"
+													onclick="location.replace('/trade/list')">목록</button>
 
-                            </div><!--endt-->
-                        </div><!--end col-->
-                    </div>
+											</td>
+											<th colspan="" class="border-0 pt-0">
+												<button type="reset"
+													class="btn btn-outline-purple float-end py-1 px-4 me-4">초기화</button>
+												<button type="submit"
+													class="btn btn-purple float-end py-1 me-3">수정하기</button>
+											</th>
+										</tr>
+									</table>
+								</form>
 
-            </div><!--end container-->
-            </section>
-            <!-- END CATEGORIES -->
-
-
-
-        </div>
-        <!-- End Page-content -->
-
-        <!-- START FOOTER -->
-        <div class="footer-alt">
-            <div class="container">
-                <div class="row">
-                    <div class="text-center text-white-50 col-lg-12 mb-2">
-                        <img style="height: 45px;" src="assets/images/logo-light.png">
-                    </div>
-                    <div class="text-center text-white-50 col-lg-12">
-                        <a class="d-inline-block text-reset" href="#">개인정보처리방침</a> |
-                        <a class="d-inline-block text-reset" href="#">저작권정책</a> |
-                        <a class="d-inline-block text-reset" href="#">사이트맵</a>
-                    </div>
-                    <div class="col-lg-12">
-                        <p class="text-white-50 text-center mb-0">
-                            고객센터 : 02-123-1234
-                            <script>document.write(new Date().getFullYear())</script> &copy; smore - All Rights
-                            Reserved.
-                        </p>
-                    </div><!--end col-->
-                </div><!--end row-->
-            </div><!--end container-->
-        </div>
-        <!-- END FOOTER -->
+							</div>
+							<!--endt-->
+						</div>
+						<!--end col-->
+					</div>
+			</div>
+			<!--end container-->
+			</section>
+			<!-- END CATEGORIES -->
 
 
-        <!--start back-to-top-->
-        <button onclick="topFunction()" id="back-to-top">
-            <i class="mdi mdi-arrow-up"></i>
-        </button>
-        <!--end back-to-top-->
-    </div>
-    <!-- end main content-->
 
-    </div>
-    <!-- END layout-wrapper -->
+		</div>
+		<!-- End Page-content -->
 
-    <!-- JAVASCRIPT -->
-    <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
+		<!-- START FOOTER -->
+		<footer th:replace="~{common/layout :: #footer}"></footer>
+		<!-- END FOOTER -->
 
 
-    <!-- Choice Js -->
-    <script src="assets/libs/choices.js/public/assets/scripts/choices.min.js"></script>
+		<!--start back-to-top-->
+		<button onclick="topFunction()" id="back-to-top">
+			<i class="mdi mdi-arrow-up"></i>
+		</button>
+		<!--end back-to-top-->
+	</div>
+	<!-- end main content-->
 
-    <!-- Switcher Js -->
-    <script src="assets/js/pages/switcher.init.js"></script>
+	</div>
+	<!-- END layout-wrapper -->
 
-    <script src="assets/js/app.js"></script>
+	<!-- JAVASCRIPT -->
+	<script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script
+		src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
+
+
+	<!-- Choice Js -->
+	<script
+		src="assets/libs/choices.js/public/assets/scripts/choices.min.js"></script>
+
+	<!-- Switcher Js -->
+	<script src="assets/js/pages/switcher.init.js"></script>
+
+	<script src="assets/js/app.js"></script>
 
 </body>
 

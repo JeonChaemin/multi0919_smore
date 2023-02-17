@@ -1,430 +1,361 @@
 <!doctype html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
 
-    <head>
-        
-        
-        <meta charset="utf-8" />
-        <title>Smore | Trade Details</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content=" " />
-        <meta name="keywords" content="" />
-        <meta content="Themesdesign" name="author" />
+<head th:fragment="head" th:replace="~{common/layout :: head}"></head>
+<!-- <title>Smore | Trade Details</title> -->
+<!--Custom Css-->
+<link th:href="@{/css/trade.css}" id="trade" rel="stylesheet"
+	type="text/css" />
 
-        <!-- App favicon -->
-        <link rel="shortcut icon" href="assets/images/favicon.ico">
+<body>
+	<!--Navbar Start-->
+	<header th:replace="~{common/layout :: #header}"></header>
+	<!-- Navbar End -->
+	<div>
+		<!-- Begin page -->
+		<div class="main-content">
+			<div class="page-content">
 
-        <!-- Bootstrap Css -->
-        <link href="assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
-        <!-- Icons Css -->
-        <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-        <!-- App Css-->
-        <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
-        <!--Custom Css-->
-        <link href="assets/css/trade.css" id="trade" rel="stylesheet" type="text/css" />
-        <!-- Pretendard Font -->
-        <link rel="stylesheet" as="style" crossorigin
-            href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard-dynamic-subset.css" />
-        <!-- Font Awesome CSS-->
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-            integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-        <script src="https://kit.fontawesome.com/dd4a6a23ab.js" crossorigin="anonymous"></script>
-    </head>
+				<!-- Start home -->
+				<section class="page-title-box hero-img">
+					<div class="container">
+						<div class="row justify-content-center">
+							<div class="col-md-6">
+								<div class="text-center text-white">
+									<h3 class="mb-4 hero-title">
+										<a class="text-white" th:href="@{/trade/list}">중고/재능 거래</a>
+									</h3>
+									<div class="page-next">
+										<nav class="d-inline-block"
+											aria-label="breadcrumb text-center">
+											<ol class="breadcrumb justify-content-center">
+												<li class="breadcrumb-item"><a th:href="@{/}">HOME</a></li>
+												<li class="breadcrumb-item"><a th:href="@{/trade/list}">LIFE</a></li>
+												<li class="breadcrumb-item"><a th:href="@{/trade/list}">TRADE</a></li>
+												<li class="breadcrumb-item"><a
+													th:onClick="window.location.reload()"
+													style="cursor: pointer;"> TRADE DETAILS</a></li>
+												<!-- <li class="breadcrumb-item"><a th:href="@{/history.go(0)}">TRADE DETAILS</a></li> -->
+											</ol>
+										</nav>
+									</div>
+								</div>
+							</div>
+							<!--end col-->
+						</div>
+						<!--end row-->
+					</div>
+					<!--end container-->
+				</section>
+				<!-- end home -->
 
-    <body>
+				<!-- START SHAPE -->
+				<div class="position-relative" style="z-index: 1">
+					<div class="shape">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 250">
+              <path fill="#FFFFFF" fill-opacity="1"
+								d="M0,192L120,202.7C240,213,480,235,720,234.7C960,235,1200,213,1320,202.7L1440,192L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z">
+							</path>
+            </svg>
+					</div>
+				</div>
+				<!-- END SHAPE -->
 
-        <!--end page Loader -->
+				<!-- START JOB-DEATILS -->
+				<section class="section my-4">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-8">
+								<div class="card job-detail overflow-hidden">
+									<th:block
+										th:if="${trade.renamedFileName == '' || trade.renamedFileName == null}">
+										<div class="text-center ">
+											<p class="fs-5 mx-auto my-5">이미지가 없습니다</p>
+											<!-- 스크랩 버튼 .js 추가 작업 필요 -->
+											<div
+												class="favorite-icon ">
+												<button type="button" class="btn btn-soft-purple p-1 active"
+													data-bs-toggle="button" aria-pressed="true"
+													style="width: 40px; height: 40px;">
+													<i class="uil uil-bookmark fs-4"></i>
+												</button>
+											</div>
+										</div>
+									</th:block>
 
-        <!-- Begin page -->
-        <div>
-            <!--Navbar Start-->
-            <nav class="navbar navbar-expand-lg" id="navbar">
-                <div class="container-fluid custom-container">
-                    <a class="navbar-brand text-dark fw-bold me-auto" href="index.html">
-                        <img src="assets/images/logo-dark.png" height="45" alt="" class="logo-dark" />
-                        <img src="assets/images/logo-light.png" height="45" alt="" class="logo-light" />
-                    </a>
-                    <div>
-                        <button class="navbar-toggler me-3" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-label="Toggle navigation">
-                            <i class="mdi mdi-menu"></i>
-                        </button>
-                    </div>
-                    <div class="collapse navbar-collapse" id="navbarCollapse">
-                        <ul class="navbar-nav mx-auto navbar-center">
-                            <li class="nav-item dropdown dropdown-hover">
-                                <a class="nav-link" href="javascript:void(0)" id="homedrop" role="button"
-                                    data-bs-toggle="dropdown">
-                                    라이프 <div class="arrow-down"></div>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="homedrop">
-                                    <li><a class="dropdown-item" href="trade.html">중고/재능 거래</a></li>
-                                    <li><a class="dropdown-item" href="recipe.html">레시피</a></li>
-                                    <li><a class="dropdown-item" href="outdoor.html">야외활동</a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown dropdown-hover">
-                                <a class="nav-link" href="javascript:void(0)" id="jobsdropdown" role="button"
-                                    data-bs-toggle="dropdown">
-                                    정보 <div class="arrow-down"></div>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="jobsdropdown">
-                                    <li><a class="dropdown-item" href="rental.html">공공임대주택</a></li>
-                                    <li><a class="dropdown-item" href="program.html">정부지원사업</a></li>
-                                    <li><a class="dropdown-item" href="news.html">뉴스</a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown dropdown-hover">
-                                <a class="nav-link" href="javascript:void(0)" id="productdropdown" role="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    커뮤니티
-                                    <div class="arrow-down"></div>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="productdropdown">
-                                    <li><a class="dropdown-item" href="notice.html">공지사항</a></li>
-                                    <li><a class="dropdown-item" href="board.html">자유 게시판</a></li>
-                                    <li><a class="dropdown-item" href="suggestion.html">건의 게시판</a></li>
-                                </ul>
-                            </li><!--end dropdown-->
-                        </ul><!--end navbar-nav-->
-                    </div>
-                    <!--end navabar-collapse-->
-                    <ul class="header-menu list-inline d-flex align-items-center mb-0">
-                        <li class="list-inline-item dropdown me-4">
-                            <a href="javascript:void(0)" class="header-item noti-icon position-relative" id="notification"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="mdi mdi-bell fs-22"></i>
-                                <div class="count position-absolute">1</div>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end p-0"
-                                aria-labelledby="notification">
-                                <div class="notification-header border-bottom bg-light">
-                                    <h6 class="mb-1"> 알림센터 </h6>
-                                    <p class="text-muted fs-13 mb-0">1개의 읽지 않은 알림</p>
-                                </div>
-                                <div class="notification-wrapper dropdown-scroll">
-                                    <a href="javascript:void(0)" class="text-dark notification-item d-block active">
-                                        <div class="d-flex align-items-center">
-                                            <div class="flex-shrink-0 me-3">
-                                                <div class="avatar-xs bg-primary text-white rounded-circle text-center">
-                                                    <i class="uil uil-user-check"></i>
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="mt-0 mb-1 fs-14">22 verified registrations</h6>
-                                                <p class="mb-0 fs-12 text-muted"><i class="mdi mdi-clock-outline"></i>
-                                                    <span>3 min
-                                                        ago</span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </a><!--end notification-item-->
-                                </div><!--end notification-wrapper-->
-                                <div class="notification-footer border-top text-center">
-                                    <a class="primary-link fs-13" href="javascript:void(0)">
-                                        <i class="mdi mdi-arrow-right-circle me-1"></i> <span>더보기</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="list-inline-item dropdown">
-                            <a href="javascript:void(0)" class="header-item" id="userdropdown" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                <img src="assets/images/profile.jpg" alt="mdo" width="35" height="35"
-                                    class="rounded-circle me-1"> <span class="d-none d-md-inline-block fw-medium">스모어
-                                    님</span>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown">
-                                <li><a class="dropdown-item" href="mypage.html">마이페이지</a></li>
-                                <li><a class="dropdown-item" href="signout.html">로그아웃</a></li>
-                            </ul>
-                        </li>
-                    </ul><!--end header-menu-->
-                </div>
-                <!--end container-->
-            </nav>
-            <!-- Navbar End -->
-            
-            <div class="main-content">
-                <div class="page-content">
+									<th:block
+										th:unless="${trade.renamedFileName == '' || trade.renamedFileName == null}">
+										<div class="text-center position-relative">
+											<img th:src="|/trade/file/${trade.renamedFileName}|"
+												style="height: 550px; object-fit: contain;" alt="제품사진"
+												class="img-fluid">
+											<div class="col-lg-4">
+												<!-- 스크랩 버튼 -->
+												<th:block th:if="${session.loginMember != null}">
+													<div class="position-absolute top-0 end-0 m-4">
+														<div class="clip clipbtn favorite-icon "
+															th:id="|clip${trade.tradeNo}|" th:value="${trade.isClip}"
+															th:onclick="|onClickClip('clip${trade.tradeNo}', '${trade.tradeNo}');|">
+															<a class="bg-soft-primary p-1"
+																style="cursor: pointer; width: 40px; height: 40px;">
+																<i class="uil uil-bookmark fs-4"></i>
+															</a>
+														</div>
+														<div th:id="|aazzclip${trade.tradeNo}|"
+																class="m-1">[[${trade.clipCount}]]</div>
+													</div>
+												</th:block>
+											</div>
+										</div>
+									</th:block>
+									<div class="card-body p-4">
+										<!--end col-->
+										<div>
+											<div class="row">
+												<div class="col-md-8 ps-5">
+													<span
+														class="badge bg-soft-primary trade-badge fs-4 py-2 px-3">[[${trade.type}]]</span>
+													<h4 class="mb-2 mt-3">[[${trade.title}]]</h4>
+												</div>
+												<!--end col-->
 
-                    <!-- Start home -->
-                    <section class="page-title-box"
-                    style="height:400px; padding-top:150px !important; background-image: linear-gradient( rgba(0, 0, 0, 0.486), rgba(0, 0, 0, 0.48) ), url(assets/images/img/hero_trade.jpg); background-position: center 80%;">
-                    <div class="container" >
-                        <div class="row justify-content-center">
-                            <div class="col-md-6">
-                                <div class="text-center text-white">
-                                    <h1 class="mb-3 font-sangju" style="font-size: 40pt;">중고/재능 거래</h1>
-                                    <div class="page-next">
-                                        <nav class="d-inline-block" aria-label="breadcrumb text-center">
-                                            <ol class="breadcrumb justify-content-center">
-                                                <li class="breadcrumb-item "><a href="index.html " class="h5"> HOME </a>
-                                                </li>
-                                                <li class="breadcrumb-item"><a href="javascript:void(0)" class="h5">
-                                                        LIFE </a></li>
-                                                <li class="breadcrumb-item active" aria-current="page"><a href="#"
-                                                        class="h5"> TRADE </a></li>
-                                                <li class="breadcrumb-item active" aria-current="page"><a href="#"
-                                                    class="h5"> TRADE DETAILS</a></li>
-                                            </ol>
-                                        </nav>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--end col-->
-                        </div>
-                        <!--end row-->
-                    </div>
-                    <!--end container-->
-                </section>
-                    <!-- end home -->
+												<div class="col-lg-4 text-end pe-4">
+													<span><p class="text-muted fs-6 mb-0">
+															<i class=""> <svg xmlns="http://www.w3.org/2000/svg"
+																	width="20" height="20" fill="currentColor"
+																	class="bi bi-person-fill me-2" viewBox="0 0 16 16">
+                                <path
+																		d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+                                </svg>
+															</i> 조회수 [[${trade.readCount}]]
+														</p></span>
+													<h4 class="mb-2 mt-3">[[${trade.price}]] 원</h4>
+												</div>
+												<!--end col-->
+											</div>
+											<!--end row-->
+										</div>
+										<hr>
+										<div class="mt-4 px-5">
+											<div class="job-detail-desc">
+												<p class="mb-0"
+													style="font-size: 15pt; line-height: 25pt; min-height: 200px;">
+													[[${trade.content}]]</p>
+											</div>
+										</div>
+									</div>
+									<!--end card-body-->
+								</div>
+								<!--end job-detail-->
+								<th:block
+									th:if="${session.loginMember != null && 
+												(session.loginMember.id == trade.writerId || 
+												session.loginMember.role == 'ROLE_ADMIN')}">
+									<div class="col-sm-12 p-3 pe-4 text-end">
+										<button type="button" id="btnUpdate"
+											class="btn btn-primary btn-hover me-3">수정하기</button>
+										<button type="button" id="btnDelete"
+											class="btn btn-primary btn-hover">삭제하기</button>
+									</div>
+								</th:block>
+								<!-- comment start -->
+								<h3 class="border-bottom pb-3 ps-5 mt-4">문의</h3>
+								<!-- 등록된 댓글 -->
+								<th:block th:if="${replyTradeList != null}">
+									<th:block th:each="replyTrade : ${replyTradeList}">
+										<div class="mt-4 pe-4">
+											<div class="d-sm-flex align-items-top">
+												<div class="flex-shrink-0 ps-5">
+													<img class="rounded-circle avatar-md"
+														th:src="@{/images/user/img-01.jpg}" alt="img"
+														style="width: 100px; height: 100px;" />
+												</div>
+												<div class="row ms-sm-3 flex-grow-1">
+													<div class="col-4 flex-grow-1">
+														<a class="primary-link"><h5 class="mt-sm-0 mt-3 mb-0">[[${replyTrade.writerId}]]
+																님</h5></a>
+														<h6 class="text-muted mb-0">[[${#dates.format(replyTrade.createDate,'yyyy/MM/dd
+															(E) a HH:mm:ss')}]]</h6>
+													</div>
+													<th:block
+														th:if="${session.loginMember != null && 
+														(session.loginMember.id == replyTrade.writerId || 
+														session.loginMember.role == 'ROLE_ADMIN')}">
+														<div class="col-5 text-end pe-2 float-end">
+															<!-- <button type="button" class="btn btn-purple py-1 opacity-75">수정</button> -->
+															<button type="button"
+																class="btn btn-purple py-1 opacity-75"
+																th:onclick="|deleteReplyTrade(${replyTrade.tradeRNo},${trade.tradeNo});|">삭제</button>
+														</div>
+													</th:block>
+													<p class="mb-0 fs-5 pe-3">[[${replyTrade.content}]]</p>
+												</div>
+											</div>
+										</div>
+									</th:block>
+								</th:block>
+								<!-- 댓글입력 폼 -->
+								<form th:action="@{/trade/reply}" method="post"
+									class="contact-form my-4 px-4">
+									<input type="hidden" name="tradeNo" th:value="${trade.tradeNo}" />
+									<div class="col-lg-12 ">
+										<div class="position-relative mb-3 ps-4">
+											<label for="comments" class="form-label fs-5">댓글작성</label>
+											<textarea name="content" id="replyContent" rows="4"
+												class="form-control bg-soft-secondary"
+												placeholder="Enter your message"></textarea>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-12 text-end">
+											<button type="submit" name="submit" id="submit"
+												class="btn btn-primary btn-hover">
+												등록하기 <i class="uil uil-arrow-right"></i>
+											</button>
+										</div>
+									</div>
+								</form>
+							</div>
+							<!--end col-->
 
-                    <!-- START SHAPE -->
-                    <div class="position-relative" style="z-index: 1">
-                        <div class="shape">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 250">
-                                <path fill="#FFFFFF" fill-opacity="1"
-                                    d="M0,192L120,202.7C240,213,480,235,720,234.7C960,235,1200,213,1320,202.7L1440,192L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    <!-- END SHAPE -->
+							<div class="col-lg-4 mt-4 mt-lg-0">
 
+								<!--start side-bar-->
+								<div class="side-bar ms-lg-4">
+									<div class="card job-overview">
+										<div class="card-body p-4">
+											<h3 class="">요약정보</h3>
+											<ul class="list-unstyled mt-4 mb-0">
 
-                    <!-- START JOB-DEATILS -->
-                    <section class="section my-4">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-lg-8">
-                                    <div class="card job-detail overflow-hidden">
-                                        <div class="text-center position-relative">
-                                            <img src="assets/images/img/trade1.jpg" style="height:550px; object-fit:contain;" alt="" class="img-fluid">
-                                            <div class="col-lg-4">
-                                                <!-- 스크랩 버튼 .js 추가 작업 필요 -->
-                                        <div class="favorite-icon text-end position-absolute top-0 end-0 m-4">
-                                            <button type="button" class="btn btn-soft-purple p-1 active"
-                                                data-bs-toggle="button" aria-pressed="true"
-                                                style="width: 40px; height:40px;">
-                                                <i class="uil uil-bookmark fs-4"></i>
-                                            </button>
-                                        </div>
-                                            </div><!--end col-->
-                                        </div>
-                                        <div class="card-body p-4">
-                                            <div>
-                                                <div class="row">
-                                                    <div class="col-md-8 ps-5">
-                                                        <h4 class="mb-4">게시글 제목</h4>
-                                                        <h4 class="mb-2">제품 가격</h4>
-                                                        <!-- <span><p class="text-muted fs-6 mb-0">
-                                                            <i class="">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-fill me-2" viewBox="0 0 16 16">
-                                                                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
-                                                                  </svg>
-                                                            </i> 조회수</p></span> -->
-                                                    </div><!--end col-->
+												<li>
+													<div class="d-flex mt-4">
+														<i class="uil uil-history icon bg-soft-primary"></i>
+														<div class="ms-3">
+															<h6 class="text-muted fs-14 mb-1">작성시간</h6>
+															<h5 class="mb-0"
+																th:text="${#dates.format(trade.createDate,'yyyy/MM/dd (a) HH:mm')}">
+																<!-- 															<h6 class="text-muted fs-14 mb-1" th:onclick="|javascript:elapsedTime('${#dates.format(trade.createDate,'yyyy-MM-dd')}')|" >작성시간 </h6> -->
+																<!-- 															<h6 class="text-muted fs-14 mb-1" id="oldDate" th:onclick="|javascript:elapsedTime('${trade.createDate}')|" >작성시간 </h6> -->
+															</h5>
+														</div>
+													</div>
+												</li>
+												<li>
+													<div class="d-flex mt-4">
+														<i class="uil uil-user icon bg-soft-primary"></i>
+														<div class="ms-3">
+															<h6 class="text-muted fs-14 mb-1">카테고리</h6>
+															<h5 class="mb-0">[[${trade.category}]]</h5>
+														</div>
+													</div>
+												</li>
+												<li>
+													<div class="d-flex mt-4">
+														<i class="uil uil-star-half-alt icon bg-soft-primary"></i>
+														<div class="ms-3">
+															<h6 class="text-muted fs-14 mb-1">상태</h6>
+															<h5 class="mb-0">[[${trade.conditions}]]</h5>
+														</div>
+													</div>
+												</li>
+												<li>
+													<div class="d-flex mt-4">
+														<i class="uil uil-location-point icon bg-soft-primary"></i>
+														<div class="ms-3">
+															<h6 class="text-muted fs-14 mb-1">위치</h6>
+															<h5 class="mb-0">[[${trade.region}]]</h5>
+														</div>
+													</div>
+												</li>
+												<li>
+													<div class="d-flex mt-4">
+														<i class="uil uil-usd-circle icon bg-soft-primary"></i>
+														<div class="ms-3">
+															<h6 class="text-muted fs-14 mb-1">가격</h6>
+															<h5 class="mb-0">[[${trade.price}]] 원</h5>
+														</div>
+													</div>
+												</li>
+											</ul>
+											<div class="mt-3">
+												<a href="#applyNow"
+													class="btn btn-primary btn-hover w-100 mt-2"
+													th:onclick="$('.clipbtn').trigger('click');"><i
+													class="uil uil-bookmark"></i> Add Bookmark </a> <a
+													onClick="history.back()"
+													class="btn btn-soft-purple btn-hover w-100 mt-2"> </i> 목록보기<i
+													class="uil uil-arrow-right"></i></a>
+											</div>
+										</div>
+										<!--end card-body-->
+									</div>
+									<!--end job-overview-->
 
-                                                    <div class="col-lg-4 text-end pe-4">
-                                                        <span><p class="text-muted fs-6 mb-0">
-                                                            <i class="">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-fill me-2" viewBox="0 0 16 16">
-                                                                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
-                                                                  </svg>
-                                                            </i> 조회수</p></span>
-                                                        <!-- 스크랩 버튼 .js 추가 작업 필요 -->
-                                                <!-- <div class="favorite-icon text-end me-2">
-                                                    <button type="button" class="btn btn-soft-purple p-1 active"
-                                                        data-bs-toggle="button" aria-pressed="true"
-                                                        style="width: 40px; height:40px;">
-                                                        <i class="uil uil-bookmark fs-4"></i>
-                                                    </button>
-                                                </div> -->
-                                                    </div><!--end col-->
-                                                </div><!--end row-->    
-                                            </div>
-                                            <hr>
-                                            <div class="mt-4 px-5">
-                                                <div class="job-detail-desc">
-                                                    <p class="mb-0" style="font-size:15pt; line-height:25pt; min-height: 200px;">
-                                                        제품 설명.<br>
-                                                        10년 버버리<br>
-                                                        상태 좋음<br>
-                                                        택포<br>
-                                                        직거래<br>
-                                                        문의</p>
-                                                </div>
-                                            </div>
-                                        </div><!--end card-body-->
-                                    </div><!--end job-detail-->
-
-                                    <!-- comment start -->
-                                    <h3 class="border-bottom pb-3 ps-5 mt-4">문의</h3>
-                                    <!-- 등록된 댓글 -->
-                                    <div class="mt-4 pe-4">
-                                        <div class="d-sm-flex align-items-top">
-                                            <div class="flex-shrink-0 ps-5">
-                                                <img class="rounded-circle avatar-md" src="assets/images/user/img-01.jpg" alt="img" style="width: 100px; height:100px;"/>
-                                            </div>
-                                            <div>
-                                            </div>
-                                            <div class="row ms-sm-3">
-                                                <div class="col-4 flex-grow-1">
-                                                    <a href="javascript:(0)" class="primary-link"><h5 class="mt-sm-0 mt-3 mb-0">작성자 아이디</h5></a>
-                                                    <h6 class="text-muted mb-0">2023-01-01 14:37 작성일시</h6>
-                                                    <div class="my-3 badge bg-light">
-                                                        <a href="javascript: void(0);" class="text-primary"><i
-                                                                class="mdi mdi-reply"></i> Reply</a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-5 text-end pe-2">
-                                                    <button type="button" class="btn btn-purple py-1 opacity-75">수정</button>
-                                                    <button type="button" class="btn btn-purple py-1 opacity-75">삭제</button>
-                                                </div>
-                                                
-                                                <p class="mb-0 fs-5 pe-3">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- 댓글입력 폼 -->
-                                    <form action="#" class="contact-form my-4 px-4">
-                                    <div class="col-lg-12 ">
-                                        <div class="position-relative mb-3 ps-4">
-                                            <label for="comments" class="form-label fs-5">댓글작성</label>
-                                            <textarea name="comments" id="comments" rows="4" class="form-control bg-soft-secondary" placeholder="Enter your message"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-12 text-end">
-                                            <button name="submit" type="submit" id="submit" class="btn btn-primary btn-hover opacity-75">등록하기 
-                                                <i class="">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
-                                                        <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
-                                                      </svg>
-                                                </i></button>
-                                        </div>
-                                    </div>
-                                </form>
-                                </div><!--end col-->
-                                <div class="col-lg-4 mt-4 mt-lg-0">
-
-                                    <!--start side-bar-->
-                                    <div class="side-bar ms-lg-4">
-                                        <div class="card job-overview">
-                                            <div class="card-body p-4">
-                                                <h3 class="">요약정보</h3>
-                                                <ul class="list-unstyled mt-4 mb-0">
-                                                    
-                                                    <li>
-                                                        <div class="d-flex mt-4">
-                                                            <i class="uil uil-history icon bg-soft-primary"></i>
-                                                            <div class="ms-3">
-                                                                <h6 class="text-muted fs-14 mb-1">업데이트</h6>
-                                                                <h5 class="mb-0">1시간 전 등록</h5> 
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="d-flex mt-4">
-                                                            <i class="uil uil-user icon bg-soft-primary"></i>
-                                                            <div class="ms-3">
-                                                                <h6 class="text-muted fs-14 mb-1">카테고리</h6>
-                                                                <h5 class="mb-0">여성의류/잡화</h5> 
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="d-flex mt-4">
-                                                            <i class="uil uil-star-half-alt icon bg-soft-primary"></i>
-                                                            <div class="ms-3">
-                                                                <h6 class="text-muted fs-14 mb-1">상태</h6>
-                                                                <h5 class="mb-0">사용감 있음</h5> 
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="d-flex mt-4">
-                                                            <i class="uil uil-location-point icon bg-soft-primary"></i>
-                                                            <div class="ms-3">
-                                                                <h6 class="text-muted fs-14 mb-1">위치</h6>
-                                                                <h5 class="mb-0">경기도</h5> 
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="d-flex mt-4">
-                                                            <i class="uil uil-usd-circle icon bg-soft-primary"></i>
-                                                            <div class="ms-3">
-                                                                <h6 class="text-muted fs-14 mb-1">가격</h6>
-                                                                <h5 class="mb-0">100,000원</h5> 
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                                <div class="mt-3">
-                                                    <a href="#applyNow" class="btn btn-primary btn-hover w-100 mt-2"><i class="uil uil-bookmark"></i> Add Bookmark </a>
-                                                    <a href="trade.html" class="btn btn-soft-purple btn-hover w-100 mt-2"></i> 목록보기 <i class="uil uil-arrow-right"></i></a>
-                                                </div>
-                                            </div><!--end card-body-->
-                                        </div><!--end job-overview-->
-
-                                    </div>
-                                    <!--end side-bar-->
-                                </div><!--end col-->
-                            </div><!--end row-->
-                        </div><!--end container-->
-                    </section>
-                    <!-- START JOB-DEATILS -->
-
-                </div>
-                <!-- End Page-content -->
+								</div>
+								<!--end side-bar-->
+							</div>
+							<!--end col-->
+						</div>
+						<!--end row-->
+					</div>
+					<!--end container-->
+				</section>
+				<!-- START JOB-DEATILS -->
+			</div>
+			<!-- End Page-content -->
 
 
 
-                <!-- START FOOTER -->
-                <div class="footer-alt">
-                    <div class="container">
-                        <div class="row">
-                            <div class="text-center text-white-50 col-lg-12 mb-2">
-                                <img style="height: 45px;" src="assets/images/logo-light.png">
-                            </div>
-                            <div class="text-center text-white-50 col-lg-12">
-                                <a class="d-inline-block text-reset" href="#">개인정보처리방침</a> | 
-                                <a class="d-inline-block text-reset" href="#">저작권정책</a> | 
-                                <a class="d-inline-block text-reset" href="#">사이트맵</a>
-                            </div>
-                            <div class="col-lg-12">
-                                <p class="text-white-50 text-center mb-0">
-                                    고객센터 : 02-123-1234
-                                    <script>document.write(new Date().getFullYear())</script> &copy; smore - All Rights Reserved.
-                                </p>
-                            </div><!--end col-->
-                        </div><!--end row-->
-                    </div><!--end container-->
-                </div>
-                <!-- END FOOTER -->
+			<!-- START FOOTER -->
+			<footer th:replace="~{common/layout :: #footer}"></footer>
+			<!-- END FOOTER -->
 
-                <!--start back-to-top-->
-                <button onclick="topFunction()" id="back-to-top">
-                    <i class="mdi mdi-arrow-up"></i>
-                </button>
-                <!--end back-to-top-->
-            </div>
-            <!-- end main content-->
+			<!--start back-to-top-->
+			<button onclick="topFunction()" id="back-to-top">
+				<i class="mdi mdi-arrow-up"></i>
+			</button>
+			<!--end back-to-top-->
+		</div>
+		<!-- end main content-->
 
-        </div>
-        <!-- END layout-wrapper -->
-
-        <!-- JAVASCRIPT -->
-        <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
+	</div>
 
 
-        <!-- Switcher Js -->
-        <script src="assets/js/pages/switcher.init.js"></script>
+	<!-- JAVASCRIPT -->
+	<script th:src="@{/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<script
+		src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
 
-        <!-- App Js -->
-        <script src="assets/js/app.js"></script>
+	<!-- jquery  -->
+	<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
 
-    </body>
+	<!-- Switcher Js -->
+	<script th:src="@{/js/pages/switcher.init.js}"></script>
+
+	<!-- App Js -->
+	<script th:src="@{/js/app.js}"></script>
+
+	<!-- Custom Js -->
+	<script th:src="@{/js/pages/trade-detail.js}"></script>
+	<script>
+	$(document).ready(() => {
+		$("#btnUpdate").on("click", (e) => {
+			location.href = "/trade/update?no=[[${trade.tradeNo}]]";
+		});
+
+		$("#btnDelete").on("click", (e) => {
+			if (confirm("정말로 게시글을 삭제 하시겠습니까?")) {
+				location.replace("/trade/delete?tradeNo=[[${trade.tradeNo}]]");
+			}
+		});
+	});
+
+	function deleteReplyTrade(replyNo, tradeNo) {
+		var url = "/trade/replyDel?replyNo=";
+		var requestURL = url + replyNo + "&tradeNo=" + tradeNo;
+		location.replace(requestURL);
+	}
+	</script>
+</body>
 </html>

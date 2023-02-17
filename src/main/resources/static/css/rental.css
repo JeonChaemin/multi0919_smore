@@ -12,10 +12,18 @@
   font-family: 'SANJUGotgam';
 }
 
+.hero-img {
+	background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), 
+	url("/images/img/hero_rental.jpg");
+	height: 350px; 
+	padding-top: 130px; 
+	background-position: center bottom;
+}
+
 .favorite-icon a:hover {
-  color: #fff;
-  background-color: #766df4;
-  border-color: #766df4;
+  color: #fff !important;
+  background-color: #766df4 !important;
+  border-color: #766df4 !important;
 }
 
 
@@ -23,4 +31,16 @@
   background-color: #766df4;
   color: #fff;
   border-color: danger;
+}
+
+.clip a{
+	width: 40px;
+	height: 40px;
+	
+}
+
+.active a{
+	color: #fff !important;
+  background-color: #766df4 !important;
+  border-color: #766df4 !important;
 }
