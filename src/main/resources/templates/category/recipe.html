@@ -32,7 +32,8 @@
   <!--Custom Css-->
   <link th:href="@{/css/recipe.css}" id="app-style" rel="stylesheet" type="text/css" />
   <!--recipe Css-->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+
 
 </head>
 
@@ -135,8 +136,9 @@
                               </div>
                               <th:block th:if="${session.loginMember != null}">
                               <div class="favorite-icon mt-n4" >
+                              	<input type="hidden" th:id="|value${recipe.rcpNo}|" th:value="${recipe.isClip}">
                                 <a href="javascript:void(0)" name="clip" th:id="|clip${recipe.rcpNo}|" th:value="${recipe.isClip}"
-                                	th:onclick="|onClip(${recipe.isClip},${recipe.rcpNo});|">
+                                	th:onclick="|onClip(${recipe.rcpNo});|">
                                 </a>
                               </div>
                               </th:block>
@@ -438,7 +440,33 @@
   </div>
   <!-- END layout-wrapper -->
   
-  <script type="text/javascript">
+  
+  <footer th:replace="~{common/layout :: #footer}"></footer>
+
+  <!-- JAVASCRIPT -->
+  <script th:src="@{/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
+  <script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
+
+
+  <!-- Choice Js -->
+  <script th:src="@{/libs/choices.js/public/assets/scripts/choices.min.js}"></script>
+
+  <!-- Nouislider Js -->
+  <script th:src="@{/libs/nouisliderribute/nouislider.min.js}"></script>
+  <script th:src="@{/js/pages/area-filter-range.init.js}"></script>
+
+  <!-- Checkbox Init Js -->
+  <script th:src="@{/js/pages/checkbox.init.js}"></script>
+
+  <!-- Job Init Js -->
+  <script th:src="@{/js/pages/job-list.init.js}"></script>
+
+  <!-- Switcher Js -->
+  <script th:src="@{/js/pages/switcher.init.js}"></script>
+
+  <script th:src="@{/js/app.js}"></script>
+  
+    <script type="text/javascript">
   	function movePage(pageUrl) {
 		/* 검색 값*/
 		var all = document.getElementById('all').value;
@@ -486,28 +514,30 @@
   	});
 	
 	
-  	function onClip(isClip, rcpNo){
-        if(isClip == 0){
-        	isClip = 1;
+  	function onClip(rcpNo){
+ 		var id = 'value' + rcpNo;
+  		var value = document.getElementById(id).value;
+        if(value == 0){
+        	value = 1;
         }else{
-        	isClip = 0;
+        	value = 0;
         }
         // 여기에 AJAX로 DB 업데이트하는 코드 있어야함!!
         $.ajax({
 			method:'get',
-			url:'/recipe/clip?rcpNo=' + rcpNo +'&isClip=' + isClip,
+			url:'/recipe/clip?rcpNo=' + rcpNo +'&isClip=' + value,
 			contentType: 'application/json',
 			dataType : 'json',
 			success: (result) =>{
-				$('#clip'+rcpNo).attr('value', ''+result);
+				$('#'+id).attr('value', ''+result);
 		        if(result === 1){
-		            $('#clip'+rcpNo).html('<i class="uil uil-heart-alt fs-18" name="clipOn"></i>');
-		            $("[name='clipOn']").css({"background-color":"#766df4", "color" : "#fff", "border-color" : "#766df4" });
-		        	$("[name='clipOn']").parents("a").css({"background-color":"#766df4", "color" : "#fff", "border-color" : "danger" });
+		            $('#clip' + rcpNo).html('<i class="uil uil-heart-alt fs-18" name="clipOn"></i>');
+		            $('#clip' + rcpNo).css({"background-color":"#766df4", "color" : "#fff", "border-color" : "#766df4" });
+		        	$('#clip' + rcpNo).children("i").css({"background-color":"#766df4", "color" : "#fff", "border-color" : "danger" });
 		        }else{
-		            $('#clip'+rcpNo).html('<i class="uil uil-heart-alt fs-18" name="clipOff"></i>');
-		            $("[name='clipOn']").css({"background-color":"#766df4", "color" : "#fff", "border-color" : "#766df4" });
-		        	$("[name='clipOn']").parents("a").css({"background-color":"#766df4", "color" : "#fff", "border-color" : "danger" });
+		            $('#clip' + rcpNo).html('<i class="uil uil-heart-alt fs-18" name="clipOff"></i>');
+		            $('#clip' + rcpNo).css({"background-color":"#fff", "color" : "#fff", "border-color" : "#eff0f2" });
+		        	$('#clip' + rcpNo).children("i").css({"background-color":"#fff", "color" : "rgba(173, 181, 189, .55)", "border-color" : "#fff" });
 		        }
 			},
 			error : (e) => {
@@ -516,31 +546,7 @@
 		});
     }
 	</script>
-  
-  <footer th:replace="~{common/layout :: #footer}"></footer>
-
-  <!-- JAVASCRIPT -->
-  <script th:src="@{/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
-  <script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
-
-
-  <!-- Choice Js -->
-  <script th:src="@{/libs/choices.js/public/assets/scripts/choices.min.js}"></script>
-
-  <!-- Nouislider Js -->
-  <script th:src="@{/libs/nouisliderribute/nouislider.min.js}"></script>
-  <script th:src="@{/js/pages/area-filter-range.init.js}"></script>
-
-  <!-- Checkbox Init Js -->
-  <script th:src="@{/js/pages/checkbox.init.js}"></script>
-
-  <!-- Job Init Js -->
-  <script th:src="@{/js/pages/job-list.init.js}"></script>
-
-  <!-- Switcher Js -->
-  <script th:src="@{/js/pages/switcher.init.js}"></script>
-
-  <script th:src="@{/js/app.js}"></script>
+	
 
 </body>
 

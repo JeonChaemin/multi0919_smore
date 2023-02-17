@@ -148,6 +148,7 @@ CREATE TABLE CLIP_HOUSE(
 -- ============================ 공공주택 모집공고 조회 서비스 ============================
 -- DROP TABLE IF EXISTS rentalHouse;
 CREATE TABLE rentalHouse(
+<<<<<<< HEAD
 rentalNo int AUTO_INCREMENT PRIMARY KEY, 
 rentalType VARCHAR(200), 
 suplyHoCo VARCHAR(200), 
@@ -227,6 +228,87 @@ INSTT_NM VARCHAR(100)
 CREATE TABLE CLIP_ONEPROGRAM(
     onepNo        INT,
 	memNo           INT,
+=======
+rhNo int AUTO_INCREMENT PRIMARY KEY, 
+rentalType VARCHAR(200), 
+suplyHoCo VARCHAR(200), 
+pblancId VARCHAR(200), 
+houseSn int, 
+sttusNm VARCHAR(200), 
+pblancNm VARCHAR(200), 
+suplyInsttNm VARCHAR(200), 
+houseTyNm VARCHAR(200), 
+suplyTyNm VARCHAR(200), 
+beforePblancId VARCHAR(200), 
+rcritPblancDe VARCHAR(200), 
+przwnerPresnatnDe VARCHAR(200), 
+refrnc VARCHAR(200), 
+url VARCHAR(200), 
+pcUrl VARCHAR(200), 
+mobileUrl VARCHAR(200), 
+hsmpNm VARCHAR(200), 
+brtcNm VARCHAR(200), 
+signguNm VARCHAR(200), 
+fullAdres VARCHAR(200), 
+rnCodeNm VARCHAR(200), 
+refrnLegaldongNm VARCHAR(200), 
+pnu VARCHAR(200), 
+heatMthdNm VARCHAR(200), 
+totHshldCo VARCHAR(200), 
+sumSuplyCo int, 
+rentGtn int, 
+enty int, 
+prtpay int, 
+surlus int, 
+mtRntchrg int, 
+beginDe VARCHAR(200), 
+endDe VARCHAR(200)
+);
+-- 공공주택 모집공고 조회 서비스 스크랩
+-- DROP TABLE IF EXISTS CLIP_RENTALHOUSE;
+CREATE TABLE CLIP_RENTALHOUSE(
+    rhNo          INT,
+	memNo         INT,
+    FOREIGN KEY (rhNo) REFERENCES RENTALHOUSE(rhNo),
+    FOREIGN KEY (memNo) REFERENCES MEMBER(memNo)
+);
+
+-- ============================ 1인가구 정부지원사업정보 서비스 ============================
+-- DROP TABLE IF EXISTS ONEPROGRAM;
+CREATE TABLE ONEPROGRAM(
+onepNo INT PRIMARY KEY AUTO_INCREMENT,
+PARTCPTN_ID VARCHAR(100),
+PARTCPTN_SJ VARCHAR(100),
+TY_NM VARCHAR(100),
+SE_NM VARCHAR(100),
+ATDRC_NM VARCHAR(100),
+RCEPT_DE1 DATE,
+RCEPT_DE2 DATE,
+PROGRS_DE1 DATE,
+PROGRS_DE2 DATE,
+AGRDE_NM VARCHAR(50),
+SEXDSTN_NM VARCHAR(100),
+TRGET_INFO VARCHAR(300),
+TME INT,
+PARTCPTN_NMPR VARCHAR(50),
+PARTCPT_CT_NM VARCHAR(100),
+PARTCPT_AMOUNT VARCHAR(100),
+RCEPT_MTH_NM VARCHAR(100),
+RCEPT_MTH_LINK VARCHAR(300),
+PROGRS_INQRY VARCHAR(100),
+PLACE_ADRES1 VARCHAR(100),
+PLACE_ADRES2 VARCHAR(100),
+CN VARCHAR(10000),
+REG_DATE2 DATE,
+INSTT_NM VARCHAR(100)
+);
+-- 1인가구 정부지원사업정보 스크랩
+-- DROP TABLE IF EXISTS CLIP_ONEPROGRAM;
+CREATE TABLE CLIP_ONEPROGRAM(
+    onepNo        INT ,
+	memNo          INT,
+	PRIMARY KEY (onepNo, memNo),
+>>>>>>> branch 'master' of https://github.com/JeonChaemin/multi0919_smore
     FOREIGN KEY (onepNo) REFERENCES ONEPROGRAM(onepNo),
     FOREIGN KEY (memNo) REFERENCES MEMBER(memNo)
 );
