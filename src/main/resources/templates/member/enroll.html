@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko">
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -34,8 +34,11 @@
   	<script src="https://kit.fontawesome.com/dd4a6a23ab.js" crossorigin="anonymous"></script>
   
   <!--Custom Css-->
-  <link href="@{/css/sign.css}" id="custom" rel="stylesheet" type="text/css" />
+  <link th:href="@{/css/sign.css}" id="custom" rel="stylesheet" type="text/css" />
+  <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 
+  <!--  다음 우편번호 script  -->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
 
 <body>
@@ -71,23 +74,21 @@
                   <div class="row align-items-center">
                     <div class="col-lg-6 text-center">
                       <div class="card-body p-4">
-                        <a th:href="@{/common/layout}">   
-                          <img th:src="@{/images/logo-light.png}" alt="" class="logo-light">
-                          <img th:src="@{/images/logo-light.png}" alt="" class="logo-dark">
-                        </a>
+                        <a th:href="@{/}"><img th:src="@{/images/logo-dark.png}" alt="" class="logo-dark" style="margin-top:30px;"></a>
                         <div class="mt-5">
-                          <img th:src="@{/images/auth/sign-up.png}" alt="" class="img-fluid">
+                          <img th:src="@{/images/auth/sign-up.png}" alt="" class="img-fluid" style="margin-bottom:60px;">
                         </div>
-
-                        <button class="btn btn-hover kakao w-100" onMouseOver="this.style.background='#f9e000'"
-                          style="margin-bottom:10px"><img class="btn-social-icon" th:src="@{/images/kakao.svg}">
-                          <a class="kakao" href="#" name="kakaoToken" value="kakaoMap.id">카카오 아이디로 <span
-                              class="d-none d-sm-inline">시작하기</span></a></button>
-
-                        <button class="btn btn-hover naver w-100" style="margin-bottom:10px"><img
-                            class="btn-social-icon" th:src="@{/images/naver.svg}"> 네이버 아이디로 <span
-                            class="d-none d-sm-inline">시작하기</span></button>
+				<!-- 
+                        <button class="btn btn-hover kakao w-100" onMouseOver="this.style.background='#f9e000'"style="margin-top:80px; margin-left:10px;">
+                          <img class="btn-social-icon" th:src="@{/images/kakao.svg}">
+                        <a class="kakao" href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=db9b4636697b685acdb60e2cfea3d1e0&redirect_uri=http://localhost/member/enroll/kakao">카카오 아이디로 <span class="d-none d-sm-inline">시작하기</span></a></button>
+				 -->
+                     
+                     <!-- 
+                        <button class="btn btn-hover naver w-100" style="margin-bottom:10px; margin-left:10px;">
+                        <img class="btn-social-icon" th:src="@{/images/naver.svg}"> 네이버 아이디로 <span class="d-none d-sm-inline">시작하기</span></button>
                         <br>
+                      -->   
                       </div>
                     </div><!--end col-->
                     <div class="col-lg-6">
@@ -97,37 +98,53 @@
                             <h5>회원가입</h5>
                             <p class="text-white-70">가입 후 스모어의 모든 기능을 이용해보세요</p>
                           </div>
-                          <form th:action="@{/member/enroll}" class="auth-form" name="memberEnrollFrm" method="post">
+                          <br>
+                          	<form id="enroll-container" name="memberEnrollFrm" th:action="@{/member/enroll}" method="post" class="auth-form">
                             <div class="mb-3">
-                              <label for="usernameInput" class="form-label">이름</label>
-                              <input type="text" class="form-control" required name ="name" placeholder="이름 입력">
-                            </div>
-                            <div class="mb-3">
-                              <label for="userIdInput" class="form-label">아이디</label>
-                              <input type="text" class="form-control" name="id" id="newId" placeholder="아이디 입력(4자 이상)" required>
+                              <span><label for="userIdInput" class="form-label" style="margin-right:30px;">아이디 </label>
+                              <input type="text" class="form-control" name="memberId" style="display:inline; width:50%;" id="memberId" placeholder="아이디 입력" required>
+                              <button type="button" class="btn btn-white btn-hover w-20" style="display:inline; margin-left:3px;" id="checkDuplicate" value="중복검사">중복 확인</button></span>
                             </div>
                             <div class="text-center">
-                              <button type="submit" class="btn btn-white btn-hover w-100" id="checkDuplicate"
-                                value="중복검사" type="button">중복 확인</buttom>
                             </div>
                             <br>
+                      
                             <div class="mb-3">
-                              <label for="emailInput" class="form-label">이메일</label>
-                              <input type="email" class="form-control" name="email" placeholder="이메일 입력">
+                              <label for="passwordInput" class="form-label" style="margin-right:50px;">비밀번호</label>
+                              <input type="password" class="form-control" name="password" id="pass1"  style="display:inline; width:70%;"  placeholder="특수문자, 영문, 숫자를 포함한 8자 이상"/>
+                               
                             </div>
                             <div class="mb-3">
-                              <label for="passwordInput" class="form-label">비밀번호</label>
-                              <input type="password" class="form-control" name="password" id="pass1"
-                                placeholder="비밀번호 입력 (특수문자, 영문, 숫자를 포함한 8자 이상)">
+                              <label for="emailInput" class="form-label" style="margin-right:20px;">비밀번호 확인</label>
+                              <input type="password" class="form-control" id="pass2" style="display:inline; width:70%;" placeholder="비밀번호 확인" required/> 
+                               
+                            </div>
+                              <div class="mb-3">
+                              <label for="usernameInput" class="form-label" style="margin-right:75px;">이름</label>
+                              <input type="text" class="form-control" required name ="name" style="display:inline; width:70%;" placeholder="이름 입력">
+                            </div>
+                               <div class="mb-3">
+                              <label for="emailInput" class="form-label" style="margin-right:60px;">이메일</label>
+                              <input type="email" class="form-control" name="email" style="display:inline; width:70%;" placeholder="smore@email.com"/>
+                            </div>
+                              <div class="mb-3">
+                              <label for="phoneInput" class="form-label" style="margin-right:60px;">연락처</label>
+                              <input type="tel" class="form-control" maxlength="11" name="phone"  style="display:inline; width:70%;" placeholder="(-없이) 01012345678"/>
                             </div>
                             <div class="mb-3">
-                              <label for="emailInput" class="form-label">비밀번호 확인</label>
-                              <input type="password" class="form-control" id="pass2" 
-                                placeholder="비밀번호 확인" required data-msg="비밀번호를 확인 해주세요.">
+                              <label for="addressInput" class="form-label" style="margin-right:50px;">주소</label>
+                              <br>
+                              
+							<span><input type="text" id="postcode" placeholder="우편번호" name="address" style="display:inline; width:50%;" class="form-control" readonly>
+							<input type="button" onclick="execDaumPostcode()" class="btn btn-white btn-hover w-20" style="display:inline; margin-left:3px;" value="우편번호 찾기" ></span>
+							<input type="text" name="address" id="roadAddress" style="margin-top:10px;" placeholder="도로명주소" class="form-control" readonly/>
+							<span id="guide" style="color:#999;display:none"></span>
+							<input type="text" name="address" id="detailAddress" placeholder="상세주소" class="form-control" style="hover:none; margin-top:5px;" />
+                              
                             </div>
+                            
                             <div class="mb-4">
-                              <div class="form-check"><input class="form-check-input" type="checkbox"
-                                  id="flexCheckDefault">
+                              <div class="form-check"><input class="form-check-input" type="checkbox"   id="flexCheckDefault">
                                 <label class="form-check-label" for="flexCheckDefault">
                                   <a href="javascript:void(0)" class="text-white text-decoration-underline">서비스이용약관</a>
                                   과
@@ -137,12 +154,18 @@
                               </div>
                             </div>
                             <div class="text-center">
-                              <button type="submit" id="enrollSubmit" value="가입" class="btn btn-white btn-hover w-100">회원가입</buttom>
+                              <button type="submit" id="enrollSubmit" value="가입" class="btn btn-white btn-hover w-100">회원가입</button>
+                              
                             </div>
+                            
+                            
+                        <button class="btn btn-hover kakao w-100" onMouseOver="this.style.background='#f9e000'"style="margin-top:10px;">
+                          <img class="btn-social-icon" th:src="@{/images/kakao.svg}">
+                        <a class="kakao" href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=db9b4636697b685acdb60e2cfea3d1e0&redirect_uri=http://localhost/member/enroll/kakao">카카오 아이디로 <span class="d-none d-sm-inline">시작하기</span></a></button>
+                            
                           </form>
                           <div class="mt-3 text-center">
-                            <p class="mb-0">이미 회원이신가요? <a th:href="@{/member/login}">
-                                class="fw-medium text-white text-decoration-underline"> 로그인 </a></p>
+                            <p class="mb-0">이미 회원이신가요? <a th:href="@{/login}"  class="fw-medium text-white text-decoration-underline"> 로그인 </a></p>
                           </div>
                         </div>
                       </div>
@@ -154,9 +177,9 @@
           </div><!--end container-->
           
           
-<script type="text/javascript">
-	$(function() {
-		$("#pass2").blur((event) => {
+	<script type="text/javascript">
+			$(function() {
+			$("#pass2").blur((event) => {
 			let pass1 = $("#pass1").val();			
 			let pass2 = $(event.target).val();
 			
@@ -169,14 +192,21 @@
 			}
 		});
     	
-	    $("#enrollSubmit").on("click", () => {
-	    	// TODO 전송하기 전에 각 영역에 유효성 검사로직을 추가하는 부분!
-	    	//return false;
-	    });
-	    
+		    $("#enrollSubmit").on("click", () => {
+		    	let regExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
+		    	if(!regExp.test($("#pass1").val().trim())) {
+		    		alert("비밀번호는 특수문자, 영문, 숫자를 포함하여 8자 이상입니다.");
+		    		$("#pass1").val("");
+					$("#pass2").val("");
+					$("#pass1").focus();
+		    		return false;
+		    	};
+		    	//return false;
+		    });
+		    
 	    // 아이디 중복을 확인하는 AJAX 코드
 	    $("#checkDuplicate").on("click", () => {
-	    	let id = $("#newId").val().trim();
+	    	let id = $("#memberId").val().trim();
 	    	
 	    	if(id.length < 4){
 	    		alert("아이디는 최소 4글자입니다.")
@@ -185,7 +215,7 @@
 	    	
 	    	$.ajax({
 	    		type:"get",
-	    		url:"[[@{/member/idCheck}]]",
+	    		url:"/member/idCheck",
 	    		data:{id}, // 속성값이 키값과 같은 이름을 가질때 하나로만 key-value 채운다.
 	    		success:
 	    			(data)=>{ // validate key값
@@ -217,39 +247,14 @@
   </div>
   <!-- END layout-wrapper -->
 
-  <!-- Style switcher -->
-  <div id="style-switcher" onclick="toggleSwitcher()" style="left: -165px;">
-    <div>
-      <h6>Select your color</h6>
-      <ul class="pattern list-unstyled mb-0">
-        <li>
-          <a class="color-list color1" href="javascript: void(0);" onclick="setColorGreen()"></a>
-        </li>
-        <li>
-          <a class="color-list color2" href="javascript: void(0);" onclick="setColor('blue')"></a>
-        </li>
-        <li>
-          <a class="color-list color3" href="javascript: void(0);" onclick="setColor('green')"></a>
-        </li>
-      </ul>
-      <div class="mt-3">
-        <h6>Light/dark Layout</h6>
-        <div class="text-center mt-3">
-          <!-- light-dark mode -->
-          <a href="javascript: void(0);" id="mode" class="mode-btn text-white rounded-3">
-            <i class="uil uil-brightness mode-dark mx-auto"></i>
-            <i class="uil uil-moon mode-light"></i>
-          </a>
-          <!-- END light-dark Mode -->
-        </div>
-      </div>
-    </div>
-    <div class="bottom d-none d-md-block">
-      <a href="javascript: void(0);" class="settings rounded-end"><i class="mdi mdi-cog mdi-spin"></i></a>
-    </div>
+    <!-- Style switcher -->
+  <a class="color-list color1" href="javascript: void(0);" onclick="setColorGreen()"></a>
+  <a class="color-list color2" href="javascript: void(0);" onclick="setColor('blue')"></a>
+  <a class="color-list color3" href="javascript: void(0);" onclick="setColor('green')"></a>
+  <a href="javascript: void(0);" id="mode">
+  <a href="javascript: void(0);" class="settings rounded-end"></a>
   </div>
   <!-- end switcher-->
-
 
   <!--start back-to-top-->
   <button onclick="topFunction()" id="back-to-top">
@@ -266,6 +271,43 @@
   <script th:src="@{/js/pages/switcher.init.js}"></script>
 
   <!--script code-->
+
+	<script>
+/** 우편번호 찾기 */
+ function execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                var roadAddr = data.roadAddress; // 도로명 주소 변수
+                var extraRoadAddr = ''; // 참고 항목 변수
+
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraRoadAddr += data.bname;
+                }
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                if(extraRoadAddr !== ''){
+                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+                }
+
+                document.getElementById('postcode').value = data.zonecode;
+                document.getElementById("roadAddress").value = roadAddr;
+             
+
+                var guideTextBox = document.getElementById("guide");
+                
+                if(data.autoRoadAddress) {
+                    var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
+                    guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+                    guideTextBox.style.display = 'block';
+                } else {
+                    guideTextBox.innerHTML = '';
+                    guideTextBox.style.display = 'none';
+                }
+            }
+        }).open();
+    }
+</script>
 
 </body>
 

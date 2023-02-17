@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head" th:replace="~{common/layout :: head}"></head>
+
+<body>
+<header th:replace="~{common/layout :: #header}"></header>
+
+<style>
+	section #enroll-container {text-align: center;}
+	section #enroll-container input {margin: 3px;}
+	section #enroll-container table {margin: 0 auto;}
+	section #enroll-container table th {padding: 0 10px; text-align: right;}
+	section #enroll-container table td {padding: 0 10px;text-align: left;}
+</style>
+
+<section id="content">
+	<h3 align="center">회원정보 조회/수정</h3>
+		<form id="enroll-container" action="/member/update" method="post">
+			<table>
+				<tr>
+					<th>아이디</th>
+					<td>
+						<input type="text" name="id" th:value="${session.loginMember.id}" readonly required />
+					</td>
+				</tr>			
+				<tr>
+					<th>이름</th>
+					<td>
+						<input type="text" name="name"  th:value="${session.loginMember.name}"  required />
+					</td>
+				</tr>		
+				<tr>
+					<th>전화번호</th>
+					<td>
+						<input type="tel" name="phone" th:value="${session.loginMember.phone}"  maxlength="11" placeholder="(-없이)01012345678" />
+					</td>
+				</tr>		
+				<tr>
+					<th>이메일</th>
+					<td>
+						<input type="email" name="email" th:value="${session.loginMember.email}"  />
+					</td>
+				</tr>		
+				<tr>
+					<th>주소</th>
+					<td>
+						<input type="text" name="address" th:value="${session.loginMember.address}" />
+					</td>
+				</tr>
+				<tr>
+					<th>취미</th>
+					<td>
+					<label><input type="checkbox" name="hobby" value="운동"
+						th:checked="${#arrays.contains(session.loginMember.hobby, '운동')  ? 'checked' : null}"
+						/>운동</label>
+						<label><input type="checkbox" name="hobby" value="등산"
+						th:checked="${#arrays.contains(session.loginMember.hobby, '등산')  ? 'checked' : null}"
+						/>등산</label>
+						<label><input type="checkbox" name="hobby" value="독서"
+						th:checked="${#arrays.contains(session.loginMember.hobby, '독서')  ? 'checked' : null}"
+						/>독서</label>
+						<label><input type="checkbox" name="hobby" value="게임"
+						th:checked="${#arrays.contains(session.loginMember.hobby, '게임')  ? 'checked' : null}"
+						/>게임</label>
+						<label><input type="checkbox" name="hobby" value="여행"
+						th:checked="${#arrays.contains(session.loginMember.hobby, '여행')  ? 'checked' : null}"
+						/>여행</label>
+					</td>
+				</tr>
+			</table>
+			<input type="button" id="updatePwd" value="비밀번호변경" />
+	        <input type="submit" value="정보수정" />
+	        <input type="button" id="deleteMember" value="탈퇴" />
+		</form>
+</section>
+
+<script type="text/javascript">
+	$(function () {
+		$("#deleteMember").on("click", (e) => {
+			if(confirm("정말로 탈퇴하시겠습니까?!")) {
+				location.replace('/member/delete');
+			}
+		});
+		
+		$("#updatePwd").on("click", (e) => {
+			const url = "/member/updatePwd";
+			const status = "left=500px,top=200px,width=400px,height=210px"
+			open(url, "", status);
+		});
+	});
+</script>
+
+
+
+
+<footer th:replace="~{common/layout :: #footer}"></footer>
+
+</body>
+</html>
+
+
+
+
+

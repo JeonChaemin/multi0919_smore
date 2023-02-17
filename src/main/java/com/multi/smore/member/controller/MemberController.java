@@ -1,6 +1,8 @@
 package com.multi.smore.member.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,18 +10,26 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.multi.smore.board.model.vo.Board;
+import com.multi.smore.common.util.PageInfo;
+import com.multi.smore.kakao.KaKaoService;
 import com.multi.smore.member.model.service.MemberService;
 import com.multi.smore.member.model.vo.Member;
+import com.multi.smore.member.model.vo.MemberForm;
 
 import lombok.extern.slf4j.Slf4j;
+
 
 
 @Slf4j // log4j 선언을 대신 선언 해주는 lombok 어노테이션
@@ -29,6 +39,10 @@ public class MemberController {
 
 	@Autowired
 	private MemberService service;
+	
+	@Autowired
+	private KaKaoService kakaoService;
+	
 	
 	@GetMapping("/login")
 	String loginPage() {
@@ -50,6 +64,33 @@ public class MemberController {
 		}
 	}
 	
+	
+	@GetMapping("/kakaoLogin")
+	public String kakaoLogin(Model model, String code) {
+		log.info("로그인 요청");
+		if(code != null) {
+			try {
+				String loginUrl = "http://localhost/kakaoLogin";
+				String token = kakaoService.getToken(code, loginUrl);
+				Map<String, Object> map = kakaoService.getUserInfo(token);
+				String kakaoToken = (String) map.get("id");
+				Member loginMember = service.loginKaKao(kakaoToken);
+
+				if(loginMember != null) { // 로그인 성공
+					model.addAttribute("loginMember",loginMember); // 세션으로 저장되는 코드, 이유: @SessionAttributes
+					return "redirect:/";
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		model.addAttribute("msg", "로그인에 실패하였습니다.");
+		model.addAttribute("location","/");
+		return "common/msg";
+	}
+	
+
+	
 	@RequestMapping("/logout")
 	public String logout(SessionStatus status) { // status : 세션의 상태 확인과 해제가 가능한 클래스
 		log.info("status : " + status.isComplete());
@@ -64,12 +105,37 @@ public class MemberController {
 		return "member/enroll";
 	}
 	
+	@GetMapping("/member/enroll/kakao")
+	public String enrollKakao(Model model, String code) {
+		log.info("가입 페이지 요청");
+		if(code != null) {
+			try {
+				String enrollUrl = "http://localhost/member/enroll/kakao";
+				System.out.println("code : " + code);
+				String token = kakaoService.getToken(code, enrollUrl);
+				System.out.println("token : " + token);
+				Map<String, Object> map = kakaoService.getUserInfo(token);
+				System.out.println(map);
+				model.addAttribute("kakaoMap", map);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return "member/enroll";
+	}
+	
 	// 회원가입 
-	// ModelAndView 사용법, 가능하면 프로젝트에서는 스타일 통일할것! 현업 일부와 전저정부프레임워크 표준.
 	@PostMapping("/member/enroll")
-	public String enroll(Model model, @ModelAttribute Member member) { // @ModelAttribute 생각가능
-		log.info("회원가입, member : " + member.toString());
+	public String enroll(Model model, @Validated MemberForm memberForm, BindingResult bindingResult) { // @ModelAttribute 생각가능
+		log.info("회원가입, MemberForm : " + memberForm.toString());
 
+		if(bindingResult.hasErrors()) {
+			model.addAttribute("msg","회원가입 실패 : " + bindingResult.getAllErrors().get(0).getDefaultMessage());
+			model.addAttribute("location", "/member/enroll");
+			return "common/msg";
+		}
+
+		Member member = memberForm.toMember();
 		int result = service.save(member);
 		
 		if(result > 0) { // 성공
@@ -82,7 +148,7 @@ public class MemberController {
 		return "common/msg";
 	}
 	
-
+	
 	// AJAX 회원아이디 중복 검사부
 	@GetMapping("/member/idCheck")
 	public ResponseEntity<Map<String, Object>> idCheck(String id){
@@ -164,11 +230,25 @@ public class MemberController {
 		}
 		return  "/common/msg";
 	}
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
-
-
-
-
 
 
 

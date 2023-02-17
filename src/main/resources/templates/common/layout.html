@@ -11,7 +11,7 @@
 	<meta content="Themesdesign" name="author" />
 
 	<!-- App favicon -->
-	<link rel="shortcut icon" th:href="@{assets/images/favicon.ico}">
+	<link rel="shortcut icon" th:href="@{/images/favicon.ico}">
 
 	<!-- Choise Css -->
 	<link rel="stylesheet" th:href="@{/libs/choices.js/public/assets/styles/choices.min.css}">
@@ -103,13 +103,13 @@
 		          <li class="list-inline-item dropdown">
 		            <a href="javascript:void(0)" class="header-item" id="userdropdown" data-bs-toggle="dropdown"
 		              aria-expanded="false">
-		              <img th:src="@{/images/profile.jpg}" alt="mdo" width="35" height="35" class="rounded-circle me-1"> <span
+		              <img th:src="@{/images/user/avatar3.png}" alt="mdo" width="35" height="35" class="rounded-circle me-1"> <span
 		                class="d-none d-md-inline-block fw-medium"><th:block th:text="${session.loginMember.name} + ' 님'"/></span>
 		            </a>
 		            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown">
-		              <li><a class="dropdown-item" th:href="@{/mypage}">마이페이지</a></li>
+		              <li><a class="dropdown-item" th:href="@{/member/view}">마이페이지</a></li>
 					  <li><a class="dropdown-item" th:href="@{/housebudget/list}">가계부</a></li>
-		              <li><a class="dropdown-item" th:href="@{/sign-out}">로그아웃</a></li>
+		              <li><a class="dropdown-item" th:href="@{/logout}">로그아웃</a></li>
 		            </ul>
 		          </li>
 		        </ul><!--end header-menu-->

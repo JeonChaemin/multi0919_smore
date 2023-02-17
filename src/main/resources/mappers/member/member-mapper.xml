@@ -2,16 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 
-<!-- 향후 Mapper interface가 정의 될 위치 -->
 <mapper namespace="com.multi.smore.member.model.mapper.MemberMapper">
 	<sql id="selectMemberSql">
 		SELECT 	
 			MEMNO, ID, PASSWORD, ROLE, NAME, PHONE,
+			EMAIL, ADDRESS,
 			EMAIL, ADDRESS, KAKAOTOKEN,
 			STATUS, ENROLLDATE, MODIFYDATE 
 		FROM MEMBER
 	</sql>
 	
+
 	<resultMap 	type="Member" 			id="memberResultMap">
 		<id 	property="memNo" 		column="MEMNO" />
 		<result property="id" 			column="ID" />
@@ -40,16 +41,21 @@
 		WHERE ID = #{id} AND STATUS = 'Y'
 	</select>	
 	
+		<select id="selectMemberByKakaoToken" parameterType="string" resultMap="memberResultMap">
+		<include refid="selectMemberSql"/>
+		WHERE KAKAOTOKEN = #{kakaoToKen} AND STATUS = 'Y'
+	</select>
+	
 	<insert id="insertMember" parameterType="Member">
 		INSERT INTO MEMBER(
 			MEMNO, ID, PASSWORD, 	
 			ROLE, NAME, PHONE,
-			EMAIL, ADDRESS, KAKAOTOKEN, 		
+			EMAIL, ADDRESS,KAKAOTOKEN,
 			STATUS, ENROLLDATE, MODIFYDATE
 		) VALUES (
 			 0, #{id}, #{password},
 			 default, #{name}, #{phone},
-			 #{email}, #{address},
+			 #{email}, #{address}, #{kakaoToken},
 			 DEFAULT, DEFAULT, DEFAULT)
 	</insert>
 	
@@ -60,8 +66,9 @@
 	 		PHONE		= #{phone},
 	 		EMAIL		= #{email},
 	 		ADDRESS		= #{address},
+	 		MODIFY_DATE	= #{modifyDate}
 	 		MODIFYDATE	= #{modifyDate}
-	 	WHERE MEMNO = #{memNo}
+		 	WHERE MEMNO = #{memNo}
 	 </update>
 	 
 	 <update id="updatePwd" parameterType="map">
@@ -76,5 +83,6 @@
 	 	WHERE MEMNO = #{memNo}
 	 </update>
 	
+
 	
 </mapper>
