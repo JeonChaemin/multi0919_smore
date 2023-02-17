@@ -37,10 +37,10 @@
 		SELECT  
 			DISTINCT B.BBNO, B.TITLE, M1.ID, B.TYPE, B.CREATE_DATE, B.ORIGINAL_FILENAME, B.READCOUNT, B.STATUS
 			,(SELECT COUNT(*) FROM BOARD_LIKE LK WHERE B.BBNO = LK.BBNO) AS LIKECOUNT
-			<if test="memNo != null">
+			<if test="memNo != 0">
 				,(SELECT COUNT(*) FROM BOARD_LIKE LK WHERE B.BBNO = LK.BBNO AND LK.MEMNO = #{memNo}) AS ISLIKE
 			</if>		
-			<if test="memNo == null">
+			<if test="memNo == 0">
 				,(SELECT COUNT(*) FROM BOARD_LIKE LK WHERE B.BBNO = LK.BBNO AND LK.MEMNO = 0) AS ISLIKE
 			</if>	
 		FROM BOARD B
@@ -88,10 +88,10 @@
 		    R.CREATE_DATE  AS R_CREATE_DATE, 
 		    R.MODIFY_DATE  AS R_MODIFY_DATE,
 		    (SELECT COUNT(*) FROM BOARD_LIKE LK WHERE B.BBNO = LK.BBNO) AS LIKECOUNT
-			<if test="memNo != null">
+			<if test="memNo != 0">
 				,(SELECT COUNT(*) FROM BOARD_LIKE LK WHERE B.BBNO = LK.BBNO AND LK.MEMNO = #{memNo}) AS ISLIKE
 			</if>		
-			<if test="memNo == null">
+			<if test="memNo == 0">
 				,(SELECT COUNT(*) FROM BOARD_LIKE LK WHERE B.BBNO = LK.BBNO AND LK.MEMNO = 0) AS ISLIKE
 			</if>
 		FROM BOARD B

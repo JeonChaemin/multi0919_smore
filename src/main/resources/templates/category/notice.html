@@ -4,8 +4,7 @@
 
 <head th:fragment="head" th:replace="~{common/layout :: head}"></head>
 <!--Custom Css-->
-<link th:href="@{/css/notice.css}" id="news" rel="stylesheet"
-	type="text/css" />
+<link th:href="@{/css/notice.css}" id="news" rel="stylesheet" type="text/css" />
 
 <body>
 	<!--start page Loader -->
@@ -31,8 +30,7 @@
 		<div class="page-content">
 
 			<!-- Start home -->
-			<section class="page-title-box"
-				style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(assets/images/img/hero_notice.jpg); height: 350px; padding-top: 130px; background-position: center bottom;">
+			<section class="page-title-box" th:style="'background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(' + @{/images/img/hero_notice.jpg} + '); height: 350px; padding-top: 130px; background-position: center;'">
 				<div class="container">
 					<div class="row justify-content-center">
 						<div class="col-md-6">
@@ -42,7 +40,7 @@
 									<nav class="d-inline-block" aria-label="breadcrumb text-center">
 										<ol class="breadcrumb justify-content-center">
 											<li class="breadcrumb-item"><a th:href="@{/index}">HOME</a></li>
-											<li class="breadcrumb-item"><a th:href="@{/notice}">COMMUNITY</a></li>
+											<li class="breadcrumb-item"><a th:href="@{/board/list?type=notice}">COMMUNITY</a></li>
 											<li class="breadcrumb-item active" aria-current="page">
 												NOTICE</li>
 										</ol>
@@ -58,27 +56,37 @@
 			</section>
 			<!-- end home -->
 
+			<!-- START SHAPE -->
+			<div class="position-relative" style="z-index: 1">
+				<div class="shape">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 250">
+                               <path fill="#FFFFFF" fill-opacity="1"
+							d="M0,192L120,202.7C240,213,480,235,720,234.7C960,235,1200,213,1320,202.7L1440,192L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"></path>
+                           </svg>
+				</div>
+			</div>
+			<!-- END SHAPE -->
 
 			<!-- START CATEGORIES -->
 			<section class="section my-5">
 				<div class="container">
-					<div class="row justify-content-center">
-						<div class="col-lg-12 mb-3">
-							<div class="text-start ps-3">
-								<h2 class="my-3">공지사항</h2>
-								<p class="text-muted m-0">스모어 공지사항을 전해드립니다</p>
-							</div>
-							<div class="col-lg-4 float-end">
-								<form class="position-relative">
-									<input class="form-control" type="search"
-										placeholder="검색어를 입력하세요">
-									<button
-										class="bg-transparent border-0 position-absolute top-50 end-0 translate-middle-y me-2"
-										type="submit">
-										<span class="fs-3 mdi mdi-magnify text-purple"></span>
+					<div class="row justify-content-center border-bottom mb-4 pb-2">
+						<div class="col-lg-8 mb-0">
+							<h3>공지사항</h3>
+							<span class="text-muted">스모어의 공지사항을 전해드립니다.</span>
+						</div>
+						<!-- 검색바 -->
+						<div class="col-lg-4 mt-2">
+							<form action="/board/list">
+								<div class="input-group">
+									<input class="form-control" type="text" th:value="${searchValue}"
+										id="searchValue" name="searchValue" placeholder="검색어를 입력하세요">
+									<input type="hidden" th:value="${type}" id="type" name="type">
+									<button class="btn btn-primary" type="submit">
+										<i class="fa fa-search"></i> 검색
 									</button>
-								</form>
-							</div>
+								</div>
+							</form>
 						</div>
 						<!--end col-->
 					</div>
@@ -88,32 +96,28 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-lg-12">
-							<div class="candidate-list">
+							<div class="candidate-list mb-4">
 
 								<!-- 아이템1 -->
-								<div class="candidate-list-box card mb-4"
-									style="border: 1px solid rgba(0, 0, 0, 0.3);">
+								<th:block th:if="${list != null}">
+								<div class="candidate-list-box card mt-4" th:each="item : ${list}">
 									<div class="card-body p-4">
 										<div class="row align-items-center">
 											<div class="col-lg-11">
 												<div class="candidate-list-content mt-3 mt-lg-0">
 													<h5 class="fs-19 mb-0">
-														<a href="notice-detail.html" class="primary-link">1인가구
-															전월세 안심계약도움 서비스 안내(신구 9개구 추가)</a>
+														<a th:href="|/board/detail?type=notice&no=${item.bbNo}|" class="primary-link">[[${item.title}]]</a>
 													</h5>
 													<ul class="list-inline mb-0 mt-2 text-muted">
-														<li class="list-inline-item me-3">
-															<!-- <i class="mdi mdi-account fs-5 p-0 m-0"></i> --> <svg
-																xmlns="http://www.w3.org/2000/svg" width="18"
-																height="18" fill="currentColor"
-																class="bi bi-person-fill me-1" viewBox="0 0 16 16">
-                                  <path
-																	d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-                                </svg> 작성자 : 관리자
+														<li class="list-inline-item">
+															 <i class="uil uil-user"></i> 관리자
 														</li>
-														<li class="list-inline-item"><i
-															class="fs-5 uil uil-calendar-alt me-1"></i> 작성일 :
-															23.01.01</li>
+														<li class="list-inline-item">
+															<i class="uil uil-calender"></i> [[${#dates.format(item.createDate, 'yyyy-MM-dd')}]]
+														</li>
+														<li class="list-inline-item">
+															<i class="uil uil-eye"></i> [[${item.readCount}]]
+														</li>
 													</ul>
 												</div>
 											</div>
@@ -122,247 +126,93 @@
 										<!--end row-->
 									</div>
 								</div>
+								</th:block>
 								<!--end card-->
-
-								<!-- 아이템1 -->
-								<div class="candidate-list-box card mb-4"
-									style="border: 1px solid rgba(0, 0, 0, 0.3);">
-									<div class="card-body p-4">
-										<div class="row align-items-center">
-											<div class="col-lg-11">
-												<div class="candidate-list-content mt-3 mt-lg-0">
-													<h5 class="fs-19 mb-0">
-														<a href="notice-detail.html" class="primary-link">1인가구
-															전월세 안심계약도움 서비스 안내(신구 9개구 추가)</a>
-													</h5>
-													<ul class="list-inline mb-0 mt-2 text-muted">
-														<li class="list-inline-item me-3">
-															<!-- <i class="mdi mdi-account fs-5 p-0 m-0"></i> --> <svg
-																xmlns="http://www.w3.org/2000/svg" width="18"
-																height="18" fill="currentColor"
-																class="bi bi-person-fill me-1" viewBox="0 0 16 16">
-                                  <path
-																	d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-                                </svg> 작성자 : 관리자
-														</li>
-														<li class="list-inline-item"><i
-															class="fs-5 uil uil-calendar-alt me-1"></i> 작성일 :
-															23.01.01</li>
-													</ul>
-												</div>
-											</div>
-											<!--end col-->
-										</div>
-										<!--end row-->
-									</div>
-								</div>
-								<!--end card-->
-
-								<!-- 아이템1 -->
-								<div class="candidate-list-box card mb-4"
-									style="border: 1px solid rgba(0, 0, 0, 0.3);">
-									<div class="card-body p-4">
-										<div class="row align-items-center">
-											<div class="col-lg-11">
-												<div class="candidate-list-content mt-3 mt-lg-0">
-													<h5 class="fs-19 mb-0">
-														<a href="notice-detail.html" class="primary-link">1인가구
-															전월세 안심계약도움 서비스 안내(신구 9개구 추가)</a>
-													</h5>
-													<ul class="list-inline mb-0 mt-2 text-muted">
-														<li class="list-inline-item me-3">
-															<!-- <i class="mdi mdi-account fs-5 p-0 m-0"></i> --> <svg
-																xmlns="http://www.w3.org/2000/svg" width="18"
-																height="18" fill="currentColor"
-																class="bi bi-person-fill me-1" viewBox="0 0 16 16">
-                                  <path
-																	d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-                                </svg> 작성자 : 관리자
-														</li>
-														<li class="list-inline-item"><i
-															class="fs-5 uil uil-calendar-alt me-1"></i> 작성일 :
-															23.01.01</li>
-													</ul>
-												</div>
-											</div>
-											<!--end col-->
-										</div>
-										<!--end row-->
-									</div>
-								</div>
-								<!--end card-->
-
-								<!-- 아이템1 -->
-								<div class="candidate-list-box card mb-4"
-									style="border: 1px solid rgba(0, 0, 0, 0.3);">
-									<div class="card-body p-4">
-										<div class="row align-items-center">
-											<div class="col-lg-11">
-												<div class="candidate-list-content mt-3 mt-lg-0">
-													<h5 class="fs-19 mb-0">
-														<a href="notice-detail.html" class="primary-link">1인가구
-															전월세 안심계약도움 서비스 안내(신구 9개구 추가)</a>
-													</h5>
-													<ul class="list-inline mb-0 mt-2 text-muted">
-														<li class="list-inline-item me-3">
-															<!-- <i class="mdi mdi-account fs-5 p-0 m-0"></i> --> <svg
-																xmlns="http://www.w3.org/2000/svg" width="18"
-																height="18" fill="currentColor"
-																class="bi bi-person-fill me-1" viewBox="0 0 16 16">
-                                  <path
-																	d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-                                </svg> 작성자 : 관리자
-														</li>
-														<li class="list-inline-item"><i
-															class="fs-5 uil uil-calendar-alt me-1"></i> 작성일 :
-															23.01.01</li>
-													</ul>
-												</div>
-											</div>
-											<!--end col-->
-										</div>
-										<!--end row-->
-									</div>
-								</div>
-								<!--end card-->
-
-								<!-- 아이템1 -->
-								<div class="candidate-list-box card mb-4"
-									style="border: 1px solid rgba(0, 0, 0, 0.3);">
-									<div class="card-body p-4">
-										<div class="row align-items-center">
-											<div class="col-lg-11">
-												<div class="candidate-list-content mt-3 mt-lg-0">
-													<h5 class="fs-19 mb-0">
-														<a href="notice-detail.html" class="primary-link">1인가구
-															전월세 안심계약도움 서비스 안내(신구 9개구 추가)</a>
-													</h5>
-													<ul class="list-inline mb-0 mt-2 text-muted">
-														<li class="list-inline-item me-3">
-															<!-- <i class="mdi mdi-account fs-5 p-0 m-0"></i> --> <svg
-																xmlns="http://www.w3.org/2000/svg" width="18"
-																height="18" fill="currentColor"
-																class="bi bi-person-fill me-1" viewBox="0 0 16 16">
-                                  <path
-																	d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-                                </svg> 작성자 : 관리자
-														</li>
-														<li class="list-inline-item"><i
-															class="fs-5 uil uil-calendar-alt me-1"></i> 작성일 :
-															23.01.01</li>
-													</ul>
-												</div>
-											</div>
-											<!--end col-->
-										</div>
-										<!--end row-->
-									</div>
-								</div>
-								<!--end card-->
-
-								<!-- 아이템1 -->
-								<div class="candidate-list-box card mb-4"
-									style="border: 1px solid rgba(0, 0, 0, 0.3);">
-									<div class="card-body p-4">
-										<div class="row align-items-center">
-											<div class="col-lg-11">
-												<div class="candidate-list-content mt-3 mt-lg-0">
-													<h5 class="fs-19 mb-0">
-														<a href="notice-detail.html" class="primary-link">1인가구
-															전월세 안심계약도움 서비스 안내(신구 9개구 추가)</a>
-													</h5>
-													<ul class="list-inline mb-0 mt-2 text-muted">
-														<li class="list-inline-item me-3">
-															<!-- <i class="mdi mdi-account fs-5 p-0 m-0"></i> --> <svg
-																xmlns="http://www.w3.org/2000/svg" width="18"
-																height="18" fill="currentColor"
-																class="bi bi-person-fill me-1" viewBox="0 0 16 16">
-                                  <path
-																	d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-                                </svg> 작성자 : 관리자
-														</li>
-														<li class="list-inline-item"><i
-															class="fs-5 uil uil-calendar-alt me-1"></i> 작성일 :
-															23.01.01</li>
-													</ul>
-												</div>
-											</div>
-											<!--end col-->
-										</div>
-										<!--end row-->
-									</div>
-								</div>
-								<!--end card-->
-
-								<!-- 아이템1 -->
-								<div class="candidate-list-box card mb-4"
-									style="border: 1px solid rgba(0, 0, 0, 0.3);">
-									<div class="card-body p-4">
-										<div class="row align-items-center">
-											<div class="col-lg-11">
-												<div class="candidate-list-content mt-3 mt-lg-0">
-													<h5 class="fs-19 mb-0">
-														<a href="notice-detail.html" class="primary-link">1인가구
-															전월세 안심계약도움 서비스 안내(신구 9개구 추가)</a>
-													</h5>
-													<ul class="list-inline mb-0 mt-2 text-muted">
-														<li class="list-inline-item me-3">
-															<!-- <i class="mdi mdi-account fs-5 p-0 m-0"></i> --> <svg
-																xmlns="http://www.w3.org/2000/svg" width="18"
-																height="18" fill="currentColor"
-																class="bi bi-person-fill me-1" viewBox="0 0 16 16">
-                                  <path
-																	d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-                                </svg> 작성자 : 관리자
-														</li>
-														<li class="list-inline-item"><i
-															class="fs-5 uil uil-calendar-alt me-1"></i> 작성일 :
-															23.01.01</li>
-													</ul>
-												</div>
-											</div>
-											<!--end col-->
-										</div>
-										<!--end row-->
-									</div>
-								</div>
-								<!--end card-->
-
-								<!-- 페이징 -->
-								<div class="row">
-									<div class="col-lg-12 mt-4 mb-5 pt-2">
-										<nav aria-label="Page navigation example">
-											<ul
-												class="pagination job-pagination mb-0 justify-content-center">
-												<li class="page-item disabled"><a class="page-link"
-													href="javascript:void(0)" tabindex="-1"> <i
-														class="mdi mdi-chevron-double-left fs-15"></i>
-												</a></li>
-												<li class="page-item active"><a class="page-link"
-													href="javascript:void(0)">1</a></li>
-												<li class="page-item"><a class="page-link"
-													href="javascript:void(0)">2</a></li>
-												<li class="page-item"><a class="page-link"
-													href="javascript:void(0)">3</a></li>
-												<li class="page-item"><a class="page-link"
-													href="javascript:void(0)">4</a></li>
-												<li class="page-item"><a class="page-link"
-													href="javascript:void(0)"> <i
-														class="mdi mdi-chevron-double-right fs-15"></i>
-												</a></li>
-											</ul>
-										</nav>
-									</div>
-									<!--end col-->
-								</div>
-								<!-- end row -->
-							</div>
-
-
+								<th:block th:if="${list == null}">
+									<p>게시글이 없습니다.</p>
+								</th:block>
 						</div>
 						<!--end candidate-list-->
+						
+						<!-- 글쓰기 버튼-->
+						<th:block th:if="${session.loginMember != null && session.loginMember.role == 'ROLE_ADMIN'}">
+						<div class="text-end">
+							<button class="btn btn-primary btn-hover"
+								th:onclick="|location.href='@{/board/write?type=notice}'|">
+								글쓰기 <i class="uil uil-edit-alt"></i>
+							</button>
+						</div>
+						</th:block>
+								
 					</div>
-					<!--end col-->
+						<!--end col-->
+						<!-- 페이징 -->
+						<div class="row">
+						<div class="col-lg-12 mt-4 mb-5 pt-2">
+							<nav aria-label="Page navigation example">
+								<ul class="pagination job-pagination mb-0 justify-content-center">
+									<th:block th:if="${pageInfo.currentPage == pageInfo.startPage}">
+										<li class="page-item "
+											th:classappend="${pageInfo.currentPage == 1 ? 'disabled' : ''}">
+											<a class="page-link" href="javascript:void(0)"
+											th:onclick="|movePage('/board/list?page=${pageInfo.prevPage}');|"
+											tabindex="-1"> <i
+												class="mdi mdi-chevron-double-left fs-15"></i>
+										</a>
+										</li>
+									</th:block>
+									<th:block th:if="${pageInfo.currentPage != pageInfo.startPage}">
+										<li class="page-item "
+											th:classappend="${pageInfo.currentPage == 1 ? 'disabled' : ''}">
+											<a class="page-link" href="javascript:void(0)"
+											th:onclick="|movePage('/board/list?page=${pageInfo.startPage');|"
+											tabindex="-1"> <i
+												class="mdi mdi-chevron-double-left fs-15"></i>
+										</a>
+										</li>
+									</th:block>
+	
+									<th:block
+										th:each="num, status : ${#numbers.sequence(pageInfo.startPage, pageInfo.endPage)}">
+										<th:block th:if="${pageInfo.currentPage == status.current}">
+											<li class="page-item active"><a class="page-link"
+												th:text="${status.current}"></a></li>
+										</th:block>
+										<th:block
+											th:if="${pageInfo.currentPage != status.current && pageInfo.endPage != 0}">
+											<li class="page-item"><a class="page-link"
+												href="javascript:void(0)"
+												th:onclick="|movePage('/board/list?page=${status.current}');|"
+												th:text="${status.current}"></a></li>
+										</th:block>
+									</th:block>
+	
+									<th:block th:if="${pageInfo.currentPage == pageInfo.endPage}">
+										<li class="page-item"
+											th:classappend="${pageInfo.currentPage == pageInfo.maxPage ? 'disabled' : ''}">
+											<a class="page-link" href="javascript:void(0)"
+											th:onclick="|movePage('/board/list?page=${pageInfo.nextPage}');|">
+												<i class="mdi mdi-chevron-double-right fs-15"></i>
+										</a>
+										</li>
+									</th:block>
+									<th:block th:if="${pageInfo.currentPage != pageInfo.endPage}">
+										<li class="page-item"
+											th:classappend="${pageInfo.currentPage == pageInfo.maxPage ? 'disabled' : ''}">
+											<a class="page-link" href="javascript:void(0)"
+											th:onclick="|movePage('/board/list?page=${pageInfo.endPage}');|">
+												<i class="mdi mdi-chevron-double-right fs-15"></i>
+										</a>
+										</li>
+									</th:block>
+									<input type="hidden" id="type" th:value="${type}">
+								</ul>
+							</nav>
+						</div>
+						<!--end col-->
+					</div>
+					<!-- end row -->
+				  </div>
 				</div>
 				<!--end container-->
 			</section>
@@ -400,18 +250,27 @@
 
 	<!-- JAVASCRIPT -->
 	<script th:src="@{/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
-	<script
-		src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
+	<script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
 
 
 	<!-- Choice Js -->
-	<script
-		th:src="@{/libs/choices.js/public/assets/scripts/choices.min.js}"></script>
+	<script th:src="@{/libs/choices.js/public/assets/scripts/choices.min.js}"></script>
 
 	<!-- Switcher Js -->
 	<script th:src="@{/js/pages/switcher.init.js}"></script>
 
 	<script th:src="@{/js/app.js}"></script>
+	
+	<script	type="text/javascript">
+	function movePage(pageUrl) {
+		var searchValue = document.getElementById("searchValue");
+		var type = document.getElementById("type").value;
+		console.dir(type);
+	
+		pageUrl = pageUrl + '&type=' + type + '&searchValue=' + searchValue;
+		location.href = encodeURI(pageUrl);
+	}
+	</script>
 
 </body>
 

@@ -38,14 +38,9 @@ public class HousebudgetController {
 	@Autowired
 	private HousebudgetService service;
 	
-	@Autowired
-	private MemberService memberService;// 삭제하기
-	
 	@GetMapping("/list")
-	public String list(Model model, HttpSession session,
+	public String list(Model model, @SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			@RequestParam Map<String, String> paramMap) {// session 삭제하기
-		Member loginMember = memberService.login("admin", "1212");// 삭제하기
-		session.setAttribute("loginMember", loginMember);
 		Map<String, Object> searchMap = new HashMap<>();
 		int sum = 0;
 		searchMap.put("memNo", loginMember.getMemNo());
@@ -76,11 +71,9 @@ public class HousebudgetController {
 	@RequestMapping(value = "/search", method= RequestMethod.GET)
 	@ResponseBody
 	public String[] searchRangeHb(
-			HttpSession session,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			@RequestParam("searchRange") String searchRange
 			) {
-		System.out.println("ajax 요청!!! parameter : " + searchRange);
 		int memNo = loginMember.getMemNo();
 		Map<String, Object> searchMap = new HashMap<>();
 		searchMap.put("memNo", memNo);
@@ -100,10 +93,8 @@ public class HousebudgetController {
 	@GetMapping("/retrieve")
 	@ResponseBody
 	public List<Map<String, Object>> retrieveHb(
-			HttpSession session,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember
 			) {
-		System.out.println("풀캘린더 ajax 호출!!!!!!!");
 		Map<String, Object> searchMap = new HashMap<>();
 		searchMap.put("searchStart", "");
 		searchMap.put("searchType", "");

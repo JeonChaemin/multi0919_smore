@@ -148,7 +148,7 @@ CREATE TABLE CLIP_HOUSE(
 -- ============================ 공공주택 모집공고 조회 서비스 ============================
 -- DROP TABLE IF EXISTS rentalHouse;
 CREATE TABLE rentalHouse(
-rhNo int AUTO_INCREMENT PRIMARY KEY, 
+rentalNo int AUTO_INCREMENT PRIMARY KEY, 
 rentalType VARCHAR(200), 
 suplyHoCo VARCHAR(200), 
 pblancId VARCHAR(200), 
@@ -186,10 +186,11 @@ endDe VARCHAR(200)
 -- 공공주택 모집공고 조회 서비스 스크랩
 -- DROP TABLE IF EXISTS CLIP_RENTALHOUSE;
 CREATE TABLE CLIP_RENTALHOUSE(
-    rhNo          INT,
 	memNo         INT,
-    FOREIGN KEY (rhNo) REFERENCES RENTALHOUSE(rhNo),
-    FOREIGN KEY (memNo) REFERENCES MEMBER(memNo)
+    rentalNo          INT,
+    PRIMARY KEY (memNo, rentalNo),
+    FOREIGN KEY (memNo) REFERENCES MEMBER(memNo),
+    FOREIGN KEY (rentalNo) REFERENCES RENTALHOUSE(rentalNo)
 );
 
 -- ============================ 1인가구 정부지원사업정보 서비스 ============================

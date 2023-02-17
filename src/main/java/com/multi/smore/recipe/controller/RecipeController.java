@@ -47,7 +47,7 @@ public class RecipeController {
 				searchMap.put("all", all);
 			}
 			if(loginMember != null) {
-				searchMap.put("MemNo", loginMember.getMemNo());
+				searchMap.put("memNo", loginMember.getMemNo());
 			}
 			searchMap.put("rcpPat2", rcpPat2);
 			searchMap.put("rcpPartsDtls", rcpPartsDtls);

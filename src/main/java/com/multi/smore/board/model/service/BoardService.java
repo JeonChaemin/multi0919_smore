@@ -80,10 +80,8 @@ public class BoardService {
 		map.put("bbNo", "" + bbNo);
 		map.put("memNo", "" + memNo);
 		Board board = mapper.selectBoardByNo(map);
-		System.out.println("서비스 보드1: " + board);
 		board.setReadCount(board.getReadCount() + 1);  
 		mapper.updateReadCount(board);
-		System.out.println("서비스 보드2: " + board);
 		return board; 
 	}
 	

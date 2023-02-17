@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,19 +45,14 @@ public class BoardController {
 	@Autowired
 	private BoardService service;
 	
-	@Autowired
-	private MemberService memberService;// 삭제하기
-	
 	final static private String savePath = "c:\\smore\\";
 	
 	@GetMapping("/list")
-	public String list(Model model, HttpSession session,
+	public String list(Model model,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			@RequestParam Map<String, String> paramMap) {
-		loginMember = memberService.login("admin", "1212");// 삭제하기
-		session.setAttribute("loginMember", loginMember);// 삭제하기
 		int page = 1;
-		String type = paramMap.get("type");
+		String type = paramMap.getOrDefault("type", "free");
 		// 탐색할 맵을 선언
 		Map<String, String> searchMap = new HashMap<String, String>();
 		try {
@@ -73,9 +69,9 @@ public class BoardController {
 		int boardCount = service.getBoardCount(searchMap);
 		PageInfo pageInfo = new PageInfo(page, 10, boardCount, 10);
 		List<Board> list = service.getBoardList(pageInfo, searchMap);
-
+		
 		for (int i = 0; i < list.size(); i++) {
-			if (page == pageInfo.getMaxPage()) {
+			if (page >= pageInfo.getMaxPage()) {
 				list.get(i).setViewNo(list.size() - i); 
 			} else {
 				list.get(i).setViewNo(boardCount - i);
@@ -86,17 +82,22 @@ public class BoardController {
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("type", type);
 		model.addAttribute("pageTitle", "smore | Board");
-		return "/board/board";
+		
+		String returnValue = "";
+		if (type.equals("free") || type.equals("question")) {
+			returnValue = "board/board";
+		} else if (type.equals("notice")) {
+			returnValue = "category/notice";
+		}
+		return returnValue;
 	}
 	
 //	@RequestMapping("/board/detail")
 	@RequestMapping("/detail")
-	public String view(Model model, HttpSession session,
+	public String view(Model model,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
-			@RequestParam("no") int no) {
-		loginMember = memberService.login("admin", "1212");// 삭제하기
-		session.setAttribute("loginMember", loginMember);// 삭제하기
-		
+			@RequestParam("no") int no
+			) {
 		int memNo = 0;
 		if(loginMember != null) {
 			memNo = loginMember.getMemNo();
@@ -108,12 +109,17 @@ public class BoardController {
 		}
 		
 		model.addAttribute("board", board);
-		System.out.println(board);
 		model.addAttribute("replyList", board.getReplyList());
 		model.addAttribute("pageTitle", "smore | Board");
-		return "board/board-detail";
+		
+		String returnValue = "";
+		if (board.getType().equals("free") || board.getType().equals("question")) {
+			returnValue = "board/board-detail";
+		} else if (board.getType().equals("notice")) {
+			returnValue = "detail/notice-detail";
+		}
+		return returnValue;
 	}
-	
 	
 	@GetMapping("/error")
 	public String error() {
@@ -127,7 +133,7 @@ public class BoardController {
 	}
 	
 	@PostMapping("/write")
-	public String writeBoard(Model model, HttpSession session,
+	public String writeBoard(Model model,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			@ModelAttribute Board board,
 			@RequestParam("upfile") MultipartFile upfile,
@@ -135,9 +141,7 @@ public class BoardController {
 			) {
 		log.info("게시글 작성 요청");
 		
-		loginMember = memberService.login("admin", "1212");// 삭제하기
-		session.setAttribute("loginMember", loginMember);// 삭제하기
-//		board.setMemNo(loginMember.getMNo());
+		board.setMemNo(loginMember.getMemNo());
 		
 		// 파일 저장 로직
 		if(upfile != null && upfile.isEmpty() == false) {
@@ -165,14 +169,12 @@ public class BoardController {
 	
 	
 	@RequestMapping("/reply")
-	public String writeReply(Model model, HttpSession session,
+	public String writeReply(Model model,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			@ModelAttribute BoardReply reply
 			) {
 
-		loginMember = memberService.login("admin", "1212");// 삭제하기
-		session.setAttribute("loginMember", loginMember);// 삭제하기
-//		reply.setMemNo(loginMember.getMNo());
+		reply.setMemNo(loginMember.getMemNo());
 		log.info("댓글 작성 요청 Reply : " + reply);
 		
 		int result = service.saveReply(reply);
@@ -187,12 +189,10 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/delete")
-	public String deleteBoard(Model model,  HttpSession session,
+	public String deleteBoard(Model model,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			int boardNo
 			) {
-		loginMember = memberService.login("admin", "1212");// 삭제하기
-		session.setAttribute("loginMember", loginMember);// 삭제하기
 		
 		log.info("게시글 삭제 요청 boardNo : " + boardNo);
 		int result = service.deleteBoard(boardNo, savePath);
@@ -207,12 +207,10 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/replyDel")
-	public String deleteReply(Model model, HttpSession session,
+	public String deleteReply(Model model,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			int replyNo, int boardNo
 			){
-		loginMember = memberService.login("admin", "1212");// 삭제하기
-		session.setAttribute("loginMember", loginMember);// 삭제하기
 		
 		log.info("댓글 삭제 요청");
 		int result = service.deleteReply(replyNo);

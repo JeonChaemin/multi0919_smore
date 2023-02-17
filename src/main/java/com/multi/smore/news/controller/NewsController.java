@@ -17,7 +17,6 @@ import com.multi.smore.news.model.vo.News;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Controller
 public class NewsController {
 	@Autowired
@@ -35,7 +34,7 @@ public class NewsController {
 		} catch (Exception e) {
 		}
 		map.put("title", "1인 가구");
-		PageInfo pageInfo = new PageInfo(page, 4, count, 10); 
+		PageInfo pageInfo = new PageInfo(page, 5, count, 8); 
 		List<News> list = service.getNewsList(pageInfo, map);
 		
 		model.addAttribute("pageInfo", pageInfo);
@@ -49,6 +48,7 @@ public class NewsController {
 		List<News> nlist = new ArrayList<>();
 		service.deleteAllNewsList();
 		nlist.addAll(NaverSearchAPI.getNewsList("1인 가구", 100, 1));
+		nlist.addAll(NaverSearchAPI.getNewsList("1인 가구", 100, 101));
 		for (News news : nlist) {
 			service.insertNews(news);
 		}
