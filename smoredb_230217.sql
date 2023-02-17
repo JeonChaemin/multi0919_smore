@@ -225,10 +225,10 @@ INSTT_NM VARCHAR(100)
 -- DROP TABLE IF EXISTS CLIP_ONEPROGRAM;
 CREATE TABLE CLIP_ONEPROGRAM(
     onepNo        INT ,
-	mNo           INT,
-	PRIMARY KEY (onepNo, mNo),
+	memNo          INT,
+	PRIMARY KEY (onepNo, memNo),
     FOREIGN KEY (onepNo) REFERENCES ONEPROGRAM(onepNo),
-    FOREIGN KEY (mNo) REFERENCES MEMBER(mNo)
+    FOREIGN KEY (memNo) REFERENCES MEMBER(memNo)
 );
 
 -- ============================ 레시피1 ============================
