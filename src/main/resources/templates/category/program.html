@@ -208,20 +208,20 @@
 						<nav aria-label="Page navigation example">
 							<ul class="pagination job-pagination mb-0 justify-content-center">
 								<li class="page-item">
-									<button class="page-link" href="javascript:void(0)" tabindex="-1" th:onclick="|movePage('/category/program?page=${pageInfo.prevPage}');|">
+									<button class="page-link" href="javascript:void(0)" tabindex="-1" th:onclick="|movePage('/program?page=${pageInfo.prevPage}');|">
 										<i class="mdi mdi-chevron-double-left fs-15"></i>
 									</button>
 								</li>
 								<th:block th:each="num, status : ${#numbers.sequence(pageInfo.startPage, pageInfo.endPage)}">
 									<th:block th:if="${status.current == pageInfo.currentPage}">
-										<li class="page-item active"><a class="page-link" th:onclick="|movePage('/category/program?page=${status.current}|')">[[${status.current}]]</a></li>
+										<li class="page-item active"><a class="page-link" th:onclick="|movePage('/program?page=${status.current}|')">[[${status.current}]]</a></li>
 									</th:block>
 									<th:block th:if="${status.current != pageInfo.currentPage}">
-										<li class="page-item"><button class="page-link"  th:onclick="|movePage('/category/program?page=${status.current}');|">[[${status.current}]]</a></li>
+										<li class="page-item"><button class="page-link"  th:onclick="|movePage('/program?page=${status.current}');|">[[${status.current}]]</a></li>
 									</th:block>
 								</th:block>
 										<li class="page-item">
-											<button class="page-link" href="javascript:void(0)" th:onclick="|movePage('/category/program?page=${pageInfo.nextPage}');|">
+											<button class="page-link" href="javascript:void(0)" th:onclick="|movePage('/program?page=${pageInfo.nextPage}');|">
 												<i class="mdi mdi-chevron-double-right fs-15"></i>
 											</button>
 										</li>
