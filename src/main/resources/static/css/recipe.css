@@ -45,6 +45,7 @@ File: Main Css File
 
 #show-recipe:hover{
   background-color: #766df4;
+  border: none;
   color: white;
 }
 
@@ -77,4 +78,9 @@ File: Main Css File
   color: #fff;
   background-color: #766df4;
   border-color: #766df4;
+}
+
+/* 댓글 수정 */
+.updateReply {
+	display: none;
 }

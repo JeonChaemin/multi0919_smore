@@ -1,44 +1,13 @@
 <!doctype html>
 <html lang="ko">
-
-<head>
-  <meta charset="utf-8" />
-  <title>smore | Program</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content=" " />
-  <meta name="keywords" content="" />
-  <meta content="Themesdesign" name="author" />
-
-  <!-- App favicon -->
-  <link rel="shortcut icon" href="assets/images/favicon.ico">
-
-  <!-- Choise Css -->
-  <link rel="stylesheet" href="assets/libs/choices.js/public/assets/styles/choices.min.css">
-
-  <!-- Swiper Css -->
-  <link rel="stylesheet" href="assets/libs/swiper/swiper-bundle.min.css">
-
-  <!-- Bootstrap Css -->
-  <link href="assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
-  <!-- Icons Css -->
-  <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-  <!-- App Css-->
-  <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
-  <!--Custom Css-->
-  <link href="assets/css/custom.css" id="custom" rel="stylesheet" type="text/css" />
-  <!--Program Css-->
-  <link href="assets/css/program-detail.css" rel="stylesheet" type="text/css" />
-  <!-- Pretendard Font -->
-  <link rel="stylesheet" as="style" crossorigin
-    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard-dynamic-subset.css" />
-  <!-- Font Awesome CSS-->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-  <script src="https://kit.fontawesome.com/dd4a6a23ab.js" crossorigin="anonymous"></script>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head" th:replace="~{common/layout :: head}">
+</head>
+  <!--Program-detail Css-->
+  <link th:href="@{/css/program-detail.css}" rel="stylesheet" type="text/css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 
-</head>
 
 <body>
   <!--start page Loader -->
@@ -56,124 +25,21 @@
   </div>
   <!--end page Loader -->
   <!-- Begin page -->
-  <!--Navbar Start-->
-  <nav class="navbar navbar-expand-lg" id="navbar">
-    <div class="container-fluid custom-container">
-      <a class="navbar-brand text-dark fw-bold me-auto" href="index.html">
-        <img src="assets/images/logo-dark.png" height="45" alt="" class="logo-dark" />
-        <img src="assets/images/logo-light.png" height="45" alt="" class="logo-light" />
-      </a>
-      <div>
-        <button class="navbar-toggler me-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-          aria-controls="navbarCollapse" aria-label="Toggle navigation">
-          <i class="mdi mdi-menu"></i>
-        </button>
-      </div>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav mx-auto navbar-center">
-          <li class="nav-item dropdown dropdown-hover">
-            <a class="nav-link" href="javascript:void(0)" id="homedrop" role="button" data-bs-toggle="dropdown">
-              라이프 <div class="arrow-down"></div>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="homedrop">
-              <li><a class="dropdown-item" href="trade.html">중고/재능 거래</a></li>
-              <li><a class="dropdown-item" href="recipe.html">레시피</a></li>
-              <li><a class="dropdown-item" href="outdoor.html">야외활동</a></li>
-            </ul>
-          </li>
-          <li class="nav-item dropdown dropdown-hover">
-            <a class="nav-link" href="javascript:void(0)" id="jobsdropdown" role="button" data-bs-toggle="dropdown">
-              정보 <div class="arrow-down"></div>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="jobsdropdown">
-              <li><a class="dropdown-item" href="rental.html">공공임대주택</a></li>
-              <li><a class="dropdown-item" href="program.html">정부지원사업</a></li>
-              <li><a class="dropdown-item" href="news.html">뉴스</a></li>
-            </ul>
-          </li>
-          <li class="nav-item dropdown dropdown-hover">
-            <a class="nav-link" href="javascript:void(0)" id="productdropdown" role="button" data-bs-toggle="dropdown"
-              aria-expanded="false">
-              커뮤니티
-              <div class="arrow-down"></div>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="productdropdown">
-              <li><a class="dropdown-item" href="notice.html">공지사항</a></li>
-              <li><a class="dropdown-item" href="board.html">자유 게시판</a></li>
-              <li><a class="dropdown-item" href="suggestion.html">건의 게시판</a></li>
-            </ul>
-          </li><!--end dropdown-->
-        </ul><!--end navbar-nav-->
-      </div>
-      <!--end navabar-collapse-->
-      <ul class="header-menu list-inline d-flex align-items-center mb-0">
-        <li class="list-inline-item dropdown me-4">
-          <a href="javascript:void(0)" class="header-item noti-icon position-relative" id="notification"
-            data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="mdi mdi-bell fs-22"></i>
-            <div class="count position-absolute">1</div>
-          </a>
-          <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end p-0" aria-labelledby="notification">
-            <div class="notification-header border-bottom bg-light">
-              <h6 class="mb-1"> 알림센터 </h6>
-              <p class="text-muted fs-13 mb-0">1개의 읽지 않은 알림</p>
-            </div>
-            <div class="notification-wrapper dropdown-scroll">
-              <a href="javascript:void(0)" class="text-dark notification-item d-block active">
-                <div class="d-flex align-items-center">
-                  <div class="flex-shrink-0 me-3">
-                    <div class="avatar-xs bg-primary text-white rounded-circle text-center">
-                      <i class="uil uil-user-check"></i>
-                    </div>
-                  </div>
-                  <div class="flex-grow-1">
-                    <h6 class="mt-0 mb-1 fs-14">22 verified registrations</h6>
-                    <p class="mb-0 fs-12 text-muted"><i class="mdi mdi-clock-outline"></i> <span>3
-                        min
-                        ago</span></p>
-                  </div>
-                </div>
-              </a><!--end notification-item-->
-            </div><!--end notification-wrapper-->
-            <div class="notification-footer border-top text-center">
-              <a class="primary-link fs-13" href="javascript:void(0)">
-                <i class="mdi mdi-arrow-right-circle me-1"></i> <span>더보기</span>
-              </a>
-            </div>
-          </div>
-        </li>
-        <li class="list-inline-item dropdown">
-          <a href="javascript:void(0)" class="header-item" id="userdropdown" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            <img src="assets/images/profile.jpg" alt="mdo" width="35" height="35" class="rounded-circle me-1"> <span
-              class="d-none d-md-inline-block fw-medium">스모어 님</span>
-          </a>
-          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown">
-            <li><a class="dropdown-item" href="mypage.html">마이페이지</a></li>
-            <li><a class="dropdown-item" href="signout.html">로그아웃</a></li>
-          </ul>
-        </li>
-      </ul><!--end header-menu-->
-    </div>
-    <!--end container-->
-  </nav>
-  <!-- Navbar End -->
-
+<header th:replace="~{common/layout :: #header}"></header>
   <!-- Start home -->
-  <section class="page-title-box"
-    style="background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url(assets/images/img/hero_singlehousehold.jpg);">
+  <section class="page-title-box programbackimage">
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-md-6">
           <div class="text-center text-white">
-            <h1 class="mb-4 font-sangju">정부지원 사업</h1>
+            <h1 class="mb-4 hero-title" style="font-weight: 400;">정부지원 사업</h1>
             <div class="page-next">
               <nav class="d-inline-block" aria-label="breadcrumb text-center">
                 <ol class="breadcrumb justify-content-center">
-                  <li class="breadcrumb-item ghktkfvy"><a href="index.html" class="fontsizeup">HOME</a></li>
-                  <li class="breadcrumb-item ghktkfvy"><a href="javascript:void(0)"
-                      class="fontsizeup">&nbsp;&nbsp;LIFE</a></li>
-                  <li class="breadcrumb-item active ghktkfvy"><a href="program.html" class="fontsizeup">PROGRAM</a></li>
+                  <li class="breadcrumb-item"><a th:href="@{/}" class="fontsizeup" >HOME</a></li>
+                  <li class="breadcrumb-item"><a href="javascript:void(0)"
+                      class="fontsizeup">&nbsp;&nbsp;&nbsp;LIFE</a></li>
+                  <li class="breadcrumb-item"><a href="@{/category/program}" class="fontsizeup" >PROGRAM</a></li>
                 </ol>
               </nav>
             </div>
@@ -208,73 +74,58 @@
               <div>
                 <div class="row">
                   <div class="col-md-8">
-                    <h4 class="mb-4 mt-4">1인가구 개인 상담 '뿌꾸네 마음쉼터 모집</h4>
-                    <!-- <h4 class="mb-4 mt-4">${PARTCPTN_SJ}</h4> -->
+                    <h4 class="mb-4 mt-4">[[${oneProgram.partcptnSj}]]</h4>
                     <ul class="list-inline text-muted mb-3 ml-1 position-absolute">
                       <li class="list-inline-item partifont">
-                        <i class="mdi mdi-account iconsize position-relative"></i> 참여 인원 : 12명
-                        <!-- <i class="mdi mdi-account iconsize position-relative"></i> 참여 인원 : ${PARTCPTN_NMPR}명 -->
+                        <i class="mdi mdi-account iconsize position-relative" >참여 인원 : [[${oneProgram.partcptnNmpr}]]명</i> 
                       </li>
                       <li class="list-inline-item text-warning review-rating categoryyellow position-relative">
-                        <span class="badge bg-warning ">상담</span>
-                        <!-- <span class="badge bg-warning ">${TY_NM}</span>  -->
+                        <span class="badge bg-warning">[[${oneProgram.tyNm}]]</span>
                       </li>
                     </ul>
                   </div><!--end col-->
                   <div class="col-lg-4">
                     <ul class="list-inline mb-0 text-lg-end mt-6 mt-lg-2">
                       <li class="list-inline-item">
-                        <div class="favorite-icon">
-                          <a href="javascript:void(0)"><i class="uil uil-heart-alt"></i></a>
-                        </div>
+                       <th:block th:if="${session.loginMember != null}">
+							<div class="clip clipbtn favorite-icon"
+								th:id="|clip${oneProgram.onepNo}|" th:value="${oneProgram.isClip}"
+								th:onclick="|onClickClip('clip${oneProgram.onepNo}', '${oneProgram.onepNo}');|">
+								<a href="javascript:void(0)">
+									<i class="uil uil-heart-alt fs-18"></i>
+								</a>
+							</div>
+						</th:block>
                       </li>
                     </ul>
                   </div><!--end col-->
                 </div><!--end row-->
               </div>
-              <script>
-                var i = 0;
-                $(".favorite-icon").on("click", function () {
-                  if (i == 0) {
-                    $(this).removeClass('favorite-icon');
-                    $(this).addClass('favorite-icon-active');
-                    i++;
-                  } else if (i == 1) {
-                    $(this).removeClass('favorite-icon-active');
-                    $(this).addClass('favorite-icon');
-                    i--;
-                  }
-                })
-              </script>
 
               <div class="mt-11">
                 <div class="row g-2">
                   <div class="col-lg-3">
                     <div class="border rounded-start p-3">
-                      <p class="text-muted mb-0 fs-13">카테고리</p>
-                      <p class="fw-medium fs-15 mb-0">외로움</p>
-                      <!-- <p class="fw-medium fs-15 mb-0">${SE_NM}</p> -->
+                      <p class="text-muted mb-0 fs-13" >카테고리</p>
+                      <p class="fw-medium fs-15 mb-0">[[${oneProgram.seNm}]]</p>
                     </div>
                   </div>
                   <div class="col-lg-3">
                     <div class="border p-3">
-                      <p class="text-muted fs-13 mb-0">지역(소속)</p>
-                      <p class="fw-medium mb-0">강북구</p>
-                      <!-- <p class="fw-medium mb-0">${ATDRC_NM}</p> -->
+                      <p class="text-muted fs-13 mb-0" >지역(소속)</p>
+                      <p class="fw-medium mb-0" >[[${oneProgram.atdrcNm}]]</p>
                     </div>
                   </div>
                   <div class="col-lg-3">
                     <div class="border p-3">
-                      <p class="text-muted fs-13 mb-0">회기수</p>
-                      <p class="fw-medium mb-0">1</p>
-                      <!-- <p class="fw-medium mb-0">${TME}</p> -->
+                      <p class="text-muted fs-13 mb-0" >회기수</p>
+                      <p class="fw-medium mb-0">[[${oneProgram.tme}]]</p>
                     </div>
                   </div>
                   <div class="col-lg-3">
                     <div class="border rounded-end p-3">
-                      <p class="text-muted fs-13 mb-0">접수방법</p>
-                      <p class="fw-medium mb-0">전화, 온라인 접수</p>
-                      <!-- <p class="fw-medium mb-0">${RCEPT_MTH_NM}</p> -->
+                      <p class="text-muted fs-13 mb-0" >접수방법</p>
+                      <p class="fw-medium mb-0" >[[${oneProgram.rceptMthNm}]]</p>
                     </div>
                   </div>
                 </div>
@@ -284,34 +135,29 @@
               <div class="mt-5">
                 <h5 class="mb-3">내용</h5>
                 <div class="job-detail-desc mb-3">
-                  <p class="text-muted mb-0">안녕하세요.<br>강북구 가족센터 1인가구 지원사업 담당자입니다.<br>강북구 가족센터에서 운영하는
-                    강북구 1인가구지원센터에서는<br>다양한 사유로 여러가지 '심리적 어려움'을 경험하고 있는<br>1인가구를 대상으로 개인 상담을 지원해드리고자
-                    합니다.</p>
-                  <!-- <p class="text-muted mb-0">${CN}</p> -->
+                  <p class="text-muted mb-0" >[[${oneProgram.cn}]]</p>
                 </div>
               </div>
 
               <div class="mt-5">
                 <h5 class="mb-3">대상</h5>
                 <div class="job-detail-desc mt-2">
-                  <p class="text-muted">서올생활권 1인가구 및 예비 1인가구(2021년 성동구 1인가구지원사업 참여자 우선 신청가능)</p>
-                  <!-- <p class="text-muted">${TRGET_INFO}</p> -->
+                  <p class="text-muted" >[[${oneProgram.trgetInfo}]]</p>
                 </div>
               </div>
 
               <div class="mt-5">
-                <h5 class="mb-3">주소 </h5>
+                <h5 class="mb-3" >주소</h5>
                 <div class="job-detail-desc mt-2">
-                  <p class="text-muted">서울특별시 광진구 능동로30길 23 (능동) 2층 광진구건강가정지원센터</p>
-                  <!-- <p class="text-muted">${PLACE_ADRES1} ${PLACE_ADRES2}</p> -->
+                  <p class="text-muted" >[[${oneProgram.placeAdres1}]] [[${oneProgram.placeAdres2}]]</p>
                 </div>
               </div>
 
               <div class="mt-5">
-                <h5 class="mb-3">접수 방법</h5>
+                <h5 class="mb-3" >접수 방법</h5>
                 <div class="job-details-desc">
-                  <p class="text-muted">온라인 접수</p>
-                  <p class="text-muted"><a href="${RCEPT_MTH_LINK}">https://forms.gle/62er5j3s229K3Y9n8</a></p>
+                  <p class="text-muted" >[[${oneProgram.rceptMthNm}]]</p>
+                  <p class="text-muted"><a href="${oneProgram.rceptMthLink}" >[[${oneProgram.rceptMthLink}]]</a></p>
                 </div>
               </div>
             </div><!--end card-body-->
@@ -329,9 +175,8 @@
                     <div class="d-flex mt-40px">
                       <i class="uil uil-user icon bg-soft-primary"></i>
                       <div class="ms-3">
-                        <h6 class="fs-14 mb-2">참여 대상</h6>
-                        <p class="text-muted mb-0">20-30대 / 성별무관</p>
-                        <!-- <p class="text-muted mb-0">${AGRDE_NM} / ${SEXDSTN_NM} 대상</p>  -->
+                        <h6 class="fs-14 mb-2" >참여 대상</h6>
+                        <p class="text-muted mb-0">[[${oneProgram.agrdeNm}]] / [[${oneProgram.sexdstnNm}]] 대상</p>
                       </div>
                     </div>
                   </li>
@@ -340,8 +185,7 @@
                       <i class="uil uil-star-half-alt icon bg-soft-primary"></i>
                       <div class="ms-3">
                         <h6 class="fs-14 mb-2">접수기간</h6>
-                        <p class="text-muted mb-0"> 2022-04-01~2022-12-31</p>
-                        <!-- <p class="text-muted mb-0"> ${RCEPT_DE1}~${RCEPT_DE2}</p>  -->
+                        <p class="text-muted mb-0">[[${#dates.format(oneProgram.rceptDe1, 'yyyy-MM-dd')}]]~[[${#dates.format(oneProgram.rceptDe2, 'yyyy-MM-dd')}]]</p>
                       </div>
                     </div>
                   </li>
@@ -349,9 +193,8 @@
                     <div class="d-flex mt-40px">
                       <i class="uil uil-history icon bg-soft-primary"></i>
                       <div class="ms-3">
-                        <h6 class="fs-14 mb-2">진행기간</h6>
-                        <p class="text-muted mb-0">2022-04-01~2022-12-31</p>
-                        <!-- <p class="text-muted mb-0">${PROGRS_DE1}~${PROGRS_DE2}</p>  -->
+                        <h6 class="fs-14 mb-2" >진행기간</h6>
+                        <p class="text-muted mb-0" >[[${#dates.format(oneProgram.progrsDe1, 'yyyy-MM-dd')}]]~[[${#dates.format(oneProgram.progrsDe2, 'yyyy-MM-dd')}]]</p>
                       </div>
                     </div>
                   </li>
@@ -360,18 +203,16 @@
                       <i class="uil uil-usd-circle icon bg-soft-primary"></i>
                       <div class="ms-3">
                         <h6 class="fs-14 mb-2">참가비</h6>
-                        <p class="text-muted mb-0">무료</p>
-                        <!-- <p class="text-muted mb-0">${PARTCPT_AMOUNT}</p>  -->
+                        <p class="text-muted mb-0">[[${oneProgram.partcptAmount}]]</p>
                       </div>
                     </div>
                   </li>
                   <li>
                     <div class="d-flex mt-40px">
-                      <i class="uil uil-graduation-cap icon bg-soft-primary"></i>
+                      <i class="uil uil-graduation-cap icon bg-soft-primary w-30"></i>
                       <div class="ms-3">
                         <h6 class="fs-14 mb-2">진행문의</h6>
-                        <p class="text-muted mb-0">070-7477-8532</p>
-                        <!-- <p class="text-muted mb-0">${PROGRS_INQRY}</p>  -->
+                        <p class="text-muted mb-0" >[[${oneProgram.progrsInqry}]]</p>
                       </div>
                     </div>
                   </li>
@@ -379,16 +220,15 @@
                     <div class="d-flex mt-40px">
                       <i class="uil uil-building icon bg-soft-primary"></i>
                       <div class="ms-3">
-                        <h6 class="fs-14 mb-2">기관명</h6>
-                        <p class="text-muted mb-0">광진구가족센터</p>
-                        <!-- <p class="text-muted mb-0">${INSTT_NM}</p>  -->
+                        <h6 class="fs-14 mb-2" >기관명</h6>
+                        <p class="text-muted mb-0" >[[${oneProgram.insttNm}]]</p>
                       </div>
                     </div>
                   </li>
 
                 </ul>
                 <div class="mt-5 mb-3">
-                  <a href="${RCEPT_MTH_LINK}" data-bs-toggle="modal" class="btn btn-primary btn-hover w-100 mt-2">페이지 이동
+                  <a href="${oneProgram.rceptMthLink}" data-bs-toggle="modal" class="btn btn-primary btn-hover w-100 mt-2">페이지 이동
                     <i class="uil uil-arrow-right"></i></a>
                 </div>
               </div><!--end card-body-->
@@ -396,68 +236,19 @@
           </div>
         </div>
         <!--end side-bar-->
-
+</th:block>
+</th:block>
       </div><!--end row-->
     </div><!--end container-->
   </section>
   <!-- START JOB-DEATILS -->
 
 
-  <!-- START FOOTER -->
-  <div class="footer-alt">
-    <div class="container">
-      <div class="row">
-        <div class="text-center text-white-50 col-lg-12 mb-2">
-          <img style="height: 45px;" src="assets/images/logo-light.png">
-        </div>
-        <div class="text-center text-white-50 col-lg-12">
-          <a class="d-inline-block text-reset" href="#">개인정보처리방침</a> |
-          <a class="d-inline-block text-reset" href="#">저작권정책</a> |
-          <a class="d-inline-block text-reset" href="#">사이트맵</a>
-        </div>
-        <div class="col-lg-12">
-          <p class="text-white-50 text-center mb-0">
-            고객센터 : 02-123-1234
-            <script>document.write(new Date().getFullYear())</script> &copy; smore - All Rights Reserved.
-          </p>
-        </div><!--end col-->
-      </div><!--end row-->
-    </div><!--end container-->
-  </div>
-  <!-- END FOOTER -->
+  <footer th:replace="~{common/layout :: #footer}"></footer>
 
-  <!-- Style switcher -->
-  <div id="style-switcher" onclick="toggleSwitcher()" style="left: -165px;">
-    <div>
-      <h6>Select your color</h6>
-      <ul class="pattern list-unstyled mb-0">
-        <li>
-          <a class="color-list color1" href="javascript: void(0);" onclick="setColorGreen()"></a>
-        </li>
-        <li>
-          <a class="color-list color2" href="javascript: void(0);" onclick="setColor('blue')"></a>
-        </li>
-        <li>
-          <a class="color-list color3" href="javascript: void(0);" onclick="setColor('green')"></a>
-        </li>
-      </ul>
-      <div class="mt-3">
-        <h6>Light/dark Layout</h6>
-        <div class="text-center mt-3">
-          <!-- light-dark mode -->
-          <a href="javascript: void(0);" id="mode" class="mode-btn text-white rounded-3">
-            <i class="uil uil-brightness mode-dark mx-auto"></i>
-            <i class="uil uil-moon mode-light"></i>
+  <a href="javascript: void(0);" id="mode" class="mode-btn text-white rounded-3">
           </a>
-          <!-- END light-dark Mode -->
-        </div>
-      </div>
-    </div>
-    <div class="bottom d-none d-md-block">
       <a href="javascript: void(0);" class="settings rounded-end"><i class="mdi mdi-cog mdi-spin"></i></a>
-    </div>
-  </div>
-  <!-- end switcher-->
 
   <!--start back-to-top-->
   <button onclick="topFunction()" id="back-to-top">
@@ -471,27 +262,80 @@
   <!-- END layout-wrapper -->
 
   <!-- JAVASCRIPT -->
-  <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
+	<script th:src="@{/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
+	<!-- Choice Js -->
+	<script th:src="@{/libs/choices.js/public/assets/scripts/choices.min.js}"></script>
+	<!-- Swiper Js -->
+	<script th:src="@{/libs/swiper/swiper-bundle.min.js}"></script>
+	<!-- Switcher Js -->
+	<script th:src="@{/js/pages/switcher.init.js}"></script>
+	<script th:src="@{/js/pages/index.init.js}"></script>
+	<!-- App Js -->
+	<script th:src="@{/js/app.js}"></script>
+	<!-- Custom Js -->
+	<script th:src="@{/js/pages/favorite.js}"></script>
+	<!-- Index Js -->
+	<script th:src="@{/js/pages/job-list.init.js}"></script>
 
-
-  <!-- Choice Js -->
-  <script src="assets/libs/choices.js/public/assets/scripts/choices.min.js"></script>
-
-  <!-- Swiper Js -->
-  <script src="assets/libs/swiper/swiper-bundle.min.js"></script>
-
-  <!-- Index Js -->
-  <script src="assets/js/pages/job-list.init.js"></script>
-
-  <!-- Switcher Js -->
-  <script src="assets/js/pages/switcher.init.js"></script>
-
-  <script src="assets/js/pages/index.init.js"></script>
-
-  <!-- App Js -->
-  <script src="assets/js/app.js"></script>
 
 </body>
+<script>
+// 초기화 문구
+$(function(){
+    // 하트 class 초기화
+    clipItems = document.getElementsByClassName('clip');
 
+for (i = 0; i < clipItems.length; i++) {
+	clipValue = JSON.parse(clipItems[i].getAttribute('value'));
+	console.log(clipValue);
+
+	if (clipValue == 1) {
+		$(clipItems[i]).addClass("active")
+	}
+	else {
+		$(clipItems[i]).removeClass("active")
+	}
+}
+});
+
+function onClickLike(id, addLike){
+    likeValue = new Number($('#'+id).text());
+    likeValue += new Number(addLike);
+    // 여기에 AJAX로 DB 업데이트하는 코드 있어야함!!
+
+    $('#'+id).text((likeValue > 0 ? '+' : '') + likeValue);
+}
+
+function onClickClip(id, onepNo){
+	clipValue = JSON.parse($('#'+id).attr('value'));
+    if(clipValue == 0){
+    	clipValue = 1;
+    }else{
+    	clipValue = 0;
+    }
+    var sendurl = '/program-detail/clip?onepNo=' + onepNo +'&isClip=' + clipValue;
+//     alert(sendurl)
+    // 여기에 AJAX로 DB 업데이트하는 코드 있어야함!!
+    $.ajax({
+		type:'get',
+		url:sendurl ,
+		contentType: 'application/json',
+		dataType : 'json',
+		success: (result) =>{
+			$('#'+id).attr('value', ''+result);
+	        if(result == 1){
+	        	$('#' + id).addClass("active")
+//					alert("스크랩에 추가 되었습니다.");
+	        }else{
+	        	$('#' + id).removeClass("active")
+//					alert("스크랩에서 제거 되었습니다.");
+	        }
+		},
+		error : (e) => {
+			alert('전송 실패!!');
+		}
+	});
+}
+</script>
 </html>

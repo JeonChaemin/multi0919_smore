@@ -12,19 +12,19 @@
 		FROM MEMBER
 	</sql>
 	
-	<resultMap type="Member" id="memberResultMap">
+	<resultMap 	type="Member" 			id="memberResultMap">
 		<id 	property="memNo" 		column="MEMNO" />
-		<result property="id" 		column="ID" />
-		<result property="password" column="PASSWORD" />
-		<result property="role" 	column="ROLE" />
-		<result property="name" 	column="NAME" />
-		<result property="phone" 	column="PHONE" />
-		<result property="email" 	column="EMAIL" />
-		<result property="address" 	column="ADDRESS" />
+		<result property="id" 			column="ID" />
+		<result property="password" 	column="PASSWORD" />
+		<result property="role" 		column="ROLE" />
+		<result property="name" 		column="NAME" />
+		<result property="phone" 		column="PHONE" />
+		<result property="email" 		column="EMAIL" />
+		<result property="address" 		column="ADDRESS" />
 		<result property="kakaotoken" 	column="KAKAOTOKEN" />
-		<result property="status" 	column="STATUS" />
-		<result property="enrollDate" column="ENROLLDATE" />
-		<result property="modifyDate" column="MODIFYDATE" />
+		<result property="status" 		column="STATUS" />
+		<result property="enrollDate" 	column="ENROLLDATE" />
+		<result property="modifyDate" 	column="MODIFYDATE" />
 	</resultMap>
 	
 	<select id="selectCount" resultType="int">
@@ -49,7 +49,7 @@
 		) VALUES (
 			 0, #{id}, #{password},
 			 default, #{name}, #{phone},
-			 #{email}, #{address}, #{hobby},
+			 #{email}, #{address},
 			 DEFAULT, DEFAULT, DEFAULT)
 	</insert>
 	

@@ -1,5 +1,8 @@
 <!doctype html>
 <html lang="ko">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head" th:replace="~{common/layout :: head}"></head>
 
 <head>
 
@@ -12,27 +15,30 @@
   <meta content="Themesdesign" name="author" />
 
   <!-- App favicon -->
-  <link rel="shortcut icon" href="assets/images/favicon.ico">
+  <link rel="shortcut icon" th:href="@{/images/favicon.ico}">
 
   <!-- Choise Css -->
-  <link rel="stylesheet" href="assets/libs/choices.js/public/assets/styles/choices.min.css">
+  <link rel="stylesheet" th:href="@{/libs/choices.js/public/assets/styles/choices.min.css}">
 
   <!-- Nouislider Css -->
-  <link rel="stylesheet" href="assets/libs/nouisliderribute/nouislider.min.css">
+  <link rel="stylesheet" th:href="@{/libs/nouisliderribute/nouislider.min.css}">
 
   <!-- Bootstrap Css -->
-  <link href="assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+  <link th:href="@{/css/bootstrap.min.css}" id="bootstrap-style" rel="stylesheet" type="text/css" />
   <!-- Icons Css -->
-  <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+  <link th:href="@{/css/icons.min.css}" rel="stylesheet" type="text/css" />
   <!-- App Css-->
-  <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+  <link th:href="@{/css/app.min.css}" id="app-style" rel="stylesheet" type="text/css" />
   <!--Custom Css-->
-  <link href="assets/css/recipe.css" id="app-style" rel="stylesheet" type="text/css" />
+  <link th:href="@{/css/recipe.css}" id="app-style" rel="stylesheet" type="text/css" />
   <!--recipe Css-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 </head>
 
 <body>
+<header th:replace="~{common/layout :: #header}"></header>
+
   <!--start page Loader -->
   <div id="preloader">
     <div id="status">
@@ -48,126 +54,12 @@
   </div>
   <!--end page Loader -->
 
-	<!-- Begin page -->
-	<div>
-		<!--Navbar Start-->
-		<nav class="navbar navbar-expand-lg" id="navbar">
-			<div class="container-fluid custom-container">
-				<a class="navbar-brand text-dark fw-bold me-auto" href="index.html">
-					<img src="assets/images/logo-dark.png" height="45" alt="" class="logo-dark" />
-					<img src="assets/images/logo-light.png" height="45" alt="" class="logo-light" />
-				</a>
-				<div>
-					<button class="navbar-toggler me-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-						aria-controls="navbarCollapse" aria-label="Toggle navigation">
-						<i class="mdi mdi-menu"></i>
-					</button>
-				</div>
-				<div class="collapse navbar-collapse" id="navbarCollapse">
-					<ul class="navbar-nav mx-auto navbar-center">
-						<li class="nav-item dropdown dropdown-hover">
-							<a class="nav-link" href="javascript:void(0)" id="homedrop" role="button" data-bs-toggle="dropdown">
-								라이프 <div class="arrow-down"></div>
-							</a>
-							<ul class="dropdown-menu dropdown-menu-center" aria-labelledby="homedrop">
-								<li><a class="dropdown-item" href="trade.html">중고/재능 거래</a></li>
-								<li><a class="dropdown-item" href="recipe.html">레시피</a></li>
-								<li><a class="dropdown-item" href="outdoor.html">야외활동</a></li>
-							</ul>
-						</li>
-						<li class="nav-item dropdown dropdown-hover">
-							<a class="nav-link" href="javascript:void(0)" id="jobsdropdown" role="button" data-bs-toggle="dropdown">
-								정보 <div class="arrow-down"></div>
-							</a>
-							<ul class="dropdown-menu dropdown-menu-center" aria-labelledby="jobsdropdown">
-								<li><a class="dropdown-item" href="rental.html">공공임대주택</a></li>
-								<li><a class="dropdown-item" href="program.html">정부지원사업</a></li>
-								<li><a class="dropdown-item" href="news.html">뉴스</a></li>
-							</ul>
-						</li>
-						<li class="nav-item dropdown dropdown-hover">
-							<a class="nav-link" href="javascript:void(0)" id="productdropdown" role="button" data-bs-toggle="dropdown"
-								aria-expanded="false">
-								커뮤니티
-								<div class="arrow-down"></div>
-							</a>
-							<ul class="dropdown-menu dropdown-menu-center" aria-labelledby="productdropdown">
-								<li><a class="dropdown-item" href="notice.html">공지사항</a></li>
-								<li><a class="dropdown-item" href="board.html">자유 게시판</a></li>
-								<li><a class="dropdown-item" href="suggestion.html">건의 게시판</a></li>
-							</ul>
-						</li><!--end dropdown-->
-					</ul><!--end navbar-nav-->
-				</div>
-				<!--end navabar-collapse-->
-        <!--logout-->
-				<!-- <ul class="header-menu list-inline d-flex align-items-center mb-0">
-					<a class="text-reset mx-2 log-menu" href="sign-in.html"><span class="d-none d-md-inline-block fw-medium">로그인</span></a> | 
-					<a class="text-reset mx-2 log-menu" href="sign-up.html"><span class="d-none d-md-inline-block fw-medium">회원가입</span></a>
-				</ul>-->
-				<!--login-->
-        <ul class="header-menu list-inline d-flex align-items-center mb-0">
-          <li class="list-inline-item dropdown me-4">
-            <a href="javascript:void(0)" class="header-item noti-icon position-relative" id="notification"
-              data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="mdi mdi-bell fs-22"></i>
-              <div class="count position-absolute">1</div>
-            </a>
-            <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end p-0" aria-labelledby="notification">
-              <div class="notification-header border-bottom bg-light">
-                <h6 class="mb-1"> 알림센터 </h6>
-                <p class="text-muted fs-13 mb-0">1개의 읽지 않은 알림</p>
-              </div>
-              <div class="notification-wrapper dropdown-scroll">
-                <a href="javascript:void(0)" class="text-dark notification-item d-block active">
-                  <div class="d-flex align-items-center">
-                    <div class="flex-shrink-0 me-3">
-                      <div class="avatar-xs bg-primary text-white rounded-circle text-center">
-                        <i class="uil uil-user-check"></i>
-                      </div>
-                    </div>
-                    <div class="flex-grow-1">
-                      <h6 class="mt-0 mb-1 fs-14">22 verified registrations</h6>
-                      <p class="mb-0 fs-12 text-muted"><i class="mdi mdi-clock-outline"></i>
-                        <span>3 min
-                          ago</span>
-                      </p>
-                    </div>
-                  </div>
-                </a><!--end notification-item-->
-              </div><!--end notification-wrapper-->
-              <div class="notification-footer border-top text-center">
-                <a class="primary-link fs-13" href="javascript:void(0)">
-                  <i class="mdi mdi-arrow-right-circle me-1"></i> <span>더보기</span>
-                </a>
-              </div>
-            </div>
-          </li>
-          <li class="list-inline-item dropdown">
-            <a href="javascript:void(0)" class="header-item" id="userdropdown" data-bs-toggle="dropdown"
-              aria-expanded="false">
-              <img src="assets/images/profile.jpg" alt="mdo" width="35" height="35" class="rounded-circle me-1"> <span
-                class="d-none d-md-inline-block fw-medium">스모어
-                님</span>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown">
-              <li><a class="dropdown-item" href="mypage.html">마이페이지</a></li>
-              <li><a class="dropdown-item" href="housebudget.html">가계부</a></li>
-              <li><a class="dropdown-item" href="sign-out.html">로그아웃</a></li>
-            </ul>
-          </li>
-        </ul><!--end header-menu-->
-      </div>
-      <!--end container-->
-    </nav>
-    <!-- Navbar End -->
-
     <div class="main-content">
 
       <div class="page-content">
 
         <!-- Start home -->
-        <section class="page-title-box" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(assets/images/img/hero_recipe.jpg); height: 350px; padding-top: 130px; background-position: center;">
+        <section class="page-title-box" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(/images/img/hero_recipe.jpg); height: 350px; padding-top: 130px; background-position: center;">
           <div class="container">
             <div class="row justify-content-center">
               <div class="col-md-6">
@@ -176,8 +68,8 @@
                   <div class="page-next">
                     <nav class="d-inline-block" aria-label="breadcrumb text-center">
                       <ol class="breadcrumb justify-content-center">
-                        <li class="breadcrumb-item"><a href="index.html">HOME</a></li>
-                        <li class="breadcrumb-item"><a href="recipe.html">LIFE</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/}">HOME</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/category/recipe}">LIFE</a></li>
                         <li class="breadcrumb-item active" aria-current="page"> RECIPE </li>
                       </ol>
                     </nav>
@@ -214,17 +106,19 @@
                   <div class="lg-4">
                     <!-- Job-list -->
                     <div class="row mt-3">
+                    
                       <!--객체 시작-->
-                      <div class="job-box card col-sm-5 mb-3 ms-5 position-relative p-4">
+                      <th:block th:if="${list != null}">
+                      <div class="job-box card col-sm-5 mb-3 ms-5 position-relative p-4" th:each="recipe : ${list}">
                         <div class="featured-label">
-                          <span class="featured">일품</span>
+                          <span class="featured" th:text="${recipe.rcpPat2}"></span>
                         </div>
                         <div>
                           <div class="row align-items-center">
                             <div class="">
                               <div class="text-center">
-                                <a href="recipe-detail.html">
-                                  <img src="assets/images/img/rcp_rec1.png" class="rounded-3 w-100" style="height: 220px; object-fit: cover;"></a>
+                                <a th:href="|/detail/recipe-detail?rcpNo=${recipe.rcpNo}|">
+                                  <img th:src="${recipe.attFileNoMain}" class="rounded-3 w-100" style="height: 220px; object-fit: cover;"></a>
                               </div>
                             </div>
                             <!--end col-->
@@ -233,283 +127,34 @@
                         </div>
                         <div class="pt-2">
                           <div class="row justify-content-between">
-                            <h5 class="col-lg-12"><a href="#" class="text-reset">제목</a></h5>
+                            <h5 class="col-lg-12"><a th:href="|/detail/recipe-detail?rcpNo=${recipe.rcpNo}|" class="text-reset" th:text="${recipe.rcpNm}"></a></h5>
                             <div class="list-inline d-flex justify-content-between align-items-center">
                               <div>
-                                <span class="text-muted d-inline"><i class="uil uil-comment-dots"></i> 10</span>
-                                <span class="text-muted ms-3 d-inline"><i class="uil uil-thumbs-up"></i> 3</span>
+                                <span class="text-muted d-inline"><i class="uil uil-comment-dots"></i>[[${recipe.reviewCount}]]</span>
+                                <span class="text-muted ms-3 d-inline"><i class="uil uil-thumbs-up"></i>[[${recipe.likeCount}]]</span>
                               </div>
-                              <div class="favorite-icon mt-n4">
-                                <a href="javascript:void(0)"><i class="uil uil-heart-alt fs-18"></i></a>
+                              <th:block th:if="${session.loginMember != null}">
+                              <div class="favorite-icon mt-n4" >
+                                <a href="javascript:void(0)" name="clip" th:id="|clip${recipe.rcpNo}|" th:value="${recipe.isClip}"
+                                	th:onclick="|onClip(${recipe.isClip},${recipe.rcpNo});|">
+                                </a>
                               </div>
+                              </th:block>
                             </div>
                           </div>
                           <!--end row-->
                         </div>
                         <div class="col-lg-12 mt-3">
-                          <a href="recipe-detail.html" class="btn btn-primary w-100 p-2" id="show-recipe"><i class="uil uil-book-alt"></i> 레시피 보기 </a>
+                          <a th:href="|/detail/recipe-detail?rcpNo=${recipe.rcpNo}|" class="btn btn-primary w-100 p-2" id="show-recipe"><i class="uil uil-book-alt"></i> 레시피 보기 </a>
                         </div><!--end col-->
                       </div>
+                      </th:block>
                       <!--객체 끝-->
-                      <!--객체 시작-->
-                      <div class="job-box card col-sm-5 mb-3 ms-5 position-relative p-4">
-                        <div class="featured-label">
-                          <span class="featured">일품</span>
-                        </div>
-                        <div>
-                          <div class="row align-items-center">
-                            <div class="">
-                              <div class="text-center">
-                                <a href="recipe-detail.html">
-                                  <img src="assets/images/img/rcp_rec1.png" class="rounded-3 w-100" style="height: 220px; object-fit: cover;"></a>
-                              </div>
-                            </div>
-                            <!--end col-->
-                          </div>
-                          <!--end row-->
-                        </div>
-                        <div class="pt-2">
-                          <div class="row justify-content-between">
-                            <h5 class="col-lg-12"><a href="#" class="text-reset">제목</a></h5>
-                            <div class="list-inline d-flex justify-content-between align-items-center">
-                              <div>
-                                <span class="text-muted d-inline"><i class="uil uil-comment-dots"></i> 10</span>
-                                <span class="text-muted ms-3 d-inline"><i class="uil uil-thumbs-up"></i> 3</span>
-                              </div>
-                              <div class="favorite-icon mt-n4">
-                                <a href="javascript:void(0)"><i class="uil uil-heart-alt fs-18"></i></a>
-                              </div>
-                            </div>
-                          </div>
-                          <!--end row-->
-                        </div>
-                        <div class="col-lg-12 mt-3">
-                          <a href="recipe-detail.html" class="btn btn-primary w-100 p-2" id="show-recipe"><i class="uil uil-book-alt"></i> 레시피 보기 </a>
-                        </div><!--end col-->
-                      </div>
-                      <!--객체 끝-->
-                      <!--객체 시작-->
-                      <div class="job-box card col-sm-5 mb-3 ms-5 position-relative p-4">
-                        <div class="featured-label">
-                          <span class="featured">일품</span>
-                        </div>
-                        <div>
-                          <div class="row align-items-center">
-                            <div class="">
-                              <div class="text-center">
-                                <a href="recipe-detail.html">
-                                  <img src="assets/images/img/rcp_rec1.png" class="rounded-3 w-100" style="height: 220px; object-fit: cover;"></a>
-                              </div>
-                            </div>
-                            <!--end col-->
-                          </div>
-                          <!--end row-->
-                        </div>
-                        <div class="pt-2">
-                          <div class="row justify-content-between">
-                            <h5 class="col-lg-12"><a href="#" class="text-reset">제목</a></h5>
-                            <div class="list-inline d-flex justify-content-between align-items-center">
-                              <div>
-                                <span class="text-muted d-inline"><i class="uil uil-comment-dots"></i> 10</span>
-                                <span class="text-muted ms-3 d-inline"><i class="uil uil-thumbs-up"></i> 3</span>
-                              </div>
-                              <div class="favorite-icon mt-n4">
-                                <a href="javascript:void(0)"><i class="uil uil-heart-alt fs-18"></i></a>
-                              </div>
-                            </div>
-                          </div>
-                          <!--end row-->
-                        </div>
-                        <div class="col-lg-12 mt-3">
-                          <a href="recipe-detail.html" class="btn btn-primary w-100 p-2" id="show-recipe"><i class="uil uil-book-alt"></i> 레시피 보기 </a>
-                        </div><!--end col-->
-                      </div>
-                      <!--객체 끝-->
-                      <!--객체 시작-->
-                      <div class="job-box card col-sm-5 mb-3 ms-5 position-relative p-4">
-                        <div class="featured-label">
-                          <span class="featured">일품</span>
-                        </div>
-                        <div>
-                          <div class="row align-items-center">
-                            <div class="">
-                              <div class="text-center">
-                                <a href="recipe-detail.html">
-                                  <img src="assets/images/img/rcp_rec1.png" class="rounded-3 w-100" style="height: 220px; object-fit: cover;"></a>
-                              </div>
-                            </div>
-                            <!--end col-->
-                          </div>
-                          <!--end row-->
-                        </div>
-                        <div class="pt-2">
-                          <div class="row justify-content-between">
-                            <h5 class="col-lg-12"><a href="#" class="text-reset">제목</a></h5>
-                            <div class="list-inline d-flex justify-content-between align-items-center">
-                              <div>
-                                <span class="text-muted d-inline"><i class="uil uil-comment-dots"></i> 10</span>
-                                <span class="text-muted ms-3 d-inline"><i class="uil uil-thumbs-up"></i> 3</span>
-                              </div>
-                              <div class="favorite-icon mt-n4">
-                                <a href="javascript:void(0)"><i class="uil uil-heart-alt fs-18"></i></a>
-                              </div>
-                            </div>
-                          </div>
-                          <!--end row-->
-                        </div>
-                        <div class="col-lg-12 mt-3">
-                          <a href="recipe-detail.html" class="btn btn-primary w-100 p-2" id="show-recipe"><i class="uil uil-book-alt"></i> 레시피 보기 </a>
-                        </div><!--end col-->
-                      </div>
-                      <!--객체 끝-->
-                      <!--객체 시작-->
-                      <div class="job-box card col-sm-5 mb-3 ms-5 position-relative p-4">
-                        <div class="featured-label">
-                          <span class="featured">일품</span>
-                        </div>
-                        <div>
-                          <div class="row align-items-center">
-                            <div class="">
-                              <div class="text-center">
-                                <a href="recipe-detail.html">
-                                  <img src="assets/images/img/rcp_rec1.png" class="rounded-3 w-100" style="height: 220px; object-fit: cover;"></a>
-                              </div>
-                            </div>
-                            <!--end col-->
-                          </div>
-                          <!--end row-->
-                        </div>
-                        <div class="pt-2">
-                          <div class="row justify-content-between">
-                            <h5 class="col-lg-12"><a href="#" class="text-reset">제목</a></h5>
-                            <div class="list-inline d-flex justify-content-between align-items-center">
-                              <div>
-                                <span class="text-muted d-inline"><i class="uil uil-comment-dots"></i> 10</span>
-                                <span class="text-muted ms-3 d-inline"><i class="uil uil-thumbs-up"></i> 3</span>
-                              </div>
-                              <div class="favorite-icon mt-n4">
-                                <a href="javascript:void(0)"><i class="uil uil-heart-alt fs-18"></i></a>
-                              </div>
-                            </div>
-                          </div>
-                          <!--end row-->
-                        </div>
-                        <div class="col-lg-12 mt-3">
-                          <a href="recipe-detail.html" class="btn btn-primary w-100 p-2" id="show-recipe"><i class="uil uil-book-alt"></i> 레시피 보기 </a>
-                        </div><!--end col-->
-                      </div>
-                      <!--객체 끝-->
-                      <!--객체 시작-->
-                      <div class="job-box card col-sm-5 mb-3 ms-5 position-relative p-4">
-                        <div class="featured-label">
-                          <span class="featured">일품</span>
-                        </div>
-                        <div>
-                          <div class="row align-items-center">
-                            <div class="">
-                              <div class="text-center">
-                                <a href="recipe-detail.html">
-                                  <img src="assets/images/img/rcp_rec1.png" class="rounded-3 w-100" style="height: 220px; object-fit: cover;"></a>
-                              </div>
-                            </div>
-                            <!--end col-->
-                          </div>
-                          <!--end row-->
-                        </div>
-                        <div class="pt-2">
-                          <div class="row justify-content-between">
-                            <h5 class="col-lg-12"><a href="#" class="text-reset">제목</a></h5>
-                            <div class="list-inline d-flex justify-content-between align-items-center">
-                              <div>
-                                <span class="text-muted d-inline"><i class="uil uil-comment-dots"></i> 10</span>
-                                <span class="text-muted ms-3 d-inline"><i class="uil uil-thumbs-up"></i> 3</span>
-                              </div>
-                              <div class="favorite-icon mt-n4">
-                                <a href="javascript:void(0)"><i class="uil uil-heart-alt fs-18"></i></a>
-                              </div>
-                            </div>
-                          </div>
-                          <!--end row-->
-                        </div>
-                        <div class="col-lg-12 mt-3">
-                          <a href="recipe-detail.html" class="btn btn-primary w-100 p-2" id="show-recipe"><i class="uil uil-book-alt"></i> 레시피 보기 </a>
-                        </div><!--end col-->
-                      </div>
-                      <!--객체 끝-->
-                      <!--객체 시작-->
-                      <div class="job-box card col-sm-5 mb-3 ms-5 position-relative p-4">
-                        <div class="featured-label">
-                          <span class="featured">일품</span>
-                        </div>
-                        <div>
-                          <div class="row align-items-center">
-                            <div class="">
-                              <div class="text-center">
-                                <a href="recipe-detail.html">
-                                  <img src="assets/images/img/rcp_rec1.png" class="rounded-3 w-100" style="height: 220px; object-fit: cover;"></a>
-                              </div>
-                            </div>
-                            <!--end col-->
-                          </div>
-                          <!--end row-->
-                        </div>
-                        <div class="pt-2">
-                          <div class="row justify-content-between">
-                            <h5 class="col-lg-12"><a href="#" class="text-reset">제목</a></h5>
-                            <div class="list-inline d-flex justify-content-between align-items-center">
-                              <div>
-                                <span class="text-muted d-inline"><i class="uil uil-comment-dots"></i> 10</span>
-                                <span class="text-muted ms-3 d-inline"><i class="uil uil-thumbs-up"></i> 3</span>
-                              </div>
-                              <div class="favorite-icon mt-n4">
-                                <a href="javascript:void(0)"><i class="uil uil-heart-alt fs-18"></i></a>
-                              </div>
-                            </div>
-                          </div>
-                          <!--end row-->
-                        </div>
-                        <div class="col-lg-12 mt-3">
-                          <a href="recipe-detail.html" class="btn btn-primary w-100 p-2" id="show-recipe"><i class="uil uil-book-alt"></i> 레시피 보기 </a>
-                        </div><!--end col-->
-                      </div>
-                      <!--객체 끝-->
-                      <!--객체 시작-->
-                      <div class="job-box card col-sm-5 mb-3 ms-5 position-relative p-4">
-                        <div class="featured-label">
-                          <span class="featured">일품</span>
-                        </div>
-                        <div>
-                          <div class="row align-items-center">
-                            <div class="">
-                              <div class="text-center">
-                                <a href="recipe-detail.html">
-                                  <img src="assets/images/img/rcp_rec1.png" class="rounded-3 w-100" style="height: 220px; object-fit: cover;"></a>
-                              </div>
-                            </div>
-                            <!--end col-->
-                          </div>
-                          <!--end row-->
-                        </div>
-                        <div class="pt-2">
-                          <div class="row justify-content-between">
-                            <h5 class="col-lg-12"><a href="#" class="text-reset">제목</a></h5>
-                            <div class="list-inline d-flex justify-content-between align-items-center">
-                              <div>
-                                <span class="text-muted d-inline"><i class="uil uil-comment-dots"></i> 10</span>
-                                <span class="text-muted ms-3 d-inline"><i class="uil uil-thumbs-up"></i> 3</span>
-                              </div>
-                              <div class="favorite-icon mt-n4">
-                                <a href="javascript:void(0)"><i class="uil uil-heart-alt fs-18"></i></a>
-                              </div>
-                            </div>
-                          </div>
-                          <!--end row-->
-                        </div>
-                        <div class="col-lg-12 mt-3">
-                          <a href="recipe-detail.html" class="btn btn-primary w-100 p-2" id="show-recipe"><i class="uil uil-book-alt"></i> 레시피 보기 </a>
-                        </div><!--end col-->
-                      </div>
-                      <!--객체 끝-->
+                      <th:block th:if="${list.size() < 0}">
+                      	<div class="col-lg-12 mb-3 ms-5 p-4">
+                      		<h1>검색</h1>
+                      	</div>
+                      </th:block>
                       <!--recipe end-->
                     </div>
 
@@ -521,19 +166,29 @@
                     <div class="col-lg-12 mt-4 pt-2 mb-3">
                       <nav aria-label="Page navigation example">
                         <ul class="pagination job-pagination mb-0 justify-content-center">
-                          <li class="page-item disabled">
-                            <a class="page-link" href="javascript:void(0)" tabindex="-1">
-                              <i class="mdi mdi-chevron-double-left fs-15"></i>
-                            </a>
-                          </li>
-                          <li class="page-item active"><a class="page-link" href="javascript:void(0)">1</a></li>
-                          <li class="page-item"><a class="page-link" href="javascript:void(0)">2</a></li>
-                          <li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
-                          <li class="page-item"><a class="page-link" href="javascript:void(0)">4</a></li>
                           <li class="page-item">
-                            <a class="page-link" href="javascript:void(0)">
+                            <button class="page-link" th:onclick="|movePage('/category/recipe?page=${pageInfo.prevPage}');|">
+                              <i class="mdi mdi-chevron-double-left fs-15"></i>
+                            </button>
+                          </li>
+                          <th:block th:each="num, status : ${#numbers.sequence(pageInfo.startPage, pageInfo.endPage)}">
+                          	<th:block th:if="${status.current == pageInfo.currentPage && status.current > 0}">
+                          		<li class="page-item active">
+                          			<button class="page-link" disabled>[[${status.current}]]</button>
+                          		</li>
+                          	</th:block>
+                          	<th:block th:if="${status.current != pageInfo.currentPage && status.current > 0}">
+                          		<li class="page-item">
+                          			<button class="page-link" th:onclick="|movePage('/category/recipe?page=${status.current}');|">
+                          				[[${status.current}]]
+                          			</button>
+                          		</li>
+                          	</th:block>
+                          </th:block>
+                          <li class="page-item">
+                            <button class="page-link" th:onclick="|movePage('/category/recipe?page=${pageInfo.nextPage}');|">
                               <i class="mdi mdi-chevron-double-right fs-15"></i>
-                            </a>
+                            </button>
                           </li>
                         </ul>
                       </nav>
@@ -542,16 +197,16 @@
                 </div>
               </div><!--end col-->
 
-              <!-- START SIDE-BAR -->
+						<!-- START SIDE-BAR -->
               <div class="col-lg-3 mt-3">
                 <div class="side-bar mt-5 mt-lg-0">
-                  <form class="position-relative mb-4" method="get" action="#"><!--검색 시작-->
-                    <input class="form-control" type="search" placeholder="검색어를 입력하세요" style="height: 50px;">
+             <form th:action="@{/category/recipe}" method="get">
+                  <div class="position-relative mb-4"><!--검색 시작-->
+                    <input class="form-control" id="all" type="search" name="all" th:value="${param.all}" placeholder="검색어를 입력하세요" style="height: 50px;">
                     <button class="bg-transparent border-0 position-absolute top-50 end-0 translate-middle-y me-2"
                       type="submit"><span class="mdi mdi-magnify text-muted"></span></button>
-                  </form><!--검색 시작, 끝-->
+                  </div><!--검색 시작, 끝-->
 
-                  <form action="#" method="get">
                     <div class="col-lg-12 col-md-6 mb-3">
                       <button type="submit" class="btn btn-primary w-100 p-2 fs-5" style="height:44px;"><i
                           class="uil uil-filter"></i> 필터 검색 </button>
@@ -568,31 +223,36 @@
                           <div class="accordion-body">
                             <div class="side-title">
                               <div class="form-check mt-2">
-                                <input class="form-check-input" type="radio" name="category" id="category1" checked>
+                                <input class="form-check-input" type="checkbox" name="rcpPat2" id="category1"  value="일품" 
+                                th:checked="${#arrays.contains(paramMap.rcpPat2, '일품')  ? 'checked' : null}" />
                                 <label class="form-check-label ms-2 text-muted" for="category1">
                                   일품
                                 </label>
                               </div>
                               <div class="form-check mt-2">
-                                <input class="form-check-input" type="radio" name="category" id="category2">
+                                <input class="form-check-input" type="checkbox" name="rcpPat2" id="category2"  value="찌개"
+                                th:checked="${#arrays.contains(paramMap.rcpPat2, '찌개')  ? 'checked' : null}" />
                                 <label class="form-check-label ms-2 text-muted" for="category2">
                                   국&찌개
                                 </label>
                               </div>
                               <div class="form-check mt-2">
-                                <input class="form-check-input" type="radio" name="category" id="category3">
+                                <input class="form-check-input" type="checkbox" name="rcpPat2" id="category3"  value="반찬"
+                                th:checked="${#arrays.contains(paramMap.rcpPat2, '반찬')  ? 'checked' : null}" />
                                 <label class="form-check-label ms-2 text-muted" for="category3">
                                   반찬
                                 </label>
                               </div>
                               <div class="form-check mt-2">
-                                <input class="form-check-input" type="radio" name="category" id="category4">
+                                <input class="form-check-input" type="checkbox" name="rcpPat2" id="category4"  value="밥"
+                                th:checked="${#arrays.contains(paramMap.rcpPat2, '밥')  ? 'checked' : null}" />
                                 <label class="form-check-label ms-2 text-muted" for="category4">
                                   밥
                                 </label>
                               </div>
                               <div class="form-check mt-2">
-                                <input class="form-check-input" type="radio" name="category" id="category5">
+                                <input class="form-check-input" type="checkbox" name="rcpPat2" id="category5"  value="후식"
+                                th:checked="${#arrays.contains(paramMap.rcpPat2, '후식')  ? 'checked' : null}" />
                                 <label class="form-check-label ms-2 text-muted" for="category5">
                                   후식
                                 </label>
@@ -612,53 +272,63 @@
                           <div class="accordion-body">
                             <div class="side-title">
                               <div class="form-check mt-2">
-                                <input class="form-check-input" type="checkbox" value="소고기" name="ingredient"
-                                  id="ingredient1" checked />
+                                <input class="form-check-input" type="checkbox" value="소고기" name="rcpPartsDtls"
+                                  id="ingredient1" 
+                                  th:checked="${#arrays.contains(paramMap.rcpPartsDtls, '소고기')  ? 'checked' : null}" />
                                 <label class="form-check-label ms-2 text-muted" for="ingredient1">소고기</label>
                               </div>
                               <div class="form-check mt-2">
-                                <input class="form-check-input" type="checkbox" value="돼지고기" name="ingredient"
-                                  id="ingredient2" />
+                                <input class="form-check-input" type="checkbox" value="돼지고기" name="rcpPartsDtls"
+                                  id="ingredient2"
+                                  th:checked="${#arrays.contains(paramMap.rcpPartsDtls, '돼지고기')  ? 'checked' : null}" />
                                 <label class="form-check-label ms-2 text-muted" for="ingredient2">돼지고기</label>
                               </div>
                               <div class="form-check mt-2">
-                                <input class="form-check-input" type="checkbox" value="닭가슴살" name="ingredient"
-                                  id="ingredient3" />
+                                <input class="form-check-input" type="checkbox" value="닭가슴살" name="rcpPartsDtls"
+                                  id="ingredient3" 
+                                  th:checked="${#arrays.contains(paramMap.rcpPartsDtls, '닭가슴살')  ? 'checked' : null}" />
                                 <label class="form-check-label ms-2 text-muted" for="ingredient3">닭가슴살</label>
                               </div>
                               <div class="form-check mt-2">
-                                <input class="form-check-input" type="checkbox" value="닭고기" name="ingredient"
-                                  id="ingredient4" />
+                                <input class="form-check-input" type="checkbox" value="닭고기" name="rcpPartsDtls"
+                                  id="ingredient4" 
+                                  th:checked="${#arrays.contains(paramMap.rcpPartsDtls, '닭고기')  ? 'checked' : null}" />
                                 <label class="form-check-label ms-2 text-muted" for="ingredient4">닭고기</label>
                               </div>
                               <div class="form-check mt-2">
-                                <input class="form-check-input" type="checkbox" value="두부" name="ingredient"
-                                  id="ingredient5" />
+                                <input class="form-check-input" type="checkbox" value="두부" name="rcpPartsDtls"
+                                  id="ingredient5" 
+                                  th:checked="${#arrays.contains(paramMap.rcpPartsDtls, '두부')  ? 'checked' : null}" />
                                 <label class="form-check-label ms-2 text-muted" for="ingredient5">두부</label>
                               </div>
                               <div class="form-check mt-2">
-                                <input class="form-check-input" type="checkbox" value="새우" name="ingredient"
-                                  id="ingredient6" />
+                                <input class="form-check-input" type="checkbox" value="새우" name="rcpPartsDtls"
+                                  id="ingredient6" 
+                                  th:checked="${#arrays.contains(paramMap.rcpPartsDtls, '새우')  ? 'checked' : null}" />
                                 <label class="form-check-label ms-2 text-muted" for="ingredient6">새우</label>
                               </div>
                               <div class="form-check mt-2">
-                                <input class="form-check-input" type="checkbox" value="고등어" name="ingredient"
-                                  id="ingredient7" />
+                                <input class="form-check-input" type="checkbox" value="고등어" name="rcpPartsDtls"
+                                  id="ingredient7" 
+                                  th:checked="${#arrays.contains(paramMap.rcpPartsDtls, '고등어')  ? 'checked' : null}" />
                                 <label class="form-check-label ms-2 text-muted" for="ingredient7">고등어</label>
                               </div>
                               <div class="form-check mt-2">
-                                <input class="form-check-input" type="checkbox" value="스파게티" name="ingredient"
-                                  id="ingredient8" />
+                                <input class="form-check-input" type="checkbox" value="스파게티" name="rcpPartsDtls"
+                                  id="ingredient8" 
+                                  th:checked="${#arrays.contains(paramMap.rcpPartsDtls, '스파게티')  ? 'checked' : null}" />
                                 <label class="form-check-label ms-2 text-muted" for="ingredient8">스파게티</label>
                               </div>
                               <div class="form-check mt-2">
-                                <input class="form-check-input" type="checkbox" value="고구마" name="ingredient"
-                                  id="ingredient9" />
+                                <input class="form-check-input" type="checkbox" value="고구마" name="rcpPartsDtls"
+                                  id="ingredient9" 
+                                  th:checked="${#arrays.contains(paramMap.rcpPartsDtls, '고구마')  ? 'checked' : null}" />
                                 <label class="form-check-label ms-2 text-muted" for="ingredient9">고구마</label>
                               </div>
                               <div class="form-check mt-2">
-                                <input class="form-check-input" type="checkbox" value="감자" name="ingredient"
-                                  id="ingredient10" />
+                                <input class="form-check-input" type="checkbox" value="감자" name="rcpPartsDtls"
+                                  id="ingredient10" 
+                                  th:checked="${#arrays.contains(paramMap.rcpPartsDtls, '감자')  ? 'checked' : null}" />
                                 <label class="form-check-label ms-2 text-muted" for="ingredient10">감자</label>
                               </div>
                             </div>
@@ -678,9 +348,12 @@
                               <div class="mb-1">
                               </div>
                               <div class="area-range mb-1">
-                                <div class="form-label mb-3"><span class="example-val mt-2" id="slider1-span"><input
-                                      type="text" name="calorie" id="calorie" value=""></span>
-                                  Kcal</div>
+                                <div class="form-label mb-3">
+                                	<span class="example-val mt-2" id="slider1-span">
+                                	</span>
+                                	<input type="hidden" name="infoEng" id="infoEng" th:value="${param.infoEng}" />
+                                  Kcal
+                               	</div>
                                 <div id="slider1"></div>
                               </div>
                             </div>
@@ -699,49 +372,23 @@
                         <div id="dateposted" class="accordion-collapse collapse show" aria-labelledby="datePosted">
                           <div class="accordion-body">
                             <!--객체 시작-->
-                            <div class="rmt-2">
-                              <a href="recipe-detail.html" class="row text-reset">
-                                <div class="col-lg-6">
-                                  <img src="http://www.foodsafetykorea.go.kr/uploadimg/cook/10_00475_2.png"
-                                      alt="" style="width: 100px; height: 100px;" class="rounded-3">
-                                </div>
-                                <div class="col-lg-6 text-md-start mt-3">
-                                  <p class="fw-semibold">오렌지삼겹찜</p>
-                                  <p class="text-muted mt-n2">반찬 • 굽기</p>
-                                </div>
-                              </a>
-                            </div>
-                            <hr />
+                            <th:block th:if="${hotList != null}">
+	                            <div class="rmt-2" th:each="recipe : ${hotList}">
+	                              <a th:href="|/detail/recipe-detail?rcpNo=${recipe.rcpNo}|" class="row text-reset">
+	                                <div class="col-lg-6">
+	                                  <img th:src="${recipe.attFileNoMain}"
+	                                      alt="" style="width: 100px; height: 100px;" class="rounded-3">
+	                                </div>
+	                                <div class="col-lg-6 text-md-start mt-3">
+	                                  <p class="fw-semibold">[[${recipe.rcpNm}]]</p>
+	                                  <p class="text-muted mt-n2">[[${recipe.rcpPat2}]] • [[${recipe.rcpWay2}]]</p>
+	                                </div>
+	                              </a>
+	                            <hr />
+	                            </div>
+                            </th:block>
                             <!--객체 끝-->
-                            <!--객체 시작-->
-                            <div class="rmt-2">
-                              <a href="recipe-detail.html" class="row text-reset">
-                                <div class="col-lg-6">
-                                  <img src="http://www.foodsafetykorea.go.kr/uploadimg/cook/10_00475_2.png"
-                                      alt="" style="width: 100px; height: 100px;" class="rounded-3">
-                                </div>
-                                <div class="col-lg-6 text-md-start mt-3">
-                                  <p class="fw-semibold">오렌지삼겹찜</p>
-                                  <p class="text-muted mt-n2">반찬 • 굽기</p>
-                                </div>
-                              </a>
-                            </div>
-                            <hr />
-                            <!--객체 끝-->
-                            <!--객체 시작-->
-                            <div class="rmt-2">
-                              <a href="recipe-detail.html" class="row text-reset">
-                                <div class="col-lg-6">
-                                  <img src="http://www.foodsafetykorea.go.kr/uploadimg/cook/10_00475_2.png"
-                                      alt="" style="width: 100px; height: 100px;" class="rounded-3">
-                                </div>
-                                <div class="col-lg-6 text-md-start mt-3">
-                                  <p class="fw-semibold">오렌지삼겹찜</p>
-                                  <p class="text-muted mt-n2">반찬 • 굽기</p>
-                                </div>
-                              </a>
-                            </div>
-                            <!--객체 끝-->
+                            
                           </div>
                         </div>
                       </div>
@@ -761,7 +408,7 @@
   </div>
   <!-- end main content-->
 
-  <!-- Style switcher -->
+	<!-- Style switcher -->
   <div id="style-switcher" onclick="toggleSwitcher()" style="left: -165px;">
     <div>
       <div class="mt-3">
@@ -790,29 +437,110 @@
 
   </div>
   <!-- END layout-wrapper -->
+  
+  <script type="text/javascript">
+  	function movePage(pageUrl) {
+		/* 검색 값*/
+		var all = document.getElementById('all').value;
+		pageUrl += '&all=' + all;
+		
+		/* 카테고리 */
+		var rcpPat2List = document.getElementsByName('rcpPat2');
+		for(i = 0; i < rcpPat2List.length; i++){
+			if(rcpPat2List[i].checked == true){
+				pageUrl += '&rcpPat2=' + rcpPat2List[i].value;
+			}
+		}
+		
+		/* 재료 */
+		var rcpPartsDtlsList = document.getElementsByName('rcpPartsDtls');
+		for(i = 0; i < rcpPartsDtlsList.length; i++){
+			if(rcpPartsDtlsList[i].checked == true){
+				pageUrl += '&rcpPartsDtls=' + rcpPartsDtlsList[i].value;
+			}
+		}
+		
+		/* 칼로리 */
+		var infoEng = document.getElementById('infoEng').value;
+		pageUrl += '&infoEng=' + infoEng;
+
+		location.href = encodeURI(pageUrl);
+	}
+  
+	//초기화 문구
+  	$(function(){
+      // 하트 class 초기화
+      clipItems = document.getElementsByName('clip');
+      for(i = 0; i < clipItems.length; i++){
+          clipValue = JSON.parse(clipItems[i].getAttribute('value'));
+
+          if(clipValue == 1){
+        	  clipItems[i].innerHTML = '<i class="uil uil-heart-alt fs-18" name="clipOn"></i>';
+        	  $("[name='clipOn']").css({"background-color":"#766df4", "color" : "#fff", "border-color" : "#766df4" });
+        	  $("[name='clipOn']").parents("a").css({"background-color":"#766df4", "color" : "#fff", "border-color" : "danger" });
+        	  
+          }else{
+        	  clipItems[i].innerHTML = '<i class="uil uil-heart-alt fs-18" name="clipOff"></i>';
+          }
+      }
+  	});
+	
+	
+  	function onClip(isClip, rcpNo){
+        if(isClip == 0){
+        	isClip = 1;
+        }else{
+        	isClip = 0;
+        }
+        // 여기에 AJAX로 DB 업데이트하는 코드 있어야함!!
+        $.ajax({
+			method:'get',
+			url:'/recipe/clip?rcpNo=' + rcpNo +'&isClip=' + isClip,
+			contentType: 'application/json',
+			dataType : 'json',
+			success: (result) =>{
+				$('#clip'+rcpNo).attr('value', ''+result);
+		        if(result === 1){
+		            $('#clip'+rcpNo).html('<i class="uil uil-heart-alt fs-18" name="clipOn"></i>');
+		            $("[name='clipOn']").css({"background-color":"#766df4", "color" : "#fff", "border-color" : "#766df4" });
+		        	$("[name='clipOn']").parents("a").css({"background-color":"#766df4", "color" : "#fff", "border-color" : "danger" });
+		        }else{
+		            $('#clip'+rcpNo).html('<i class="uil uil-heart-alt fs-18" name="clipOff"></i>');
+		            $("[name='clipOn']").css({"background-color":"#766df4", "color" : "#fff", "border-color" : "#766df4" });
+		        	$("[name='clipOn']").parents("a").css({"background-color":"#766df4", "color" : "#fff", "border-color" : "danger" });
+		        }
+			},
+			error : (e) => {
+				alert('전송 실패!!');
+			}
+		});
+    }
+	</script>
+  
+  <footer th:replace="~{common/layout :: #footer}"></footer>
 
   <!-- JAVASCRIPT -->
-  <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script th:src="@{/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
   <script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
 
 
   <!-- Choice Js -->
-  <script src="assets/libs/choices.js/public/assets/scripts/choices.min.js"></script>
+  <script th:src="@{/libs/choices.js/public/assets/scripts/choices.min.js}"></script>
 
   <!-- Nouislider Js -->
-  <script src="assets/libs/nouisliderribute/nouislider.min.js"></script>
-  <script src="assets/js/pages/area-filter-range.init.js"></script>
+  <script th:src="@{/libs/nouisliderribute/nouislider.min.js}"></script>
+  <script th:src="@{/js/pages/area-filter-range.init.js}"></script>
 
   <!-- Checkbox Init Js -->
-  <script src="assets/js/pages/checkbox.init.js"></script>
+  <script th:src="@{/js/pages/checkbox.init.js}"></script>
 
   <!-- Job Init Js -->
-  <script src="assets/js/pages/job-list.init.js"></script>
+  <script th:src="@{/js/pages/job-list.init.js}"></script>
 
   <!-- Switcher Js -->
-  <script src="assets/js/pages/switcher.init.js"></script>
+  <script th:src="@{/js/pages/switcher.init.js}"></script>
 
-  <script src="assets/js/app.js"></script>
+  <script th:src="@{/js/app.js}"></script>
 
 </body>
 

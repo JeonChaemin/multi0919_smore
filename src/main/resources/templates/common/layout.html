@@ -59,7 +59,7 @@
 	              </a>
 	              <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="homedrop">
 	                <li><a class="dropdown-item" th:href="@{/trade}">중고/재능 거래</a></li>
-	                <li><a class="dropdown-item" th:href="@{/recipe}">레시피</a></li>
+	                <li><a class="dropdown-item" th:href="@{/category/recipe}">레시피</a></li>
 	                <li><a class="dropdown-item" th:href="@{/outdoor}">야외활동</a></li>
 	              </ul>
 	            </li>
@@ -69,7 +69,7 @@
 	              </a>
 	              <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="jobsdropdown">
 	                <li><a class="dropdown-item" th:href="@{/rental}">공공임대주택</a></li>
-	                <li><a class="dropdown-item" th:href="@{/program}">정부지원사업</a></li>
+	                <li><a class="dropdown-item" th:href="@{/category/program}">정부지원사업</a></li>
 	                <li><a class="dropdown-item" th:href="@{/news}">뉴스</a></li>
 	              </ul>
 	            </li>
@@ -92,8 +92,8 @@
 	        <!--logout-->
 	       	<th:block th:if="${session.loginMember == null}">
 				<ul class="header-menu list-inline d-flex align-items-center mb-0">
-					<a class="text-reset mx-2 log-menu" th:href="@{/sign-in}"><span class="d-none d-md-inline-block fw-medium">로그인</span></a> | 
-					<a class="text-reset mx-2 log-menu" th:href="@{/sign-up}"><span class="d-none d-md-inline-block fw-medium">회원가입</span></a>
+					<a class="text-reset mx-2 log-menu" th:href="@{/login}"><span class="d-none d-md-inline-block fw-medium">로그인</span></a> | 
+					<a class="text-reset mx-2 log-menu" th:href="@{/member/enrol}"><span class="d-none d-md-inline-block fw-medium">회원가입</span></a>
 				</ul>
 			</th:block>
 			
