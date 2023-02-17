@@ -31,28 +31,28 @@ public class OneProgramService {
 	public int getOneProgramCount(Map<String, String> param) {
 		return mapper.selectOneProgramCount(param);
 	}
-	
+	 
 	@Transactional(rollbackFor = Exception.class)
-	public OneProgram findByNo(int onepNo, int mNo) {
+	public OneProgram findByNo(int onepNo, int memNo) {
 		Map<String, String> map = new HashMap<>();
 		map.put("onepNo", ""+onepNo);
-		map.put("mNo", ""+mNo);
+		map.put("memNo", ""+memNo);
 		OneProgram onePro = mapper.selectOneProgramByNo(map);
 		return onePro;
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
-	public int clipOneProgram(int mNo, int onepNo) {
+	public int clipOneProgram(int memNo, int onepNo) {
 		Map<String, String> map = new HashMap<>();
-		map.put("mNo", ""+mNo);
+		map.put("memNo", ""+memNo);
 		map.put("onepNo", "" +onepNo);
 		return mapper.clipOneProgram(map);
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
-	public int unClipOneProgram(int mNo, int onepNo) {
+	public int unClipOneProgram(int memNo, int onepNo) {
 		Map<String, String> map = new HashMap<>();
-		map.put("memNo", ""+mNo);
+		map.put("memNo", ""+memNo);
 		map.put("onepNo", "" +onepNo);
 		return mapper.unClipOneProgram(map);
 	}

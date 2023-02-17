@@ -44,10 +44,10 @@
 			, O.PROGRS_DE1, O.PROGRS_DE2, O.AGRDE_NM, O.SEXDSTN_NM, O.TRGET_INFO, O.TME, O.PARTCPTN_NMPR , O.PARTCPT_CT_NM
 			, O.PARTCPT_AMOUNT , O.RCEPT_MTH_NM, O.RCEPT_MTH_LINK , O.PROGRS_INQRY , O.PLACE_ADRES1, O.PLACE_ADRES2, O.CN, O.REG_DATE2, O.INSTT_NM
 			, (SELECT COUNT(*) FROM CLIP_ONEPROGRAM CO WHERE O.onepNo = CO.onepNo) as likeCount
-			<if test="mNo !=  null">
+			<if test="memNo !=  null">
 				, (SELECT COUNT(*) FROM CLIP_ONEPROGRAM CO WHERE O.onepNo = CO.onepNo AND CO.memNo = #{memNo}) as isClip
 			</if>
-			<if test="mNo == null">
+			<if test="memNo == null">
 				, (SELECT COUNT(*) FROM CLIP_ONEPROGRAM CO WHERE O.onepNo = CO.onepNo AND CO.memNo = 0) as isClip
 			</if>
 		FROM ONEPROGRAM O
@@ -79,17 +79,17 @@
 			AND	O.TY_NM LIKE '%${tyNm}%'
 		</if>
 	</select>
-	
+	 
 	<select id="selectOneProgramByNo" parameterType="map" resultMap="oneProgramListResultMap">
 		SELECT
 			O.onepNo, O.PARTCPTN_ID, O.PARTCPTN_SJ, O.TY_NM, O.SE_NM, O.ATDRC_NM, O.RCEPT_DE1, O.RCEPT_DE2
 			, O.PROGRS_DE1, O.PROGRS_DE2, O.AGRDE_NM, O.SEXDSTN_NM, O.TRGET_INFO, O.TME, O.PARTCPTN_NMPR , O.PARTCPT_CT_NM
 			, O.PARTCPT_AMOUNT , O.RCEPT_MTH_NM, O.RCEPT_MTH_LINK , O.PROGRS_INQRY , O.PLACE_ADRES1, O.PLACE_ADRES2, O.CN, O.REG_DATE2, O.INSTT_NM
 			, (SELECT COUNT(*) FROM CLIP_ONEPROGRAM CO WHERE O.onepNo = CO.onepNo) as likeCount
-			<if test="mNo !=  null">
+			<if test="memNo !=  null">
 				, (SELECT COUNT(*) FROM CLIP_ONEPROGRAM CO WHERE O.onepNo = CO.onepNo AND CO.memNo = #{memNo}) as isClip
 			</if>
-			<if test="mNo == null">
+			<if test="memNo == null">
 				, (SELECT COUNT(*) FROM CLIP_ONEPROGRAM CO WHERE O.onepNo = CO.onepNo AND CO.memNo = 0) as isClip
 			</if>
 		FROM ONEPROGRAM O
@@ -98,63 +98,28 @@
 		WHERE O.onepNo = #{onepNo}
 	</select>
 	
-<!-- 	<sql id="selectOneProgramsql"> -->
-<!-- 		SELECT  -->
-<!-- 			O.onepNo, O.PARTCPTN_ID, O.PARTCPTN_SJ, O.TY_NM, O.SE_NM, O.ATDRC_NM, O.RCEPT_DE1, O.RCEPT_DE2 -->
-<!-- 			, O.PROGRS_DE1, O.PROGRS_DE2, O.AGRDE_NM, O.SEXDSTN_NM, O.TRGET_INFO, O.TME, O.PARTCPTN_NMPR , O.PARTCPT_CT_NM -->
-<!-- 			, O.PARTCPT_AMOUNT , O.RCEPT_MTH_NM, O.RCEPT_MTH_LINK , O.PROGRS_INQRY , O.PLACE_ADRES1, O.PLACE_ADRES2, O.CN, O.REG_DATE2, O.INSTT_NM -->
-<!-- 			<if test='memNo !=  null and memNo != "" '> -->
-<!-- 				, (SELECT COUNT(*) FROM CLIP_ONEPROGRAM CO WHERE O.onepNo = CO.onepNo AND MEMNO = #{memNo}) as isClip -->
-<!-- 			</if> -->
-<!-- 		FROM ONEPROGRAM O -->
-<!-- 		LEFT OUTER JOIN CLIP_ONEPROGRAM CO ON (O.onepNo = CO.onepNo) -->
-<!-- 		WHERE  CO.MEMNO = ${memNo}; -->
-<!-- 	</sql> -->
-	
-<!-- 	<sql id="selectOneProgramsql"> -->
-<!-- 		SELECT  -->
-<!-- 			O.onepNo, O.PARTCPTN_ID, O.PARTCPTN_SJ, O.TY_NM, O.SE_NM, O.ATDRC_NM, O.RCEPT_DE1, O.RCEPT_DE2 -->
-<!-- 			, O.PROGRS_DE1, O.PROGRS_DE2, O.AGRDE_NM, O.SEXDSTN_NM, O.TRGET_INFO, O.TME, O.PARTCPTN_NMPR , O.PARTCPT_CT_NM -->
-<!-- 			, O.PARTCPT_AMOUNT , O.RCEPT_MTH_NM, O.RCEPT_MTH_LINK , O.PROGRS_INQRY , O.PLACE_ADRES1, O.PLACE_ADRES2, O.CN, O.REG_DATE2, O.INSTT_NM -->
-<!-- 			<if test='mNo !=  null and mNo != "" '> -->
-<!-- 				, (SELECT COUNT(*) FROM CLIP_ONEPROGRAM CO WHERE O.onepNo = CO.onepNo AND MEMNO = #{mNo}) as isClip -->
-<!-- 			</if> -->
-<!-- 		FROM ONEPROGRAM O -->
-<!-- 		LEFT OUTER JOIN CLIP_ONEPROGRAM CO ON (O.onepNo = CO.onepNo) -->
-<!-- 		WHERE  CO.MEMNO = ${mNo}; -->
-<!-- 	</sql> -->
+	<sql id="selectOneProgramsql">
+		SELECT 
+			O.onepNo, O.PARTCPTN_ID, O.PARTCPTN_SJ, O.TY_NM, O.SE_NM, O.ATDRC_NM, O.RCEPT_DE1, O.RCEPT_DE2
+			, O.PROGRS_DE1, O.PROGRS_DE2, O.AGRDE_NM, O.SEXDSTN_NM, O.TRGET_INFO, O.TME, O.PARTCPTN_NMPR , O.PARTCPT_CT_NM
+			, O.PARTCPT_AMOUNT , O.RCEPT_MTH_NM, O.RCEPT_MTH_LINK , O.PROGRS_INQRY , O.PLACE_ADRES1, O.PLACE_ADRES2, O.CN, O.REG_DATE2, O.INSTT_NM
+			<if test='memNo !=  null and memNo != "" '>
+				, (SELECT COUNT(*) FROM CLIP_ONEPROGRAM CO WHERE O.onepNo = CO.onepNo AND MEMNO = #{memNo}) as isClip
+			</if>
+		FROM ONEPROGRAM O
+		LEFT OUTER JOIN CLIP_ONEPROGRAM CO ON (O.onepNo = CO.onepNo)
+		WHERE  CO.MEMNO = ${memNo};
+	</sql>
 	
 	
 	
 <!-- 	좋아요 -->
 	<insert id="clipOneProgram" parameterType="map">
-		INSERT INTO CLIP_ONEPROGRAM(onepNo, memNo ) VALUES(#{onepNo}, #{memNo})
+		INSERT INTO CLIP_ONEPROGRAM(onepNo, memNo) VALUES(#{onepNo}, #{memNo})
 	</insert>
 	
 	<insert id="unClipOneProgram" parameterType="map">
 		DELETE FROM CLIP_ONEPROGRAM WHERE MEMNO=#{memNo} AND ONEPNO=#{onepNo}
 	</insert>
 	
-<!-- 	<insert id="insertOneProgram" parameterType="OneProgram"> -->
-<!-- 		insert into ONEPROGRAM (onepNo, PARTCPTN_ID, PARTCPTN_SJ, TY_NM, SE_NM, ATDRC_NM, RCEPT_DE1, RCEPT_DE2, -->
-<!-- 					PROGRS_DE1, PROGRS_DE2, AGRDE_NM, SEXDSTN_NM, TRGET_INFO, TME, PARTCPTN_NMPR, PARTCPT_CT_NM, -->
-<!-- 					PARTCPT_AMOUNT, RCEPT_MTH_NM, RCEPT_MTH_LINK, PROGRS_INQRY, PLACE_ADRES1, PLACE_ADRES2, CN, REG_DATE2, INSTT_NM)	 -->
-<!-- 		values(0, #{partcptnId}, #{partcptnSj}, #{tyNm}, W#{seNm}, #{atdrcNm}, #{rceptDe1}, #{rceptDe2} -->
-<!-- 					, #{progrsDe1}, #{progrsDe2}, #{agrdeNm}, #{sexdstnNm}, #{trgetInfo}, #{tme}, #{partcptnNmpr}, #{partcptCtNm} -->
-<!-- 					, #{partcptAmount}, #{rceptMthNm}, #{rceptMthLink}, #{progrsInqry}, #{placeAdres1}, #{placeAdres2}, #{cn}, #{regDate2}, #{insttNm});	 -->
-<!-- 	</insert> -->
-	
-<!-- 	<delete id="deleteAllOneProgramList1"> -->
-<!-- 		SET FOREIGN_KEY_CHECKS = 0 -->
-<!-- 	</delete> -->
-<!-- 	<delete id="deleteAllOneProgramList2"> -->
-<!-- 		TRUNCATE ONEPROGRAM -->
-<!-- 	</delete> -->
-<!-- 	<delete id="deleteAllOneProgramList3"> -->
-<!-- 		SET FOREIGN_KEY_CHECKS = 1 -->
-<!-- 	</delete> -->
-
-<!-- 	<delete id="deleteOneProgram" parameterType="int"> -->
-<!-- 		DELETE FROM ONEPROGRAM WHERE onepNo=#{onepNo} -->
-<!-- 	</delete> -->
 </mapper>

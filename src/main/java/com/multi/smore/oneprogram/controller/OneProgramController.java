@@ -31,7 +31,7 @@ public class OneProgramController {
 	
 //	final static private String savePath = "c:\\smore\\";
 	
-	@RequestMapping("category/program")
+	@RequestMapping("program")
 	public String oneProList(@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 								Model model, @RequestParam Map<String, String> paramMap,
 										  @RequestParam(required = false) String searchValue,
@@ -97,34 +97,39 @@ public class OneProgramController {
 		return "category/program";
 	}
 	
-	@GetMapping("/detail/program-detail")
+	@GetMapping("/program-detail")
 	public String programdetail(@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 								@RequestParam Map<String, String> paramMap,
 								Model model, int onepNo
 								) {
 
-		int mNo = 0;
+		int memNo = 0;
 		if(loginMember != null) {
-			mNo = loginMember.getMemNo();
-			paramMap.put("mNo",""+ mNo);
+			memNo = loginMember.getMemNo();
+			paramMap.put("memNo",""+ memNo);
 		}
 		
-		OneProgram oneProgram = service.findByNo(onepNo, mNo);
+		OneProgram oneProgram = service.findByNo(onepNo, memNo);
 		System.out.println(oneProgram);
 		
 		if(oneProgram == null) {
 			return "redirect:error";
 		}
-			System.out.println("no " + oneProgram.getOnepNo());
-			System.out.println("getIsClip " + oneProgram.getIsClip() + "\n");
-			System.out.println(paramMap);
+		System.out.println("no " + oneProgram.getOnepNo());
+		System.out.println("getIsClip " + oneProgram.getIsClip() + "\n");
+		System.out.println(paramMap);
+
+		
+		if(oneProgram.getRceptMthLink().toLowerCase().contains("http") == false) {
+			oneProgram.setRceptMthLink("http://" + oneProgram.getRceptMthLink());
+		}
 			
 		model.addAttribute("oneProgram", oneProgram);
 		model.addAttribute("paramMap",paramMap);
 		model.addAttribute("pageTitle", "smore | 정부지원사업");
 		return "detail/program-detail";
 	}
-	
+	 
 	//program/clip?onepNo=251&isClip=1
 		@GetMapping("/program/clip") 
 		public ResponseEntity<Integer> oneProgramClip(

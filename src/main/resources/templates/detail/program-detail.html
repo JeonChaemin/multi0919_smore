@@ -39,7 +39,7 @@
                   <li class="breadcrumb-item"><a th:href="@{/}" class="fontsizeup" >HOME</a></li>
                   <li class="breadcrumb-item"><a href="javascript:void(0)"
                       class="fontsizeup">&nbsp;&nbsp;&nbsp;LIFE</a></li>
-                  <li class="breadcrumb-item"><a href="@{/category/program}" class="fontsizeup" >PROGRAM</a></li>
+                  <li class="breadcrumb-item"><a href="@{/program}" class="fontsizeup" >PROGRAM</a></li>
                 </ol>
               </nav>
             </div>
@@ -157,7 +157,7 @@
                 <h5 class="mb-3" >접수 방법</h5>
                 <div class="job-details-desc">
                   <p class="text-muted" >[[${oneProgram.rceptMthNm}]]</p>
-                  <p class="text-muted"><a href="${oneProgram.rceptMthLink}" >[[${oneProgram.rceptMthLink}]]</a></p>
+                  <p class="text-muted"><a th:href="|${oneProgram.rceptMthLink}|" >[[${oneProgram.rceptMthLink}]]</a></p>
                 </div>
               </div>
             </div><!--end card-body-->
@@ -203,7 +203,7 @@
                       <i class="uil uil-usd-circle icon bg-soft-primary"></i>
                       <div class="ms-3">
                         <h6 class="fs-14 mb-2">참가비</h6>
-                        <p class="text-muted mb-0">[[${oneProgram.partcptAmount}]]</p>
+                        <p class="text-muted mb-0">[[${oneProgram.partcptCtNm}]]</p>
                       </div>
                     </div>
                   </li>
@@ -228,7 +228,8 @@
 
                 </ul>
                 <div class="mt-5 mb-3">
-                  <a href="${oneProgram.rceptMthLink}" data-bs-toggle="modal" class="btn btn-primary btn-hover w-100 mt-2">페이지 이동
+<!--                   <a th:href="${oneProgram.rceptMthLink}" data-bs-toggle="modal" class="btn btn-primary btn-hover w-100 mt-2">페이지 이동 -->
+                  <a th:href="${oneProgram.rceptMthLink}" class="btn btn-primary btn-hover w-100 mt-2">페이지 이동
                     <i class="uil uil-arrow-right"></i></a>
                 </div>
               </div><!--end card-body-->
@@ -242,7 +243,7 @@
     </div><!--end container-->
   </section>
   <!-- START JOB-DEATILS -->
-
+ 
 
   <footer th:replace="~{common/layout :: #footer}"></footer>
 

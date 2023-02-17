@@ -40,7 +40,7 @@
 								<ol class="breadcrumb justify-content-center">
 									<li class="breadcrumb-item"><a th:href="@{/}">HOME</a></li>
 									<li class="breadcrumb-item"><a th:href="@{/}">&nbsp;&nbsp;&nbsp;LIFE</a></li>
-									<li class="breadcrumb-item" aria-current="page"><a th:href="@{/category/program}"> PROGRAM </a></li>
+									<li class="breadcrumb-item" aria-current="page"><a th:href="@{/program}"> PROGRAM </a></li>
 								</ol>
 							</nav>
 						</div>
@@ -68,7 +68,7 @@
 
 	<section class="section">
 		<div class="container mt-5">
-			<form th:action="@{/category/program}" method="post" name="oneprosearch" class="my-5 formbox">
+			<form th:action="@{/program}" method="post" name="oneprosearch" class="my-5 formbox">
 				<div class="row g-2">
 					<div class="col-lg-5 col-md-6">
 						<div class="filler-job-form">
@@ -137,11 +137,11 @@
 								<img th:src="|/images/programimage/program${oneProgram.onepNo}.jpg|" alt="" class="img-fluid"
 									style="height: 280px; width: auto; object-fit: cover;">
 								<div class="card-body">
-									<a th:href="|/detail/program-detail?onepNo=${oneProgram.onepNo}|" class="primary-link">
+									<a th:href="|/program-detail?onepNo=${oneProgram.onepNo}|" class="primary-link">
 										<h6 class="fs-17" th:text="${oneProgram.partcptnSj}"></h6>
 									</a>
 									<div>
-										<a th:href="|/detail/program-detail?onepNo=${oneProgram.onepNo}|"  class="form-text text-primary" th:text="'서울특별시 '+${oneProgram.atdrcNm}"><i class="uil uil-angle-right-b"></i></a>
+										<a th:href="|/program-detail?onepNo=${oneProgram.onepNo}|"  class="form-text text-primary" th:text="'서울특별시 '+${oneProgram.atdrcNm}"><i class="uil uil-angle-right-b"></i></a>
 									</div>
 								</div>
 							</div><!--end blog-grid-box-->
@@ -154,7 +154,7 @@
 		</div>
 		<!--end sidebar-->
 	</section>
-
+ 
 	<section>
 		<th:block th:each="oneProgram : ${list2}"> 
 		<div class="container">
@@ -163,15 +163,15 @@
 					<div class="row">
 						<div class="col-lg-1">
 						
-							<a th:href="|/detail/program-detail?onepNo=${oneProgram.onepNo}|" ><img th:src="|/images/programimage/program${oneProgram.onepNo%101}.jpg|" alt=""
+							<a th:href="|/program-detail?onepNo=${oneProgram.onepNo}|" ><img th:src="|/images/programimage/program${oneProgram.onepNo%101}.jpg|" alt=""
 									class="img-fluid rounded-3 imground"></a>
 						</div><!--end col-->
 						<div class="col-lg-10">
 							<div class="mt-3 mt-lg-0">
-								<h5 class="fs-17 mt-2 mb-3"><a th:href="|/detail/program-detail?onepNo=${oneProgram.onepNo}|"  class="text-dark" >[[${oneProgram.partcptnSj}]]  [[${oneProgram.onepNo}]]</a></h5>
+								<h5 class="fs-17 mt-2 mb-3"><a th:href="|/program-detail?onepNo=${oneProgram.onepNo}|"  class="text-dark" >[[${oneProgram.partcptnSj}]] </a></h5>
 								<ul class="list-inline mb-0">
 									<li class="list-inline-item">
-										<p class="text-muted fs-14 mb-0"><i class="mdi mdi-map-marker" ></i>&nbsp;서울특별시 [[${oneProgram.atdrcNm}]] [[${oneProgram.tyNm}]]</p>
+										<p class="text-muted fs-14 mb-0"><i class="mdi mdi-map-marker" ></i>&nbsp;서울특별시 [[${oneProgram.atdrcNm}]]</p>
 									</li>
 									<li class="list-inline-item">
 										<p class="text-muted fs-14 mb-0"><i class="fa-regular fa-calendar" ></i>&nbsp;[[${#dates.format(oneProgram.progrsDe1, 'yyyy-MM-dd')}]]~[[${#dates.format(oneProgram.progrsDe2, 'yyyy-MM-dd')}]]</p>
@@ -184,7 +184,7 @@
 							<div class="clip clipbtn favorite-icon"
 								th:id="|clip${oneProgram.onepNo}|" th:value="${oneProgram.isClip}"
 								th:onclick="|onClickClip('clip${oneProgram.onepNo}', '${oneProgram.onepNo}');|">
-								<a href="oneprogramclip">
+								<a href="javascript:void(0)">
 									<i class="uil uil-heart-alt fs-18"></i>
 								</a>
 							</div>
