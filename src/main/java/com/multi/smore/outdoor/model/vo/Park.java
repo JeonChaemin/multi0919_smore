@@ -1,7 +1,6 @@
-package com.multi.smore.model.vo;
+package com.multi.smore.outdoor.model.vo;
 
 import java.util.Date;
-import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,7 +29,5 @@ public class Park {
 	private String phoneNumber; //전화번호
 	private Date referenceDate; //데이터기준일자
 	private int insttCode; //제공기관코드
-	private List<ReplyPark> replys;
-	private int clipCount;
 	private int isClip;
 }
