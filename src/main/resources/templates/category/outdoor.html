@@ -1,162 +1,17 @@
 <!doctype html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-
-
-  <meta charset="utf-8" />
-  <title>smore | Outdoor</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content=" " />
-  <meta name="keywords" content="" />
-  <meta content="Themesdesign" name="author" />
-
-  <!-- App favicon -->
-  <link rel="shortcut icon" href="assets/images/favicon.ico">
-
-  <!-- Choise Css -->
-  <link rel="stylesheet" href="assets/libs/choices.js/public/assets/styles/choices.min.css">
-
-  <!-- Nouislider Css -->
-  <link rel="stylesheet" href="assets/libs/nouisliderribute/nouislider.min.css">
-
-
-  <!-- Bootstrap Css -->
-  <link href="assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
-  <!-- Icons Css -->
-  <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-  <!-- App Css-->
-  <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+<head th:fragment="head" th:replace="~{common/layout :: head}"></head>
   <!--Custom Css-->
-  <link rel="stylesheet" href="assets/css/outdoor.css">
-  <!-- Pretendard Font -->
-	<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard-dynamic-subset.css" />
-	<!-- Font Awesome CSS-->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-  <script src="https://kit.fontawesome.com/dd4a6a23ab.js" crossorigin="anonymous"></script>
-
-
-</head>
+  <link rel="stylesheet" id="custom" type="text/css" th:href="@{/css/outdoor.css}">
 
 <body>
-  <!--start page Loader -->
-  <!-- <div id="preloader">
-  </div> -->
-  <!--end page Loader -->
-
   <!-- Begin page -->
+  
   <div>
     <!--Navbar Start-->
-    <nav class="navbar navbar-expand-lg" id="navbar">
-      <div class="container-fluid custom-container">
-        <a class="navbar-brand text-dark fw-bold me-auto" href="index.html">
-          <img src="assets/images/logo-dark.png" height="45" alt="" class="logo-dark" />
-          <img src="assets/images/logo-light.png" height="45" alt="" class="logo-light" />
-        </a>
-        <div>
-          <button class="navbar-toggler me-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-            aria-controls="navbarCollapse" aria-label="Toggle navigation">
-            <i class="mdi mdi-menu"></i>
-          </button>
-        </div>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-          <ul class="navbar-nav mx-auto navbar-center">
-            <li class="nav-item dropdown dropdown-hover">
-              <a class="nav-link" href="javascript:void(0)" id="homedrop" role="button" data-bs-toggle="dropdown">
-                라이프 <div class="arrow-down"></div>
-              </a>
-              <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="homedrop">
-                <li><a class="dropdown-item" href="trade.html">중고/재능 거래</a></li>
-                <li><a class="dropdown-item" href="recipe.html">레시피</a></li>
-                <li><a class="dropdown-item" href="outdoor.html">야외활동</a></li>
-              </ul>
-            </li>
-            <li class="nav-item dropdown dropdown-hover">
-              <a class="nav-link" href="javascript:void(0)" id="jobsdropdown" role="button" data-bs-toggle="dropdown">
-                정보 <div class="arrow-down"></div>
-              </a>
-              <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="jobsdropdown">
-                <li><a class="dropdown-item" href="rental.html">공공임대주택</a></li>
-                <li><a class="dropdown-item" href="program.html">정부지원사업</a></li>
-                <li><a class="dropdown-item" href="news.html">뉴스</a></li>
-              </ul>
-            </li>
-            <li class="nav-item dropdown dropdown-hover">
-              <a class="nav-link" href="javascript:void(0)" id="productdropdown" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                커뮤니티
-                <div class="arrow-down"></div>
-              </a>
-              <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="productdropdown">
-                <li><a class="dropdown-item" href="notice.html">공지사항</a></li>
-                <li><a class="dropdown-item" href="board.html">자유 게시판</a></li>
-                <li><a class="dropdown-item" href="suggestion.html">건의 게시판</a></li>
-              </ul>
-            </li><!--end dropdown-->
-          </ul><!--end navbar-nav-->
-        </div>
-        <!--end navabar-collapse-->
-        <!--logout-->
-				<!-- <ul class="header-menu list-inline d-flex align-items-center mb-0">
-					<a class="text-reset mx-2 log-menu" href="sign-in.html"><span class="d-none d-md-inline-block fw-medium">로그인</span></a> | 
-					<a class="text-reset mx-2 log-menu" href="sign-up.html"><span class="d-none d-md-inline-block fw-medium">회원가입</span></a>
-				</ul>-->
-				<!--login-->
-        <ul class="header-menu list-inline d-flex align-items-center mb-0">
-          <li class="list-inline-item dropdown me-4">
-            <a href="javascript:void(0)" class="header-item noti-icon position-relative" id="notification"
-              data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="mdi mdi-bell fs-22"></i>
-              <div class="count position-absolute">1</div>
-            </a>
-            <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end p-0" aria-labelledby="notification">
-              <div class="notification-header border-bottom bg-light">
-                <h6 class="mb-1"> 알림센터 </h6>
-                <p class="text-muted fs-13 mb-0">1개의 읽지 않은 알림</p>
-              </div>
-              <div class="notification-wrapper dropdown-scroll">
-                <a href="javascript:void(0)" class="text-dark notification-item d-block active">
-                  <div class="d-flex align-items-center">
-                    <div class="flex-shrink-0 me-3">
-                      <div class="avatar-xs bg-primary text-white rounded-circle text-center">
-                        <i class="uil uil-user-check"></i>
-                      </div>
-                    </div>
-                    <div class="flex-grow-1">
-                      <h6 class="mt-0 mb-1 fs-14">22 verified registrations</h6>
-                      <p class="mb-0 fs-12 text-muted"><i class="mdi mdi-clock-outline"></i>
-                        <span>3 min
-                          ago</span>
-                      </p>
-                    </div>
-                  </div>
-                </a><!--end notification-item-->
-              </div><!--end notification-wrapper-->
-              <div class="notification-footer border-top text-center">
-                <a class="primary-link fs-13" href="javascript:void(0)">
-                  <i class="mdi mdi-arrow-right-circle me-1"></i> <span>더보기</span>
-                </a>
-              </div>
-            </div>
-          </li>
-          <li class="list-inline-item dropdown">
-            <a href="javascript:void(0)" class="header-item" id="userdropdown" data-bs-toggle="dropdown"
-              aria-expanded="false">
-              <img src="assets/images/profile.jpg" alt="mdo" width="35" height="35" class="rounded-circle me-1"> <span
-                class="d-none d-md-inline-block fw-medium">스모어
-                님</span>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown">
-              <li><a class="dropdown-item" href="mypage.html">마이페이지</a></li>
-              <li><a class="dropdown-item" href="housebudget.html">가계부</a></li>
-              <li><a class="dropdown-item" href="sign-out.html">로그아웃</a></li>
-            </ul>
-          </li>
-        </ul><!--end header-menu-->
-      </div>
-      <!--end container-->
-    </nav>
+	<header th:replace="~{common/layout :: #header}"></header>
+    
     <!-- Navbar End -->
 
     <div class="main-content">
@@ -164,7 +19,7 @@
       <div class="page-content">
 
         <!-- Start home -->
-        <section class="page-title-box" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(assets/images/img/hero_outdoor.jpg); height: 350px; padding-top: 130px; background-position: center;">
+         <section class="page-title-box" th:style="'background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('+@{/images/img/hero_outdoor.jpg}+'); height: 350px; padding-top: 130px; background-position: center;'">
           <div class="container">
             <div class="row justify-content-center">
               <div class="col-md-6">
@@ -173,9 +28,9 @@
                   <div class="page-next">
                     <nav class="d-inline-block" aria-label="breadcrumb text-center">
                       <ol class="breadcrumb justify-content-center">
-                        <li class="breadcrumb-item"><a href="index.html">HOME</a></li>
-                        <li class="breadcrumb-item"><a href="outdoor.html">LIFE</a></li>
-                        <li class="breadcrumb-item active" aria-current="page"> OUTDOOR </li>
+                        <li class="breadcrumb-item"><a th:href="@{/home}">HOME</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/outdoor}">LIFE</a></li>
+                        <li class="breadcrumb-item active" aria-current="page"><a th:href="@{/outdoor}">OUTDOOR</a></li>
                       </ol>
                     </nav>
                   </div>
@@ -190,7 +45,7 @@
         <!-- end home -->
 
         <!-- START SHAPE -->
-        <div class="position-relative" style="z-index: 1">
+        <div class="position-relative" th:style="'z-index: 1'">
           <div class="shape">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 250">
               <path fill="#FFFFFF" fill-opacity="1"
@@ -202,201 +57,142 @@
         <!-- END SHAPE -->
 
 
-        <!-- START JOB-LIST -->
+        <!-- START outdoor -->
         <section class="section">
           <div class="container mt-5">
-            <form action="#">
+            <form th:action="@{/outdoor}" method="get">
               <div class="row g-2">
                 <div class="col-lg-5 col-md-8">
                   <div class="filler-job-form">
                     <i class="mdi mdi-magnify"></i>
-                    <input type="search" class="form-control filter-job-input-box2" id="exampleFormControlInput1"
-                      placeholder="검색어를 입력하세요. ">
+                    <input type="search"  name="searchValue" id="searchValue" class="form-control filter-job-input-box2"
+                      th:value="${param.searchValue}" placeholder="검색어를 입력하세요. "> 
                   </div>
                 </div><!--end col-->
-                <div class="col-lg-2 col-md-5">
+                <div class="col-lg-2 col-md-5"> 
                   <div class="filler-job-form">
-                    <i class="uil uil-clipboard-notes"></i>
-                    <select class="form-select " data-trigger name="choices-single-categories"
-                      id="choices-single-categories" aria-label="Default select example">
-                      <option value="#">공원</option>
-                      <option value="#">산책로</option>
+                    <i class="uil uil-clipboard-notes me-5"></i>
+                    <select class="form-select filter-job-input-box2" name="searchType" id="searchType">
+                      <option value="공원" th:selected="${param.searchType} == '공원'">공원</option>
+                      <option value="산책로" th:selected="${param.searchType} == '산책로'">산책로</option>
                     </select>
                   </div>
                 </div><!--end col-->
-
                 <div class="col-lg-2 col-md-2">
                   <div class="filler-job-form">
                     <i class="uil uil-location-point"></i>
-                    <select class="form-select" data-trigger name="choices-single-location" id="choices-single-location"
-                      aria-label="Default select example">
-                      <option value="#">서울특별시</option>
-                      <option value="#">부산광역시</option>
-                      <option value="#">인천광역시</option>
-                      <option value="#">대구광역시</option>
-                      <option value="#">대전광역시</option>
-                      <option value="#">광주광역시</option>
-                      <option value="#">울산광역시</option>
-                      <option value="#">세종특별자치시</option>
-                      <option value="#">경기도</option>
-                      <option value="#">강원도 </option>
-                      <option value="#">충청북도</option>
-                      <option value="#">충청남도</option>
-                      <option value="#">전라북도</option>
-                      <option value="#">전라남도</option>
-                      <option value="#">경상북도</option>
-                      <option value="#">경상남도</option>
-                      <option value="#">제주특별자치도</option>
+                    <select class="form-select filter-job-input-box2" name="regions" id="regions">
+                      <option value="서울특별시" th:selected="${#arrays.contains(regions, '서울특별시')  ? 'selected' : null}">서울특별시</option>
+                      <option value="부산광역시" th:selected="${#arrays.contains(regions, '부산광역시')  ? 'selected' : null}">부산광역시</option>
+                      <option value="인천광역시" th:selected="${#arrays.contains(regions, '인천광역시')  ? 'selected' : null}">인천광역시</option>
+                      <option value="대구광역시" th:selected="${#arrays.contains(regions, '대구광역시')  ? 'selected' : null}">대구광역시</option>
+                      <option value="대전광역시" th:selected="${#arrays.contains(regions, '대전광역시')  ? 'selected' : null}">대전광역시</option>
+                      <option value="광주광역시" th:selected="${#arrays.contains(regions, '광주광역시')  ? 'selected' : null}">광주광역시</option>
+                      <option value="울산광역시" th:selected="${#arrays.contains(regions, '울산광역시')  ? 'selected' : null}">울산광역시</option>
+                      <option value="세종특별자치시" th:selected="${#arrays.contains(regions, '세종특별자치시')  ? 'selected' : null}">세종특별자치시</option>
+                      <option value="경기도" th:selected="${#arrays.contains(regions, '경기도')  ? 'selected' : null}">경기도</option>
+                      <option value="강원도" th:selected="${#arrays.contains(regions, '강원도')  ? 'selected' : null}">강원도 </option>
+                      <option value="충청북도" th:selected="${#arrays.contains(regions, '충청북도')  ? 'selected' : null}">충청북도</option>
+                      <option value="충청남도" th:selected="${#arrays.contains(regions, '충청남도')  ? 'selected' : null}">충청남도</option>
+                      <option value="전라북도" th:selected="${#arrays.contains(regions, '전라북도')  ? 'selected' : null}">전라북도</option>
+                      <option value="전라남도" th:selected="${#arrays.contains(regions, '전라남도')  ? 'selected' : null}">전라남도</option>
+                      <option value="경상북도" th:selected="${#arrays.contains(regions, '경상북도')  ? 'selected' : null}">경상북도</option>
+                      <option value="경상남도" th:selected="${#arrays.contains(regions, '경상남도')  ? 'selected' : null}">경상남도</option>
+                      <option value="제주특별자치도" th:selected="${#arrays.contains(regions, '제주특별자치도')  ? 'selected' : null}">제주특별자치도</option>
                     </select>
                   </div>
                 </div><!--end col-->
-
                 <div class="col-lg-3 col-md-5">
-                  <a href="javascript:void(0)" class="btn btn-primary w-100"><i class="uil uil-filter"></i> 필터 적용</a>
+                  <button class="btn btn-primary w-100" type="submit"><i class="uil uil-filter"></i> 필터 적용</button>
                 </div><!--end col-->
               </div><!--end row-->
             </form>
 
 
+            <!-- '추천 키워드'로 변환!!! -->
             <div class="row mt-4">
               <div class="col-lg-12">
-                <h6 class="fs-20 mb-3">선택 키워드</h6>
+                <h6 class="fs-20 mb-3">추천 키워드</h6>
                 <div class="selecte-tag position-relative">
-                  <input type="text" id="choices-text-remove-button" value="경기도, 서울특별시">
-                </div>
-              </div><!--end col-->
-              <div class="col-lg-12">
-                <div class="mt-4">
-                  <h6 class="fs-22">인기 공원</h6>
+                  <div class="choices" data-type="text" aria-haspopup="true" aria-expanded="false">
+                    <div class="choices__inner">
+                    <input type="text" id="choices-text-remove-button" value="서울특별시"
+                        class="choices__input" hidden="" tabindex="-1" data-choice="active">
+                      <div class="choices__list choices__list--multiple">
+                        <div class="choices__item choices__item--selectable" data-item="" data-id="1" data-value="서울특별시"
+                          data-custom-properties="null" aria-selected="true" data-deletable="" style="font-size: 15px;">서울특별시<button
+                            type="button" class="choices__button" aria-label="Remove item: '서울특별시'"
+                            data-button="">Remove item</button></div>
+                      </div>
+                      <input type="text" class="choices__input choices__input--cloned" autocomplete="off"
+                        autocapitalize="off" spellcheck="false" role="textbox" aria-autocomplete="list"
+                        aria-label="false">
+                    </div>
+                    <div class="choices__list choices__list--dropdown" aria-expanded="false"></div>
+                  </div>
+                  <!-- <input type="text" id="choices-text-remove-button" value="경기도, 서울특별시"> -->
                 </div>
               </div><!--end col-->
             </div><!--end row-->
 
-            <!-- 인기게시글 시작  -->
-            <div class="row">
+
+			<!-- 공원 시작 부  -->
+            <!-- 인기게시글 4개 -->
+            <th:block th:if="${param.searchValue} == null">
+              <div class="row">
               <div class="col-lg-12 col-md-12 mt-3">
+              	<div class="mt-3 mb-4"><h6 class="fs-22">인기 공원</h6></div>
                 <div class="blog-post">
                   <div class="row ">
                     <!-- 인기 1 -->
+                    <th:block th:each="item : ${parkList}">
                     <div class="col-lg-3 mb-4">
-                      <div class="card blog-grid-box p-2">
-                        <img src="assets/images/img/park2.jpeg" alt="" class="rounded-2" style="width: 250px; height: 150px;">
+                      <div class="card blog-grid-box p-2"  > <!-- th:each=" i : ${#numbers.sequence(1,1)}" -->  
+                        <img th:src="@{/images/img/park1.jpeg}" alt="" class="rounded-2" th:style="${'width: 250px; height: 150px;'}">
                         <div class="card-body">
                           <ul class="list-inline d-flex justify-content-between mb-0">
                             <li class="list-inline-item">
-                              <p class="text-muted mb-0">근린공원</p>
+                              <p class="text-muted mb-0">[[${item.parkSe}]]</p>
                             </li>
-                            <!-- <li class="list-inline-item">
-                                                      <p class="text-muted mb-0"><i class="mdi mdi-eye"></i> 432</p>
-                                                  </li> -->
                           </ul>
-                          <a href="outdoor-detail.html" class="primary-link">
-                            <h6 class="fs-20 mb-3">올림픽공원</h6>
-                          </a>
-                          <p class="text-muted fs-16"><i class="mdi mdi-map-marker"></i>서울특별시</p>
+                          <h6 class="fs-20 mb-3">
+                          	<a th:href="@{/outdoor/outdoor-detail(parkNo=${item.parkNo})}" class="primary-link">[[${item.parkNm}]]</a>
+                          </h6>
+                          <p class="text-muted fs-16"><i class="mdi mdi-map-marker"></i>[[${item.lnmadr}]]</p>
                           <div class="text-md-end">
-                            <a href="outdoor-detail.html" class="form-text text-primary">상세보기 <i
+                            <a th:href="@{/outdoor/outdoor-detail(parkNo=${item.parkNo}, searchType=${param.searchType == '공원'})}" class="form-text text-primary">상세보기 <i
                                 class="mdi mdi-chevron-double-right"></i></a>
                           </div>
                         </div>
-                      </div><!--end blog-grid-box-->
-                    </div><!--end col-->
-                    <!-- 인기 2-->
-                    <div class="col-lg-3 mb-4">
-                      <div class="card blog-grid-box p-2">
-                        <img src="assets/images/img/park1.png" alt="" class="rounded-2" style="width:250px; height:150px">
-                        <div class="card-body">
-                          <ul class="list-inline d-flex justify-content-between mb-0">
-                            <li class="list-inline-item">
-                              <p class="text-muted mb-0">어린이공원</p>
-                            </li>
-                            <!-- <li class="list-inline-item">
-                                                      <p class="text-muted mb-0"><i class="mdi mdi-eye"></i> 432</p>
-                                                  </li> -->
-                          </ul>
-                          <a href="outdoor-detail.html" class="primary-link">
-                            <h6 class="fs-20 mb-3">서울숲공원</h6>
-                          </a>
-                          <p class="text-muted fs-16"><i class="mdi mdi-map-marker"></i>서울특별시</p>
-                          <div class="text-md-end">
-                            <a href="outdoor-detail.html" class="form-text text-primary">상세보기 <i
-                                class="mdi mdi-chevron-double-right"></i></a>
-                          </div>
-                        </div>
-                      </div><!--end blog-grid-box-->
-                    </div><!--end col-->
-                    <!-- 인기 3 -->
-                    <div class="col-lg-3 mb-4">
-                      <div class="card blog-grid-box p-2">
-                        <img src="assets/images/img/park3.jpeg" alt="" class="rounded-2" style="width: 250px; height: 150px;">
-                        <div class="card-body">
-                          <ul class="list-inline d-flex justify-content-between mb-0">
-                            <li class="list-inline-item">
-                              <p class="text-muted mb-0">어린이공원</p>
-                            </li>
-                            <!-- <li class="list-inline-item">
-                                                      <p class="text-muted mb-0"><i class="mdi mdi-eye"></i> 432</p>
-                                                  </li> -->
-                          </ul>
-                          <a href="outdoor-detail.html" class="primary-link">
-                            <h6 class="fs-20 mb-3">어린이대공원</h6>
-                          </a>
-                          <p class="text-muted fs-16"><i class="mdi mdi-map-marker"></i>서울특별시</p>
-                          <div class="text-md-end">
-                            <a href="outdoor-detail.html" class="form-text text-primary">상세보기 <i
-                                class="mdi mdi-chevron-double-right"></i></a>
-                          </div>
-                        </div>
-                      </div><!--end blog-grid-box-->
-                    </div><!--end col-->
-                    <!-- 인기 4 -->
-                    <div class="col-lg-3 mb-4">
-                      <div class="card blog-grid-box p-2">
-                        <img src="assets/images/img/park4.jpeg" alt="" class="rounded-2" style="width: 250px; height: 150px;">
-                        <div class="card-body">
-                          <ul class="list-inline d-flex justify-content-between mb-0">
-                            <li class="list-inline-item">
-                              <p class="text-muted mb-0">생태공원</p>
-                            </li>
-                            <!-- <li class="list-inline-item">
-                                                      <p class="text-muted mb-0"><i class="mdi mdi-eye"></i> 432</p>
-                                                  </li> -->
-                          </ul>
-                          <a href="outdoor-detail.html" class="primary-link">
-                            <h6 class="fs-20 mb-3">광교호수공원</h6>
-                          </a>
-                          <p class="text-muted fs-16"><i class="mdi mdi-map-marker"></i>경기도</p>
-                          <div class="text-md-end">
-                            <a href="outdoor-detail.html" class="form-text text-primary">상세보기 <i
-                                class="mdi mdi-chevron-double-right"></i></a>
-                          </div>
-                        </div>
-                      </div><!--end blog-grid-box-->
-                    </div><!--end col-->
+                      </div>
+                    </div>
+                    </th:block>
                   </div>
                 </div>
               </div>
             </div>
+           </th:block>
 
             <!-- 리스트 시작 -->
+            <div class="mt-3"><h6 class="fs-22">전체 보기</h6></div>
+            <th:block th:each="item : ${list}" >
             <div class="row">
-              <!-- 항목 1 -->
               <div class="col-lg-12">
                 <div class="job-box card mt-3">
                   <div class="p-4">
                     <div class="row align-items-center">
                       <div class="col-md-1">
                         <div class="text-center mb-4 mb-md-0">
-                          <a href="outdoor-detail.html"><img src="assets/images/img/free-icon-park-433102.png" alt=""
-                              style="width: 50px; height: 50px;"></a>
+                          <a th:href="@{/outdoor/outdoor-detail(parkNo=${item.parkNo})}"><img th:src="@{/images/img/free-icon-park-433102.png}" alt=""
+                              th:style="'width: 50px; height: 50px;'"></a>
                         </div>
                       </div>
                       <!--end col-->
                       <div class="col-md-3">
                         <div class="mb-2 mb-md-0 ms-2">
-                          <h5 class="fs-21 mb-1"><a href="outdoor-detail.html" class="text-dark">올림픽공원</a>
+                          <h5 class="fs-21 mb-1"><a th:href="@{/outdoor/outdoor-detail(parkNo=${item.parkNo})}" class="text-dark">[[${item.parkNm}]]</a>
                           </h5>
-                          <p class="text-muted fs-14 mb-0">근린공원</p>
+                          <p class="text-muted fs-14 mb-0">[[${item.parkSe}]]</p>
                         </div>
                       </div>
                       <!--end col-->
@@ -406,7 +202,7 @@
                             <i class="mdi mdi-map-marker text-primary"></i>
                           </div>
                           <div class="flex-grow-1 ms-2">
-                            <p class="text-muted fs-16 mb-0">서울특별시 성동구 뚝섬로 273</p>
+                            <p class="text-muted fs-16 mb-0">[[${item.lnmadr}]]</p>
                           </div>
                         </div>
                       </div>
@@ -417,325 +213,63 @@
                             <i class="uil uil-phone-alt"></i>
                           </div>
                           <div class="flex-grow-1 ms-2">
-                            <p class="text-muted fs-16 mb-0">02-460-2905</p>
+                            <p class="text-muted fs-16 mb-0">[[${item.phoneNumber}]]</p>
                           </div>
                         </div>
                       </div>
-                      <!--end col-->
-                      <div class="text-end favorite-icon2" style="line-height: 70px;">
-                        <a href="javascript:void(0)"><i class="uil uil-heart-alt fs-20"></i></a>
+                      <!-- 좋아요 수정... -->
+                       <th:block th:if="${session.loginMember != null}">
+					 	<div class="clip text-end favorite-icon2" th:style="'line-height: 70px;'" th:id="|clip${item.parkNo}|" th:value="${item.isClip}" th:onclick="|onClickClip('clip${item.parkNo}', '${item.parkNo}');|">
+					 		<a th:style="'cursor: pointer;'"><i class="uil uil-heart-alt fs-20"></i></a>
+					 	</div>
+					  </th:block>
                       </div>
                       <!--end col-->
                     </div>
                     <!--end row-->
-                  </div>
                   <div class="p-1 bg-light">
                     <div class="text-end fs-14 me-3">
-                      <a href="outdoor-detail.html" class="primary-link">상세보기 <i class="mdi mdi-chevron-double-right"></i></a>
+                      <a th:href="@{/outdoor/outdoor-detail(parkNo=${item.parkNo})}" th:class="primary-link">상세보기 <i class="mdi mdi-chevron-double-right"></i></a>
                     </div>
+                  </div>
                   </div>
                 </div>
               </div>
-              <!-- 항목 2 -->
-              <div class="col-lg-12">
-                <div class="job-box card mt-3">
-                  <div class="p-4">
-                    <div class="row align-items-center">
-                      <div class="col-md-1">
-                        <div class="text-center mb-4 mb-md-0">
-                          <a href="outdoor-detail.html"><img src="assets/images/img/free-icon-park-433102.png" alt=""
-                              style="width: 50px; height: 50px;"></a>
-                        </div>
-                      </div>
-                      <!--end col-->
-                      <div class="col-md-3">
-                        <div class="mb-2 mb-md-0 ms-2">
-                          <h5 class="fs-21 mb-1"><a href="outdoor-detail.html" class="text-dark">올림픽공원</a>
-                          </h5>
-                          <p class="text-muted fs-14 mb-0">근린공원</p>
-                        </div>
-                      </div>
-                      <!--end col-->
-                      <div class="col-md-4">
-                        <div class="d-flex">
-                          <div class="flex-shrink-0">
-                            <i class="mdi mdi-map-marker text-primary"></i>
-                          </div>
-                          <div class="flex-grow-1 ms-2">
-                            <p class="text-muted fs-16 mb-0">서울특별시 성동구 뚝섬로 273</p>
-                          </div>
-                        </div>
-                      </div>
-                      <!--end col-->
-                      <div class="col-md-3">
-                        <div class="d-flex">
-                          <div class="flex-shrink-0 text-primary">
-                            <i class="uil uil-phone-alt"></i>
-                          </div>
-                          <div class="flex-grow-1 ms-2">
-                            <p class="text-muted fs-16 mb-0">02-460-2905</p>
-                          </div>
-                        </div>
-                      </div>
-                      <!--end col-->
-                      <div class="text-end favorite-icon2" style="line-height: 70px;">
-                        <a href="javascript:void(0)"><i class="uil uil-heart-alt fs-20"></i></a>
-                      </div>
-                      <!--end col-->
-                    </div>
-                    <!--end row-->
-                  </div>
-                  <div class="p-1 bg-light">
-                    <div class="text-end fs-14 me-3">
-                      <a href="outdoor-detail.html" class="primary-link">상세보기 <i class="mdi mdi-chevron-double-right"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- 항목 3 -->
-              <div class="col-lg-12">
-                <div class="job-box card mt-3">
-                  <div class="p-4">
-                    <div class="row align-items-center">
-                      <div class="col-md-1">
-                        <div class="text-center mb-4 mb-md-0">
-                          <a href="outdoor-detail.html"><img src="assets/images/img/free-icon-park-433102.png" alt=""
-                              style="width: 50px; height: 50px;"></a>
-                        </div>
-                      </div>
-                      <!--end col-->
-                      <div class="col-md-3">
-                        <div class="mb-2 mb-md-0 ms-2">
-                          <h5 class="fs-21 mb-1"><a href="outdoor-detail.html" class="text-dark">올림픽공원</a>
-                          </h5>
-                          <p class="text-muted fs-14 mb-0">근린공원</p>
-                        </div>
-                      </div>
-                      <!--end col-->
-                      <div class="col-md-4">
-                        <div class="d-flex">
-                          <div class="flex-shrink-0">
-                            <i class="mdi mdi-map-marker text-primary"></i>
-                          </div>
-                          <div class="flex-grow-1 ms-2">
-                            <p class="text-muted fs-16 mb-0">서울특별시 성동구 뚝섬로 273</p>
-                          </div>
-                        </div>
-                      </div>
-                      <!--end col-->
-                      <div class="col-md-3">
-                        <div class="d-flex">
-                          <div class="flex-shrink-0 text-primary">
-                            <i class="uil uil-phone-alt"></i>
-                          </div>
-                          <div class="flex-grow-1 ms-2">
-                            <p class="text-muted fs-16 mb-0">02-460-2905</p>
-                          </div>
-                        </div>
-                      </div>
-                      <!--end col-->
-                      <div class="text-end favorite-icon2" style="line-height: 70px;">
-                        <a href="javascript:void(0)"><i class="uil uil-heart-alt fs-20"></i></a>
-                      </div>
-                      <!--end col-->
-                    </div>
-                    <!--end row-->
-                  </div>
-                  <div class="p-1 bg-light">
-                    <div class="text-end fs-14 me-3">
-                      <a href="outdoor-detail.html" class="primary-link">상세보기 <i class="mdi mdi-chevron-double-right"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- 항목 4 -->
-              <div class="col-lg-12">
-                <div class="job-box card mt-3">
-                  <div class="p-4">
-                    <div class="row align-items-center">
-                      <div class="col-md-1">
-                        <div class="text-center mb-4 mb-md-0">
-                          <a href="outdoor-detail.html"><img src="assets/images/img/free-icon-park-433102.png" alt=""
-                              style="width: 50px; height: 50px;"></a>
-                        </div>
-                      </div>
-                      <!--end col-->
-                      <div class="col-md-3">
-                        <div class="mb-2 mb-md-0 ms-2">
-                          <h5 class="fs-21 mb-1"><a href="outdoor-detail.html" class="text-dark">올림픽공원</a>
-                          </h5>
-                          <p class="text-muted fs-14 mb-0">근린공원</p>
-                        </div>
-                      </div>
-                      <!--end col-->
-                      <div class="col-md-4">
-                        <div class="d-flex">
-                          <div class="flex-shrink-0">
-                            <i class="mdi mdi-map-marker text-primary"></i>
-                          </div>
-                          <div class="flex-grow-1 ms-2">
-                            <p class="text-muted fs-16 mb-0">서울특별시 성동구 뚝섬로 273</p>
-                          </div>
-                        </div>
-                      </div>
-                      <!--end col-->
-                      <div class="col-md-3">
-                        <div class="d-flex">
-                          <div class="flex-shrink-0 text-primary">
-                            <i class="uil uil-phone-alt"></i>
-                          </div>
-                          <div class="flex-grow-1 ms-2">
-                            <p class="text-muted fs-16 mb-0">02-460-2905</p>
-                          </div>
-                        </div>
-                      </div>
-                      <!--end col-->
-                      <div class="text-end favorite-icon2" style="line-height: 70px;">
-                        <a href="javascript:void(0)"><i class="uil uil-heart-alt fs-20"></i></a>
-                      </div>
-                      <!--end col-->
-                    </div>
-                    <!--end row-->
-                  </div>
-                  <div class="p-1 bg-light">
-                    <div class="text-end fs-14 me-3">
-                      <a href="outdoor-detail.html" class="primary-link">상세보기 <i class="mdi mdi-chevron-double-right"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- 항목 5 -->
-              <div class="col-lg-12">
-                <div class="job-box card mt-3">
-                  <div class="p-4">
-                    <div class="row align-items-center">
-                      <div class="col-md-1">
-                        <div class="text-center mb-4 mb-md-0">
-                          <a href="outdoor-detail.html"><img src="assets/images/img/free-icon-park-433102.png" alt=""
-                              style="width: 50px; height: 50px;"></a>
-                        </div>
-                      </div>
-                      <!--end col-->
-                      <div class="col-md-3">
-                        <div class="mb-2 mb-md-0 ms-2">
-                          <h5 class="fs-21 mb-1"><a href="outdoor-detail.html" class="text-dark">올림픽공원</a>
-                          </h5>
-                          <p class="text-muted fs-14 mb-0">근린공원</p>
-                        </div>
-                      </div>
-                      <!--end col-->
-                      <div class="col-md-4">
-                        <div class="d-flex">
-                          <div class="flex-shrink-0">
-                            <i class="mdi mdi-map-marker text-primary"></i>
-                          </div>
-                          <div class="flex-grow-1 ms-2">
-                            <p class="text-muted fs-16 mb-0">서울특별시 성동구 뚝섬로 273</p>
-                          </div>
-                        </div>
-                      </div>
-                      <!--end col-->
-                      <div class="col-md-3">
-                        <div class="d-flex">
-                          <div class="flex-shrink-0 text-primary">
-                            <i class="uil uil-phone-alt"></i>
-                          </div>
-                          <div class="flex-grow-1 ms-2">
-                            <p class="text-muted fs-16 mb-0">02-460-2905</p>
-                          </div>
-                        </div>
-                      </div>
-                      <!--end col-->
-                      <div class="text-end favorite-icon2" style="line-height: 70px;">
-                        <a href="javascript:void(0)"><i class="uil uil-heart-alt fs-20"></i></a>
-                      </div>
-                      <!--end col-->
-                    </div>
-                    <!--end row-->
-                  </div>
-                  <div class="p-1 bg-light">
-                    <div class="text-end fs-14 me-3">
-                      <a href="outdoor-detail.html" class="primary-link">상세보기 <i class="mdi mdi-chevron-double-right"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- 항목 6 -->
-              <div class="col-lg-12">
-                <div class="job-box card mt-3">
-                  <div class="p-4">
-                    <div class="row align-items-center">
-                      <div class="col-md-1">
-                        <div class="text-center mb-4 mb-md-0">
-                          <a href="outdoor-detail.html"><img src="assets/images/img/free-icon-park-433102.png" alt=""
-                              style="width: 50px; height: 50px;"></a>
-                        </div>
-                      </div>
-                      <!--end col-->
-                      <div class="col-md-3">
-                        <div class="mb-2 mb-md-0 ms-2">
-                          <h5 class="fs-21 mb-1"><a href="outdoor-detail.html" class="text-dark">올림픽공원</a>
-                          </h5>
-                          <p class="text-muted fs-14 mb-0">근린공원</p>
-                        </div>
-                      </div>
-                      <!--end col-->
-                      <div class="col-md-4">
-                        <div class="d-flex">
-                          <div class="flex-shrink-0">
-                            <i class="mdi mdi-map-marker text-primary"></i>
-                          </div>
-                          <div class="flex-grow-1 ms-2">
-                            <p class="text-muted fs-16 mb-0">서울특별시 성동구 뚝섬로 273</p>
-                          </div>
-                        </div>
-                      </div>
-                      <!--end col-->
-                      <div class="col-md-3">
-                        <div class="d-flex">
-                          <div class="flex-shrink-0 text-primary">
-                            <i class="uil uil-phone-alt"></i>
-                          </div>
-                          <div class="flex-grow-1 ms-2">
-                            <p class="text-muted fs-16 mb-0">02-460-2905</p>
-                          </div>
-                        </div>
-                      </div>
-                      <!--end col-->
-                      <div class="text-end favorite-icon2" style="line-height: 70px;">
-                        <a href="javascript:void(0)"><i class="uil uil-heart-alt fs-20"></i></a>
-                      </div>
-                      <!--end col-->
-                    </div>
-                    <!--end row-->
-                  </div>
-                  <div class="p-1 bg-light">
-                    <div class="text-end fs-14 me-3">
-                      <a href="outdoor-detail.html" class="primary-link">상세보기 <i class="mdi mdi-chevron-double-right"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              </th:block>
             </div>
+            
+            
+			<!-- 산책로 시작부  -->
+			<th:block th:if="${param.searchType} == '산책로' ? '산책로' : '공원'">
+			
+			
+			</th:block>
+		
 
+
+
+			
+			
 
             <!-- 페이지 카운트 -->
+		  <th:block th:unless="${list == null || list.size == 0}">
             <div class="row">
               <div class="col-lg-12 mt-5 mb-5">
                 <nav aria-label="Page navigation example">
                   <ul class="pagination job-pagination mb-0 justify-content-center">
-                    <li class="page-item disabled">
-                      <a class="page-link" href="javascript:void(0)" tabindex="-1">
-                        <i class="mdi mdi-chevron-double-left fs-15"></i>
-                      </a>
-                    </li>
-                    <li class="page-item active"><a class="page-link" href="javascript:void(0)">1</a></li>
-                    <li class="page-item"><a class="page-link" href="javascript:void(0)">2</a></li>
-                    <li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
-                    <li class="page-item"><a class="page-link" href="javascript:void(0)">4</a></li>
-                    <li class="page-item"><a class="page-link" href="javascript:void(0)">5</a></li>
                     <li class="page-item">
-                      <a class="page-link" href="javascript:void(0)">
+                      <a class="page-link" th:onclick="|movePage('/outdoor?page=${pageInfo.prevPage}');|" tabindex="-1"><i class="mdi mdi-chevron-double-left fs-15"></i></a>
+                    </li>
+	              	<th:block th:each="num, status : ${#numbers.sequence(pageInfo.startPage, pageInfo.endPage)}">
+					  <th:block th:if="${status.current == pageInfo.currentPage}">
+	                    <li class="page-item active"><a class="page-link">[[${status.current}]]</a></li>
+					  </th:block>
+					  <th:block th:if="${status.current != pageInfo.currentPage}">
+                    	<li class="page-item"><a class="page-link" th:onclick="|movePage('/outdoor?page=${status.current}');|">[[${status.current}]]</a></li>
+					  </th:block>
+					</th:block>
+                    <li class="page-item">
+                      <a class="page-link" th:onclick="|movePage('/outdoor?page=${pageInfo.nextPage}');|">
                         <i class="mdi mdi-chevron-double-right fs-15"></i>
                       </a>
                     </li>
@@ -743,106 +277,141 @@
                 </nav>
               </div><!--end col-->
             </div><!-- end row -->
-
-          </div><!--end container-->
+          </th:block>  
+            
         </section>
+        </div><!--end container-->
         <!-- END JOB-LIST -->
       </div>
       <!-- End Page-content -->
 
-
-      <!-- START FOOTER -->
-			<div class="footer-alt">
-				<div class="container">
-					<div class="row">
-						<div class="text-center text-white-50 col-lg-12 mb-2">
-							<img style="height: 45px;" src="assets/images/logo-light.png">
-						</div>
-						<div class="text-center text-white-50 col-lg-12">
-							<a class="d-inline-block text-reset" href="#">개인정보처리방침</a> | 
-							<a class="d-inline-block text-reset" href="#">저작권정책</a> | 
-							<a class="d-inline-block text-reset" href="#">사이트맵</a>
-						</div>
-						<div class="col-lg-12">
-							<p class="text-white-50 text-center mb-0">
-								고객센터 : 02-123-1234
-								<script>document.write(new Date().getFullYear())</script> &copy; smore - All Rights Reserved.
-							</p>
-						</div><!--end col-->
-					</div><!--end row-->
-				</div><!--end container-->
-			</div>
-			<!-- END FOOTER -->
-
-    
-
-      <!-- Style switcher -->
-      <div id="style-switcher" onclick="toggleSwitcher()" style="left: -165px;">
-        <div>
-          <h6>Select your color</h6>
-          <ul class="pattern list-unstyled mb-0">
-            <li>
-              <a class="color-list color1" href="javascript: void(0);" onclick="setColorGreen()"></a>
-            </li>
-            <li>
-              <a class="color-list color2" href="javascript: void(0);" onclick="setColor('blue')"></a>
-            </li>
-            <li>
-              <a class="color-list color3" href="javascript: void(0);" onclick="setColor('green')"></a>
-            </li>
-          </ul>
-          <div class="mt-3">
-            <h6>Light/dark Layout</h6>
-            <div class="text-center mt-3">
-              <!-- light-dark mode -->
-              <a href="javascript: void(0);" id="mode" class="mode-btn text-white rounded-3">
-                <i class="uil uil-brightness mode-dark mx-auto"></i>
-                <i class="uil uil-moon mode-light"></i>
-              </a>
-              <!-- END light-dark Mode -->
-            </div>
-          </div>
-        </div>
-        <!-- 톱니바퀴 아이콘 가리기  -->
-        <!-- <div class="bottom d-none d-md-block">
-          <a href="javascript: void(0);" class="settings rounded-end"><i class="mdi mdi-cog mdi-spin"></i></a>
-        </div> -->
-      </div>
-      <!-- end switcher-->
+  
+	  <footer th:replace="~{common/layout :: #footer}"></footer>		
 
       <!--start back-to-top-->
-      <button onclick="topFunction()" id="back-to-top">
+      <button th:onclick="|topFunction()|" id="back-to-top">
         <i class="mdi mdi-arrow-up"></i>
       </button>
       <!--end back-to-top-->
     </div>
     <!-- end main content-->
+ 	
 
-  </div>
-  <!-- END layout-wrapper -->
 
   <!-- JAVASCRIPT -->
-  <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
+  <!-- <script th:src="@{/js/pages/outdoor.js}"></script> -->
+  <script type="text/javascript" th:inline="javascript">
+  $(function(){
+      // 하트 class 초기화
+      heartItems = document.getElementsByClassName('heart');
+      for(i = 0; i < heartItems.length; i++){
+          heartValue = JSON.parse(heartItems[i].getAttribute('value'));
 
+          if(heartValue == 1){
+              heartItems[i].innerHTML = '<img src="/images/heart-fill.svg">';
+          }else{
+              heartItems[i].innerHTML = '<img src="/images/heart.svg">';
+          }
+      }
+  });
+
+  /* 좋아요 */
+  function onClickLike(id, addLike) {
+  	likeValue = new Number($('#' + id).text());
+  	likeValue += new Number(addLike);
+  	// 여기에 AJAX로 DB 업데이트하는 코드 있어야함!!
+
+  	$.ajax({
+  		method: 'get',
+  		url: '/trade/clip?tradeNo=' + tradeNo + '&clipCount=' + likeValue,
+  		contentType: 'application/json',
+  		dataType: 'json',
+  		success: (result) => {
+  			$('#' + id).attr('value', '' + result);
+
+  			$('#' + id).text((likeValue > 0 ? '+' : '') + likeValue);
+
+  		},
+  		error: (e) => {
+  			alert('전송 실패!!');
+  		}
+  	});
+
+  }
+
+  function onClickClip(id, parkNo) {
+  	clipValue = JSON.parse($('#' + id).attr('value'));
+  	if (clipValue == 0) {
+  		clipValue = 1;
+  	} else {
+  		clipValue = 0;
+  	}
+  	// 여기에 AJAX로 DB 업데이트하는 코드 있어야함!!
+  	$.ajax({
+  		method: 'get',
+  		url: '/outdoor/clip?parkNo=' + parkNo + '&isClip=' + clipValue,
+  		contentType: 'application/json',
+  		dataType: 'json',
+  		success: (result) => {
+  			$('#' + id).attr('value', '' + result);
+  			if (result == 1) {
+  				/*$('#'+id).html('<img src="/images/heart-fill.svg">');*/
+  				$('#' + id).addClass("active")
+  			} else {
+  				/*$('#'+id).html('<img src="/images/heart.svg">');*/
+  				$('#' + id).removeClass("active")
+  			}
+  		},
+  		error: (e) => {
+  			alert('전송 실패!!');
+  		}
+  	});
+  }
+
+  /* 페이징  */
+  function movePage(pageUrl){
+  		var searchValue = document.getElementById("searchValue"); 
+  		if(searchValue != null){
+  			pageUrl += '&searchValue=' + searchValue.value;
+  		}
+  		
+  		var searchTypes = document.getElementById("searchType");  		
+  		var value = (searchTypes.options[searchTypes.selectedIndex].value);
+  		pageUrl += '&searchType=' + value;
+  		
+  		var region = document.getElementById("regions");
+  		var value2 = (region.options[region.selectedIndex].value);
+  		pageUrl += '&regions=' + value2;
+  		
+  		
+  		// alert(pageUrl);
+  		location.href = encodeURI(pageUrl);	
+  	}
+  
+  	
+  </script>
+	
+	
+  <script th:src="@{/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js}"></script>
 
   <!-- Choice Js -->
-  <script src="assets/libs/choices.js/public/assets/scripts/choices.min.js"></script>
+  <script th:src="@{/libs/choices.js/public/assets/scripts/choices.min.js}"></script>
 
   <!-- Job Init Js -->
-  <script src="assets/js/pages/job-list.init.js"></script>
+  <script th:src="@{/js/pages/job-list.init.js}"></script>
 
   <!-- Job-Grid Js -->
-  <script src="assets/js/pages/job-grid.init.js"></script>
+  <script th:src="@{/js/pages/job-grid.init.js}"></script>
 
   <!-- Switcher Js -->
-  <script src="assets/js/pages/switcher.init.js"></script>
+  <script th:src="@{/js/pages/switcher.init.js}"></script>
 
   <!-- App Js -->
-  <script src="assets/js/app.js"></script>
+  <script th:src="@{/js/app.js}"></script>
 
   <!-- Custom Js -->
-  <script src="assets/js/pages/favorite.js"></script>
+  <script th:src="@{/js/pages/favorite.js}"></script>
 </body>
 
 </html>

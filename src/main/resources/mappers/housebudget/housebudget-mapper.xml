@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.multi.smore.housebudget.model.mapper.HousebudgetMapper">
+	<resultMap 	type="Housebudget" 	id="housebudgetResultMap">
+		<id 	property="memNo" 	column="MEMNO"/>
+		<result property="type" 	column="TYPE"/>
+		<result property="title" 	column="TITLE"/>
+		<result property="amount" 	column="AMOUNT"/>
+		<result property="memo" 	column="MEMO"/>
+		<result property="start" 	column="START"/>
+	</resultMap>
+	
+	<sql id="selectHbSql">
+		SELECT MEMNO, TYPE, TITLE, AMOUNT, MEMO, START
+		FROM HOUSEBUDGET
+	</sql>
+	
+	<select id="selectHbCount" resultType="int" parameterType="int">
+		SELECT COUNT(*) FROM HOUSEBUDGET
+		WHERE MEMNO = #{memNo}
+	</select>
+	
+	<select id="selectAllHb" resultMap="housebudgetResultMap" parameterType="map">
+		<include refid="selectHbSql"/>
+		WHERE MEMNO = #{memNo}
+		<if test='searchStart != ""'>
+			AND START LIKE '%${searchStart}%'
+		</if>
+		<if test='searchType != ""'>
+			AND TYPE = #{searchType}
+		</if>
+		ORDER BY START
+	</select>
+	
+	<select id="selectHbByRange" resultType="String" parameterType="map">
+		<if test='searchRange == "월간" or searchRange == "전체"'>
+			SELECT DISTINCT DATE_FORMAT(START, '%Y-%m')
+		</if>
+		<if test='searchRange == "연간"'>
+			SELECT DISTINCT DATE_FORMAT(START, '%Y')
+		</if>
+		FROM HOUSEBUDGET
+		WHERE MEMNO = #{memNo}
+		<if test='searchRange == "월간" or searchRange == "전체"'>
+			ORDER BY DATE_FORMAT(START, '%Y-%m') DESC
+		</if>
+		<if test='searchRange == "연간"'>
+			ORDER BY DATE_FORMAT(START, '%Y') DESC
+		</if>
+	</select>
+	
+	<insert id="insertHb" parameterType="Housebudget">
+		INSERT INTO HOUSEBUDGET(
+			MEMNO, TYPE, TITLE, AMOUNT, MEMO, START
+		) VALUES(
+			#{memNo}, #{type}, #{title}, #{amount}, #{memo}, #{start}
+		)
+	</insert>
+	
+	<update id="updateHb" parameterType="map">
+		UPDATE HOUSEBUDGET 
+			SET TYPE   = #{modalType},
+				TITLE  = #{modalTitle},
+				AMOUNT = #{modalAmount},
+				MEMO   = #{modalMemo}
+			WHERE MEMNO = #{memNo}
+			AND START = #{oldStart}
+			AND TYPE  = #{oldType}
+			AND TITLE = #{oldTitle}
+	</update>
+	
+	<delete id="deleteHb" parameterType="map">
+		DELETE FROM HOUSEBUDGET
+			WHERE MEMNO = #{memNo}
+			AND START = #{start}
+			AND TYPE  = #{type}
+			AND TITLE = #{title}
+	</delete>
+</mapper>

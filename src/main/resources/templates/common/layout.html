@@ -4,7 +4,7 @@
 
 <head th:fragment="head">
 	<meta charset="utf-8" />
-	<title>smore | Home</title>
+	<title th:text="${pageTitle}"></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content=" " />
 	<meta name="keywords" content="" />
@@ -41,7 +41,7 @@
 	    <!--Navbar Start-->
 	    <nav class="navbar navbar-expand-lg" id="navbar">
 	      <div class="container-fluid custom-container">
-	        <a class="navbar-brand text-dark fw-bold me-auto" href="index.html">
+	        <a class="navbar-brand text-dark fw-bold me-auto" th:href="@{/}">
 	          <img th:src="@{/images/logo-dark.png}" height="45" alt="" class="logo-dark" />
 	          <img th:src="@{/images/logo-light.png}" height="45" alt="" class="logo-light" />
 	        </a>
@@ -58,9 +58,9 @@
 	                라이프 <div class="arrow-down"></div>
 	              </a>
 	              <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="homedrop">
-	                <li><a class="dropdown-item" href="trade.html">중고/재능 거래</a></li>
-	                <li><a class="dropdown-item" href="recipe.html">레시피</a></li>
-	                <li><a class="dropdown-item" href="outdoor.html">야외활동</a></li>
+	                <li><a class="dropdown-item" th:href="@{/trade}">중고/재능 거래</a></li>
+	                <li><a class="dropdown-item" th:href="@{/recipe}">레시피</a></li>
+	                <li><a class="dropdown-item" th:href="@{/outdoor}">야외활동</a></li>
 	              </ul>
 	            </li>
 	            <li class="nav-item dropdown dropdown-hover">
@@ -68,9 +68,9 @@
 	                정보 <div class="arrow-down"></div>
 	              </a>
 	              <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="jobsdropdown">
-	                <li><a class="dropdown-item" href="rental.html">공공임대주택</a></li>
-	                <li><a class="dropdown-item" href="program.html">정부지원사업</a></li>
-	                <li><a class="dropdown-item" href="news.html">뉴스</a></li>
+	                <li><a class="dropdown-item" th:href="@{/rental}">공공임대주택</a></li>
+	                <li><a class="dropdown-item" th:href="@{/program}">정부지원사업</a></li>
+	                <li><a class="dropdown-item" th:href="@{/news}">뉴스</a></li>
 	              </ul>
 	            </li>
 	            <li class="nav-item dropdown dropdown-hover">
@@ -80,9 +80,9 @@
 	                <div class="arrow-down"></div>
 	              </a>
 	              <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="productdropdown">
-	                <li><a class="dropdown-item" href="notice.html">공지사항</a></li>
-	                <li><a class="dropdown-item" href="board.html">자유 게시판</a></li>
-	                <li><a class="dropdown-item" href="suggestion.html">건의 게시판</a></li>
+	                <li><a class="dropdown-item" th:href="@{/notice}">공지사항</a></li>
+	                <li><a class="dropdown-item" th:href="@{/board/list?type=free}">자유 게시판</a></li>
+	                <li><a class="dropdown-item" th:href="@{/board/list?type=question}">건의 게시판</a></li>
 	              </ul>
 	            </li><!--end dropdown-->
 	          </ul><!--end navbar-nav-->
@@ -92,8 +92,8 @@
 	        <!--logout-->
 	       	<th:block th:if="${session.loginMember == null}">
 				<ul class="header-menu list-inline d-flex align-items-center mb-0">
-					<a class="text-reset mx-2 log-menu" href="sign-in.html"><span class="d-none d-md-inline-block fw-medium">로그인</span></a> | 
-					<a class="text-reset mx-2 log-menu" href="sign-up.html"><span class="d-none d-md-inline-block fw-medium">회원가입</span></a>
+					<a class="text-reset mx-2 log-menu" th:href="@{/sign-in}"><span class="d-none d-md-inline-block fw-medium">로그인</span></a> | 
+					<a class="text-reset mx-2 log-menu" th:href="@{/sign-up}"><span class="d-none d-md-inline-block fw-medium">회원가입</span></a>
 				</ul>
 			</th:block>
 			
@@ -104,13 +104,12 @@
 		            <a href="javascript:void(0)" class="header-item" id="userdropdown" data-bs-toggle="dropdown"
 		              aria-expanded="false">
 		              <img th:src="@{/images/profile.jpg}" alt="mdo" width="35" height="35" class="rounded-circle me-1"> <span
-		                class="d-none d-md-inline-block fw-medium">스모어
-		                님</span>
+		                class="d-none d-md-inline-block fw-medium"><th:block th:text="${session.loginMember.name} + ' 님'"/></span>
 		            </a>
 		            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown">
-		              <li><a class="dropdown-item" href="mypage.html">마이페이지</a></li>
-									<li><a class="dropdown-item" href="housebudget.html">가계부</a></li>
-		              <li><a class="dropdown-item" href="sign-out.html">로그아웃</a></li>
+		              <li><a class="dropdown-item" th:href="@{/mypage}">마이페이지</a></li>
+					  <li><a class="dropdown-item" th:href="@{/housebudget/list}">가계부</a></li>
+		              <li><a class="dropdown-item" th:href="@{/sign-out}">로그아웃</a></li>
 		            </ul>
 		          </li>
 		        </ul><!--end header-menu-->

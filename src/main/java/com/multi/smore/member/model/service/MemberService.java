@@ -48,7 +48,7 @@ public class MemberService {
 	@Transactional(rollbackFor = Exception.class)
 	public int save(Member member) {
 		int result = 0;
-		if(member.getMNo() == 0) { // 회원가입
+		if(member.getMemNo() == 0) { // 회원가입
 			String encodePW = pwEncoder.encode(member.getPassword());
 			member.setPassword(encodePW);
 			result = mapper.insertMember(member);
@@ -75,7 +75,7 @@ public class MemberService {
 	@Transactional(rollbackFor = Exception.class)
 	public int updatePwd(Member loginMember, String userPW) {
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("mNo", "" + loginMember.getMNo());
+		map.put("mNo", "" + loginMember.getMemNo());
 		map.put("password", pwEncoder.encode(userPW));
 		return mapper.updatePwd(map);
 	}

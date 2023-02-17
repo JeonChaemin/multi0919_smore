@@ -11,17 +11,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Board {
-	private int bNo;
-	private int mNo;
+	private int bbNo;
+	private int memNo;
 	private String id;
 	private String title;
 	private String content;
+	private String type;
 	private String originalFileName;
 	private String renamedFileName;
 	private int readCount;
 	private String status;
-	private String type;
-	private List<Reply> replyList;
+	private List<BoardReply> replyList;
 	private Date createDate;
 	private Date modifyDate;
+	private int likeCount;
+	private int isLike;
+	private int viewNo;
 }

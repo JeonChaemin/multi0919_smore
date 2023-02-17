@@ -6,14 +6,14 @@
 <mapper namespace="com.multi.smore.member.model.mapper.MemberMapper">
 	<sql id="selectMemberSql">
 		SELECT 	
-			MNO, ID, PASSWORD, ROLE, NAME, PHONE,
-			EMAIL, ADDRESS, HOBBY,
-			STATUS, ENROLL_DATE, MODIFY_DATE 
+			MEMNO, ID, PASSWORD, ROLE, NAME, PHONE,
+			EMAIL, ADDRESS, KAKAOTOKEN,
+			STATUS, ENROLLDATE, MODIFYDATE 
 		FROM MEMBER
 	</sql>
 	
 	<resultMap type="Member" id="memberResultMap">
-		<id 	property="mNo" 		column="MNO" />
+		<id 	property="memNo" 		column="MEMNO" />
 		<result property="id" 		column="ID" />
 		<result property="password" column="PASSWORD" />
 		<result property="role" 	column="ROLE" />
@@ -21,10 +21,10 @@
 		<result property="phone" 	column="PHONE" />
 		<result property="email" 	column="EMAIL" />
 		<result property="address" 	column="ADDRESS" />
-		<result property="hobby" 	column="HOBBY" />
+		<result property="kakaotoken" 	column="KAKAOTOKEN" />
 		<result property="status" 	column="STATUS" />
-		<result property="enrollDate" column="ENROLL_DATE" />
-		<result property="modifyDate" column="MODIFY_DATE" />
+		<result property="enrollDate" column="ENROLLDATE" />
+		<result property="modifyDate" column="MODIFYDATE" />
 	</resultMap>
 	
 	<select id="selectCount" resultType="int">
@@ -42,10 +42,10 @@
 	
 	<insert id="insertMember" parameterType="Member">
 		INSERT INTO MEMBER(
-			MNO, ID, PASSWORD, 	
+			MEMNO, ID, PASSWORD, 	
 			ROLE, NAME, PHONE,
-			EMAIL, ADDRESS,HOBBY, 		
-			STATUS, ENROLL_DATE, MODIFY_DATE
+			EMAIL, ADDRESS, KAKAOTOKEN, 		
+			STATUS, ENROLLDATE, MODIFYDATE
 		) VALUES (
 			 0, #{id}, #{password},
 			 default, #{name}, #{phone},
@@ -60,21 +60,20 @@
 	 		PHONE		= #{phone},
 	 		EMAIL		= #{email},
 	 		ADDRESS		= #{address},
-	 		HOBBY		= #{hobby},
-	 		MODIFY_DATE	= #{modifyDate}
-	 	WHERE MNO = #{mNo}
+	 		MODIFYDATE	= #{modifyDate}
+	 	WHERE MEMNO = #{memNo}
 	 </update>
 	 
 	 <update id="updatePwd" parameterType="map">
 	 	UPDATE MEMBER 
 	 		SET PASSWORD = #{password} 
- 		WHERE MNO = #{mNo}
+ 		WHERE MEMNO = #{memNo}
 	 </update>
 	 
 	 <update id="deleteMember" parameterType="int">
 	 	UPDATE MEMBER 
 	 		SET STATUS = 'N' 
-	 	WHERE MNO = #{mNo}
+	 	WHERE MEMNO = #{memNo}
 	 </update>
 	
 	

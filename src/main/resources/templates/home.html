@@ -5,7 +5,8 @@
 <head th:fragment="head" th:replace="~{common/layout :: head}"></head>
 <!-- Custom Css-->
 <link th:href="@{/css/index.css}" id="custom" rel="stylesheet" type="text/css" />
-
+<!-- jquery CDN -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <body>
 	<!--start page Loader -->
@@ -115,7 +116,7 @@
 										th:src="@{/images/img/calculation.png}">
 								</div>
 								<div class="popu-category-content mt-4">
-									<a href="housebudget.html" class="text-dark stretched-link">
+									<a th:href="@{/housebudget/list}" class="text-dark stretched-link">
 										<h5 class="fs-18">가계부</h5>
 									</a>
 								</div>
@@ -206,14 +207,16 @@
 									class="fa-solid fa-angle-right"></i></a>
 							</div>
 							<!--end col-->
-							<div class="col-lg-3 text-center">
-								<a href="#"><img class="index-img"
-									th:src="@{/images/img/main_banner1.png}"></a> <a
-									class="text-reset text-start" href="#">
-									<h5 class="mt-2">1인가구 공구대여 서비스</h5>
-									<p class="text-primary">서울 강남구</p>
-								</a>
-							</div>
+<!-- 							<th:block th:each=""> -->
+								<div class="col-lg-3 text-center">
+									<a href="#"><img class="index-img"
+										th:src="@{/images/img/main_banner1.png}"></a> <a
+										class="text-reset text-start" href="#">
+										<h5 class="mt-2">1인가구 공구대여 서비스</h5>
+										<p class="text-primary">서울 강남구</p>
+									</a>
+								</div>
+<!-- 							</th:block> -->
 							<!--end col-->
 							<div class="col-lg-3 text-center">
 								<a href="#"><img class="index-img"

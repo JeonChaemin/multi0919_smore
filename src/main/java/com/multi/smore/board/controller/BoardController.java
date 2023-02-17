@@ -28,8 +28,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.multi.smore.board.model.service.BoardService;
 import com.multi.smore.board.model.vo.Board;
-import com.multi.smore.board.model.vo.Reply;
+import com.multi.smore.board.model.vo.BoardReply;
 import com.multi.smore.common.util.PageInfo;
+import com.multi.smore.member.model.service.MemberService;
 import com.multi.smore.member.model.vo.Member;
 
 import jakarta.servlet.http.HttpSession;
@@ -43,46 +44,74 @@ public class BoardController {
 	@Autowired
 	private BoardService service;
 	
-	final static private String savePath = "c:\\bbs\\";
+	@Autowired
+	private MemberService memberService;// 삭제하기
+	
+	final static private String savePath = "c:\\smore\\";
 	
 	@GetMapping("/list")
-	public String list(Model model, @RequestParam Map<String, String> paramMap) {
+	public String list(Model model, HttpSession session,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			@RequestParam Map<String, String> paramMap) {
+		loginMember = memberService.login("admin", "1212");// 삭제하기
+		session.setAttribute("loginMember", loginMember);// 삭제하기
 		int page = 1;
-
+		String type = paramMap.get("type");
 		// 탐색할 맵을 선언
 		Map<String, String> searchMap = new HashMap<String, String>();
 		try {
 			String searchValue = paramMap.get("searchValue");
-			if(searchValue != null && searchValue.length() > 0) {
-				String searchType = paramMap.get("searchType");
-				searchMap.put(searchType, searchValue);
-			}else {
-				paramMap.put("searchType", "all");
-			}
+			searchMap.put("searchValue", searchValue);
 			page = Integer.parseInt(paramMap.get("page"));
 		} catch (Exception e) {}
 		
+		if(loginMember != null) {
+			searchMap.put("memNo", ""+loginMember.getMemNo());
+		}
+		
+		searchMap.put("type", type);
 		int boardCount = service.getBoardCount(searchMap);
 		PageInfo pageInfo = new PageInfo(page, 10, boardCount, 10);
 		List<Board> list = service.getBoardList(pageInfo, searchMap);
+
+		for (int i = 0; i < list.size(); i++) {
+			if (page == pageInfo.getMaxPage()) {
+				list.get(i).setViewNo(list.size() - i); 
+			} else {
+				list.get(i).setViewNo(boardCount - i);
+			}
+		}
 		
 		model.addAttribute("list", list);
-		model.addAttribute("paramMap", paramMap);
 		model.addAttribute("pageInfo", pageInfo);
-		return "board/list";
+		model.addAttribute("type", type);
+		model.addAttribute("pageTitle", "smore | Board");
+		return "/board/board";
 	}
 	
-//	@RequestMapping("/board/view")
-	@RequestMapping("/view")
-	public String view(Model model, @RequestParam("no") int no) {
-		Board board = service.findByNo(no);
+//	@RequestMapping("/board/detail")
+	@RequestMapping("/detail")
+	public String view(Model model, HttpSession session,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			@RequestParam("no") int no) {
+		loginMember = memberService.login("admin", "1212");// 삭제하기
+		session.setAttribute("loginMember", loginMember);// 삭제하기
+		
+		int memNo = 0;
+		if(loginMember != null) {
+			memNo = loginMember.getMemNo();
+		}
+		
+		Board board = service.findByNo(no, memNo);
 		if(board == null) {
 			return "redirect:error";
 		}
 		
 		model.addAttribute("board", board);
+		System.out.println(board);
 		model.addAttribute("replyList", board.getReplyList());
-		return "board/view";
+		model.addAttribute("pageTitle", "smore | Board");
+		return "board/board-detail";
 	}
 	
 	
@@ -92,19 +121,23 @@ public class BoardController {
 	}
 	
 	@GetMapping("/write")
-	public String writeView() {
-		return "board/write";
+	public String writeView(Model model, @RequestParam("type") String type) {
+		model.addAttribute("type", type);
+		return "board/board-write";
 	}
 	
 	@PostMapping("/write")
 	public String writeBoard(Model model, HttpSession session,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			@ModelAttribute Board board,
-			@RequestParam("upfile") MultipartFile upfile
+			@RequestParam("upfile") MultipartFile upfile,
+			@RequestParam("type") String type
 			) {
 		log.info("게시글 작성 요청");
 		
-		board.setMNo(loginMember.getMNo());
+		loginMember = memberService.login("admin", "1212");// 삭제하기
+		session.setAttribute("loginMember", loginMember);// 삭제하기
+//		board.setMemNo(loginMember.getMNo());
 		
 		// 파일 저장 로직
 		if(upfile != null && upfile.isEmpty() == false) {
@@ -121,10 +154,10 @@ public class BoardController {
 
 		if(result > 0) {
 			model.addAttribute("msg", "게시글이 등록 되었습니다.");
-			model.addAttribute("location", "/board/list");
+			model.addAttribute("location", "/board/list?type=" + type);
 		}else {
 			model.addAttribute("msg", "게시글 작성에 실패하였습니다.");
-			model.addAttribute("location", "/board/list");
+			model.addAttribute("location", "/board/list?type=" + type);
 		}
 		
 		return "common/msg";
@@ -132,21 +165,24 @@ public class BoardController {
 	
 	
 	@RequestMapping("/reply")
-	public String writeReply(Model model, 
+	public String writeReply(Model model, HttpSession session,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
-			@ModelAttribute Reply reply
+			@ModelAttribute BoardReply reply
 			) {
-		reply.setMNo(loginMember.getMNo());
-		log.info("리플 작성 요청 Reply : " + reply);
+
+		loginMember = memberService.login("admin", "1212");// 삭제하기
+		session.setAttribute("loginMember", loginMember);// 삭제하기
+//		reply.setMemNo(loginMember.getMNo());
+		log.info("댓글 작성 요청 Reply : " + reply);
 		
 		int result = service.saveReply(reply);
 		
 		if(result > 0) {
-			model.addAttribute("msg", "리플이 등록되었습니다.");
+			model.addAttribute("msg", "댓글이 등록되었습니다.");
 		}else {
-			model.addAttribute("msg", "리플 등록에 실패하였습니다.");
+			model.addAttribute("msg", "댓글 등록에 실패하였습니다.");
 		}
-		model.addAttribute("location", "/board/view?no="+reply.getBNo());
+		model.addAttribute("location", "/board/detail?no="+reply.getBbNo());
 		return "common/msg";
 	}
 	
@@ -155,11 +191,14 @@ public class BoardController {
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			int boardNo
 			) {
+		loginMember = memberService.login("admin", "1212");// 삭제하기
+		session.setAttribute("loginMember", loginMember);// 삭제하기
+		
 		log.info("게시글 삭제 요청 boardNo : " + boardNo);
 		int result = service.deleteBoard(boardNo, savePath);
 		
 		if(result > 0) {
-			model.addAttribute("msg", "게시글 삭제가 정상적으로 완료되었습니다.");
+			model.addAttribute("msg", "게시글이 삭제 되었습니다.");
 		}else {
 			model.addAttribute("msg", "게시글 삭제에 실패하였습니다.");
 		}
@@ -168,19 +207,22 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/replyDel")
-	public String deleteReply(Model model, 
+	public String deleteReply(Model model, HttpSession session,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			int replyNo, int boardNo
 			){
-		log.info("리플 삭제 요청");
+		loginMember = memberService.login("admin", "1212");// 삭제하기
+		session.setAttribute("loginMember", loginMember);// 삭제하기
+		
+		log.info("댓글 삭제 요청");
 		int result = service.deleteReply(replyNo);
 		
 		if(result > 0) {
-			model.addAttribute("msg", "리플 삭제가 정상적으로 완료되었습니다.");
+			model.addAttribute("msg", "댓글이 삭제 되었습니다.");
 		}else {
-			model.addAttribute("msg", "리플 삭제에 실패하였습니다.");
+			model.addAttribute("msg", "댓글 삭제에 실패하였습니다.");
 		}
-		model.addAttribute("location", "/board/view?no=" + boardNo);
+		model.addAttribute("location", "/board/detail?no="+ boardNo);
 		return "/common/msg";
 	}
 	
@@ -190,9 +232,9 @@ public class BoardController {
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			@RequestParam("no") int no
 			) {
-		Board board = service.findByNo(no);
+		Board board = service.findByNo(no, 0);
 		model.addAttribute("board",board);
-		return "board/update";
+		return "board/board-update";
 	}
 	
 
@@ -204,7 +246,8 @@ public class BoardController {
 			) {
 		log.info("게시글 수정 요청");
 		
-		board.setMNo(loginMember.getMNo());
+		board.setMemNo(loginMember.getMemNo());
+		System.out.println("수정 요청 보드: " + board);
 		
 		// 파일 저장 로직
 		if(reloadFile != null && reloadFile.isEmpty() == false) {
@@ -267,6 +310,25 @@ public class BoardController {
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 실패했을 경우
 	}
 
-
+	@GetMapping("/like") 
+	public ResponseEntity<int[]> boardLike(
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			int bbNo, int isLike){
+		int result = 0;
+		if(isLike == 1) {
+			result = service.likeBoard(loginMember.getMemNo(), bbNo);
+		}else {
+			result = service.unLikeBoard(loginMember.getMemNo(), bbNo);
+		}
+		
+		if(result > 0) {
+			int likeCount = service.likeCount(bbNo);
+			int[] pArr = {isLike, likeCount};
+			System.out.println("dddddddd : "+pArr);
+			return ResponseEntity.status(HttpStatus.OK).body(pArr);
+		}else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		}
+	}
 }
 

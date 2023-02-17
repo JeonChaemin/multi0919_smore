@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.multi.smore.model.mapper.ParkMapper">
+
+	<resultMap type="Park" id="ParkListResultMap">
+		<id property="parkNo" column="parkNo"/>
+		<result property="manageNo" column="manageNo"/>
+		<result property="parkNm" column="parkNm"/>
+		<result property="parkSe" column="parkSe"/>
+		<result property="rdnmadr" column="rdnmadr"/>
+		<result property="lnmadr" column="lnmadr"/>
+		<result property="latitude" column="latitude"/>
+		<result property="longitude" column="longitude"/>
+		<result property="parkAr" column="parkAr"/>
+		<result property="mvmFclty" column="mvmFclty"/>
+		<result property="amsmtFclty" column="amsmtFclty"/>
+		<result property="cnvnncFclty" column="cnvnncFclty"/>
+		<result property="cltrFclty" column="cltrFclty"/>
+		<result property="etcFclty" column="etcFclty"/>
+		<result property="appnNtfcDate" column="appnNtfcDate"/>
+		<result property="institutionNm" column="institutionNm"/>
+		<result property="phoneNumber" column="phoneNumber"/>
+		<result property="referenceDate" column="referenceDate"/>
+		<result property="insttCode" column="insttCode"/>
+		<result property="clipCount" column="clipCount"/>
+		<result property="isClip" column="isClip"/>
+	</resultMap>
+
+	<resultMap type="ReplyPark" id="ParkReplyResultMap">
+		<id 	property="parkRno"		column="parkRno"/>
+		<result property="parkNo" 		column="parkNo"/>
+		<result property="memNo" 		column="memNo"/>
+		<result property="writer" 		column="WRITER"/>
+		<result property="writerName" 	column="WRITER_NAME"/>
+		<result property="content" 		column="CONTENT"/>
+		<result property="status" 		column="STATUS"/>
+		<result property="createDate" 	column="CREATE_DATE"/>
+		<result property="modifyDate" 	column="MODIFY_DATE"/>
+	</resultMap>
+	
+	<resultMap type="Park" id="ParkDetailResultMap" extends="ParkListResultMap">
+		<collection property="replys" javaType="arrayList" columnPrefix="R_" 
+												resultMap="ParkReplyResultMap"/>
+	</resultMap>
+
+
+	<select id="selectParkList" resultMap="ParkListResultMap" parameterType="map">
+		SELECT *
+			<!-- , (SELECT COUNT (*) FROM CLIP_PARK CP WHERE PARK.parkNo = CP.parkNo) as likeCount
+			<if test="memNo != null">
+				, (SELECT COUNT (*) FROM CLIP_PARK CP WHERE PARK.parkNo = LK.parkNo AND CP.memNo = #{memNo}) as isLike
+			</if>
+			<if test="memNo == null">
+				, (SELECT COUNT (*) FROM CLIP_PARK CP WHERE PARK.parkNo = LK.parkNo AND CP.memNo = 0) as isLike
+			</if>  -->
+		FROM PARK
+		<!-- LEFT OUTER JOIN MEMBER M1 ON B.WRITER_NO = M1.MEMNO
+		LEFT OUTER JOIN REPLY_PARK R ON R.PARKNO = PARK.parkNo 
+		LEFT OUTER JOIN MEMBER M2 ON R.WRITER_NO = M2.MEMNO 
+		LEFT OUTER JOIN CLIP_PARK CP ON CP.parkNo = PARK.parkNo -->
+		WHERE 1=1
+		<if test="searchValue != null">
+			AND ( parkNm LIKE '%${searchValue}%'
+				OR parkSe LIKE '%${searchValue}%' )
+		</if>
+		<if test="regions != null">
+			AND 
+			( <foreach collection="regions" item="item" separator="or" index="index">
+				lnmadr LIKE '%${item}%'
+			</foreach> )
+		</if>
+		ORDER BY parkNo DESC LIMIT ${limit} OFFSET ${offset}
+	</select>
+	
+	<select id="selectParkCount" resultType="int" parameterType="map">
+		SELECT COUNT(*)
+		FROM PARK
+		WHERE 1=1
+		<if test="searchValue != null">
+			AND ( parkNm LIKE '%${searchValue}%'
+				OR parkSe LIKE '%${searchValue}%' )
+		</if>
+		<if test="regions != null">
+			AND 
+			( <foreach collection="regions" item="item" separator="or" index="index">
+				lnmadr LIKE '%${item}%'
+			</foreach> )
+		</if>
+	</select>
+	
+	<select id="selectParkByNo" parameterType="int" resultMap="ParkDetailResultMap">
+		SELECT  
+			P.PARKNO, P.PARKNM, P.PARKSE, P.RDNMADR, P.LNMADR, P.LATITUDE, P.LONGITUDE, P.PARKAR, P.MVMFCLTY, P.AMSMTFCLTY, P.CNVNNCFCLTY, P.CLTRFCLTY, P.ETCFCLTY, P.APPNNTFCDATE, P.INSTITUTIONNM, P.PHONENUMBER, P.REFERENCEDATE,
+			R.PARKRNO AS R_PRNO, 
+		    R.PARKNO AS R_PNO,
+		    R.CONTENT  AS R_CONTENT, 
+		    M.ID  AS R_WRITER, 
+		    R.CREATE_DATE  AS R_CREATE_DATE, 
+		    R.MODIFY_DATE  AS R_MODIFY_DATE
+		    ,(SELECT COUNT(*) FROM CLIP_PARK CP WHERE P.PARKNO = CP.PARKNO) as clipCount
+		    <if test="memNo != null">
+				,(SELECT COUNT(*) FROM CLIP_PARK CP WHERE P.PARKNO = CP.PARKNO AND CP.MEMNO = #{memNo}) as isClip
+			</if>		
+			<if test="memNo == null">
+				,(SELECT COUNT(*) FROM CLIP_PARK CP WHERE P.PARKNO = CP.PARKNO AND CP.MEMNO = 0) as isClip
+			</if>	
+		FROM PARK P
+		LEFT OUTER JOIN REPLY_PARK R ON (P.PARKNO = R.PARKNO)
+		LEFT OUTER JOIN MEMBER M ON (R.MEMNO = M.MEMNO)
+		LEFT OUTER JOIN CLIP_PARK CP ON (CP.PARKNO = P.PARKNO)
+		WHERE P.PARKNO = #{parkNo}
+	</select>
+	
+	<select id="selectParkListHot" resultMap="ParkListResultMap" parameterType="map">
+		SELECT 
+			parkNo, manageNo, parkNm, parkSe, rdnmadr, lnmadr, latitude, longitude, 
+			parkAr, mvmFclty, amsmtFclty, cnvnncFclty, cltrFclty, etcFclty, appnNtfcDate, 
+			institutionNm, phoneNumber, referenceDate, insttCode
+		FROM PARK
+		WHERE parkNm IN 
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+        #{item}
+  		</foreach>
+  		ORDER BY parkNm
+	</select>
+	
+	<insert id="insertPark" parameterType="Park">
+		INSERT INTO PARK(
+			parkNo, manageNo, parkNm, parkSe, rdnmadr, lnmadr, latitude, longitude, 
+			parkAr, mvmFclty, amsmtFclty, cnvnncFclty, cltrFclty, etcFclty, appnNtfcDate, 
+			institutionNm, phoneNumber, referenceDate, insttCode
+		) VALUES (
+			0, #{manageNo}, #{parkNm}, #{parkSe}, #{rdnmadr}, #{lnmadr}, #{latitude}, #{longitude},
+			#{parkAr}, #{mvmFclty}, #{amsmtFclty}, #{cnvnncFclty}, #{cltrFclty}, #{etcFclty},
+			#{appnNtfcDate}, #{institutionNm}, #{phoneNumber}, #{referenceDate}, #{insttCode}		
+		)
+	</insert>
+	
+	
+	<insert id="insertReplyPark" parameterType="ReplyPark">
+		INSERT INTO REPLY_PARK(
+			parkRno, parkNo, memNo, WRITER, WRITER_NAME,
+			CONTENT, STATUS, CREATE_DATE, MODIFY_DATE
+		) VALUES(
+			0, #{parkNo}, #{memNo}, #{WRITER}, #{WRITER_NAME},
+			#{CONTENT}, DEFAULT, DEFAULT, DEFAULT
+		)
+	</insert>
+	
+	<delete id="deleteReplyPark" parameterType="int">
+		DELETE FROM REPLY_PARK WHERE parkRno=#{parkRno}
+	</delete>
+	
+	<update id="updateReplyPark" parameterType="ReplyPark">
+		UPDATE REPLY_PARK
+		SET 
+			CONTENT=#{CONTENT},
+			MODIFYDATE= CURRENT_TIMESTAMP
+		WHERE
+			PARKRNO=#{parkRno}	
+	</update>
+	
+	<!-- 스크랩 -->
+	<insert id="clipPark" parameterType="map">
+		INSERT INTO CLIP_PARK VALUES(#{memNo}, #{parkNo})
+	</insert>
+	
+	<!-- 스크랩 풀기-->
+	<insert id="unClipPark" parameterType="map">
+		DELETE FROM CLIP_PARK WHERE MEMNO=#{memNo} AND PARKNO=#{parkNo}
+	</insert>
+	
+</mapper>

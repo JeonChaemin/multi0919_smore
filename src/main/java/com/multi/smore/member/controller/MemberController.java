@@ -102,7 +102,7 @@ public class MemberController {
 			return "common/msg";
 		}
 		
-		updateMember.setMNo(loginMember.getMNo());
+		updateMember.setMemNo(loginMember.getMemNo());
 		int result = service.save(updateMember);
 		
 		if(result > 0) {
@@ -148,7 +148,7 @@ public class MemberController {
 	@RequestMapping("/member/delete")
 	public String delete(Model model,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember) {
-		int result = service.delete(loginMember.getMNo());
+		int result = service.delete(loginMember.getMemNo());
 		if(result > 0) {
 			model.addAttribute("msg", "회원탈퇴에 성공하였습니다.");
 			model.addAttribute("location","/logout");

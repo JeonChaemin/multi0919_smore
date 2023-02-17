@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Member {
-	private int mNo;
+	private int memNo;
 	private String id;
 	private String password;
 	private String role;
@@ -18,7 +18,7 @@ public class Member {
 	private String phone;
 	private String email;
 	private String address;
-	private String hobby = "";
+	private String kakaotoken;
 	private String status;
 	private Date enrollDate;
 	private Date modifyDate;

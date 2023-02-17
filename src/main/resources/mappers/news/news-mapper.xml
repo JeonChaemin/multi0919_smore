@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.multi.smore.news.model.mapper.NewsMapper">
+
+	<insert id="insertNews" parameterType="News">
+		insert into News (nNo, title, originallink, link, description, pubDate) 
+		values(0, #{title}, #{originallink}, #{link}, #{description}, #{pubDate});
+	</insert>
+	
+	<select id="selectNewsCount" resultType="int" parameterType="map">
+		SELECT  
+			COUNT(*)
+		FROM News
+		WHERE 1=1
+		<if test="title != null">
+			AND 
+			(TITLE LIKE '%${title}%' OR
+			 description LIKE '%${title}%')
+		</if>		
+	</select>
+	
+	<select id="selectNewsList" resultType="News" parameterType="map">
+		SELECT
+			*
+		FROM News
+		WHERE 1=1
+		<if test="title != null">
+			AND 
+			(TITLE LIKE '%${title}%' OR
+			 description LIKE '%${title}%')
+		</if>		
+		ORDER BY PUBDATE DESC LIMIT ${limit} OFFSET ${offset}
+	</select>
+	
+	<delete id="deleteAllNewsList">
+		TRUNCATE NEWS
+	</delete>
+</mapper>

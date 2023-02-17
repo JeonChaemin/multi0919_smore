@@ -16,24 +16,30 @@
   font-family: 'SANJUGotgam';
 }
 
-.bw-tbl th{
+input[type=file]::file-selector-button {
+  display: inline-block;
+  padding: 0.5em 0.5em;
+  font-size: 75%;
+  font-weight: 600;
+  line-height: 1;
   text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25rem;
+  -webkit-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+  color: #fff;
+  background-color: #74788d;
+  border: none;
 }
-
-.bw-tbl input[type="text"] {
-  width: 90%;
-  border-radius: 5px;
+a.badge-secondary:hover, a.badge-secondary:focus {
+    color: #fff;
+    background-color: #5d6071;
 }
-
-.bw-tbl textarea{
-  width: 95%;
-  border-radius: 5px;
-}
-
-.input-file-button {
-  padding: 6px 25px;
-  background-color:#766df4;
-  border-radius: 4px;
-  color: white;
-  cursor: pointer;
+a.badge-secondary:focus, a.badge-secondary.focus {
+  outline: 0;
+  -webkit-box-shadow: 0 0 0 0.15rem rgba(116, 120, 141, 0.5);
+          box-shadow: 0 0 0 0.15rem rgba(116, 120, 141, 0.5);
 }

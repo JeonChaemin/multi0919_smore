@@ -75,6 +75,10 @@
   border-color: #FFF !important;
 }
 
+.fc-highlight {
+  background-color: #FEF7E5 !important;
+}
+
 tbody, td, tfoot, th, thead, tr {
   border-color: #FFF !important;
 }

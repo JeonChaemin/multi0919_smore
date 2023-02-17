@@ -3,6 +3,7 @@ package com.multi.smore.board.model.service;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.multi.smore.board.model.mapper.BoardMapper;
 import com.multi.smore.board.model.vo.Board;
-import com.multi.smore.board.model.vo.Reply;
+import com.multi.smore.board.model.vo.BoardReply;
 import com.multi.smore.common.util.PageInfo;
 
 @Service
@@ -24,7 +25,7 @@ public class BoardService {
 	@Transactional(rollbackFor = Exception.class)
 	public int saveBoard(Board board) {
 		int result = 0;
-		if(board.getBNo() == 0) {
+		if(board.getBbNo() == 0) {
 			result = mapper.insertBoard(board);
 		}else {
 			result = mapper.updateBoard(board);
@@ -33,7 +34,7 @@ public class BoardService {
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
-	public int saveReply(Reply reply) {
+	public int saveReply(BoardReply reply) {
 		return mapper.insertReply(reply);
 	}
 	
@@ -74,10 +75,15 @@ public class BoardService {
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
-	public Board findByNo(int boardNo) {
-		Board board = mapper.selectBoardByNo(boardNo); 
+	public Board findByNo(int bbNo, int memNo) {
+		Map<String, String> map = new HashMap<>();
+		map.put("bbNo", "" + bbNo);
+		map.put("memNo", "" + memNo);
+		Board board = mapper.selectBoardByNo(map);
+		System.out.println("서비스 보드1: " + board);
 		board.setReadCount(board.getReadCount() + 1);  
 		mapper.updateReadCount(board);
+		System.out.println("서비스 보드2: " + board);
 		return board; 
 	}
 	
@@ -89,19 +95,37 @@ public class BoardService {
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
-	public int deleteBoard(int no, String rootPath) {
-		Board board = mapper.selectBoardByNo(no);
+	public int deleteBoard(int bbNo, String rootPath) {
+		Map<String, String> map = new HashMap<>();
+		map.put("bbNo", "" + bbNo);
+		Board board = mapper.selectBoardByNo(map);
 		deleteFile(rootPath + "\\" + board.getRenamedFileName());
-		return mapper.deleteBoard(no);
+		return mapper.deleteBoard(bbNo);
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
-	public int deleteReply(int no) {
-		return mapper.deleteReply(no);
+	public int deleteReply(int bbrno) {
+		return mapper.deleteReply(bbrno);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int likeBoard(int memNo, int bbNo) {
+		Map<String, String> map = new HashMap<>();
+		map.put("memNo", ""+memNo);
+		map.put("bbNo", ""+bbNo);
+		return mapper.likeBoard(map);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int unLikeBoard(int memNo, int bbNo) {
+		Map<String, String> map = new HashMap<>();
+		map.put("memNo", ""+memNo);
+		map.put("bbNo", ""+bbNo);
+		return mapper.unLikeBoard(map);
+	}
+	
+	public int likeCount(int bbNo) {
+		return mapper.likeCount(bbNo);
 	}
 	
 }
-
-
-
-

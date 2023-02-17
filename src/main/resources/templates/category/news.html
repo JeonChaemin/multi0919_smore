@@ -1,163 +1,37 @@
 <!doctype html>
-<html lang="ko">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-
-
-  <meta charset="utf-8" />
-  <title>smore | News</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content=" " />
-  <meta name="keywords" content="" />
-  <meta content="Themesdesign" name="author" />
-
-  <!-- App favicon -->
-  <link rel="shortcut icon" href="assets/images/favicon.ico">
-
-  <!-- Choise Css -->
-  <link rel="stylesheet" href="assets/libs/choices.js/public/assets/styles/choices.min.css">
-
-  <!-- Bootstrap Css -->
-  <link href="assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
-  <!-- Icons Css -->
-  <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-  <!-- App Css-->
-  <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
-  <!--Custom Css-->
-  <link href="assets/css/news.css" id="news" rel="stylesheet" type="text/css" />
-  <!-- Pretendard Font -->
-  <link rel="stylesheet" as="style" crossorigin
-    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard-dynamic-subset.css" />
-  <!-- Font Awesome CSS-->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-  <script src="https://kit.fontawesome.com/dd4a6a23ab.js" crossorigin="anonymous"></script>
-</head>
+<head th:fragment="head" th:replace="~{common/layout :: head}"></head>
+<!--Custom Css-->
+<link th:href="@{/css/news.css}" id="news" rel="stylesheet" type="text/css" />
+<!-- jquery CDN -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <body>
+    <!--start page Loader -->
+	<div id="preloader">
+		<div id="status">
+			<ul>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>
+	</div>
+	<!--end page Loader -->
 
-  <!-- Begin page -->
-  <div>
-
-    <!--Navbar Start-->
-    <nav class="navbar navbar-expand-lg" id="navbar">
-      <div class="container-fluid custom-container">
-        <a class="navbar-brand text-dark fw-bold me-auto" href="index.html">
-          <img src="assets/images/logo-dark.png" height="45" alt="" class="logo-dark" />
-          <img src="assets/images/logo-light.png" height="45" alt="" class="logo-light" />
-        </a>
-        <div>
-          <button class="navbar-toggler me-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-            aria-controls="navbarCollapse" aria-label="Toggle navigation">
-            <i class="mdi mdi-menu"></i>
-          </button>
-        </div>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-          <ul class="navbar-nav mx-auto navbar-center">
-            <li class="nav-item dropdown dropdown-hover">
-              <a class="nav-link" href="javascript:void(0)" id="homedrop" role="button" data-bs-toggle="dropdown">
-                라이프 <div class="arrow-down"></div>
-              </a>
-              <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="homedrop">
-                <li><a class="dropdown-item" href="trade.html">중고/재능 거래</a></li>
-                <li><a class="dropdown-item" href="recipe.html">레시피</a></li>
-                <li><a class="dropdown-item" href="outdoor.html">야외활동</a></li>
-              </ul>
-            </li>
-            <li class="nav-item dropdown dropdown-hover">
-              <a class="nav-link" href="javascript:void(0)" id="jobsdropdown" role="button" data-bs-toggle="dropdown">
-                정보 <div class="arrow-down"></div>
-              </a>
-              <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="jobsdropdown">
-                <li><a class="dropdown-item" href="rental.html">공공임대주택</a></li>
-                <li><a class="dropdown-item" href="program.html">정부지원사업</a></li>
-                <li><a class="dropdown-item" href="news.html">뉴스</a></li>
-              </ul>
-            </li>
-            <li class="nav-item dropdown dropdown-hover">
-              <a class="nav-link" href="javascript:void(0)" id="productdropdown" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                커뮤니티
-                <div class="arrow-down"></div>
-              </a>
-              <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="productdropdown">
-                <li><a class="dropdown-item" href="notice.html">공지사항</a></li>
-                <li><a class="dropdown-item" href="board.html">자유 게시판</a></li>
-                <li><a class="dropdown-item" href="suggestion.html">건의 게시판</a></li>
-              </ul>
-            </li><!--end dropdown-->
-          </ul><!--end navbar-nav-->
-        </div>
-        <!--end navabar-collapse-->
-        <!--logout-->
-        <!-- <ul class="header-menu list-inline d-flex align-items-center mb-0">
-					<a class="text-reset mx-2 log-menu" href="sign-in.html"><span class="d-none d-md-inline-block fw-medium">로그인</span></a> | 
-					<a class="text-reset mx-2 log-menu" href="sign-up.html"><span class="d-none d-md-inline-block fw-medium">회원가입</span></a>
-				</ul>-->
-        <!--login-->
-        <ul class="header-menu list-inline d-flex align-items-center mb-0">
-          <li class="list-inline-item dropdown me-4">
-            <a href="javascript:void(0)" class="header-item noti-icon position-relative" id="notification"
-              data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="mdi mdi-bell fs-22"></i>
-              <div class="count position-absolute">1</div>
-            </a>
-            <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end p-0" aria-labelledby="notification">
-              <div class="notification-header border-bottom bg-light">
-                <h6 class="mb-1"> 알림센터 </h6>
-                <p class="text-muted fs-13 mb-0">1개의 읽지 않은 알림</p>
-              </div>
-              <div class="notification-wrapper dropdown-scroll">
-                <a href="javascript:void(0)" class="text-dark notification-item d-block active">
-                  <div class="d-flex align-items-center">
-                    <div class="flex-shrink-0 me-3">
-                      <div class="avatar-xs bg-primary text-white rounded-circle text-center">
-                        <i class="uil uil-user-check"></i>
-                      </div>
-                    </div>
-                    <div class="flex-grow-1">
-                      <h6 class="mt-0 mb-1 fs-14">22 verified registrations</h6>
-                      <p class="mb-0 fs-12 text-muted"><i class="mdi mdi-clock-outline"></i>
-                        <span>3 min
-                          ago</span>
-                      </p>
-                    </div>
-                  </div>
-                </a><!--end notification-item-->
-              </div><!--end notification-wrapper-->
-              <div class="notification-footer border-top text-center">
-                <a class="primary-link fs-13" href="javascript:void(0)">
-                  <i class="mdi mdi-arrow-right-circle me-1"></i> <span>더보기</span>
-                </a>
-              </div>
-            </div>
-          </li>
-          <li class="list-inline-item dropdown">
-            <a href="javascript:void(0)" class="header-item" id="userdropdown" data-bs-toggle="dropdown"
-              aria-expanded="false">
-              <img src="assets/images/profile.jpg" alt="mdo" width="35" height="35" class="rounded-circle me-1"> <span
-                class="d-none d-md-inline-block fw-medium">스모어
-                님</span>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown">
-              <li><a class="dropdown-item" href="mypage.html">마이페이지</a></li>
-              <li><a class="dropdown-item" href="housebudget.html">가계부</a></li>
-              <li><a class="dropdown-item" href="sign-out.html">로그아웃</a></li>
-            </ul>
-          </li>
-        </ul><!--end header-menu-->
-      </div>
-      <!--end container-->
-    </nav>
-    <!-- Navbar End -->
+	<!-- Begin page -->
+	<header th:replace="~{common/layout :: #header}"></header>
 
     <div class="main-content">
 
       <div class="page-content">
 
         <!-- Start home -->
-        <section class="page-title-box"
-          style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(assets/images/img/hero_news.jpg); height: 350px; padding-top: 130px; background-position: center bottom;">
+        <section class="page-title-box" th:style="'background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(' + @{/images/img/hero_news.jpg} + '); height: 350px; padding-top: 130px; background-position: center bottom;'">
           <div class="container">
             <div class="row justify-content-center">
               <div class="col-md-6">
@@ -166,8 +40,8 @@
                   <div class="page-next">
                     <nav class="d-inline-block" aria-label="breadcrumb text-center">
                       <ol class="breadcrumb justify-content-center">
-                        <li class="breadcrumb-item"><a href="index.html">HOME</a></li>
-                        <li class="breadcrumb-item"><a href="news.html">INFORMATION</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/index}">HOME</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/news}">INFORMATION</a></li>
                         <li class="breadcrumb-item active" aria-current="page"> NEWS </li>
                       </ol>
                     </nav>
@@ -203,244 +77,82 @@
                 <div class="text-center mb-5">
                   <p class="badge bg-warning fs-14 mb-2 px-3">오늘의 뉴스</p>
                   <h2 class="my-3">실시간 뉴스 정보</h2>
-                  <p class="text-muted">오늘의 핫토픽과 실시간 뉴스 정보를 카테고리별로 안내해드립니다.</p>
+                  <p class="text-muted">1인 가구 관련 뉴스 정보를 안내해드립니다.</p>
                 </div>
               </div><!--end col-->
             </div><!--end row-->
             <div class="row">
-              <div class="col-lg-4">
+              <div class="col-lg-12">
                 <div class="card job-Categories-box border-0">
-                  <div class="bg-secondary bg-opacity-10 text-center rounded-3 p-2 mb-3">
-                    <h3 class="m-0">경제</h3>
-                  </div>
-                  <div class="card-body bg-secondary bg-opacity-10 rounded-3 p-3" style="width:360px;">
-                    <ul class="list-unstyled job-Categories-list mb-0">
-                      <li class="" style="height:70px; ">
+                  <div class="card-body bg-secondary bg-opacity-10 rounded-3">
+                    <div th:each="item : ${list}">
+                    <ul class="list-unstyled job-Categories-list m-4" id="newsContents">
+                      <li class="row">
                         <div class="d-inline-block">
-                          <span class="fs-5 fw-bold d-inline-block text-truncate" style="max-width:200px;">뉴스
-                            제목hhhhhhhhhhhhhhhhhhhhhhhhhh</span>
-                          <p class="text-muted">뉴스 날짜 </p>
+                          <span class="fs-5 fw-bold d-inline-block text-truncate" th:text="${item.title}"></span>
+                          <p th:text="${item.description}"></p>
+                          <p class="text-muted" th:text="${#dates.format(item.pubDate, 'yyyy-MM-dd HH:mm')}"></p>
+                          <a class="badge bg-soft-info fs-6 float-end align-middle mt-n4" th:href="${item.originallink}" target="_blank">바로가기 <i class="uil uil-external-link-alt"></i> </a>
                         </div>
-                        <span class="badge bg-soft-info fs-6 float-end align-middle mt-3">바로가기</span>
                       </li>
-                      <li class="" style="height:70px; ">
-                        <div class="d-inline-block">
-                          <span class="fs-5 fw-bold d-inline-block text-truncate" style="max-width:200px;">뉴스
-                            제목hhhhhhhhhhhhhhhhhhhhhhhhhh</span>
-                          <p class="text-muted">뉴스 날짜 </p>
-                        </div>
-                        <span class="badge bg-soft-info fs-6 float-end align-middle mt-3">바로가기</span>
-                      </li>
-                      <li class="" style="height:70px; ">
-                        <div class="d-inline-block">
-                          <span class="fs-5 fw-bold d-inline-block text-truncate" style="max-width:200px;">뉴스
-                            제목hhhhhhhhhhhhhhhhhhhhhhhhhh</span>
-                          <p class="text-muted">뉴스 날짜 </p>
-                        </div>
-                        <span class="badge bg-soft-info fs-6 float-end align-middle mt-3">바로가기</span>
-                      </li>
-                      <li class="" style="height:70px; ">
-                        <div class="d-inline-block">
-                          <span class="fs-5 fw-bold d-inline-block text-truncate" style="max-width:200px;">뉴스
-                            제목hhhhhhhhhhhhhhhhhhhhhhhhhh</span>
-                          <p class="text-muted">뉴스 날짜 </p>
-                        </div>
-                        <span class="badge bg-soft-info fs-6 float-end align-middle mt-3">바로가기</span>
-                      </li>
-                      <li class="" style="height:70px; ">
-                        <div class="d-inline-block">
-                          <span class="fs-5 fw-bold d-inline-block text-truncate" style="max-width:200px;">뉴스
-                            제목hhhhhhhhhhhhhhhhhhhhhhhhhh</span>
-                          <p class="text-muted">뉴스 날짜 </p>
-                        </div>
-                        <span class="badge bg-soft-info fs-6 float-end align-middle mt-3">바로가기</span>
-                      </li>
-                      <li class="" style="height:70px; ">
-                        <div class="d-inline-block">
-                          <span class="fs-5 fw-bold d-inline-block text-truncate" style="max-width:200px;">뉴스
-                            제목hhhhhhhhhhhhhhhhhhhhhhhhhh</span>
-                          <p class="text-muted">뉴스 날짜 </p>
-                        </div>
-                        <span class="badge bg-soft-info fs-6 float-end align-middle mt-3">바로가기</span>
-                      </li>
-                      <li class="" style="height:70px; ">
-                        <div class="d-inline-block">
-                          <span class="fs-5 fw-bold d-inline-block text-truncate" style="max-width:200px;">뉴스
-                            제목hhhhhhhhhhhhhhhhhhhhhhhhhh</span>
-                          <p class="text-muted">뉴스 날짜 </p>
-                        </div>
-                        <span class="badge bg-soft-info fs-6 float-end align-middle mt-3">바로가기</span>
-                      </li>
-                      <li class="" style="height:70px; ">
-                        <div class="d-inline-block">
-                          <span class="fs-5 fw-bold d-inline-block text-truncate" style="max-width:200px;">뉴스
-                            제목hhhhhhhhhhhhhhhhhhhhhhhhhh</span>
-                          <p class="text-muted">뉴스 날짜 </p>
-                        </div>
-                        <span class="badge bg-soft-info fs-6 float-end align-middle mt-3">바로가기</span>
-                      </li>
-
                     </ul>
+                    </div>
+                    
+                  <!-- 페이징 -->
+                  <div class="row">
+                    <div class="col-lg-12 mt-4 mb-5 pt-2">
+                      <nav aria-label="Page navigation example">
+                        <ul class="pagination job-pagination mb-0 justify-content-center">
+                          <th:block th:if="${pageInfo.currentPage == pageInfo.startPage}">
+                            <li class="page-item " th:classappend="${pageInfo.currentPage == 1 ? 'disabled' : ''}">
+                              <a class="page-link" th:href="@{/news(page=${pageInfo.prevPage})}" tabindex="-1">
+                                <i class="mdi mdi-chevron-double-left fs-15"></i>
+                              </a>
+                            </li>
+                          </th:block>
+                          <th:block th:if="${pageInfo.currentPage != pageInfo.startPage}">
+                            <li class="page-item " th:classappend="${pageInfo.currentPage == 1 ? 'disabled' : ''}">
+                              <a class="page-link" th:href="@{/news(page=${pageInfo.startPage})}" tabindex="-1">
+                                <i class="mdi mdi-chevron-double-left fs-15"></i>
+                              </a>
+                            </li>
+                          </th:block>
+                          
+                          <th:block th:each="num, status : ${#numbers.sequence(pageInfo.startPage, pageInfo.endPage)}">
+	                          <th:block th:if="${pageInfo.currentPage == status.current}">
+	                            <li class="page-item active">
+	                              <a class="page-link" th:text="${status.current}"></a>
+	                            </li>
+	                          </th:block>
+	                          <th:block th:if="${pageInfo.currentPage != status.current}">
+	                            <li class="page-item">
+	                              <a class="page-link" th:href="@{/news(page=${status.current})}" th:text="${status.current}"></a>
+	                            </li>
+	                          </th:block>
+                          </th:block>
+                          
+                          <th:block th:if="${pageInfo.currentPage == pageInfo.endPage}">
+                            <li class="page-item">
+                              <a class="page-link" th:href="@{/news(page=${pageInfo.nextPage})}">
+                                <i class="mdi mdi-chevron-double-right fs-15"></i>
+                              </a>
+                            </li>
+                          </th:block>
+                          <th:block th:if="${pageInfo.currentPage != pageInfo.endPage}">
+                            <li class="page-item">
+                              <a class="page-link" th:href="@{/news(page=${pageInfo.endPage})}">
+                                <i class="mdi mdi-chevron-double-right fs-15"></i>
+                              </a>
+                            </li>
+                          </th:block>
+                        </ul>
+                      </nav>
+                    </div><!--end col-->
+                  </div><!-- end row -->
+                  
                   </div>
                 </div>
               </div><!--end col-->
-
-              <div class="col-lg-4">
-                <div class="card job-Categories-box border-0">
-                  <div class="bg-secondary bg-opacity-10 text-center rounded-3 p-2 mb-3">
-                    <h3 class="m-0">사회</h3>
-                  </div>
-                  <div class="card-body bg-secondary bg-opacity-10 rounded-3 p-3" style="width:360px;">
-                    <ul class="list-unstyled job-Categories-list mb-0">
-                      <li class="" style="height:70px; ">
-                        <div class="d-inline-block">
-                          <span class="fs-5 fw-bold d-inline-block text-truncate" style="max-width:200px;">뉴스
-                            제목hhhhhhhhhhhhhhhhhhhhhhhhhh</span>
-                          <p class="text-muted">뉴스 날짜 </p>
-                        </div>
-                        <span class="badge bg-soft-info fs-6 float-end align-middle mt-3">바로가기</span>
-                      </li>
-                      <li class="" style="height:70px; ">
-                        <div class="d-inline-block">
-                          <span class="fs-5 fw-bold d-inline-block text-truncate" style="max-width:200px;">뉴스
-                            제목hhhhhhhhhhhhhhhhhhhhhhhhhh</span>
-                          <p class="text-muted">뉴스 날짜 </p>
-                        </div>
-                        <span class="badge bg-soft-info fs-6 float-end align-middle mt-3">바로가기</span>
-                      </li>
-                      <li class="" style="height:70px; ">
-                        <div class="d-inline-block">
-                          <span class="fs-5 fw-bold d-inline-block text-truncate" style="max-width:200px;">뉴스
-                            제목hhhhhhhhhhhhhhhhhhhhhhhhhh</span>
-                          <p class="text-muted">뉴스 날짜 </p>
-                        </div>
-                        <span class="badge bg-soft-info fs-6 float-end align-middle mt-3">바로가기</span>
-                      </li>
-                      <li class="" style="height:70px; ">
-                        <div class="d-inline-block">
-                          <span class="fs-5 fw-bold d-inline-block text-truncate" style="max-width:200px;">뉴스
-                            제목hhhhhhhhhhhhhhhhhhhhhhhhhh</span>
-                          <p class="text-muted">뉴스 날짜 </p>
-                        </div>
-                        <span class="badge bg-soft-info fs-6 float-end align-middle mt-3">바로가기</span>
-                      </li>
-                      <li class="" style="height:70px; ">
-                        <div class="d-inline-block">
-                          <span class="fs-5 fw-bold d-inline-block text-truncate" style="max-width:200px;">뉴스
-                            제목hhhhhhhhhhhhhhhhhhhhhhhhhh</span>
-                          <p class="text-muted">뉴스 날짜 </p>
-                        </div>
-                        <span class="badge bg-soft-info fs-6 float-end align-middle mt-3">바로가기</span>
-                      </li>
-                      <li class="" style="height:70px; ">
-                        <div class="d-inline-block">
-                          <span class="fs-5 fw-bold d-inline-block text-truncate" style="max-width:200px;">뉴스
-                            제목hhhhhhhhhhhhhhhhhhhhhhhhhh</span>
-                          <p class="text-muted">뉴스 날짜 </p>
-                        </div>
-                        <span class="badge bg-soft-info fs-6 float-end align-middle mt-3">바로가기</span>
-                      </li>
-                      <li class="" style="height:70px; ">
-                        <div class="d-inline-block">
-                          <span class="fs-5 fw-bold d-inline-block text-truncate" style="max-width:200px;">뉴스
-                            제목hhhhhhhhhhhhhhhhhhhhhhhhhh</span>
-                          <p class="text-muted">뉴스 날짜 </p>
-                        </div>
-                        <span class="badge bg-soft-info fs-6 float-end align-middle mt-3">바로가기</span>
-                      </li>
-                      <li class="" style="height:70px; ">
-                        <div class="d-inline-block">
-                          <span class="fs-5 fw-bold d-inline-block text-truncate" style="max-width:200px;">뉴스
-                            제목hhhhhhhhhhhhhhhhhhhhhhhhhh</span>
-                          <p class="text-muted">뉴스 날짜 </p>
-                        </div>
-                        <span class="badge bg-soft-info fs-6 float-end align-middle mt-3">바로가기</span>
-                      </li>
-
-                    </ul>
-                  </div>
-                </div>
-              </div><!--end col-->
-
-              <div class="col-lg-4">
-                <div class="card job-Categories-box border-0">
-                  <div class="bg-secondary bg-opacity-10 text-center rounded-3 p-2 mb-3">
-                    <h3 class="m-0">생활/문화</h3>
-                  </div>
-                  <div class="card-body bg-secondary bg-opacity-10 rounded-3 p-3" style="width:360px;">
-                    <ul class="list-unstyled job-Categories-list mb-0">
-                      <li class="" style="height:70px; ">
-                        <div class="d-inline-block">
-                          <span class="fs-5 fw-bold d-inline-block text-truncate" style="max-width:200px;">뉴스
-                            제목hhhhhhhhhhhhhhhhhhhhhhhhhh</span>
-                          <p class="text-muted">뉴스 날짜 </p>
-                        </div>
-                        <span class="badge bg-soft-info fs-6 float-end align-middle mt-3">바로가기</span>
-                      </li>
-                      <li class="" style="height:70px; ">
-                        <div class="d-inline-block">
-                          <span class="fs-5 fw-bold d-inline-block text-truncate" style="max-width:200px;">뉴스
-                            제목hhhhhhhhhhhhhhhhhhhhhhhhhh</span>
-                          <p class="text-muted">뉴스 날짜 </p>
-                        </div>
-                        <span class="badge bg-soft-info fs-6 float-end align-middle mt-3">바로가기</span>
-                      </li>
-                      <li class="" style="height:70px; ">
-                        <div class="d-inline-block">
-                          <span class="fs-5 fw-bold d-inline-block text-truncate" style="max-width:200px;">뉴스
-                            제목hhhhhhhhhhhhhhhhhhhhhhhhhh</span>
-                          <p class="text-muted">뉴스 날짜 </p>
-                        </div>
-                        <span class="badge bg-soft-info fs-6 float-end align-middle mt-3">바로가기</span>
-                      </li>
-                      <li class="" style="height:70px; ">
-                        <div class="d-inline-block">
-                          <span class="fs-5 fw-bold d-inline-block text-truncate" style="max-width:200px;">뉴스
-                            제목hhhhhhhhhhhhhhhhhhhhhhhhhh</span>
-                          <p class="text-muted">뉴스 날짜 </p>
-                        </div>
-                        <span class="badge bg-soft-info fs-6 float-end align-middle mt-3">바로가기</span>
-                      </li>
-                      <li class="" style="height:70px; ">
-                        <div class="d-inline-block">
-                          <span class="fs-5 fw-bold d-inline-block text-truncate" style="max-width:200px;">뉴스
-                            제목hhhhhhhhhhhhhhhhhhhhhhhhhh</span>
-                          <p class="text-muted">뉴스 날짜 </p>
-                        </div>
-                        <span class="badge bg-soft-info fs-6 float-end align-middle mt-3">바로가기</span>
-                      </li>
-                      <li class="" style="height:70px; ">
-                        <div class="d-inline-block">
-                          <span class="fs-5 fw-bold d-inline-block text-truncate" style="max-width:200px;">뉴스
-                            제목hhhhhhhhhhhhhhhhhhhhhhhhhh</span>
-                          <p class="text-muted">뉴스 날짜 </p>
-                        </div>
-                        <span class="badge bg-soft-info fs-6 float-end align-middle mt-3">바로가기</span>
-                      </li>
-                      <li class="" style="height:70px; ">
-                        <div class="d-inline-block">
-                          <span class="fs-5 fw-bold d-inline-block text-truncate" style="max-width:200px;">뉴스
-                            제목hhhhhhhhhhhhhhhhhhhhhhhhhh</span>
-                          <p class="text-muted">뉴스 날짜 </p>
-                        </div>
-                        <span class="badge bg-soft-info fs-6 float-end align-middle mt-3">바로가기</span>
-                      </li>
-                      <li class="" style="height:70px; ">
-                        <div class="d-inline-block">
-                          <span class="fs-5 fw-bold d-inline-block text-truncate" style="max-width:200px;">뉴스
-                            제목hhhhhhhhhhhhhhhhhhhhhhhhhh</span>
-                          <p class="text-muted">뉴스 날짜 </p>
-                        </div>
-                        <span class="badge bg-soft-info fs-6 float-end align-middle mt-3">바로가기</span>
-                      </li>
-
-                    </ul>
-                  </div>
-                </div>
-              </div><!--end col-->
-
-
-
             </div><!--end row-->
           </div><!--end container-->
         </section>
@@ -452,9 +164,9 @@
             <div class="row justify-content-center">
               <div class="text-center">
                 <p class="fs-5 text-muted mb-1">더 많은 뉴스 정보를 확인하고 싶다면</p>
-                <p class="fs-5 text-muted mb-2">해당 버튼을 클릭시 네이버뉴스 사이트로 이동됩니다</p>
+                <p class="fs-5 text-muted mb-2">해당 버튼을 클릭하여 네이버뉴스 사이트로 이동</p>
                 <div class="mt-4">
-                  <a href="javascript:void(0)" class="btn btn-outline-primary btn-hover ms-sm-1 mt-2"><i
+                  <a href="https://search.naver.com/search.naver?where=news&sm=tab_jum&query=1%EC%9D%B8+%EA%B0%80%EA%B5%AC" class="btn btn-outline-primary btn-hover ms-sm-1 mt-2"><i
                       class="uil uil-rocket"></i> 네이버 뉴스 이동</a>
                 </div>
               </div>
@@ -466,35 +178,23 @@
       </div>
       <!-- End Page-content -->
 
-      <!-- START FOOTER -->
-      <div class="footer-alt">
-        <div class="container">
-          <div class="row">
-            <div class="text-center text-white-50 col-lg-12 mb-2">
-              <img style="height: 45px;" src="assets/images/logo-light.png">
-            </div>
-            <div class="text-center text-white-50 col-lg-12">
-              <a class="d-inline-block text-reset" href="#">개인정보처리방침</a> |
-              <a class="d-inline-block text-reset" href="#">저작권정책</a> |
-              <a class="d-inline-block text-reset" href="#">사이트맵</a>
-            </div>
-            <div class="col-lg-12">
-              <p class="text-white-50 text-center mb-0">
-                고객센터 : 02-123-1234
-                <script>document.write(new Date().getFullYear())</script> &copy; smore - All Rights Reserved.
-              </p>
-            </div><!--end col-->
-          </div><!--end row-->
-        </div><!--end container-->
-      </div>
-      <!-- END FOOTER -->
+	  <footer th:replace="~{common/layout :: #footer}"></footer>
 
+      <!-- Style switcher -->
+              <a class="color-list color1" href="javascript: void(0);" onclick="setColorGreen()"></a>
+              <a class="color-list color2" href="javascript: void(0);" onclick="setColor('blue')"></a>
+              <a class="color-list color3" href="javascript: void(0);" onclick="setColor('green')"></a>
+              <a href="javascript: void(0);" id="mode">
+          <a href="javascript: void(0);" class="settings rounded-end"></a>
+      </div>
+      <!-- end switcher-->
 
       <!--start back-to-top-->
       <button onclick="topFunction()" id="back-to-top">
         <i class="mdi mdi-arrow-up"></i>
       </button>
       <!--end back-to-top-->
+      
     </div>
     <!-- end main content-->
 
@@ -502,18 +202,17 @@
   <!-- END layout-wrapper -->
 
   <!-- JAVASCRIPT -->
-  <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script th:src="@{/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
   <script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
 
-
   <!-- Choice Js -->
-  <script src="assets/libs/choices.js/public/assets/scripts/choices.min.js"></script>
+  <script th:src="@{/libs/choices.js/public/assets/scripts/choices.min.js}"></script>
 
   <!-- Switcher Js -->
-  <script src="assets/js/pages/switcher.init.js"></script>
+  <script th:src="@{/js/pages/switcher.init.js}"></script>
 
-  <script src="assets/js/app.js"></script>
-
+  <script th:src="@{/js/app.js}"></script>
+  
 </body>
 
 </html>
