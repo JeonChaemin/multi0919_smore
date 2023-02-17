@@ -47,7 +47,7 @@ public class RecipeController {
 				searchMap.put("all", all);
 			}
 			if(loginMember != null) {
-				searchMap.put("MemNo", loginMember.getMemNo());
+				searchMap.put("memNo", loginMember.getMemNo());
 			}
 			searchMap.put("rcpPat2", rcpPat2);
 			searchMap.put("rcpPartsDtls", rcpPartsDtls);
@@ -93,7 +93,11 @@ public class RecipeController {
 	@RequestMapping("/detail/recipe-detail")
 	public String view(Model model, @SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			@RequestParam("rcpNo") int rcpNo) {
-		Recipe recipe = service.getRecipeByNo(rcpNo);
+		String memNo = "";
+		if(loginMember != null) {
+			memNo = "" +loginMember.getMemNo();
+		}
+		Recipe recipe = service.getRecipeByNo(rcpNo, memNo);
 		List<RecipeReply> replyList = service.getRecipeReplyListByNo(rcpNo);
 		if(recipe == null) {
 			return "redirect:error";

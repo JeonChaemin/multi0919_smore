@@ -15,7 +15,7 @@ public interface RecipeMapper {
 	List<Recipe> selectRecipeList(Map<String, Object> map);
 	int selectRecipeCount(Map<String, Object> map);
 	List<Recipe> selectHotRecipeList();
-	Recipe selectRecipeByNo(int rcpNo);
+	Recipe selectRecipeByNo(Map<String, String> map);
 	List<RecipeReply> selectRecipeReplyListByNo(int rcpNo);
 	int selectRecipeReplyCountByNo(int rcpNo);
 	List<RecipeClip> selectRecipeClipList(Map<String, String> map);

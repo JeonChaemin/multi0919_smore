@@ -14,18 +14,18 @@
 		r.MANUAL_IMG13, r.MANUAL14, r.MANUAL_IMG14, r.MANUAL15, r.MANUAL_IMG15, r.MANUAL16, 
 		r.MANUAL_IMG16, r.MANUAL17, r.MANUAL_IMG17, r.MANUAL18, r.MANUAL_IMG18, r.MANUAL19, 
 		r.MANUAL_IMG19, r.MANUAL20, r.MANUAL_IMG20, 
-		(SELECT COUNT(*) FROM like_recipe WHERE r.rcpNo = l.rcpNo) as likeCount,
-		(SELECT COUNT(*) FROM review_rcp WHERE r.rcpNo = rv.rcpNo) as reviewCount
-		<if test="mNo != null">
-		,(SELECT COUNT(*) FROM like_recipe WHERE r.rcpNo = l.rcpNo AND memNo = ${mNo}) as isLike
+		(SELECT COUNT(*) FROM like_recipe l WHERE r.rcpNo = l.rcpNo) as likeCount,
+		(SELECT COUNT(*) FROM review_rcp rv WHERE r.rcpNo = rv.rcpNo AND rv.STATUS = 'Y') as reviewCount
+		<if test='memNo != null and memNo != "" '>
+		,(SELECT COUNT(*) FROM like_recipe l WHERE r.rcpNo = l.rcpNo AND memNo = ${memNo}) as isLike
 		</if>
-		<if test="mNo != null">
-		,(SELECT COUNT(*) FROM clip_rcp WHERE r.rcpNo = c.rcpNo AND memNo = ${mNo}) as isClip
+		<if test='memNo != null and memNo != "" '>
+		,(SELECT COUNT(*) FROM clip_rcp cr WHERE r.rcpNo = cr.rcpNo AND memNo = ${memNo}) as isClip
 		</if>
 		FROM recipe r
 		LEFT OUTER JOIN (SELECT DISTINCT rcpNo FROM like_recipe) As l on (r.rcpNo = l.rcpNo)
 		LEFT OUTER JOIN (SELECT DISTINCT rcpNo FROM review_rcp) As rv on (r.rcpNo = rv.rcpNo)
-		LEFT OUTER JOIN (SELECT DISTINCT rcpNo FROM clip_rcp) As c on (r.rcpNo = c.rcpNo)
+		LEFT OUTER JOIN (SELECT DISTINCT rcpNo FROM clip_rcp) As cr on (r.rcpNo = cr.rcpNo)
 	</sql>
 
 	<resultMap type="Recipe" id="recipeResultMap">
@@ -176,26 +176,26 @@
 		ORDER BY likeCount DESC LIMIT 5
 	</select>
 	
-	<select id="selectRecipeByNo" resultMap="recipeResultMap" parameterType="int">
+	<select id="selectRecipeByNo" resultMap="recipeResultMap" parameterType="map">
 		<include refid="selectRecipeSql"/>
 		WHERE r.rcpNo = #{rcpNo}
 	</select>
 	
 	<select id="selectRecipeClipList" resultMap="RecipeClipResultMap" parameterType="map">
 		SELECT rcpNo, memNo FROM CLIP_RCP
-		WHERE memNo = ${mNo}
+		WHERE memNo = ${memNo}
 		LIMIT ${limit} OFFSET ${offset}
 	</select>
 	
 	<select id="selectRecipeClipCount" resultType="int" parameterType="int">
 		SELECT COUNT(*) FROM CLIP_RCP
-		WHERE memNo = #{mNo}
+		WHERE memNo = #{memNo}
 	</select>
 	
 	<select id="selectRecipeClipByNo" resultMap="RecipeClipResultMap" parameterType="map">
 		SELECT rcpNo, memNo FROM CLIP_RCP
 		rcpNo = ${rcpNo}
-		AND memNo = ${mNo}
+		AND memNo = ${memNo}
 	</select>
 	
 	<select id="selectRecipeReplyCountByNo" resultType="int" parameterType="int">
@@ -214,7 +214,7 @@
 	<select id="selectRecipeLikeByNo" resultMap="RecipeLikeResultMap" parameterType="map">
 		SELECT rcpNo, memNo FROM LIKE_RECIPE
 		WHERE rcpNo = ${rcpNo}
-		AND memNo = ${mNo}
+		AND memNo = ${memNo}
 	</select>
 	
 	<select id="selectRecipeLikeCountByNo" resultType="int" parameterType="int">
@@ -260,7 +260,7 @@
 		INSERT INTO CLIP_RCP(
 			rcpNo, memNo
 		) VALUES (
-			#{rcpNo}, #{mNo}
+			#{rcpNo}, #{memNo}
 			 )
 	</insert>
 	
@@ -268,7 +268,7 @@
 		INSERT INTO LIKE_RECIPE(
 			rcpNo, memNo
 		) VALUES (
-			#{rcpNo}, #{mNo}
+			#{rcpNo}, #{memNo}
 			 )
 	</insert>
 	
@@ -308,13 +308,13 @@
 	<delete id="deleteRecipeClip" parameterType="map">
 		DELETE FROM CLIP_RCP 
 		WHERE rcpNo = ${rcpNo}
-		AND memNo = ${mNo}
+		AND memNo = ${memNo}
 	</delete>
 	
 	<delete id="deleteRecipeLike" parameterType="map">
 		DELETE FROM LIKE_RECIPE 
 		WHERE rcpNo = ${rcpNo}
-		AND memNo = ${mNo}
+		AND memNo = ${memNo}
 	</delete>
 
 </mapper>

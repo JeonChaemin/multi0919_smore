@@ -34,8 +34,11 @@ public class RecipeService {
 		return mapper.selectHotRecipeList();
 	}
 	
-	public Recipe getRecipeByNo(int rcpNo) {
-		return mapper.selectRecipeByNo(rcpNo);
+	public Recipe getRecipeByNo(int rcpNo, String memNo) {
+		Map<String, String> map = new HashMap<>();
+		map.put("rcpNo", ""+rcpNo);
+		map.put("memNo", memNo);
+		return mapper.selectRecipeByNo(map);
 	}
 	
 	public List<RecipeReply> getRecipeReplyListByNo(int rcpNo){
@@ -76,17 +79,17 @@ public class RecipeService {
 		return mapper.insertRecipeReply(recipeReply);
 	}
 	
-	public int clipRecipe(int rcpNo, int mNo) {
+	public int clipRecipe(int rcpNo, int memNo) {
 		Map<String, String> map = new HashMap<>();
 		map.put("rcpNo", ""+rcpNo);
-		map.put("mNo", ""+mNo);
+		map.put("memNo", ""+memNo);
 		return mapper.insertRecipeClip(map);
 	}
 	
-	public int likeRecipe(int rcpNo, int mNo) {
+	public int likeRecipe(int rcpNo, int memNo) {
 		Map<String, String> map = new HashMap<>();
 		map.put("rcpNo", ""+rcpNo);
-		map.put("mNo", ""+mNo);
+		map.put("memNo", ""+memNo);
 		return mapper.insertRecipeLike(map);
 	}
 	
@@ -111,18 +114,18 @@ public class RecipeService {
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
-	public int unClipRecipe(int rcpNo, int mNo) {
+	public int unClipRecipe(int rcpNo, int memNo) {
 		Map<String, String> map = new HashMap<>();
 		map.put("rcpNo", ""+rcpNo);
-		map.put("mNo", ""+mNo);
+		map.put("memNo", ""+memNo);
 		return mapper.deleteRecipeClip(map);
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
-	public int unLikeRecipe(int rcpNo, int mNo) {
+	public int unLikeRecipe(int rcpNo, int memNo) {
 		Map<String, String> map = new HashMap<>();
 		map.put("rcpNo", ""+rcpNo);
-		map.put("mNo", ""+mNo);
+		map.put("memNo", ""+memNo);
 		return mapper.deleteRecipeLike(map);
 	}
 	
