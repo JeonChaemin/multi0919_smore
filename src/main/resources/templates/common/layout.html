@@ -59,8 +59,11 @@
 	              </a>
 	              <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="homedrop">
 	                <li><a class="dropdown-item" th:href="@{/trade}">중고/재능 거래</a></li>
-	                <li><a class="dropdown-item" th:href="@{/recipe}">레시피</a></li>
-	                <li><a class="dropdown-item" th:href="@{/outdoor}">야외활동</a></li>
+	                <li><a class="dropdown-item" th:href="@{/category/recipe}">레시피</a></li>
+	                <hr class="mb-0">
+					<span class="dropdown-header mb-0">야외활동</span>
+                	<li><a class="dropdown-item" th:href="@{/outdoor}">공원</a></li>
+               		<li><a class="dropdown-item" th:href="@{/tracking}">산책로</a></li>
 	              </ul>
 	            </li>
 	            <li class="nav-item dropdown dropdown-hover">
