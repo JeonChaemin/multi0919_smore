@@ -38,7 +38,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@RequestMapping("/trade") // 요청 url의 상위 url을 모두 처리할때 사용
+//@RequestMapping("/trade") // 요청 url의 상위 url을 모두 처리할때 사용
 @Controller
 public class TradeController {
 
@@ -53,7 +53,7 @@ public class TradeController {
 //	}
 
 	// http://localhost/trade/list?searchValue=&searchType=%EC%A4%91%EA%B3%A0%ED%8C%90%EB%A7%A4
-	@GetMapping("/list")
+	@GetMapping("/trade")
 	public String tradeList(Model model, 
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			@RequestParam Map<String, Object> paramMap,
@@ -67,7 +67,7 @@ public class TradeController {
 //		System.out.println("page : " + page);
 //		System.out.println("가져온값 : " + paramMap);
 //		System.out.println("searchValue : " + searchValue);
-		System.out.println("searchType : " + searchType);
+//		System.out.println("searchType : " + searchType);
 //		System.out.println("categories : " + categories);
 //		System.out.println("regions : " + regions);
 
@@ -125,8 +125,9 @@ public class TradeController {
 		return "trade/trade-list";
 	}
 
-	@RequestMapping("/detail")
-	public String view(Model model, @RequestParam("no") int tradeNo, 
+	@RequestMapping("/trade/detail")
+	public String view(Model model, 
+			@RequestParam("no") int tradeNo, 
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember) {
 		
 		int memNo = 0;
@@ -135,26 +136,29 @@ public class TradeController {
 		}
 		
 		Trade trade = service.findByNo(tradeNo, memNo);
+		List<ReplyTrade> replyTradeList = service.getRecipeReplyListByNo(tradeNo);
 		if (trade == null) {
 			return "redirect:error";
 		}
 
 		model.addAttribute("trade", trade);
-		model.addAttribute("replyTradeList", trade.getReplyTradeList());
+		System.out.println(trade);
+		model.addAttribute("replyTradeList", replyTradeList);
+		System.out.println(replyTradeList);
 		return "trade/trade-detail";
 	}
 
-	@GetMapping("/error")
+	@GetMapping("/trade/error")
 	public String error() {
 		return "common/error";
 	}
 
-	@GetMapping("/write")
+	@GetMapping("/trade/write")
 	public String writeView() {
 		return "trade/trade-write";
 	}
 
-	@PostMapping("/write")
+	@PostMapping("/trade/write")
 	public String writeTrade(Model model, HttpSession session,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember, 
 			@ModelAttribute Trade trade,
@@ -181,16 +185,16 @@ public class TradeController {
 
 		if (result > 0) {
 			model.addAttribute("msg", "거래게시글이 등록 되었습니다.");
-			model.addAttribute("location", "/trade/list");
+			model.addAttribute("location", "/trade");
 		} else {
 			model.addAttribute("msg", "거래게시글 작성에 실패하였습니다.");
-			model.addAttribute("location", "/trade/list");
+			model.addAttribute("location", "/trade");
 		}
 
 		return "common/msg";
 	}
 
-	@RequestMapping("/reply")
+	@RequestMapping("/trade/reply")
 	public String writeReplyTrade(Model model, 
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			@ModelAttribute ReplyTrade replyTrade) {
@@ -208,7 +212,7 @@ public class TradeController {
 		return "common/msg";
 	}
 
-	@RequestMapping("/delete")
+	@RequestMapping("/trade/delete")
 	public String deleteTrade(Model model, HttpSession session,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember, 
 			int tradeNo) {
@@ -221,11 +225,11 @@ public class TradeController {
 		} else {
 			model.addAttribute("msg", "게시글 삭제에 실패하였습니다.");
 		}
-		model.addAttribute("location", "/trade/list");
+		model.addAttribute("location", "/trade");
 		return "common/msg";
 	}
 
-	@RequestMapping("/replyDel")
+	@RequestMapping("/trade/replyDel")
 	public String deleteReplyTrade(Model model, 
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			int replyNo, int tradeNo) {
@@ -241,8 +245,24 @@ public class TradeController {
 		return "/common/msg";
 	}
 
+	@RequestMapping("/trade/replyUpdate")
+	public String updateReplyTrade(Model model, 
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember, ReplyTrade replyTrade, int tradeNo) {
+		
+		log.info("리플 수정 요청");
+		int result = service.updateReplyTrade(replyTrade);
+
+		if (result > 0) {
+			model.addAttribute("msg", "리플이 수정되었습니다.");
+		} else {
+			model.addAttribute("msg", "리플 수정에 실패하였습니다.");
+		}
+		model.addAttribute("location", "/trade/detail?no=" + tradeNo);
+		return "/common/msg";
+	}
+	
 	// http://localhost/mvc/board/update?no=27
-	@GetMapping("/update")
+	@GetMapping("/trade/update")
 	public String updateView(Model model, 
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			@RequestParam("no") int tradeNo) {
@@ -252,8 +272,8 @@ public class TradeController {
 		return "trade/trade-update";
 	}
 
-	@PostMapping("/update")
-	public String updateBoard(Model model, HttpSession session,
+	@PostMapping("/trade/update")
+	public String updateTrade(Model model, HttpSession session,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember, 
 			@ModelAttribute Trade trade,
 			@RequestParam("reloadFile") MultipartFile reloadFile) {
@@ -281,16 +301,16 @@ public class TradeController {
 
 		if (result > 0) {
 			model.addAttribute("msg", "게시글이 수정 되었습니다.");
-			model.addAttribute("location", "/trade/list");
+			model.addAttribute("location", "/trade");
 		} else {
 			model.addAttribute("msg", "게시글 수정에 실패하였습니다.");
-			model.addAttribute("location", "/trade/list");
+			model.addAttribute("location", "/trade");
 		}
 
 		return "common/msg";
 	}
 
-	@GetMapping("/file/{fileName}")
+	@GetMapping("/trade/file/{fileName}")
 	@ResponseBody
 	public Resource downloadImage(@PathVariable("fileName") String fileName, Model model) throws IOException {
 		return new UrlResource("file:" + savePath + fileName);
@@ -322,7 +342,7 @@ public class TradeController {
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 실패했을 경우
 	}
 
-	@GetMapping("/clip") 
+	@GetMapping("/trade/clip") 
 	public ResponseEntity<int[]> tradeClip(
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			int tradeNo, int isClip)

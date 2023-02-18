@@ -41,8 +41,9 @@ function onClickClip(id, rentalNo) {
 		dataType: 'json',
 		success: (result) => {
 			$('#' + id).attr('value', '' + result[0]);
-			$('#aazz' + id).html(result[1]);
-			if (result == 1) {
+			$('#aazz' + id).html('스크랩 수 : ' + result[1]);
+			console.dir(result);
+			if (result[0] == 1) {
 				$('#' + id).addClass("active")
 			} else {
 				$('#' + id).removeClass("active")

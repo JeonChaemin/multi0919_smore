@@ -20,18 +20,15 @@
 	background-position: center bottom;
 }
 
-.favorite-icon a:hover {
-  color: #fff !important;
-  background-color: #766df4 !important;
-  border-color: #766df4 !important;
+/* .subBtn{
+	height:40px !important;
+	padding-top: 5px;
+	margin-left: 20px;
+	margin-right: 15px;
 }
+ */
 
-
-.bookmark-post .favorite-icon a, .job-box.bookmark-post .favorite-icon a {
-  background-color: #766df4;
-  color: #fff;
-  border-color: danger;
-}
+ 
 
 .clip a{
 	width: 40px;
@@ -39,8 +36,12 @@
 	
 }
 
+.clip a:hover{
+	color: #fff !important;
+  background-color: #766df4 !important;
+}
+
 .active a{
 	color: #fff !important;
   background-color: #766df4 !important;
-  border-color: #766df4 !important;
 }

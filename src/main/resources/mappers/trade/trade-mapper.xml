@@ -24,6 +24,8 @@
 		<result property="modifyDate" column="MODIFYDATE"/>
 		<result property="clipCount" column="clipCount"/>
 		<result property="isClip" column="isClip"/>
+		<result property="reviewCount" column="reviewCount" />
+		<result property="id" column="ID" />
 	</resultMap>
 
 	<!-- 거래 리플 테이블 -->
@@ -46,20 +48,20 @@
 	<!-- 거래게시판 검색 -->
 	<select id="selectTradeList" resultMap="tradeListResultMap" parameterType="map">
 		SELECT DISTINCT 
-		B.tradeNo, B.WRITER_NO, B.WRITER_ID, B.TYPE, B.CATEGORY, B.REGION, B.TITLE, B.CONDITIONS, B.PRICE, 
+		B.tradeNo, B.WRITER_NO, M1.ID, B.TYPE, B.CATEGORY, B.REGION, B.TITLE, B.CONDITIONS, B.PRICE, 
 		B.CONTENT, B.ORIGINAL_FILENAME, B.RENAMED_FILENAME, B.READCOUNT, B.STATUS, B.CREATEDATE, B.MODIFYDATE
-				,(SELECT COUNT(*) FROM CLIP_TRADE CT WHERE B.TRADENO = CT.TRADENO) as clipCount
-			<if test="memNo != null">
-				,(SELECT COUNT(*) FROM CLIP_TRADE CT WHERE B.TRADENO = CT.TRADENO AND CT.MEMNO = #{memNo}) as isClip
-			</if>		
-			<if test="memNo == null">
-				,(SELECT COUNT(*) FROM CLIP_TRADE CT WHERE B.TRADENO = CT.TRADENO AND CT.MEMNO = 0) as isClip
-			</if>		
+			,(SELECT COUNT(*) FROM REPLY_TRADE R WHERE B.TRADENO = R.TRADENO AND R.STATUS = 'Y') as reviewCount
+			,(SELECT COUNT(*) FROM CLIP_TRADE CT WHERE B.TRADENO = CT.TRADENO) as clipCount
+		<if test="memNo != null">
+			,(SELECT COUNT(*) FROM CLIP_TRADE CT WHERE B.TRADENO = CT.TRADENO AND CT.MEMNO = #{memNo}) as isClip
+		</if>		
+		<if test="memNo == null">
+			,(SELECT COUNT(*) FROM CLIP_TRADE CT WHERE B.TRADENO = CT.TRADENO AND CT.MEMNO = 0) as isClip
+		</if>		
 		FROM TRADE B
-		LEFT OUTER JOIN MEMBER M ON (B.WRITER_NO = M.MEMNO)
-		LEFT OUTER JOIN REPLY_TRADE R ON (B.TRADENO = R.TRADENO) 
-		LEFT OUTER JOIN MEMBER M2 ON (R.WRITER_NO = M2.MEMNO) 
-		LEFT OUTER JOIN CLIP_TRADE CT ON  (CT.TRADENO = B.TRADENO)
+		LEFT OUTER JOIN MEMBER M1 ON (B.WRITER_NO = M1.MEMNO)
+		LEFT OUTER JOIN (SELECT DISTINCT TRADENO FROM REPLY_TRADE) AS R ON (B.TRADENO = R.TRADENO)
+		LEFT OUTER JOIN CLIP_TRADE CT ON (CT.TRADENO = B.TRADENO)
 		WHERE B.STATUS = 'Y'
 		<if test="searchValue != null">
 			AND	B.TITLE LIKE '%${searchValue}%' 
@@ -116,16 +118,11 @@
 	</select>
 
 	<!-- 거래게시판 상세 > 검토전 -->
-	<select id="selectTradeByNo" parameterType="map" resultMap="tradeDetailResultMap">
+	<select id="selectTradeByNo" parameterType="int" resultMap="tradeDetailResultMap">
 		SELECT  
-			B.TRADENO, B.WRITER_NO, B.WRITER_ID, B.TYPE, B.CATEGORY, B.REGION, B.TITLE, B.CONDITIONS, B.PRICE, B.CONTENT, 
-			B.ORIGINAL_FILENAME, B.RENAMED_FILENAME, B.READCOUNT, B.CREATEDATE, B.MODIFYDATE,
-			R.TRADERNO AS R_TRADERNO, 
-		    R.TRADENO AS R_TRADENO,
-		    R.CONTENT  AS R_CONTENT, 
-		    M2.ID  AS R_WRITER_ID, 
-		    R.CREATEDATE  AS R_CREATEDATE, 
-		    R.MODIFYDATE  AS R_MODIFYDATE
+			B.TRADENO, B.WRITER_NO, M.ID, B.TYPE, B.CATEGORY, B.REGION, B.TITLE, B.CONDITIONS, B.PRICE, B.CONTENT, 
+			B.ORIGINAL_FILENAME, B.RENAMED_FILENAME, B.READCOUNT, B.CREATEDATE, B.MODIFYDATE
+		    ,(SELECT COUNT(*) FROM REPLY_TRADE R WHERE B.TRADENO = R.TRADENO AND R.STATUS = 'Y') as reviewCount
 		    ,(SELECT COUNT(*) FROM CLIP_TRADE CT WHERE B.TRADENO = CT.TRADENO) as clipCount
 			<if test="memNo != null">
 				,(SELECT COUNT(*) FROM CLIP_TRADE CT WHERE B.TRADENO = CT.TRADENO AND CT.MEMNO = #{memNo}) as isClip
@@ -135,8 +132,7 @@
 			</if>	
 		FROM TRADE B
 		JOIN MEMBER M ON (B.WRITER_NO = M.MEMNO)
-		LEFT OUTER JOIN REPLY_TRADE R ON (B.TRADENO = R.TRADENO)
-		LEFT OUTER JOIN MEMBER M2 ON (R.WRITER_NO = M2.MEMNO)
+		LEFT OUTER JOIN (SELECT DISTINCT TRADENO FROM REPLY_TRADE) AS R ON (B.TRADENO = R.TRADENO)
 		LEFT OUTER JOIN CLIP_TRADE CT ON  CT.TRADENO = B.TRADENO
 		WHERE B.STATUS = 'Y' AND B.TRADENO = #{tradeNo}
 	</select>
@@ -157,11 +153,9 @@
 	<!-- 거래게시판 리플 작성 -->
 	<insert id="insertReplyTrade" parameterType="ReplyTrade">
 		INSERT INTO REPLY_TRADE(
-				tradeRNo, tradeNo, WRITER_NO,
-				CONTENT, STATUS, CREATEDATE, MODIFYDATE) 
+				tradeRNo, tradeNo, WRITER_NO, WRITER_ID, CONTENT, STATUS, CREATEDATE, MODIFYDATE) 
 			VALUES(
-				0, #{tradeNo}, #{writerNo},
-				#{content}, DEFAULT, DEFAULT, DEFAULT
+				0, #{tradeNo}, #{writerNo}, #{writerId}, #{content}, DEFAULT, DEFAULT, DEFAULT
 			)
 	</insert>
 	
@@ -192,14 +186,42 @@
 		UPDATE TRADE SET READCOUNT=#{readCount} WHERE TRADENO=#{tradeNo}
 	</update>
 	
-	<!-- 거래게시판 글 삭제 > 검토전 -->
+	<!-- 거래게시판 글 삭제 -->
 	<update id="deleteTrade" parameterType="int">
-		UPDATE TRADE SET STATUS='N' WHERE TRADENO=#{tradeNo}
+		UPDATE TRADE 
+		SET 
+		STATUS='N', MODIFYDATE = CURRENT_TIMESTAMP 
+		WHERE TRADENO=#{tradeNo}
 	</update>
 	
-	<!-- 거래게시판 리플 삭제 -->
+		<select id="selectTradeReplyListByNo" resultMap="tradeReplyResultMap" parameterType="int">
+		SELECT tradeRNo, tradeNo, WRITER_NO, WRITER_ID, CONTENT, STATUS, CREATEDATE, MODIFYDATE
+		FROM REPLY_TRADE
+		WHERE STATUS = 'Y'
+		AND tradeNo = ${tradeNo}
+	</select>
+	
+		<select id="selectTradeReplyCountByNo" resultType="int" parameterType="int">
+		SELECT COUNT(*)
+		WHERE STATUS = 'Y'
+		AND tradeNo = ${tradeNo}
+	</select>
+	
+		<!-- 거래게시판 리플 수정 -->
+	<delete id="updateReplyTrade" parameterType="ReplyTrade">
+		UPDATE REPLY_TRADE 
+		SET 
+		CONTENT=#{content}, MODIFYDATE = CURRENT_TIMESTAMP 
+		WHERE tradeRNo=#{tradeRNo}
+	</delete>
+	
+		<!-- 거래게시판 리플 삭제 -->
+		<!-- DELETE FROM REPLY_TRADE WHERE tradeRNo=#{tradeRNo} -->
 	<delete id="deleteReplyTrade" parameterType="int">
-		DELETE FROM REPLY_TRADE WHERE tradeRNo=#{tradeRNo}
+		UPDATE REPLY_TRADE 
+		SET 
+		STATUS='N', MODIFYDATE = CURRENT_TIMESTAMP 
+		WHERE tradeRNo=#{tradeRNo}
 	</delete>
 	
 	<!-- 스크랩 -->

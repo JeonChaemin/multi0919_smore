@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.multi.smore.common.util.PageInfo;
+import com.multi.smore.recipe.model.vo.RecipeReply;
 import com.multi.smore.trade.model.mapper.TradeMapper;
 import com.multi.smore.trade.model.vo.ReplyTrade;
 import com.multi.smore.trade.model.vo.Trade;
@@ -88,6 +89,10 @@ public class TradeService {
 		return trade; 
 	}
 	
+	public List<ReplyTrade> getRecipeReplyListByNo(int tradeNo){
+		return mapper.selectTradeReplyListByNo(tradeNo);
+	}
+	
 	public void deleteFile(String filePath) {
 		File file = new File(filePath);
 		if(file.exists()) {
@@ -108,7 +113,12 @@ public class TradeService {
 	public int deleteReplyTrade(int tradeno) {
 		return mapper.deleteReplyTrade(tradeno);
 	}
-			
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int updateReplyTrade(ReplyTrade replyTrade) {
+		return mapper.updateReplyTrade(replyTrade);
+	}
+	
 	// 추천 카테고리 랜덤
 	@Transactional(rollbackFor = Exception.class)
 	public List<Trade> selectTradeRandomList(){

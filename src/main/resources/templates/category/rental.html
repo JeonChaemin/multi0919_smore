@@ -146,11 +146,11 @@
 
 							<div class="row mt-4">
 								<div class="col-lg-12 d-flex fs-5">
-                <span class="mt-2 mb-0 mx-2 h4">공급 유형</span>
+                <span class="pt-2 mb-0 mx-2 h5">공급 유형</span>
                 <input type="checkbox" class="btn-check" name="searchSuplyType" id="영구임대" 
                 value="영구임대" autocomplete="off"
               	  th:checked="${#arrays.contains(searchSuplyType, '영구임대')  ? 'checked' : null}" />
-                <label class="btn btn-outline-primary rounded-pill pt-2 mx-2" for="영구임대">영구임대</label><br>
+                <label class="subBtn btn btn-outline-primary rounded-pill pt-2 mx-2" for="영구임대">영구임대</label><br>
                 <input type="checkbox" class="btn-check" name="searchSuplyType" id="매입임대" 
              		  value="매입임대" autocomplete="off"
                	  th:checked="${#arrays.contains(searchSuplyType, '매입임대')  ? 'checked' : null}" />
@@ -210,7 +210,7 @@
                       </div><!--end row-->
                       <div class="p-2 bg-light">
                         <div class="row justify-content-between">
-                          <div class="col-md-9 ">
+                          <div class="col-md-8 ">
                             <div class="mx-3">
                               <ul class="list-inline mb-0 mt-1">
                                 <li class="list-inline-item"><i class="mdi mdi-calendar-blank"></i> 모집시작일자 : [[${rental.beginDe}]]
@@ -220,9 +220,16 @@
                             </div>
                           </div>
                           <!--end col-->
-                          <div class="col-md-3">
+                          <div class="col-md-2">
                             <div class="text-md-end me-2 pt-1">
-                              <a th:href="@{${rental.pcUrl}}" target="_blank" class="primary-link">상세정보보기 <i
+                              <a th:href="@{${rental.pcUrl}}" target="_blank" class="primary-link">마이홈 상세보기 <i
+                                  class="mdi mdi-chevron-double-right"></i></a>
+                            </div>
+                          </div>
+                          <!--end col-->
+                          <div class="col-md-2">
+                            <div class="text-md-end me-2 pt-1">
+                              <a th:href="@{${rental.url}}" target="_blank" class="primary-link">청약센터 상세보기 <i
                                   class="mdi mdi-chevron-double-right"></i></a>
                             </div>
                           </div>
@@ -238,7 +245,7 @@
 												th:value="${rental.isClip}"
 												th:onclick="|onClickClip('clip${rental.rentalNo}', '${rental.rentalNo}');|">
 												<div th:id="|aazzclip${rental.rentalNo}|"
-																class="m-2">[[${rental.clipCount}]]</div>
+																class="m-2">스크랩 수 : [[${rental.clipCount}]]</div>
 												<a class="bg-soft-primary p-1" style="cursor: pointer;"> <i
 													class="uil uil-bookmark fs-4"></i></a>
 											</div>

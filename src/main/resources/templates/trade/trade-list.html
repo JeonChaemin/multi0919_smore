@@ -26,15 +26,15 @@
 							<div class="col-md-6">
 								<div class="text-center text-white">
 									<h3 class="mb-4 hero-title">
-										<a class="text-white" th:href="@{/trade/list}">중고/재능 거래</a>
+										<a class="text-white" th:href="@{/trade}">중고/재능 거래</a>
 									</h3>
 									<div class="page-next">
 										<nav class="d-inline-block"
 											aria-label="breadcrumb text-center">
 											<ol class="breadcrumb justify-content-center">
 												<li class="breadcrumb-item"><a th:href="@{/}">HOME</a></li>
-												<li class="breadcrumb-item"><a th:href="@{/trade/list}">LIFE</a></li>
-												<li class="breadcrumb-item"><a th:href="@{/trade/list}">TRADE</a></li>
+												<li class="breadcrumb-item"><a th:href="@{/trade}">LIFE</a></li>
+												<li class="breadcrumb-item"><a th:href="@{/trade}">TRADE</a></li>
 											</ol>
 										</nav>
 									</div>
@@ -63,14 +63,14 @@
 				<!-- START JOB-LIST -->
 				<section class="section mt-5">
 					<div class="container">
-						<form th:action="@{/trade/list}" name="filter-search"
+						<form th:action="@{/trade}" name="filter-search"
 							id="filter-search" method="get">
 							<div class="row">
 								<div class="col-lg-9">
 									<div class="me-lg-5">
 										<div class="job-list-header">
 											<!-- 검색 폼 form-->
-											<!-- <form th:action="@{/trade/list}" id="filter-search" method="get"> -->
+											<!-- <form th:action="@{/trade}" id="filter-search" method="get"> -->
 											<div class="row g-2">
 												<div class="col-lg-5 col-md-6">
 													<div class="filler-job-form">
@@ -131,7 +131,7 @@
 																<i class="uil uil-award"></i>
 															</div>
 															<a
-																th:href="@{/trade/list(categories=${ctList.category})}"
+																th:href="@{/trade(categories=${ctList.category})}"
 																class="primary-link stretched-link px-1">
 																<h6 class="mb-0" th:text="${ctList.category}"></h6>
 															</a>
@@ -190,7 +190,7 @@
 																		</div>
 																		<ul class="list-inline mb-0">
 																			<li class="list-inline-item" style="width: 130px;">
-																				<p class="text-muted mb-1">[[${trade.writerId}]]</p>
+																				<p class="text-muted mb-1">[[${trade.Id}]]</p>
 																			</li>
 																			<li class="list-inline-item">
 																				<p class="text-muted mb-0">
@@ -213,7 +213,7 @@
 																	th:value="${trade.isClip}"
 																	th:onclick="|onClickClip('clip${trade.tradeNo}', '${trade.tradeNo}');|">
 																<div th:id="|aazzclip${trade.tradeNo}|"
-																class="m-2">[[${trade.clipCount}]]</div>
+																class="m-2">스크랩 수 : [[${trade.clipCount}]]</div>
 																	<a class="bg-soft-primary p-1" style="cursor: pointer;"> <i
 																		class="uil uil-bookmark fs-4"></i></a>
 																</div>
@@ -238,14 +238,14 @@
 												</th:block>
 											</th:block>
 											<!--end job-box-->
-
+										<th:block th:if="${session.loginMember != null}">
 											<div class="text-end mt-3">
 												<!-- <a th:href="@{/trade/write}" class="btn btn-primary" onclick="location.href='/trade/trade-write'">글쓰기 <i class="uil uil-edit-alt ms-1"></i></a> -->
 												<a class="btn btn-primary"
 													onclick="location.href='/trade/write'">글쓰기 <i
 													class="uil uil-edit-alt ms-1"></i></a>
 											</div>
-
+										</th:block>
 										</div>
 										<!-- End Job-list -->
 
@@ -258,7 +258,7 @@
 															class="pagination job-pagination mb-0 justify-content-center">
 															<!--이전 페이지 -->
 															<li class="page-item btn p-0"
-																th:onclick="|movePage('/trade/list?page=${pageInfo.prevPage}');|">
+																th:onclick="|movePage('/trade?page=${pageInfo.prevPage}');|">
 																<a class="page-link" tabindex="-1"> <i
 																	class="mdi mdi-chevron-double-left fs-15"></i>
 															</a>
@@ -277,7 +277,7 @@
 																<th:block
 																	th:if="${status.current != pageInfo.currentPage}">
 																	<li class="page-item"><a class="page-link"
-																		th:onclick="|movePage('/trade/list?page=${status.current}');|"
+																		th:onclick="|movePage('/trade?page=${status.current}');|"
 																		style="cursor: pointer;"> [[${status.current}]]</a></li>
 																</th:block>
 
@@ -287,7 +287,7 @@
 															</th:block>
 															<!--다음 페이지 -->
 															<li class="page-item"><a class="page-link btn"
-																th:onclick="|movePage('/trade/list?page=${pageInfo.nextPage}');|">
+																th:onclick="|movePage('/trade?page=${pageInfo.nextPage}');|">
 																	<i class="mdi mdi-chevron-double-right fs-15"></i>
 															</a></li>
 														</ul>

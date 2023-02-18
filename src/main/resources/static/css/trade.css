@@ -45,11 +45,6 @@
 	z-index: 0;
 }
 
-.active a{
-	color: #fff !important;
-  background-color: #766df4 !important;
-}
-
 .clip a{
 	width: 40px;
 	height: 40px;
@@ -57,6 +52,11 @@
 }
 
 .clip a:hover{
+	color: #fff !important;
+  background-color: #766df4 !important;
+}
+
+.active a{
 	color: #fff !important;
   background-color: #766df4 !important;
 }

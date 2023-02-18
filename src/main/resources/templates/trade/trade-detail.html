@@ -24,15 +24,15 @@
 							<div class="col-md-6">
 								<div class="text-center text-white">
 									<h3 class="mb-4 hero-title">
-										<a class="text-white" th:href="@{/trade/list}">중고/재능 거래</a>
+										<a class="text-white" th:href="@{/trade}">중고/재능 거래</a>
 									</h3>
 									<div class="page-next">
 										<nav class="d-inline-block"
 											aria-label="breadcrumb text-center">
 											<ol class="breadcrumb justify-content-center">
 												<li class="breadcrumb-item"><a th:href="@{/}">HOME</a></li>
-												<li class="breadcrumb-item"><a th:href="@{/trade/list}">LIFE</a></li>
-												<li class="breadcrumb-item"><a th:href="@{/trade/list}">TRADE</a></li>
+												<li class="breadcrumb-item"><a th:href="@{/trade}">LIFE</a></li>
+												<li class="breadcrumb-item"><a th:href="@{/trade}">TRADE</a></li>
 												<li class="breadcrumb-item"><a
 													th:onClick="window.location.reload()"
 													style="cursor: pointer;"> TRADE DETAILS</a></li>
@@ -73,14 +73,6 @@
 										<div class="text-center ">
 											<p class="fs-5 mx-auto my-5">이미지가 없습니다</p>
 											<!-- 스크랩 버튼 .js 추가 작업 필요 -->
-											<div
-												class="favorite-icon ">
-												<button type="button" class="btn btn-soft-purple p-1 active"
-													data-bs-toggle="button" aria-pressed="true"
-													style="width: 40px; height: 40px;">
-													<i class="uil uil-bookmark fs-4"></i>
-												</button>
-											</div>
 										</div>
 									</th:block>
 
@@ -91,24 +83,24 @@
 												style="height: 550px; object-fit: contain;" alt="제품사진"
 												class="img-fluid">
 											<div class="col-lg-4">
-												<!-- 스크랩 버튼 -->
-												<th:block th:if="${session.loginMember != null}">
-													<div class="position-absolute top-0 end-0 m-4">
-														<div class="clip clipbtn favorite-icon "
-															th:id="|clip${trade.tradeNo}|" th:value="${trade.isClip}"
-															th:onclick="|onClickClip('clip${trade.tradeNo}', '${trade.tradeNo}');|">
-															<a class="bg-soft-primary p-1"
-																style="cursor: pointer; width: 40px; height: 40px;">
-																<i class="uil uil-bookmark fs-4"></i>
-															</a>
-														</div>
-														<div th:id="|aazzclip${trade.tradeNo}|"
-																class="m-1">[[${trade.clipCount}]]</div>
-													</div>
-												</th:block>
 											</div>
 										</div>
 									</th:block>
+									<!-- 스크랩 버튼 -->
+									<th:block th:if="${session.loginMember != null}">
+										<div class="position-absolute top-0 end-0 m-4">
+											<div class="clip clipbtn favorite-icon "
+												th:id="|clip${trade.tradeNo}|" th:value="${trade.isClip}"
+												th:onclick="|onClickClip('clip${trade.tradeNo}', '${trade.tradeNo}');|">
+												<a class="bg-soft-primary p-1"
+													style="cursor: pointer; width: 40px; height: 40px;">
+													<i class="uil uil-bookmark fs-4"></i>
+												</a>
+											</div>
+											<div th:id="|aazzclip${trade.tradeNo}|"
+													class="m-1 text-center">[[${trade.clipCount}]]</div>
+										</div>
+												</th:block>
 									<div class="card-body p-4">
 										<!--end col-->
 										<div>
@@ -150,8 +142,7 @@
 								<!--end job-detail-->
 								<th:block
 									th:if="${session.loginMember != null && 
-												(session.loginMember.id == trade.writerId || 
-												session.loginMember.role == 'ROLE_ADMIN')}">
+									(session.loginMember.id == trade.id || session.loginMember.role == 'ROLE_ADMIN')}">
 									<div class="col-sm-12 p-3 pe-4 text-end">
 										<button type="button" id="btnUpdate"
 											class="btn btn-primary btn-hover me-3">수정하기</button>
@@ -173,32 +164,50 @@
 												</div>
 												<div class="row ms-sm-3 flex-grow-1">
 													<div class="col-4 flex-grow-1">
-														<a class="primary-link"><h5 class="mt-sm-0 mt-3 mb-0">[[${replyTrade.writerId}]]
-																님</h5></a>
-														<h6 class="text-muted mb-0">[[${#dates.format(replyTrade.createDate,'yyyy/MM/dd
-															(E) a HH:mm:ss')}]]</h6>
+														<a class="primary-link"><h5 class="mt-sm-0 mt-3 mb-0">[[${replyTrade.writerId}]] 님</h5></a>
+														<h6 class="text-muted mb-0">[[${#dates.format(replyTrade.createDate,'yyyy/MM/dd (E) a HH:mm:ss')}]]</h6>
 													</div>
 													<th:block
-														th:if="${session.loginMember != null && 
-														(session.loginMember.id == replyTrade.writerId || 
+														th:if="${session.loginMember != null && (session.loginMember.id == replyTrade.writerId || 
 														session.loginMember.role == 'ROLE_ADMIN')}">
 														<div class="col-5 text-end pe-2 float-end">
-															<!-- <button type="button" class="btn btn-purple py-1 opacity-75">수정</button> -->
+															<button type="button" class="btn btn-purple py-1 opacity-75" 
+																name="update" th:id="|updateBtn${replyTrade.tradeRNo}|"
+																th:onclick="|updateReplyTrade(${replyTrade.tradeRNo});|">수정</button>
 															<button type="button"
-																class="btn btn-purple py-1 opacity-75"
+																name="delete" class="btn btn-purple py-1 opacity-75"
 																th:onclick="|deleteReplyTrade(${replyTrade.tradeRNo},${trade.tradeNo});|">삭제</button>
 														</div>
 													</th:block>
-													<p class="mb-0 fs-5 pe-3">[[${replyTrade.content}]]</p>
+													<p class="mb-0 fs-5 pe-3" th:id="|content${replyTrade.tradeRNo}|">[[${replyTrade.content}]]</p>
+													<div class="mt-1 pt-3 mb-3 updateReply" th:id="|updateReply${replyTrade.tradeRNo}|" style="display: none">
+	                        		<div class="row">
+					                  <div class="col-lg-12">
+					                    <div class="mb-3">
+					                      <input type="hidden" name="tradeNo" th:value="${replyTrade.tradeRNo}" />
+					                      <textarea class="form-control" th:id="|inputReply${replyTrade.tradeRNo}|" name="content" rows="3"
+					                        placeholder="내용을 입력해주세요." required>[[${replyTrade.content}]]</textarea>
+					                    </div>
+					                  </div><!--end col-->
+					                </div><!--end row-->
+					                <div class="text-end">
+					                  <button id="submit" class="btn btn-purple py-1" 
+					                  th:onclick="|backBtn(${replyTrade.tradeRNo})|">취소</button>
+					                  <button type="submit" id="submit" class="btn btn-purple py-1" 
+					                  th:onclick="|updBtn(${replyTrade.tradeRNo}, ${replyTrade.tradeNo})|">확인</button>
+					                </div>
+		                          </div>
 												</div>
 											</div>
 										</div>
 									</th:block>
 								</th:block>
 								<!-- 댓글입력 폼 -->
+								<th:block th:if="${session.loginMember != null}">
 								<form th:action="@{/trade/reply}" method="post"
 									class="contact-form my-4 px-4">
 									<input type="hidden" name="tradeNo" th:value="${trade.tradeNo}" />
+									<input type="hidden" name="writerId" th:value="${session.loginMember.id}" />
 									<div class="col-lg-12 ">
 										<div class="position-relative mb-3 ps-4">
 											<label for="comments" class="form-label fs-5">댓글작성</label>
@@ -211,11 +220,12 @@
 										<div class="col-sm-12 text-end">
 											<button type="submit" name="submit" id="submit"
 												class="btn btn-primary btn-hover">
-												등록하기 <i class="uil uil-arrow-right"></i>
+												등록하기 <i class="uil uil-message ms-1"></i>
 											</button>
 										</div>
 									</div>
 								</form>
+								</th:block>
 							</div>
 							<!--end col-->
 
@@ -230,20 +240,29 @@
 
 												<li>
 													<div class="d-flex mt-4">
-														<i class="uil uil-history icon bg-soft-primary"></i>
+														<i class="uil uil-user icon bg-soft-primary"></i>
 														<div class="ms-3">
-															<h6 class="text-muted fs-14 mb-1">작성시간</h6>
+															<h6 class="text-muted fs-14 mb-1">작성자</h6>
 															<h5 class="mb-0"
-																th:text="${#dates.format(trade.createDate,'yyyy/MM/dd (a) HH:mm')}">
-																<!-- 															<h6 class="text-muted fs-14 mb-1" th:onclick="|javascript:elapsedTime('${#dates.format(trade.createDate,'yyyy-MM-dd')}')|" >작성시간 </h6> -->
-																<!-- 															<h6 class="text-muted fs-14 mb-1" id="oldDate" th:onclick="|javascript:elapsedTime('${trade.createDate}')|" >작성시간 </h6> -->
+																th:text="${trade.id}">
 															</h5>
 														</div>
 													</div>
 												</li>
 												<li>
 													<div class="d-flex mt-4">
-														<i class="uil uil-user icon bg-soft-primary"></i>
+														<i class="uil uil-history icon bg-soft-primary"></i>
+														<div class="ms-3">
+															<h6 class="text-muted fs-14 mb-1">작성시간</h6>
+															<h5 class="mb-0"
+																th:text="${#dates.format(trade.createDate,'yyyy/MM/dd (a) HH:mm')}">
+															</h5>
+														</div>
+													</div>
+												</li>
+												<li>
+													<div class="d-flex mt-4">
+														<i class="uil uil-package icon bg-soft-primary"></i>
 														<div class="ms-3">
 															<h6 class="text-muted fs-14 mb-1">카테고리</h6>
 															<h5 class="mb-0">[[${trade.category}]]</h5>
@@ -282,7 +301,7 @@
 												<a href="#applyNow"
 													class="btn btn-primary btn-hover w-100 mt-2"
 													th:onclick="$('.clipbtn').trigger('click');"><i
-													class="uil uil-bookmark"></i> Add Bookmark </a> <a
+													class="uil uil-bookmark"></i> 스크랩 추가 </a> <a
 													onClick="history.back()"
 													class="btn btn-soft-purple btn-hover w-100 mt-2"> </i> 목록보기<i
 													class="uil uil-arrow-right"></i></a>
@@ -351,11 +370,45 @@
 		});
 	});
 
-	function deleteReplyTrade(replyNo, tradeNo) {
+	function deleteReplyTrade(tradeRNo, tradeNo) {
 		var url = "/trade/replyDel?replyNo=";
-		var requestURL = url + replyNo + "&tradeNo=" + tradeNo;
+		var requestURL = url + tradeRNo + "&tradeNo=" + tradeNo;
 		location.replace(requestURL);
 	}
+	
+	function updateReplyTrade(tradeRNo){
+  		var updateBtn = document.getElementById("updateBtn" + tradeRNo);
+  		updateBtn.style.display = "none";
+  		
+  		var content = document.getElementById("content" + tradeRNo);
+  		content.style.display = "none";
+  		
+  		var updateForm = document.getElementById("updateReply" +tradeRNo);
+  		updateForm.style.display = "inline-block";
+  	}
+  	
+ 	function updBtn(tradeRNo, tradeNo){
+ 		var newContent = document.getElementById("inputReply" + tradeRNo).value;
+ 		if(newContent.trim() === ''){
+ 			alert("내용을 입력해주세요.")
+ 			return;
+ 		}
+ 		
+ 		var requestURL = '/trade/replyUpdate?tradeRNo=' + tradeRNo +'&content=' + newContent + '&tradeNo=' + tradeNo;
+ 		location.replace(requestURL);
+ 	}
+ 	
+ 	function backBtn(tradeRNo){
+ 		var updateBtn = document.getElementById("updateBtn" + tradeRNo);
+ 		updateBtn.style.display = "inline-block";
+ 		
+ 		var content = document.getElementById("content" + tradeRNo);
+ 		content.style.display = "inline-block";
+ 		
+ 		var updateForm = document.getElementById("updateReply" +tradeRNo);
+ 		updateForm.style.display = "none";
+ 	}
+  	
 	</script>
 </body>
 </html>

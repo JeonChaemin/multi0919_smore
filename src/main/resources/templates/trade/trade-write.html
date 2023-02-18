@@ -27,14 +27,14 @@
               <div class="col-md-6">
                 <div class="text-center text-white">
                   <h3 class="mb-4 hero-title">
-                  	<a class="text-white" th:href="@{/trade/list}">중고/재능 거래</a>
+                  	<a class="text-white" th:href="@{/trade}">중고/재능 거래</a>
                   	</h3>
                   <div class="page-next">
                     <nav class="d-inline-block" aria-label="breadcrumb text-center">
                       <ol class="breadcrumb justify-content-center">
                         <li class="breadcrumb-item"><a th:href="@{/}">HOME</a></li>
-                        <li class="breadcrumb-item"><a th:href="@{/trade/list}">LIFE</a></li>
-                        <li class="breadcrumb-item"><a th:href="@{/trade/list}">TRADE</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/trade}">LIFE</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/trade}">TRADE</a></li>
                         <li class="breadcrumb-item active" aria-current="page"> TRADE WRITE </li>
                       </ol>
                     </nav>
@@ -164,17 +164,13 @@
 									</tr>
 									<tr>
 										<th>작성자</th>
-										<!-- <td><input type="text" name="writerId" value="${loginMember.id}" readonly></td> -->
-										<!-- <td><span name="writerId" th:value="${session.loginMember.id}" th:text="${session.loginMember.id}"></span></td> -->
 										<td><input type="text" class="border-0" name="writerId" th:value="${session.loginMember.id}" readonly></td>
 									</tr>
 									<tr class="align-middle">
 										<th><label for="file-btn">첨부파일</label></th>
 										<td>
 											<label class="position-absolute input-file-button py-1" for="file-btn">파일첨부</label>
-											<!-- <span>&ensp;선택된 파일이 없습니다.</span> -->
 											<input type="file" name="upfile" id="file-btn" style="margin-left:29px;">
-											<!-- <input type="file" name="upfile" id="file-btn" style="display: none;"> -->
 										</td>
 
 									</tr>
@@ -191,7 +187,7 @@
 											<!-- <input type="submit" value="등록">
                                             <input type="reset" value="취소"> -->
 											<button type="button" class="btn btn-outline-purple text-start py-1"
-											th:onclick="|location.replace('/trade/list')|">목록</button>
+											th:onclick="|location.replace('/trade')|">목록</button>
 
 										</td>
 										<th colspan="" class="border-0 pt-0">

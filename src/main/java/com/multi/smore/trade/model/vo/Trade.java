@@ -14,6 +14,7 @@ public class Trade {
 	private int tradeNo;
 	private int writerNo;
 	private String writerId;
+	private String id; // 멤버 ID
 	private String type;
 	private String category;
 	private String region;
@@ -28,8 +29,10 @@ public class Trade {
 	private List<ReplyTrade> replyTradeList;
 	private Date createDate;
 	private Date modifyDate;
+	private int reviewCount;
 	// 스크랩
 	private int clipCount;
 	private int isClip;
+	
 
 }

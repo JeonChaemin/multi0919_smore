@@ -103,22 +103,3 @@ function updateTime() {
 	return "방금 전";
 }());
 
-//elapsedTime();
-
-//elapsedTime('2022-11-15');
-
-// 여기다하면 오류뜨네..
-/*$(document).ready(() => {
-	$("#btnUpdate").on("click", (e) => {
-		location.href = "/trade/update?no=[[${trade.tradeNo}]]";
-	});
-
-	$("#btnDelete").on("click", (e) => {
-		if (confirm("정말로 게시글을 삭제 하시겠습니까?")) {
-			location.replace("/trade/delete?tradeNo=[[${trade.tradeNo}]]");
-		}
-	});
-});*/
-
-
-

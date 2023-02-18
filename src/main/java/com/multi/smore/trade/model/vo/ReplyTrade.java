@@ -15,6 +15,7 @@ public class ReplyTrade {
 	private int writerNo;
 	private String writerId;
 	private String content;	
+	private String status;	
 	private Date createDate;
 	private Date modifyDate;
 }
