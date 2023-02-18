@@ -1,4 +1,4 @@
-package com.multi.smore.model.controller;
+package com.multi.smore.outdoor.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,16 +11,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.multi.smore.common.util.PageInfo;
 import com.multi.smore.member.model.vo.Member;
-import com.multi.smore.model.service.ParkService;
-import com.multi.smore.model.vo.Park;
-import com.multi.smore.model.vo.ReplyPark;
+import com.multi.smore.outdoor.model.service.TrackingService;
+import com.multi.smore.outdoor.model.vo.Tracking;
+import com.multi.smore.outdoor.model.vo.TrackingReply;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -28,26 +27,27 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-public class ParkController {
-	
-	@Autowired
-	private ParkService service;
+public class TrackingController {
 
-	@GetMapping("/outdoor")
-	public String ParkList(Model model, @RequestParam Map<String, Object> param,
-			@RequestParam(required = false) String searchValue, @RequestParam(required = false) String searchType, 
-			@RequestParam(required = false) List<String> regions) {
-		List<String> parkItem = new ArrayList<String>();
-		parkItem.add("올림픽공원");
-		parkItem.add("남가좌동어린이공원");
-		parkItem.add("분당공원");
-		parkItem.add("광교호수공원");
-		List<Park> parkList = service.selectParkListHot(parkItem);
-		for (Park park : parkList) {
-			park.getParkNm(); 
-		}
+	@Autowired
+	private TrackingService service;
+	
+	
+	@GetMapping("/tracking")
+	public String  TrackingList(Model model, @RequestParam Map<String, Object> param,
+			@RequestParam(required = false) String searchValue) {
 		
-		int page = 1;
+		List<String> trackItem = new ArrayList<String>();
+		trackItem.add("507");
+		trackItem.add("333");
+		trackItem.add("1300");
+		trackItem.add("117");
+		List<Tracking> trackingList = service.selectTrackingListHot(trackItem);
+		for(Tracking tracking : trackingList) {
+			tracking.getTNo();
+		}		
+		
+		int page =1;
 		try {
 
 			if (param.get("page") != null) {
@@ -57,136 +57,132 @@ public class ParkController {
 				param.put("searchValue", searchValue);
 				model.addAttribute("searchValue", searchValue);
 			}
-			
-			param.put("searchType", searchType);
-			model.addAttribute("searchType", searchType);
-			
-			param.put("regions", regions);
-			if (regions == null) {
-				regions = new ArrayList<>();
-			}
-			model.addAttribute("regions", regions);
 		} catch (Exception e) {	}
 		
-		int count = service.selectParkCount(param);
+		int count = service.selectTrackCount(param);
 		PageInfo pageInfo = new PageInfo(page, 5, count, 6);
-		List<Park> list = service.selectParkList(pageInfo, param);
+		List<Tracking> list = service.selectTrackingList(pageInfo, param);
 		
-		model.addAttribute("parkList", parkList);
+		model.addAttribute("trackingList", trackingList);
 		model.addAttribute("list", list);
-		model.addAttribute("param", param);
 		model.addAttribute("pageInfo", pageInfo);
+		model.addAttribute("param", param);
 		model.addAttribute("pageTitle", "smore | Outdoor");
 		
-
-		return "category/outdoor";
-
+		return "category/tracking";
 	}
+	
+	
 
-	@GetMapping("/outdoor/outdoor-detail") // html 의 경로 부분에 작성 
-	public String detailView(Model model, @RequestParam("parkNo") int parkNo,  @RequestParam(required = false) String searchType,
+	@GetMapping("/tracking/track-detail") // html 의 경로 부분에 작성 
+	public String detailView(Model model, @RequestParam("tNo") int tNo,  
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember){
-		int memNo = 0;
+		String memNo = "";
+		
 		if(loginMember != null) {
-			memNo = loginMember.getMemNo();
-		}
+			memNo =""+ loginMember.getMemNo();
+		}	
 				
-				
-		Park park = service.selectParkByNo(parkNo, memNo);
-		if(park == null) {
+		Tracking tracking = service.selectTrackingByNo(tNo, memNo);
+		List<TrackingReply> replyList = service.selectTrackingReplyListByNo(tNo);
+		
+		if(tracking == null) {
 			return "redirect:error";
 		}
-		System.out.println(park);
+		// 검사용
+		System.out.println(tracking);
 		
-		model.addAttribute("searchType", searchType);
-		model.addAttribute("park", park);
-		model.addAttribute("parkReplys", park.getReplys());
+		model.addAttribute("tracking", tracking);
+		model.addAttribute("replyList", replyList);
 		model.addAttribute("pageTitle", "smore | Outdoor-detail");
 		
-		return "detail/outdoor-detail";
+		return "detail/track-detail";
 	}
 	
 	
-	@PostMapping("/outdoor-detail/parkReview")  
+	@RequestMapping("/tracking/track-detail/trackReview")  
 	public String writeReply(Model model, HttpSession session,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
-			@ModelAttribute ReplyPark reply, HttpServletRequest request
+			@ModelAttribute TrackingReply reply, HttpServletRequest request
 			) {
 		reply.setMemNo(loginMember.getMemNo());
+		reply.setWriter(loginMember.getId());
+		reply.setWriterName(loginMember.getName());
 		log.info("리뷰 작성 요청 Review : " + reply);
 		
-		int result = service.insertReview(reply);
-
+		int result = service.insertTrackingReply(reply);
+		
+		
 		if(result > 0) {
 			model.addAttribute("msg", "리뷰가 등록되었습니다.");
 		}else {
 			model.addAttribute("msg", "리뷰 등록에 실패하였습니다.");
 		}
-		
-		model.addAttribute("location", "/outdoor/outdoor-detail?parkNo=" + reply.getParkNo());
+
+		model.addAttribute("location", "/tracking/track-detail?tNo=" + reply.getTNo());
 		return "common/msg";
 	}
 	
-	@RequestMapping("/outdoor-detail/parkReviewDel")
+	@RequestMapping("/track-detail/delReply")
 	public String deleteReply(Model model, HttpSession session,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
-			int rNo, int parkNo
+			int tRno, int tNo
 			){
-		log.info("리뷰 삭제 요청");
-		int result = service.deleteReview(rNo);
+		log.info("리뷰 삭제 요청 tNo : " + tNo);
+		int result = service.deleteTrackingReply(tRno);
 		if(result > 0) {
 			model.addAttribute("msg", "리뷰 삭제가 정상적으로 완료되었습니다.");
 		}else {
 			model.addAttribute("msg", "리뷰 삭제에 실패하였습니다.");
 		}
-		model.addAttribute("location", "/outdoor/outdoor-detail?parkNo=" + parkNo);
-		return "common/msg";
+		
+		model.addAttribute("location", "/tracking/track-detail?tNo=" + tNo);
+		return "/common/msg";
 	}
 	
-	@PostMapping("/outdoor-detail/parkReviewUpd")
+	@RequestMapping("/track-detail/updateReply")
 	public String updateReply(Model model, HttpSession session,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
-			@ModelAttribute ReplyPark reply
+			TrackingReply reply, int tNo
 			){
-		log.info("리뷰 수정 요청");
-		reply.setParkRno(reply.getParkRno());
-//		reply.setContent(reply.getContent());
-//		reply.setWriter(reply.getWriter());
-//		reply.setModifyDate(reply.getModifyDate());
+		log.info("리뷰 수정 요청" );
 		
-		int result = service.updateReview(reply);
+		int result = service.updateTrackingReply(reply);
 		
-		if(result >= 1) {
+		if(result > 0) {
 			model.addAttribute("msg", "리뷰 수정에 성공하습니다.");
 		}else {
 			model.addAttribute("msg", "리뷰 수정에 실패하였습니다.");
 		}
-		model.addAttribute("location", "/outdoor/outdoor-detail?parkNo=" + reply.getParkNo());
-		return "common/msg";
+		model.addAttribute("location", "/tracking/track-detail?tNo=" + tNo );
+
+		return "/common/msg";
 	}
 		
-		
-	@GetMapping("/error")
+	@GetMapping("/tracking/error")
 	public String error() {
-		return "common/error";
-	}
+		return "/common/error";
+	}	
+
 	
-	@GetMapping("/clip") 
-	public ResponseEntity<Integer> parkClip(
+	@RequestMapping("/tracking/clip") 
+	public ResponseEntity<Integer> trackingClip(
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
-			int parkNo, int isClip)
+			int tNo, int isClip)
 	{
 		System.out.println("스크랩 요청 옴");
+		System.out.println(loginMember);
 		
 		int result = 0;
 		
 		if(isClip == 1) {
-			result = service.clipPark(loginMember.getMemNo(), parkNo);	
+			result = service.insertTrackingClip(loginMember.getMemNo(), tNo);	
 			System.out.println("isClip == 1 인 상태");
 		}else {
-			result = service.unClipPark(loginMember.getMemNo(), parkNo);	
+			result = service.deleteTrackingClip(loginMember.getMemNo(), tNo);	
 			System.out.println("isClip == 1 이 아닌 상태");
 		}
+		System.out.println(result);
 		
 		if(result > 0) {
 			return ResponseEntity.status(HttpStatus.OK).body(isClip);
@@ -194,7 +190,4 @@ public class ParkController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 	}
-	
-		
-		
 }

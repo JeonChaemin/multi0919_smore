@@ -32,7 +32,7 @@ public class RecipeController {
 	@Autowired
 	private RecipeService service;
 	
-	@GetMapping("/category/recipe")
+	@GetMapping("/recipe")
 	public String list(Model model, @SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			@RequestParam Map<String, Object> paramMap,
 			@RequestParam(required = false) List<String> rcpPat2,

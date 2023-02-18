@@ -65,8 +65,8 @@
   <!-- 배너 쉐잎 끝 -->
   <!-- 프로그램 소개------------------------------------- -->
   <section class="section">
-    <h2 class="programintrotitle">프로그램 소개</h2>
     <div class="container mb-30">
+    <h4 class="my-4">프로그램 소개</h4>
       <div class="row">
         <div class="col-lg-8">
           <div class="card job-detail overflow-hidden">
@@ -77,7 +77,7 @@
                     <h4 class="mb-4 mt-4">[[${oneProgram.partcptnSj}]]</h4>
                     <ul class="list-inline text-muted mb-3 ml-1 position-absolute">
                       <li class="list-inline-item partifont">
-                        <i class="mdi mdi-account iconsize position-relative" >참여 인원 : [[${oneProgram.partcptnNmpr}]]명</i> 
+                        <i class="uil uil-user-plus"></i>참여 인원 : [[${oneProgram.partcptnNmpr}]]명
                       </li>
                       <li class="list-inline-item text-warning review-rating categoryyellow position-relative">
                         <span class="badge bg-warning">[[${oneProgram.tyNm}]]</span>
@@ -88,7 +88,7 @@
                     <ul class="list-inline mb-0 text-lg-end mt-6 mt-lg-2">
                       <li class="list-inline-item">
                        <th:block th:if="${session.loginMember != null}">
-							<div class="clip clipbtn favorite-icon"
+							<div class="favorite-icon clip clipbtn"
 								th:id="|clip${oneProgram.onepNo}|" th:value="${oneProgram.isClip}"
 								th:onclick="|onClickClip('clip${oneProgram.onepNo}', '${oneProgram.onepNo}');|">
 								<a href="javascript:void(0)">

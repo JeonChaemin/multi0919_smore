@@ -1,4 +1,4 @@
-package com.multi.smore.model.service;
+package com.multi.smore.outdoor.model.service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -9,9 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.multi.smore.common.util.PageInfo;
-import com.multi.smore.model.mapper.ParkMapper;
-import com.multi.smore.model.vo.Park;
-import com.multi.smore.model.vo.ReplyPark;
+import com.multi.smore.outdoor.model.mapper.ParkMapper;
+import com.multi.smore.outdoor.model.vo.Park;
+import com.multi.smore.outdoor.model.vo.ParkClip;
+import com.multi.smore.outdoor.model.vo.ParkReply;
 
 @Service
 public class ParkService {
@@ -20,10 +21,10 @@ public class ParkService {
 	private ParkMapper mapper;
 	
 	@Transactional(rollbackFor = Exception.class)
-	public Park selectParkByNo(int parkNo, int memNo) {
+	public Park selectParkByNo(int parkNo, String memNo) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("parkNo", ""+parkNo);		
-		map.put("memNo", ""+memNo);
+		map.put("memNo", memNo);
 		Park park = mapper.selectParkByNo(map); 
 		
 		
@@ -37,39 +38,50 @@ public class ParkService {
 	
 	public List<Park> selectParkList(PageInfo pageInfo, Map<String, Object> param){
 		param.put("limit", "" + pageInfo.getListLimit());
-		param.put("offset", "" + (pageInfo.getStartList() - 1));
+		param.put("offset", "" + (pageInfo.getStartList()-1));
 		return mapper.selectParkList(param);
 	}
 	
-	@Transactional(rollbackFor = Exception.class)
+	
 	public int insertPark(Park park) {
-		int result = 0;
-		result = mapper.insertPark(park);
+		return mapper.insertPark(park);
+	}
+	
+	
+
+	public List<ParkReply> selectParkReplyListByNo(int parkNo) {
+		return mapper.selectParkReplyListByNo(parkNo);
+	}
+	
+	public int selectParkReplyCountByNo(int parkRno) {
+		return mapper.selectParkReplyCountByNo(parkRno);
+	}
+	
+	public List<ParkClip> selectParkClipList(PageInfo pageInfo, Map<String, String> param){
+		param.put("limit", "" + pageInfo.getListLimit());
+		param.put("offset", "" + (pageInfo.getStartList() - 1));
+		return mapper.selectParkClipList(param);
+	}
+	
+	public ParkClip selectParkClipByNo(Map<String, String> param) {
+		return mapper.selectParkClipByNo(param);
+	}
+
+	public int insertParkReply(ParkReply parkReply) {
+		int result=0;
+		result=mapper.insertParkReply(parkReply);
 		return result;
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
-	public int insertReview(ReplyPark replypark) {
-		int result = 0;
-		if(replypark.getParkNo() == 0) {
-			result = mapper.insertReplyPark(replypark);
-		}
-		return result;
-	}
-	
-	@Transactional(rollbackFor = Exception.class)
-	public int deleteReview(int parkRno) {
-		return mapper.deleteReplyPark(parkRno);
+	public int deleteParkReply(int parkRno) {
+		return mapper.deleteParkReply(parkRno);
 		
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
-	public int updateReview(ReplyPark replypark) {
-		int result= 0;
-		if(replypark.getParkRno() >= 1) {
-			result = mapper.updateReplyPark(replypark);
-		}
-		return result;
+	public int updateParkReply(ParkReply parkReply) {
+		return mapper.updateParkReply(parkReply);
 	}
 	
 	public List<Park> selectParkListHot(List<String> parkItem) {
@@ -81,15 +93,17 @@ public class ParkService {
 	public int clipPark(int memNo, int parkNo) {
 		Map<String, String> map = new HashMap<>();
 		map.put("memNo", ""+memNo);
-		map.put("tradeNo", ""+parkNo);
-		return mapper.clipPark(map);
+		map.put("parkNo", ""+parkNo);
+		return mapper.insertParkClip(map);
 	}
 	// 스크랩 풀기
 	@Transactional(rollbackFor = Exception.class)
 	public int unClipPark(int memNo, int parkNo) {
 		Map<String, String> map = new HashMap<>();
 		map.put("memNo", ""+memNo);
-		map.put("tradeNo", ""+parkNo);
-		return mapper.unClipPark(map);
+		map.put("parkNo", ""+parkNo);
+		return mapper.deleteParkClip(map);
 	}
+
+
 }

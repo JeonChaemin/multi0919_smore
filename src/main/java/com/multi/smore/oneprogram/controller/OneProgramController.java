@@ -31,7 +31,7 @@ public class OneProgramController {
 	
 //	final static private String savePath = "c:\\smore\\";
 	
-	@RequestMapping("program")
+	@RequestMapping("/program")
 	public String oneProList(@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 								Model model, @RequestParam Map<String, String> paramMap,
 										  @RequestParam(required = false) String searchValue,
@@ -69,7 +69,6 @@ public class OneProgramController {
 			}
 		} catch (Exception e) {}
 		
-		
 //		 추천 프로그램
 		OneProgram item1 = service.findByNo(372, memNo);
 		OneProgram item2 = service.findByNo(251, memNo);
@@ -93,7 +92,7 @@ public class OneProgramController {
 		model.addAttribute("list2", list2);
 		model.addAttribute("paramMap", paramMap);
 		model.addAttribute("pageInfo", pageInfo);
-		model.addAttribute("pageTitle", "smore | 정부지원사업");
+		model.addAttribute("pageTitle", "smore | Program");
 		return "category/program";
 	}
 	

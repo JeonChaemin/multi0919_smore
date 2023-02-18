@@ -133,42 +133,6 @@
     top: 15px;
     right: 15px;
 }
-.bookmark-post .favorite-icon a, .job-box.bookmark-post .favorite-icon a {
-    color: #766df4;
-    border-color: rgb(172, 172, 172);
-    background-color: white;
-}
-.bookmark-post .favorite-icon-active a, .job-box.bookmark-post .favorite-icon-active a {
-    color: white;
-    border-color: rgb(172, 172, 172);
-    background-color: #766df4;
-}
-.favorite-icon a {
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    font-size: 18px;
-    line-height: 30px;
-    text-align: center;
-    border: 1px solid #eff0f2;
-    border-radius: 6px;
-    color: rgba(173, 181, 189, .55);
-    -webkit-transition: all .5s ease;
-    transition: all .5s ease;
-}
-.favorite-icon-active a {
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    font-size: 18px;
-    line-height: 30px;
-    text-align: center;
-    border: 1px solid #eff0f2;
-    border-radius: 6px;
-    color: rgba(173, 181, 189, .55);
-    -webkit-transition: all .5s ease;
-    transition: all .5s ease;
-}
 
 .active a{
 	color: #fff !important;
