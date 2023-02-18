@@ -189,10 +189,6 @@
 								</a>
 							</div>
 					</th:block>
-					
-<!-- 					<div class="favorite-icon" type="button"> -->
-<!-- 						<a href="javascript:void(0)"><i class="uil uil-heart-alt fs-18"></i></a> -->
-<!-- 					</div> -->
 				</div>
 			<!--end job-box-->
 		</div>
@@ -204,31 +200,69 @@
 			
 			<th:block th:if="${list2.size != 0}">
 				<div class="row">
-					<div class="col-lg-12 mt-4 pt-2 mb-5">
+					<div class="col-lg-12 mt-4 mb-5 pt-2">
 						<nav aria-label="Page navigation example">
 							<ul class="pagination job-pagination mb-0 justify-content-center">
-								<li class="page-item">
-									<button class="page-link" href="javascript:void(0)" tabindex="-1" th:onclick="|movePage('/program?page=${pageInfo.prevPage}');|">
-										<i class="mdi mdi-chevron-double-left fs-15"></i>
-									</button>
-								</li>
-								<th:block th:each="num, status : ${#numbers.sequence(pageInfo.startPage, pageInfo.endPage)}">
-									<th:block th:if="${status.current == pageInfo.currentPage}">
-										<li class="page-item active"><a class="page-link" th:onclick="|movePage('/program?page=${status.current}|')">[[${status.current}]]</a></li>
+								<th:block th:if="${pageInfo.currentPage == pageInfo.startPage}">
+									<li class="page-item "
+										th:classappend="${pageInfo.currentPage == 1 ? 'disabled' : ''}">
+										<a class="page-link" href="javascript:void(0)"
+										th:onclick="|movePage('/program?page=${pageInfo.prevPage}');|"
+										tabindex="-1"> <i
+											class="mdi mdi-chevron-double-left fs-15"></i>
+									</a>
+									</li>
+								</th:block>
+								<th:block th:if="${pageInfo.currentPage != pageInfo.startPage}">
+									<li class="page-item "
+										th:classappend="${pageInfo.currentPage == 1 ? 'disabled' : ''}">
+										<a class="page-link" href="javascript:void(0)"
+										th:onclick="|movePage('/program?page=${pageInfo.startPage}');|"
+										tabindex="-1"> <i
+											class="mdi mdi-chevron-double-left fs-15"></i>
+									</a>
+									</li>
+								</th:block>
+		
+								<th:block
+									th:each="num, status : ${#numbers.sequence(pageInfo.startPage, pageInfo.endPage)}">
+									<th:block th:if="${pageInfo.currentPage == status.current}">
+										<li class="page-item active"><a class="page-link"
+											th:text="${status.current}"></a></li>
 									</th:block>
-									<th:block th:if="${status.current != pageInfo.currentPage}">
-										<li class="page-item"><button class="page-link"  th:onclick="|movePage('/program?page=${status.current}');|">[[${status.current}]]</a></li>
+									<th:block
+										th:if="${pageInfo.currentPage != status.current && pageInfo.endPage != 0}">
+										<li class="page-item"><a class="page-link"
+											href="javascript:void(0)"
+											th:onclick="|movePage('/program?page=${status.current}');|"
+											th:text="${status.current}"></a></li>
 									</th:block>
 								</th:block>
-										<li class="page-item">
-											<button class="page-link" href="javascript:void(0)" th:onclick="|movePage('/program?page=${pageInfo.nextPage}');|">
-												<i class="mdi mdi-chevron-double-right fs-15"></i>
-											</button>
-										</li>
+		
+								<th:block th:if="${pageInfo.currentPage == pageInfo.endPage}">
+									<li class="page-item"
+										th:classappend="${pageInfo.currentPage == pageInfo.maxPage ? 'disabled' : ''}">
+										<a class="page-link" href="javascript:void(0)"
+										th:onclick="|movePage('/program?page=${pageInfo.nextPage}');|">
+											<i class="mdi mdi-chevron-double-right fs-15"></i>
+									</a>
+									</li>
+								</th:block>
+								<th:block th:if="${pageInfo.currentPage != pageInfo.endPage}">
+									<li class="page-item"
+										th:classappend="${pageInfo.currentPage == pageInfo.maxPage ? 'disabled' : ''}">
+										<a class="page-link" href="javascript:void(0)"
+										th:onclick="|movePage('/program?page=${pageInfo.endPage}');|">
+											<i class="mdi mdi-chevron-double-right fs-15"></i>
+									</a>
+									</li>
+								</th:block>
 							</ul>
 						</nav>
-					</div><!--end col-->
-				</div><!-- end row -->
+					</div>
+					<!--end col-->
+				</div>
+				<!-- end row -->
 			</th:block>
  			
 	</section>
