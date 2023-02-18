@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 
@@ -28,9 +28,9 @@
                     <nav class="d-inline-block" aria-label="breadcrumb text-center">
                       <ol class="breadcrumb justify-content-center">
                         <li class="breadcrumb-item"><a href="@{/}">HOME</a></li>
-                        <li class="breadcrumb-item"><a href="@{/outdoor}">LIFE</a></li>
-                        <li class="breadcrumb-item"><a href="@{/outdoor}">OUTDOOR</a></li>
-                        <li class="breadcrumb-item"><a href="@{/outdoor}">PARK</a></li>
+                        <li class="breadcrumb-item"><a href="@{/tracking}">LIFE</a></li>
+                        <li class="breadcrumb-item"><a href="@{/tracking}">OUTDOOR</a></li>
+                        <li class="breadcrumb-item"><a href="@{/tracking}">TRACKING</a></li>
                         <li class="breadcrumb-item" aria-current="page"> DETAIL </li>
                       </ol>
                     </nav>
@@ -63,22 +63,22 @@
               <div class="col-lg-8 mt-lg-4">
                 <div class="card job-detail overflow-hidden">
                   <div >
-                    <img th:src="@{/images/img/park3.jpeg}" alt="" th:style="'width: 800px; height:400px'">
+                    <img th:src="@{/images/img/trail1.jpg}" alt="" th:style="'width: 800px; height:400px'">
                   </div>
                   <div class="card-body p-4">
                     <div>
                       <div class="row">
                         <div class="col-md-10">
-                          <h2 class="mb-2" th:style="'letter-spacing:.5px;'">[[${park.parkNm}]]</h2>
+                          <h2 class="mb-2" th:style="'letter-spacing:.5px;'">[[${tracking.courseName}]]</h2>
                           <ul class="list-inline text-muted mb-0">
-                            <li class="fs-18">[[${park.parkSe}]]</li>
+                            <li class="fs-18">[[${tracking.courseCategoryNm}]]</li>
                           </ul>
                         </div><!--end col-->
                         <div class="col-lg-2">
                           <ul class="list-inline mb-0 text-lg-end mt-3 mt-lg-0">
                             <li class="list-inline-item">
                               <th:block th:if="${session.loginMember != null}">
-				 				<div class="clip clip2 text-end favorite-icon2" th:style="'line-height: 70px;'" th:id="|clip${park.parkNo}|" th:value="${park.isClip}" th:onclick="|onClickClip('clip${park.parkNo}', '${park.parkNo}');|">
+				 				<div class="clip clip2 text-end favorite-icon2" th:style="'line-height: 70px;'" th:id="|clip${tracking.tNo}|" th:value="${tracking.isClip}" th:onclick="|onClickClip('clip${tracking.tNo}', '${tracking.tNo}');|">
 				 				  <a th:href="|javascript:void(0)|"><i class="uil uil-heart-alt fs-20"></i></a>
 				 				</div>
 				  			  </th:block>
@@ -90,39 +90,33 @@
 
                     <div class="mt-4">
                       <div class="row g-2">
-                        <div class="col-lg-8">
+                        <div class="col-lg-12">
                           <div class="border rounded-start p-3">
-                            <p class="text-muted mb-0 fs-16">주소</p>
-                            <p class="fw-medium fs-17 mb-0">[[${park.lnmadr}]]</p>
+                            <p class="text-muted mb-0 fs-16">세부코스</p>
+                            <p class="fw-medium fs-17 mb-0">[[${tracking.detailCourse}]]</p>
                           </div>
                         </div>
-                        <div class="col-lg-4">
-                          <div class="border p-3">
-                            <p class="text-muted fs-16 mb-0">공원면적</p>
-                            <p class="fw-medium fs-17 mb-0">[[${park.parkAr}]]&nbsp;m<sup>2</sup></p>
-                          </div>
-                        </div>
+                       
                       </div>
                     </div><!--end Experience-->
 
 
                     <div class="mt-5">
-                      <h4 class="mb-4">공원보유시설</h4>
+                      <h4 class="mb-4">산책로 안내</h4>
                       <div class="job-detail-desc mt-2">
                         <ul class=" job-detail-list2 list-unstyled mb-0 text-muted fs-17">
-                          <li><i class="uil uil-circle"></i>운동시설&nbsp;:&nbsp;[[${park.mvmFclty}]]</li>
-                          <li><i class="uil uil-circle"></i>유희시설&nbsp;:&nbsp;[[${park.amsmtFclty}]]</li>
-                          <li><i class="uil uil-circle"></i>편익시설&nbsp;:&nbsp;[[${park.cnvnncFclty}]]</li>
-                          <li><i class="uil uil-circle"></i>교양시설&nbsp;:&nbsp;[[${park.cltrFclty}]]</li>
-                          <li><i class="uil uil-circle"></i>기타시설&nbsp;:&nbsp;[[${park.etcFclty}]]</li>
+                        	
+                          <li><i class="uil uil-circle"></i>포인트 명칭&nbsp;:&nbsp;[[${tracking.cpiName}]]</li>
+                          <li><i class="uil uil-circle"></i>포인트 설명&nbsp;:&nbsp;[[${tracking.cpiContent}]]</li>
+                          <li><i class="uil uil-circle"></i>[[${tracking.content}]]</li>
                         </ul>
                       </div>
                     </div>
                     <div class="mt-4">
                       <div class="job-details-desc">
                         <div class="mt-4">
-                          <span class="badge2 bg-primary">#[[${park.parkNm}]]</span>
-                          <span class="badge2 bg-primary">#[[${park.parkSe}]]</span>
+                          <span class="badge2 bg-primary">#[[${tracking.courseName}]]</span>
+                          <span class="badge2 bg-primary">#[[${tracking.courseCategoryNm}]]</span>
                         </div>
                       </div>
                     </div>
@@ -150,23 +144,23 @@
                          									              (session.loginMember.id == replys.writer || session.loginMember.role == 'ROLE_ADMIN')}">
 										<div class="col-lg-3 text-end">
 											<button name="update"
-												th:id="|updateBtn${replys.parkRno}|"
+												th:id="|updateBtn${replys.tRno}|"
 												class="btn btn-primary"
-												th:onclick="|updateReply(${replys.parkRno})|">수정</button>
+												th:onclick="|updateReply(${replys.tRno})|">수정</button>
 											<button name="delete" class="btn btn-primary"
-												th:onclick="|deleteReply(${replys.parkRno},${park.parkNo});|">삭제</button>
+												th:onclick="|deleteReply(${replys.tRno},${tracking.tNo});|">삭제</button>
 										</div>
 									</th:block>
-									<p class="text-muted" th:id="|content${replys.parkRno}|">[[${replys.content}]]</p>
+									<p class="text-muted" th:id="|content${replys.tRno}|">[[${replys.content}]]</p>
 									<div class="mt-1 pt-3 mb-3 updateReply"
-										th:id="|updateReply${replys.parkRno}|"
+										th:id="|updateReply${replys.tRno}|"
 										th:style="'display: none'">
 										<div class="row">
 											<div class="col-lg-12">
 												<div class="mb-3">
-													<input type="hidden" name="parkNo" th:value="${park.parkNo}" />
+													<input type="hidden" name="tNo" th:value="${tracking.tNo}" />
 													<textarea class="form-control"
-														th:id="|inputReply${replys.parkRno}|" name="content"
+														th:id="|inputReply${replys.tRno}|" name="content"
 														rows="3" placeholder="내용을 입력해주세요." required>[[${replys.content}]]</textarea>
 												</div>
 											</div>
@@ -175,10 +169,10 @@
 										<!--end row-->
 										<div class="text-end">
 											<button id="submit" class="btn btn-primary btn-hover"
-												th:onclick="|backBtn(${replys.parkRno})|">취소</button>
+												th:onclick="|backBtn(${replys.tRno})|">취소</button>
 											<button type="submit" id="submit"
 												class="btn btn-primary btn-hover"
-												th:onclick="|updBtn(${replys.parkRno},${park.parkNo});|">확인</button>
+												th:onclick="|updBtn(${replys.tRno},${tracking.tNo});|">확인</button>
 										</div>
 									</div>
 								</div>
@@ -193,11 +187,11 @@
 				</th:block>
 			</div>
 			<th:block th:if="${session.loginMember != null}">
-				<form th:action="@{outdoor-detail/parkReview}" method="post"class="mt-5 pt-3 mb-3">
+				<form th:action="@{track-detail/trackReview}" method="post"class="mt-5 pt-3 mb-3">
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="mb-3">
-								<input type="hidden" name="parkNo" th:value="${park.parkNo}" />
+								<input type="hidden" name="tNo" th:value="${tracking.tNo}" />
 									<textarea class="form-control" id="inputcoment"
 										name="content" rows="3" placeholder="내용을 입력해주세요." required></textarea>
 							</div>
@@ -223,37 +217,19 @@
                       <ul class="list-unstyled mt-4 mb-0">
                         <li>
                           <div class="d-flex mt-4">
-                            <i class="uil uil-list-ul icon bg-soft-primary"></i>
+                            <i class="uil uil-location-point icon bg-soft-primary"></i>
                             <div class="ms-3">
-                              <h6 class="fs-15 mb-1">관리번호</h6>
-                              <p class="text-muted mb-0 fs-17">[[${park.manageNo}]]</p>
+                              <h6 class="fs-15 mb-1">구역</h6>
+                              <p class="text-muted mb-0 fs-17">[[${tracking.areaGu}]]</p>
                             </div>
                           </div>
                         </li>
                         <li>
                           <div class="d-flex mt-4">
-                            <i class="uil uil-building icon bg-soft-primary"></i>
+                            <i class="uil uil-arrows-resize icon bg-soft-primary"></i>
                             <div class="ms-3">
-                              <h6 class="fs-15 mb-1">관리기관명</h6>
-                              <p class="text-muted mb-0 fs-17" >[[${park.institutionNm}]]</p>
-                            </div>
-                          </div>
-                        </li>
-                        <li>
-                          <div class="d-flex mt-4">
-                            <i class="uil uil-phone icon bg-soft-primary"></i>
-                            <div class="ms-3">
-                              <h6 class="fs-15 mb-1">전화번호</h6>
-                              <p class="text-muted mb-0 fs-17">[[${park.phoneNumber}]]</p>
-                            </div>
-                          </div>
-                        </li>
-                        <li>
-                          <div class="d-flex mt-4">
-                            <i class="uil uil-calendar-alt icon bg-soft-primary"></i>
-                            <div class="ms-3">
-                              <h6 class="fs-15 mb-1">지정고시일</h6>
-                              <p class="text-muted mb-0 fs-17" th:text="${#dates.format(park.appnNtfcDate, 'yyyy-MM-dd')}">[[${park.appnNtfcDate}]]</p>
+                              <h6 class="fs-15 mb-1">거리</h6>
+                              <p class="text-muted mb-0 fs-17" >[[${tracking.distance}]]</p>
                             </div>
                           </div>
                         </li>
@@ -261,8 +237,26 @@
                           <div class="d-flex mt-4">
                             <i class="uil uil-history icon bg-soft-primary"></i>
                             <div class="ms-3">
-                              <h6 class="fs-15 mb-1">데이터기준일자</h6>
-                              <p class="text-muted mb-0 fs-17" th:text="${#dates.format(park.referenceDate, 'yyyy-MM-dd')}">[[${park.referenceDate}]]</p>
+                              <h6 class="fs-15 mb-1">소요시간</h6>
+                              <p class="text-muted mb-0 fs-17">[[${tracking.leadTime}]]</p>
+                            </div>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="d-flex mt-4">
+                            <i class="uil uil-star-half-alt icon bg-soft-primary"></i>
+                            <div class="ms-3">
+                              <h6 class="fs-15 mb-1">코스 난이도</h6>
+                              <p class="text-muted mb-0 fs-17">난이도&nbsp;[[${tracking.courseLevel}]]</p>
+                            </div>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="d-flex mt-4">
+                            <i class="uil uil-subway icon bg-soft-primary"></i>
+                            <div class="ms-3">
+                              <h6 class="fs-15 mb-1">연계 지하철</h6>
+                              <p class="text-muted mb-0 fs-17">[[${tracking.relateSubway}]]</p>
                             </div>
                           </div>
                         </li>
@@ -304,45 +298,45 @@
   <!-- JAVASCRIPT -->
   <script type="text/javascript" th:inline="javascript">
 
-	function updateReply(parkRno){
-		var updateBtn = document.getElementById("updateBtn" + parkRno);
+	function updateReply(tRno){
+		var updateBtn = document.getElementById("updateBtn" + tRno);
 		updateBtn.style.display = "none";
 		
-		var content = document.getElementById("content" + parkRno);
+		var content = document.getElementById("content" + tRno);
 		content.style.display = "none";
 		
-		var updateForm = document.getElementById("updateReply" +parkRno);
+		var updateForm = document.getElementById("updateReply" +tRno);
 		updateForm.style.display = "inline-block";
 	}
 	
-	function updBtn(parkRno, parkNo){
-		var newContent = document.getElementById("inputReply" + parkRno).value;
+	function updBtn(tRno, tNo){
+		var newContent = document.getElementById("inputReply" + tRno).value;
 		if(newContent.trim() === ''){
 			alert("내용을 입력해주세요.")
 			return;
 		}
- 		var requestURL = '/outdoor-detail/updateReply?parkRno=' +  parkRno +'&content=' + newContent + '&parkNo=' + parkNo; 
+ 		var requestURL = '/track-detail/updateReply?tRno=' +  tRno +'&content=' + newContent + '&tNo=' + tNo; 
 		location.replace(requestURL);
 	}
 	
-	function backBtn(parkRno){
-  		var updateBtn = document.getElementById("updateBtn" + parkRno);
+	function backBtn(tRno){
+  		var updateBtn = document.getElementById("updateBtn" + tRno);
   		updateBtn.style.display = "inline-block";
   		
-  		var content = document.getElementById("content" + parkRno);
+  		var content = document.getElementById("content" + tRno);
   		content.style.display = "inline-block";
   		
-  		var updateForm = document.getElementById("updateReply" +parkRno);
+  		var updateForm = document.getElementById("updateReply" +tRno);
   		updateForm.style.display = "none";
   	}
 
   
-  function deleteReply(parkRno, parkNo) {
-		var url = "/outdoor-detail/delReply?parkRno=";
-		var requestURL = url + parkRno + "&parkNo=" + parkNo;
+  function deleteReply(tRno, tNo) {
+		var url = "/track-detail/delReply?tRno=";
+		var requestURL = url + tRno + "&tNo=" + tNo;
 		location.replace(requestURL);
-	}
   
+	}
  
   </script>
 
@@ -364,7 +358,7 @@
           }
       }
   });
-  function onClickClip(id, parkNo) {
+  function onClickClip(id, tNo) {
   	clipValue = JSON.parse($('#' + id).attr('value'));
   	if (clipValue == 0) {
   		clipValue = 1;
@@ -374,13 +368,13 @@
   	// 여기에 AJAX로 DB 업데이트하는 코드 있어야함!!
   	$.ajax({
   		method: 'get',
-  		url: '/outdoor/clip?parkNo=' + parkNo + '&isClip=' + clipValue,
+  		url: '/tracking/clip?tNo=' + tNo + '&isClip=' + clipValue,
   		contentType: 'application/json',
   		dataType: 'json',
   		success: (result) => {
   			$('#' + id).attr('value', '' + result);
   			if (result == 1) {
-  				$('#' + id).addClass("active")
+  				$('#' + id).addClass("active");
   			} else {
   				$('#' + id).removeClass("active")
   			}
@@ -391,9 +385,6 @@
   	});
   }
   </script>
-  
-  
-
 
   <!-- 카카오 지도 -->
  <script type="text/javascript" th:inline="javascript" th:src="@{//dapi.kakao.com/v2/maps/sdk.js?appkey=e0216acf240302af61958af813b83190}"></script>
@@ -402,14 +393,14 @@
     var mapContainer = document.getElementById('kakaomap'), // 지도를 표시할 div 
    
         mapOption = { 
-            center: new kakao.maps.LatLng([[${park.latitude}]], [[${park.longitude}]]),   // 지도의 중심좌표
+            center: new kakao.maps.LatLng([[${tracking.latitude}]], [[${tracking.longitude}]]),   // 지도의 중심좌표
             level: 5  // 지도의 확대 레벨
         };
         
     var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
     // 마커가 표시될 위치입니다 
-    var markerPosition  = new kakao.maps.LatLng([[${park.latitude}]], [[${park.longitude}]]); 
+    var markerPosition  = new kakao.maps.LatLng([[${tracking.latitude}]], [[${tracking.longitude}]]); 
 
     // 마커를 생성합니다
     var marker = new kakao.maps.Marker({
@@ -423,12 +414,13 @@
   
   <script th:src="@{/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
   <script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
-	<!-- jquery  -->
-	<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+  <!-- jquery  -->
+  <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
   <!-- Switcher Js -->
   <script th:src="@{/js/pages/switcher.init.js}"></script>
   <!-- App Js -->
   <script th:src="@{/js/app.js}"></script>
+  
 </body>
 
 </html>

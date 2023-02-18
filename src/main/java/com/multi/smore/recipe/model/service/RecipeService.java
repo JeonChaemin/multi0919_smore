@@ -20,6 +20,10 @@ public class RecipeService {
 	@Autowired
 	private RecipeMapper mapper;
 	
+	public List<Recipe> getSearchRecipeList(Map<String, String> param){
+		return mapper.selectRecipeSearchList(param);
+	}
+	
 	public List<Recipe> getRecipeList(PageInfo pageInfo, Map<String, Object> param){
 		param.put("limit", "" + pageInfo.getListLimit());
 		param.put("offset", "" + (pageInfo.getStartList() - 1));

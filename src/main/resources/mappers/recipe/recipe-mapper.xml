@@ -112,6 +112,19 @@
 		<result property="modifyDate" column="MODIFY_DATE" />
 	</resultMap>
 	
+	<select id="selectRecipeSearchList" resultMap="recipeResultMap" parameterType="map">
+		<include refid="selectRecipeSql"/>
+		WHERE 1 = 1
+		<if test="all != null">
+		AND( 
+			r.RCP_NM LIKE '%${all}%'
+			OR r.RCP_PARTS_DTLS LIKE '%${all}%'
+			OR r.RCP_PAT2 LIKE '%${all}%'
+		)
+		</if>
+		ORDER BY r.rcpNo DESC LIMIT 5
+	</select>
+	
 	<select id="selectRecipeList" resultMap="recipeResultMap" parameterType="map">
 		<include refid="selectRecipeSql"/>
 		WHERE 1 = 1

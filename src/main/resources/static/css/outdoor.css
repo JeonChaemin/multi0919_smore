@@ -84,7 +84,6 @@
 .filter-job-input-box2{
   -webkit-box-shadow: none !important;
   box-shadow: none !important;
-  font-size: 16px;
   height: 44px;
   padding: 6px 6px 6px 45px;
   border-radius: 6px
@@ -111,11 +110,21 @@
   transition: all .5s ease
 }
 
-.favorite-icon2 a:hover {
+.favorite-icon2 > a:hover {
   color: #fff;
-  background-color: #5257c2;
-  border-color: #5257c2;
+  background-color: #766df4;
+  border-color: #766df4;
 }
+.active a{
+	color: #fff !important;
+  background-color: #766df4 !important;
+}
+
+.active >a :hover{
+	color: #fff !important;
+  background-color: #766df4 !important;
+}
+
 .job-box .favorite-icon2 {
   position: absolute;
   top: 15px;
@@ -139,6 +148,19 @@
   display: inline-block;
   padding: .6rem .9rem;
   font-size: 15px;
+  font-weight: 500;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25rem
+}
+.badge3 {
+  display: inline-block;
+  padding: .6rem .7rem;
+  margin: 0.3rem;
+  font-size: 16px;
   font-weight: 500;
   line-height: 1;
   color: #fff;

@@ -12,6 +12,7 @@ import com.multi.smore.recipe.model.vo.RecipeReply;
 
 @Mapper
 public interface RecipeMapper {
+	List<Recipe> selectRecipeSearchList(Map<String, String> map);
 	List<Recipe> selectRecipeList(Map<String, Object> map);
 	int selectRecipeCount(Map<String, Object> map);
 	List<Recipe> selectHotRecipeList();
