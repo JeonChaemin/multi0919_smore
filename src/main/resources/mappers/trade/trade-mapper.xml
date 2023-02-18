@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.multi.smore.trade.model.mapper.TradeMapper">
+
+	<!-- 거래 게시판 테이블 -->
+	<resultMap type="Trade" id="tradeListResultMap">
+		<id property="tradeNo" column="tradeNo"/>
+		<result property="writerNo" column="WRITER_NO"/>
+		<result property="writerId" column="WRITER_ID"/>
+		<result property="type" column="TYPE"/>
+		<result property="category" column="CATEGORY"/>
+		<result property="region" column="REGION"/>
+		<result property="title" column="TITLE"/>
+		<result property="conditions" column="CONDITIONS"/>
+		<result property="price" column="PRICE"/>
+		<result property="content" column="CONTENT"/>
+		<result property="originalFileName" column="ORIGINAL_FILENAME"/>
+		<result property="renamedFileName" column="RENAMED_FILENAME"/>
+		<result property="readCount" column="READCOUNT"/>
+		<result property="status" column="STATUS"/>
+		<result property="createDate" column="CREATEDATE"/>
+		<result property="modifyDate" column="MODIFYDATE"/>
+		<result property="clipCount" column="clipCount"/>
+		<result property="isClip" column="isClip"/>
+		<result property="reviewCount" column="reviewCount" />
+		<result property="id" column="ID" />
+	</resultMap>
+
+	<!-- 거래 리플 테이블 -->
+	<resultMap type="ReplyTrade" id="tradeReplyResultMap">
+		<id 	property="tradeRNo"			column="tradeRNo"/>
+		<result property="tradeNo" 			column="tradeNo"/>
+		<result property="writerNo" 		column="WRITER_NO"/>
+		<result property="writerId" 		column="WRITER_ID"/>
+		<result property="content" 			column="CONTENT"/>
+		<result property="status" 			column="STATUS"/>
+		<result property="createDate" 		column="CREATEDATE"/>
+		<result property="modifyDate" 		column="MODIFYDATE"/>
+	</resultMap>
+	
+	<resultMap type="Trade" id="tradeDetailResultMap" extends="tradeListResultMap">
+		<collection property="replyTradeList" javaType="arrayList" columnPrefix="R_" 
+												resultMap="tradeReplyResultMap"/>
+	</resultMap>
+	
+	<!-- 거래게시판 검색 -->
+	<select id="selectTradeList" resultMap="tradeListResultMap" parameterType="map">
+		SELECT DISTINCT 
+		B.tradeNo, B.WRITER_NO, M1.ID, B.TYPE, B.CATEGORY, B.REGION, B.TITLE, B.CONDITIONS, B.PRICE, 
+		B.CONTENT, B.ORIGINAL_FILENAME, B.RENAMED_FILENAME, B.READCOUNT, B.STATUS, B.CREATEDATE, B.MODIFYDATE
+			,(SELECT COUNT(*) FROM REPLY_TRADE R WHERE B.TRADENO = R.TRADENO AND R.STATUS = 'Y') as reviewCount
+			,(SELECT COUNT(*) FROM CLIP_TRADE CT WHERE B.TRADENO = CT.TRADENO) as clipCount
+		<if test="memNo != null">
+			,(SELECT COUNT(*) FROM CLIP_TRADE CT WHERE B.TRADENO = CT.TRADENO AND CT.MEMNO = #{memNo}) as isClip
+		</if>		
+		<if test="memNo == null">
+			,(SELECT COUNT(*) FROM CLIP_TRADE CT WHERE B.TRADENO = CT.TRADENO AND CT.MEMNO = 0) as isClip
+		</if>		
+		FROM TRADE B
+		LEFT OUTER JOIN MEMBER M1 ON (B.WRITER_NO = M1.MEMNO)
+		LEFT OUTER JOIN (SELECT DISTINCT TRADENO FROM REPLY_TRADE) AS R ON (B.TRADENO = R.TRADENO)
+		LEFT OUTER JOIN CLIP_TRADE CT ON (CT.TRADENO = B.TRADENO)
+		WHERE B.STATUS = 'Y'
+		<if test="searchValue != null">
+			AND	B.TITLE LIKE '%${searchValue}%' 
+		</if>			
+		<if test="searchType != null">
+			AND	B.TYPE LIKE '%${searchType}%' 
+		</if>	
+		<if test="categories != null">
+			AND (
+				<foreach collection="categories" item="item" separator="or" index="index">
+					B.CATEGORY LIKE '%${item}%'
+				</foreach>
+			)
+		</if>		
+		<if test="regions != null">
+			AND (
+				<foreach collection="regions" item="item"  separator="or" index="index">
+					B.REGION LIKE '%${item}%'
+				</foreach>
+			)
+		</if>			
+		ORDER BY B.TRADENO DESC LIMIT ${limit} OFFSET ${offset}
+	</select>
+	
+	<!-- 거래게시판 검색 결과 페이지 -->
+	<select id="selectTradeCount" resultType="int" parameterType="map">
+		SELECT  
+			 COUNT(DISTINCT B.TRADENO)
+		FROM TRADE B
+		LEFT OUTER JOIN MEMBER M1 ON B.WRITER_NO = M1.MEMNO
+		LEFT OUTER JOIN REPLY_TRADE R ON R.TRADENO = B.TRADENO 
+		LEFT OUTER JOIN MEMBER M2 ON R.WRITER_NO = M2.MEMNO 
+		WHERE B.STATUS = 'Y'
+		<if test="searchValue != null">
+			AND	TITLE LIKE '%${searchValue}%' 
+		</if>	
+		<if test="searchType != null">
+			AND	TYPE LIKE 	'%${searchType}%' 
+		</if>	
+		<if test="categories != null">
+			AND (
+				<foreach collection="categories" item="item" separator="or" index="index">
+					CATEGORY LIKE '%${item}%'
+				</foreach>
+			)
+		</if>		
+		<if test="regions != null">
+			AND (
+				<foreach collection="regions" item="item" separator="or" index="index">
+					REGION LIKE '%${item}%'
+				</foreach>
+			)
+		</if>		
+	</select>
+
+	<!-- 거래게시판 상세 > 검토전 -->
+	<select id="selectTradeByNo" parameterType="int" resultMap="tradeDetailResultMap">
+		SELECT  
+			B.TRADENO, B.WRITER_NO, M.ID, B.TYPE, B.CATEGORY, B.REGION, B.TITLE, B.CONDITIONS, B.PRICE, B.CONTENT, 
+			B.ORIGINAL_FILENAME, B.RENAMED_FILENAME, B.READCOUNT, B.CREATEDATE, B.MODIFYDATE
+		    ,(SELECT COUNT(*) FROM REPLY_TRADE R WHERE B.TRADENO = R.TRADENO AND R.STATUS = 'Y') as reviewCount
+		    ,(SELECT COUNT(*) FROM CLIP_TRADE CT WHERE B.TRADENO = CT.TRADENO) as clipCount
+			<if test="memNo != null">
+				,(SELECT COUNT(*) FROM CLIP_TRADE CT WHERE B.TRADENO = CT.TRADENO AND CT.MEMNO = #{memNo}) as isClip
+			</if>		
+			<if test="memNo == null">
+				,(SELECT COUNT(*) FROM CLIP_TRADE CT WHERE B.TRADENO = CT.TRADENO AND CT.MEMNO = 0) as isClip
+			</if>	
+		FROM TRADE B
+		JOIN MEMBER M ON (B.WRITER_NO = M.MEMNO)
+		LEFT OUTER JOIN (SELECT DISTINCT TRADENO FROM REPLY_TRADE) AS R ON (B.TRADENO = R.TRADENO)
+		LEFT OUTER JOIN CLIP_TRADE CT ON  CT.TRADENO = B.TRADENO
+		WHERE B.STATUS = 'Y' AND B.TRADENO = #{tradeNo}
+	</select>
+	
+	<!-- 거래 게시판 글쓰기 -->
+	<insert id="insertTrade" parameterType="Trade">
+		INSERT INTO TRADE(
+			TRADENO, WRITER_NO, WRITER_Id, TYPE, CATEGORY,
+			REGION, TITLE, CONDITIONS, PRICE, CONTENT,
+			ORIGINAL_FILENAME, RENAMED_FILENAME, READCOUNT, STATUS, CREATEDATE, MODIFYDATE
+		) VALUES (
+			0, #{writerNo}, #{writerId}, #{type}, #{category},
+			#{region}, #{title}, #{conditions}, #{price}, #{content},
+			#{originalFileName}, #{renamedFileName}, DEFAULT, DEFAULT, DEFAULT, DEFAULT		
+		)
+	</insert>
+	
+	<!-- 거래게시판 리플 작성 -->
+	<insert id="insertReplyTrade" parameterType="ReplyTrade">
+		INSERT INTO REPLY_TRADE(
+				tradeRNo, tradeNo, WRITER_NO, WRITER_ID, CONTENT, STATUS, CREATEDATE, MODIFYDATE) 
+			VALUES(
+				0, #{tradeNo}, #{writerNo}, #{writerId}, #{content}, DEFAULT, DEFAULT, DEFAULT
+			)
+	</insert>
+	
+	<!-- 거래게시판 글 수정 -->
+	<update id="updateTrade" parameterType="Trade">
+		UPDATE TRADE
+		SET
+			TITLE=#{title},
+			TYPE=#{type},
+			CATEGORY=#{category},
+			REGION=#{region},
+			CONDITIONS=#{conditions},
+			PRICE=#{price},
+			CONTENT=#{content},
+			<if test="originalFileName != null">
+				ORIGINAL_FILENAME=#{originalFileName},
+			</if>
+			<if test="renamedFileName != null">
+				RENAMED_FILENAME=#{renamedFileName},
+			</if>
+			MODIFYDATE = CURRENT_TIMESTAMP
+		WHERE
+			TRADENO=#{tradeNo}
+	</update>
+	
+	<!-- 거래게시판 조회수-->
+	<update id="updateReadCount" parameterType="map">
+		UPDATE TRADE SET READCOUNT=#{readCount} WHERE TRADENO=#{tradeNo}
+	</update>
+	
+	<!-- 거래게시판 글 삭제 -->
+	<update id="deleteTrade" parameterType="int">
+		UPDATE TRADE 
+		SET 
+		STATUS='N', MODIFYDATE = CURRENT_TIMESTAMP 
+		WHERE TRADENO=#{tradeNo}
+	</update>
+	
+		<select id="selectTradeReplyListByNo" resultMap="tradeReplyResultMap" parameterType="int">
+		SELECT tradeRNo, tradeNo, WRITER_NO, WRITER_ID, CONTENT, STATUS, CREATEDATE, MODIFYDATE
+		FROM REPLY_TRADE
+		WHERE STATUS = 'Y'
+		AND tradeNo = ${tradeNo}
+	</select>
+	
+		<select id="selectTradeReplyCountByNo" resultType="int" parameterType="int">
+		SELECT COUNT(*)
+		WHERE STATUS = 'Y'
+		AND tradeNo = ${tradeNo}
+	</select>
+	
+		<!-- 거래게시판 리플 수정 -->
+	<delete id="updateReplyTrade" parameterType="ReplyTrade">
+		UPDATE REPLY_TRADE 
+		SET 
+		CONTENT=#{content}, MODIFYDATE = CURRENT_TIMESTAMP 
+		WHERE tradeRNo=#{tradeRNo}
+	</delete>
+	
+		<!-- 거래게시판 리플 삭제 -->
+		<!-- DELETE FROM REPLY_TRADE WHERE tradeRNo=#{tradeRNo} -->
+	<delete id="deleteReplyTrade" parameterType="int">
+		UPDATE REPLY_TRADE 
+		SET 
+		STATUS='N', MODIFYDATE = CURRENT_TIMESTAMP 
+		WHERE tradeRNo=#{tradeRNo}
+	</delete>
+	
+	<!-- 스크랩 -->
+	<insert id="clipTrade" parameterType="map">
+		INSERT INTO CLIP_TRADE VALUES(#{memNo}, #{tradeNo})
+	</insert>
+	
+	<!-- 스크랩 풀기-->
+	<insert id="unClipTrade" parameterType="map">
+		DELETE FROM CLIP_TRADE WHERE MEMNO=#{memNo} AND TRADENO=#{tradeNo}
+	</insert>
+
+	<!-- 추천 카테고리 5개 - 중복값없게  -->
+	<select id="selectTradeRandomList" resultMap="tradeListResultMap">
+		SELECT DISTINCT
+			CATEGORY 
+		FROM TRADE
+		ORDER BY RAND() LIMIT 5;
+	</select>
+	
+	<!-- 스크랩 수 실시간 -->
+	<select id="clipCount" resultType="int" parameterType="int">
+		SELECT COUNT(*) FROM CLIP_TRADE WHERE TRADENO=#{tradeNO}
+	</select> 
+	
+	<!-- 중고 거래 스크랩목록 불러오기  -->
+ 	<select id="selectClipTradeList" resultMap="tradeDetailResultMap" parameterType="map">
+	SELECT
+		B.tradeNo, B.WRITER_NO, B.WRITER_ID, B.TYPE, B.CATEGORY, B.REGION, B.TITLE, B.CONDITIONS, B.PRICE, 
+		B.CONTENT, B.ORIGINAL_FILENAME, B.RENAMED_FILENAME, B.READCOUNT, B.STATUS, B.CREATEDATE, B.MODIFYDATE
+	<if test='memNo != null and memNo != "" '>
+		,(SELECT COUNT(*) FROM CLIP_TRADE CT WHERE B.tradeNo = CT.tradeNo AND memNo = ${MEMNO}) as isClip
+	</if>
+	FROM TRADE B
+	LEFT OUTER JOIN  CLIP_TRADE CT on (B.tradeNo = CT.tradeNo)
+	LEFT OUTER JOIN  REPLY_TRADE R on (R.tradeNo = B.tradeNo)
+	WHERE CT.memNo = ${MEMNO};
+	</select>
+
+	<!-- 메인화면 검색 -->
+	<select id="selectTradeListHome" resultMap="tradeListResultMap" parameterType="map">
+		SELECT DISTINCT 
+		B.tradeNo, B.WRITER_NO, M1.ID, B.TYPE, B.CATEGORY, B.REGION, B.TITLE, B.CONDITIONS, B.PRICE, 
+		B.CONTENT, B.ORIGINAL_FILENAME, B.RENAMED_FILENAME, B.READCOUNT, B.STATUS, B.CREATEDATE, B.MODIFYDATE
+			,(SELECT COUNT(*) FROM REPLY_TRADE R WHERE B.TRADENO = R.TRADENO AND R.STATUS = 'Y') as reviewCount
+			,(SELECT COUNT(*) FROM CLIP_TRADE CT WHERE B.TRADENO = CT.TRADENO) as clipCount
+		<if test="memNo != null">
+			,(SELECT COUNT(*) FROM CLIP_TRADE CT WHERE B.TRADENO = CT.TRADENO AND CT.MEMNO = #{memNo}) as isClip
+		</if>		
+		<if test="memNo == null">
+			,(SELECT COUNT(*) FROM CLIP_TRADE CT WHERE B.TRADENO = CT.TRADENO AND CT.MEMNO = 0) as isClip
+		</if>		
+		FROM TRADE B
+		LEFT OUTER JOIN MEMBER M1 ON (B.WRITER_NO = M1.MEMNO)
+		LEFT OUTER JOIN (SELECT DISTINCT TRADENO FROM REPLY_TRADE) AS R ON (B.TRADENO = R.TRADENO)
+		LEFT OUTER JOIN CLIP_TRADE CT ON (CT.TRADENO = B.TRADENO)
+		WHERE B.STATUS = 'Y'
+		<if test="all != null">
+			AND	(
+				B.TITLE LIKE '%${all}%' 
+				OR	M1.ID LIKE '%${all}%'
+				OR	B.CONTENT LIKE '%${all}%'
+				OR	B.CATEGORY LIKE '%${all}%'
+				OR	B.REGION LIKE '%${all}%'
+					)
+		</if>				
+		ORDER BY B.TRADENO DESC LIMIT 5
+	</select>
+	
+	
+	
+	
+	
+	
+</mapper>
