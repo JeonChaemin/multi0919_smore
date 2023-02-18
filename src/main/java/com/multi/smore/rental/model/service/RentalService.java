@@ -37,6 +37,11 @@ public class RentalService {
 		param.put("limit", "" + pageInfo.getListLimit());
 		param.put("offset", "" + (pageInfo.getStartList() - 1));
 		return mapper.selectRentalList(param);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public List<Rental> getRentalListHome(Map<String, Object> param){
+		return mapper.selectRentalListHome(param);
 	}	
 		
 	@Transactional(rollbackFor = Exception.class)

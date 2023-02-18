@@ -143,7 +143,31 @@
 	WHERE CR.memNo = #{memNo};
 </select>
 
-
+<!-- 통합검색 --> 
+	<select id="selectRentalListHome" resultMap="rentalListResultMap" parameterType="map">
+		SELECT DISTINCT
+		*
+		,(SELECT COUNT(*) FROM CLIP_RENTALHOUSE CR WHERE R.rentalNo = CR.rentalNo) as clipCount
+		<if test="memNo != null">
+			,(SELECT COUNT(*) FROM CLIP_RENTALHOUSE CR WHERE R.rentalNo = CR.rentalNo AND CR.MEMNO = #{memNo}) as isClip
+		</if>
+		<if test="memNo == null">
+			,(SELECT COUNT(*) FROM CLIP_RENTALHOUSE CR WHERE R.rentalNo = CR.rentalNo AND CR.MEMNO = 0) as isClip
+		</if>
+		FROM RentalHouse R
+		LEFT OUTER JOIN CLIP_RENTALHOUSE CR ON CR.rentalNo = R.rentalNo
+		WHERE 1=1
+		<if test="all != null">
+			AND (
+				pblancNm LIKE '%${all}%'
+				OR brtcNm LIKE '%${all}%'
+				OR houseTyNm LIKE '%${all}%'
+				OR suplyTyNm LIKE '%${all}%'
+				OR fullAdres LIKE '%${all}%'
+				)
+		</if>
+		ORDER BY R.rentalNo DESC LIMIT 5
+	</select>
 
 
 

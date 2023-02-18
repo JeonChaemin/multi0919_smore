@@ -147,4 +147,8 @@ public class TradeService {
 		return mapper.clipCount(tradeNo);
 	}
 	
+	// 통합검색
+	public List<Trade> getTradeListHome(Map<String, Object> param){
+		return mapper.selectTradeListHome(param);
+	}
 }

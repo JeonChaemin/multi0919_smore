@@ -261,7 +261,35 @@
 	WHERE CT.memNo = ${MEMNO};
 	</select>
 
-	
+	<!-- 메인화면 검색 -->
+	<select id="selectTradeListHome" resultMap="tradeListResultMap" parameterType="map">
+		SELECT DISTINCT 
+		B.tradeNo, B.WRITER_NO, M1.ID, B.TYPE, B.CATEGORY, B.REGION, B.TITLE, B.CONDITIONS, B.PRICE, 
+		B.CONTENT, B.ORIGINAL_FILENAME, B.RENAMED_FILENAME, B.READCOUNT, B.STATUS, B.CREATEDATE, B.MODIFYDATE
+			,(SELECT COUNT(*) FROM REPLY_TRADE R WHERE B.TRADENO = R.TRADENO AND R.STATUS = 'Y') as reviewCount
+			,(SELECT COUNT(*) FROM CLIP_TRADE CT WHERE B.TRADENO = CT.TRADENO) as clipCount
+		<if test="memNo != null">
+			,(SELECT COUNT(*) FROM CLIP_TRADE CT WHERE B.TRADENO = CT.TRADENO AND CT.MEMNO = #{memNo}) as isClip
+		</if>		
+		<if test="memNo == null">
+			,(SELECT COUNT(*) FROM CLIP_TRADE CT WHERE B.TRADENO = CT.TRADENO AND CT.MEMNO = 0) as isClip
+		</if>		
+		FROM TRADE B
+		LEFT OUTER JOIN MEMBER M1 ON (B.WRITER_NO = M1.MEMNO)
+		LEFT OUTER JOIN (SELECT DISTINCT TRADENO FROM REPLY_TRADE) AS R ON (B.TRADENO = R.TRADENO)
+		LEFT OUTER JOIN CLIP_TRADE CT ON (CT.TRADENO = B.TRADENO)
+		WHERE B.STATUS = 'Y'
+		<if test="all != null">
+			AND	(
+				B.TITLE LIKE '%${all}%' 
+				OR	M1.ID LIKE '%${all}%'
+				OR	B.CONTENT LIKE '%${all}%'
+				OR	B.CATEGORY LIKE '%${all}%'
+				OR	B.REGION LIKE '%${all}%'
+					)
+		</if>				
+		ORDER BY B.TRADENO DESC LIMIT 5
+	</select>
 	
 	
 	

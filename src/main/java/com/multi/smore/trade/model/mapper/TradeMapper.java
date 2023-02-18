@@ -28,4 +28,7 @@ public interface TradeMapper { //interface
 	int clipTrade(Map<String, String> map);
 	int unClipTrade(Map<String, String> map);
 	int clipCount(int tradeNo);
+	//home 통합검색용
+	List<Trade> selectTradeListHome(Map<String, Object> map);
+	
 }
