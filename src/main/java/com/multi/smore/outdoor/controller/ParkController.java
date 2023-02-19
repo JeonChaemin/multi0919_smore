@@ -33,7 +33,7 @@ public class ParkController {
 	private ParkService service;
 
 	@GetMapping("/outdoor")
-	public String ParkList(Model model, @RequestParam Map<String, Object> param,
+	public String ParkList(Model model, @SessionAttribute(name = "loginMember", required = false) Member loginMember, @RequestParam Map<String, Object> param,
 			@RequestParam(required = false) String searchValue, @RequestParam(required = false) String searchType, 
 			@RequestParam(required = false) List<String> regions) {
 		List<String> parkItem = new ArrayList<String>();
@@ -44,6 +44,12 @@ public class ParkController {
 		List<Park> parkList = service.selectParkListHot(parkItem);
 		for (Park park : parkList) {
 			park.getParkNm(); 
+		}
+		
+		int memNo = 0;
+		if(loginMember != null) {
+			memNo = loginMember.getMemNo();
+			param.put("memNo",""+ memNo);
 		}
 		
 		int page = 1;
@@ -87,10 +93,10 @@ public class ParkController {
 	@GetMapping(value={"/outdoor/outdoor-detail", "/outdoor/outdoor-detail-track"}) // html 의 경로 부분에 작성 
 	public String detailView(Model model, @RequestParam("parkNo") int parkNo,  @RequestParam(required = false) String searchType,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember){
-		String memNo = "";
+		int memNo = 0;
 		
 		if(loginMember != null) {
-			memNo =""+ loginMember.getMemNo();
+			memNo =loginMember.getMemNo();
 		}	
 				
 		Park park = service.selectParkByNo(parkNo, memNo);

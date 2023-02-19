@@ -62,9 +62,10 @@
 		<if test="searchValue != null">
 			AND (COURSE_NAME LIKE '%${searchValue}%'
 				OR COURSE_CATEGORY_NM LIKE '%${searchValue}%'
-				OR CPI_NAME LIKE '%${cpiName}%')
+				OR CPI_NAME LIKE '%${searchValue}%'
+				OR AREA_GU LIKE '%${searchValue}%')
 		</if>
-		ORDER BY TNO LIMIT ${limit}
+		ORDER BY TNO DESC LIMIT ${limit} OFFSET ${offset}
 	</select>
 	
 	

@@ -189,7 +189,7 @@
                         </div>
                       </div>
                        <th:block th:if="${session.loginMember != null}" class="col-md-1">
-					 	<div class="clip clip2 text-end favorite-icon2" th:style="'line-height: 70px;'" th:id="|clip${item.tNo}|" th:value="${item.isClip}" th:onclick="|onClickClip('clip${item.tNo}', '${item.tNo}');|">
+					 	<div class="clip text-end favorite-icon" th:style="'line-height: 70px;'" th:id="|clip${item.tNo}|" th:value="${item.isClip}" th:onclick="|onClickClip('clip${item.tNo}', ${item.tNo});|" >
 					 		<a th:href="|javascript:void(0)|"><i class="uil uil-heart-alt fs-20"></i></a>
 					 	</div>
 					  </th:block>

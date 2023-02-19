@@ -21,9 +21,9 @@ public class ParkService {
 	private ParkMapper mapper;
 	
 	@Transactional(rollbackFor = Exception.class)
-	public Park selectParkByNo(int parkNo, String memNo) {
+	public Park selectParkByNo(int parkNo, int memNo) {
 		Map<String, Object> map = new HashMap<>();
-		map.put("parkNo", ""+parkNo);		
+		map.put("parkNo", parkNo);		
 		map.put("memNo", memNo);
 		Park park = mapper.selectParkByNo(map); 
 		
