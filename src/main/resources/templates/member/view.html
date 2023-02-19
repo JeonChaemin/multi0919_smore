@@ -7,6 +7,7 @@
 <link th:href="@{/css/index.css}" id="custom" rel="stylesheet" type="text/css" />
 <link th:href="@{/css/mypage.css}" id="custom" rel="stylesheet" type="text/css" />
 
+
 <body>
 	<!--start page Loader -->
 	<div id="preloader">
@@ -58,8 +59,8 @@
 			<div class="position-relative" style="z-index: 1">
 				<div class="shape">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 250">
-                            <path fill="#FFFFFF" fill-opacity="1" d="M0,192L120,202.7C240,213,480,235,720,234.7C960,235,1200,213,1320,202.7L1440,192L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"></path>
-                        </svg>
+	                           <path fill="#FFFFFF" fill-opacity="1" d="M0,192L120,202.7C240,213,480,235,720,234.7C960,235,1200,213,1320,202.7L1440,192L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"></path>
+	                       </svg>
 				</div>
 			</div>
 			<!-- END SHAPE -->
@@ -74,7 +75,7 @@
 							<div class="card side-bar">
 								<div class="card-body p-4">
 									<div class="candidate-profile text-center">
-										<img th:src="@{/images/user/avatar3.png}" alt="" class="avatar-lg rounded-circle img-thumbnail">
+										<img th:src="@{/images/user/avatar2.png}" alt="" class="avatar-lg rounded-circle img-thumbnail">
 										<h6 class="fs-18 mb-2 mt-4">[[${session.loginMember.id}]]</h6>
 									</div>
 								</div>
@@ -158,13 +159,13 @@
 											
 											<!-- 탭5  -->
 											<li class="nav-item" role="presentation">
-												<button class="nav-link" id="settings-tab" data-bs-toggle="pill" data-bs-target="#clip"
+												<button class="nav-link" id="settings-tab" data-bs-toggle="pill" data-bs-target="#rentalClip"
 													type="button" role="tab" aria-controls="overview" aria-selected="false" style="font-size:14px;">공공주택</button>
 											</li>
 											
 											<!-- 탭6  -->
 											<li class="nav-item" role="presentation">
-												<button class="nav-link" id="settings-tab" data-bs-toggle="pill" data-bs-target="#clip"
+												<button class="nav-link" id="settings-tab" data-bs-toggle="pill" data-bs-target="#oprogramClip"
 													type="button" role="tab" aria-controls="overview" aria-selected="false" style="font-size:14px;">프로그램</button>
 											</li>
 											
@@ -176,9 +177,9 @@
 											<!-- 스크랩내역 -->
 											<div class="tab-pane active" id="tradeClip" role="tabpanel">
 												<!-- tradeClip -->
-												<div class="job-box card mb-2">
-												  <th:block th:if="${tradeList != null}">
-													  <th:block th:each="trade : ${tradeList}">
+												<th:block th:if="${tradeList != null}">
+											     <th:block th:each="trade : ${tradeList}">
+												  <div class="job-box card mb-2">
 														<div class="card-body p-3">
 															<div class="row">
 																<div class="col-lg-9">
@@ -212,23 +213,23 @@
 															</div>
 															<!--end row-->
 														  </div>
-														</th:block>
+														</div>
+												      </th:block>
 													</th:block>
 													<th:block th:if="${#lists.isEmpty(tradeList)}">
-														<div>
+														<div class="text-center mt-3">
 															<p>스크랩 내역이 없습니다.</p>
 														</div>
 													</th:block>
-												</div>
 												<!-- item1 end -->
 											</div>
 				
 											<!-- 스크랩내역 -->
 											<div class="tab-pane" id="recipeClip" role="tabpanel">
 												<!-- recipeClip -->
-												<div class="job-box card mb-2">
 												  <th:block th:if="${recipeList != null}">
-													  <th:block th:each="recipe : ${recipeList}">
+													<th:block th:each="recipe : ${recipeList}">
+													  <div class="job-box card mb-2">
 														<div class="card-body p-3">
 															<div class="row">
 																<div class="col-lg-9">
@@ -262,23 +263,23 @@
 															</div>
 															<!--end row-->
 														  </div>
-														</th:block>
+														</div>
+													  </th:block>
 													</th:block>
 													<th:block th:if="${#lists.isEmpty(recipeList)}">
-														<div>
+														<div class="text-center mt-3">
 															<p>스크랩 내역이 없습니다.</p>
 														</div>
 													</th:block>
-												</div>
 												<!-- item1 end -->
 											</div>
 				
 											<!-- 스크랩내역 -->
 											<div class="tab-pane" id="outdoorClip" role="tabpanel">
 												<!-- outdoorClip -->
-												<div class="job-box card mb-2">
 												  <th:block th:if="${parkList != null}">
-													  <th:block th:each="park : ${parkList}">
+													<th:block th:each="park : ${parkList}">
+													  <div class="job-box card mb-2">
 														<div class="card-body p-3">
 															<div class="row">
 																<div class="col-lg-9">
@@ -312,9 +313,10 @@
 															</div>
 															<!--end row-->
 														  </div>
-														</th:block>
+														 </div>
+													  </th:block>
 													</th:block>
-												  <th:block th:if="${trackingList != null}">
+													<th:block th:if="${trackingList != null}">
 													  <th:block th:each="tracking : ${trackingList}">
 														<hr>
 														<div class="card-body p-3">
@@ -352,23 +354,122 @@
 														  </div>
 														</th:block>
 													</th:block>
-													
-													<th:block th:if="${#lists.isEmpty(recipeList)} and ${#lists.empty(trackingList)}">
-														<div>
+													<th:block th:if="${#lists.isEmpty(parkList)} and ${#lists.empty(trackingList)}">
+														<div class="text-center mt-3">
 															<p>스크랩 내역이 없습니다.</p>
 														</div>
 													</th:block>
-												</div>
 												<!-- item1 end -->
 											</div>
 
+											<!-- 스크랩내역 -->
+											<div class="tab-pane" id="rentalClip" role="tabpanel">
+												<!-- rentalClip -->
+												  <th:block th:if="${rentalList != null}">
+													<th:block th:each="rental : ${rentalList}">
+													  <div class="job-box card mb-2">
+														<div class="card-body p-3">
+															<div class="row">
+																<div class="col-lg-9">
+																	<div class="mt-3 mt-lg-0">
+																		<h5 class="fs-17 mb-1">
+																			<a th:href="@{${rental.pcUrl}}" class="text-dark">[[${rental.pblancNm}]]</a>
+																		</h5>
+																		<p class="text-muted fs-14 mb-0">[[${rental.beginDe}]] ~ [[${rental.endDe}]]</p>
+																	</div>
+																</div>
+																<!--end col-->
+																<div class="col-lg-3 align-self-center">
+																	<ul class="list-inline mb-0 float-end">
+																		<li class="list-inline-item" data-bs-toggle="tooltip"
+																			data-bs-placement="top" title=""
+																			data-bs-original-title="자세히 보기"><a
+																			th:href="@{${rental.pcUrl}}"
+																			class="avatar-xs bg-soft-success d-inline-block text-center rounded-circle fs-4">
+																				<i class="mdi mdi-eye"></i>
+																		</a></li>
+																		<li class="list-inline-item " data-bs-toggle="tooltip"
+																			data-bs-placement="top" title=""
+																			data-bs-original-title="삭제"><a
+																			href="javascript:void(0)" data-bs-toggle="modal"
+																			data-bs-target="#deleteModal"
+																			class="avatar-xs bg-soft-danger d-inline-block text-center rounded-circle fs-4">
+																				<i class="uil uil-trash-alt"></i>
+																		</a></li>
+																	</ul>
+																</div>
+															</div>
+															<!--end row-->
+														  </div>
+														</div>
+													  </th:block>
+													</th:block>
+													<th:block th:if="${#lists.isEmpty(rentalList)}">
+														<div class="text-center mt-3">
+															<p>스크랩 내역이 없습니다.</p>
+														</div>
+													</th:block>
+												<!-- item1 end -->
+											</div>
+											
+											<!-- 스크랩내역 -->
+											<div class="tab-pane" id="oprogramClip" role="tabpanel">
+												<!-- oprogramClip -->
+											  <th:block th:if="${oprogramList != null}">
+												<th:block th:each="oneProgram : ${oprogramList}">
+													<div class="job-box card mb-2">
+														<div class="card-body p-3">
+															<div class="row">
+																<div class="col-lg-9">
+																	<div class="mt-3 mt-lg-0">
+																		<h5 class="fs-17 mb-1">
+																			<a th:href="|/program-detail?onepNo=${oneProgram.onepNo}|" class="text-dark">[[${oneProgram.partcptnSj}]]</a>
+																		</h5>
+																		<p class="text-muted fs-14 mb-0">[[${#dates.format(oneProgram.progrsDe1, "yyyy-MM-dd")}]] ~ [[${#dates.format(oneProgram.progrsDe2, "yyyy-MM-dd")}]]</p>
+																	</div>
+																</div>
+																<!--end col-->
+																<div class="col-lg-3 align-self-center">
+																	<ul class="list-inline mb-0 float-end">
+																		<li class="list-inline-item" data-bs-toggle="tooltip"
+																			data-bs-placement="top" title=""
+																			data-bs-original-title="자세히 보기"><a
+																			th:href="|/program-detail?onepNo=${oneProgram.onepNo}|"
+																			class="avatar-xs bg-soft-success d-inline-block text-center rounded-circle fs-4">
+																				<i class="mdi mdi-eye"></i>
+																		</a></li>
+																		<li class="list-inline-item " data-bs-toggle="tooltip"
+																			data-bs-placement="top" title=""
+																			data-bs-original-title="삭제"><a
+																			href="javascript:void(0)" data-bs-toggle="modal"
+																			data-bs-target="#deleteModal"
+																			class="avatar-xs bg-soft-danger d-inline-block text-center rounded-circle fs-4">
+																				<i class="uil uil-trash-alt"></i>
+																		</a></li>
+																	</ul>
+																</div>
+															</div>
+															<!--end row-->
+														  </div>
+														</div>
+													  </th:block>
+													</th:block>
+													<th:block th:if="${#lists.isEmpty(oprogramList)}">
+														<div class="text-center mt-3">
+															<p>스크랩 내역이 없습니다.</p>
+														</div>
+													</th:block>
+												<!-- item1 end -->
+											</div>
+											
+											
 											<!-- 정보 변경 -->
 											<div class="tab-pane" id="mypinfo" role="tabpanel">
 												<p class="mb-0">
 												<form id="enroll-container" th:action="@{/member/update}" method="post" >
 													<div class="text-center">
 														<div class="mb-4 profile-user">
-															<img th:src="@{/images/user/avatar3.png}"
+															<img th:src="@{/images/user/avatar2.png}"
 																class="rounded-circle img-thumbnail profile-img"
 																id="profile-img" alt="">
 															<div class="p-0 rounded-circle profile-photo-edit">

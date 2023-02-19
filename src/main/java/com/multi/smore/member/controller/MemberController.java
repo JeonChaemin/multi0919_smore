@@ -27,6 +27,7 @@ import com.multi.smore.member.model.service.MemberService;
 import com.multi.smore.member.model.vo.Member;
 import com.multi.smore.member.model.vo.MemberForm;
 import com.multi.smore.oneprogram.model.service.OneProgramService;
+import com.multi.smore.oneprogram.model.vo.OneProgram;
 import com.multi.smore.outdoor.model.service.ParkService;
 import com.multi.smore.outdoor.model.service.TrackingService;
 import com.multi.smore.outdoor.model.vo.Park;
@@ -34,6 +35,7 @@ import com.multi.smore.outdoor.model.vo.Tracking;
 import com.multi.smore.recipe.model.service.RecipeService;
 import com.multi.smore.recipe.model.vo.Recipe;
 import com.multi.smore.rental.model.service.RentalService;
+import com.multi.smore.rental.model.vo.Rental;
 import com.multi.smore.trade.model.service.TradeService;
 import com.multi.smore.trade.model.vo.Trade;
 
@@ -223,6 +225,8 @@ public class MemberController {
 		}
 		Map<String, Object> paramOMap = new HashMap<>();
 		paramOMap.put("memNo", ""+loginMember.getMemNo());
+		Map<String, String> paramSMap = new HashMap<>();
+		paramSMap.put("memNo", ""+loginMember.getMemNo());
 		PageInfo pageInfo = new PageInfo(1, 50, 50, 50);
 		
 		List<Trade> getTradeList = tradeService.getTradeList(pageInfo, paramOMap);
@@ -257,11 +261,28 @@ public class MemberController {
 			}
 		}
 		
+		List<Rental> getRentalList = rentalService.getRentalList(pageInfo, paramOMap);
+		List<Rental> rentalList = new ArrayList<>();
+		for (Rental rental : getRentalList) {
+			if (rental.getIsClip() == 1) {
+				rentalList.add(rental);
+			}
+		}
+		
+		List<OneProgram> getOprogramList = oneProgramService.getOneProgramList(pageInfo, paramSMap);
+		List<OneProgram> oprogramList = new ArrayList<>();
+		for (OneProgram oneprogram : getOprogramList) {
+			if (oneprogram.getIsClip() == 1) {
+				oprogramList.add(oneprogram);
+			}
+		}
 		
 		model.addAttribute("tradeList", tradeList);
 		model.addAttribute("recipeList", recipeList);
 		model.addAttribute("parkList", parkList);
 		model.addAttribute("trackingList", trackingList);
+		model.addAttribute("rentalList", rentalList);
+		model.addAttribute("oprogramList", oprogramList);
 		return "member/view";
 	}
 	

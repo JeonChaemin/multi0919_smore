@@ -27,7 +27,7 @@
   background-attachment: fixed;
   box-shadow: 0 10px 10px rgba(195, 195, 195, 0.19), 0 6px 6px rgba(211, 211, 211, 0.23); 
   font: 14px/16px "pretendard", sans-serif;
-
+  z-index: 9999;
 }
 
 
@@ -112,12 +112,6 @@
   border-radius: 4px;
   background: transparent;
 }
-
-
-.btn{
-  text-align: left;
-}
-
 
 
 /* 스크롤바 */
@@ -210,10 +204,6 @@
 .floating-chat .chat .messages li.other:after {
   border-left: 10px solid transparent;
   left: -10px;
-}
-
-.btn{
-  padding:0px;
 }
 
 .floating-chat .chat .footer {

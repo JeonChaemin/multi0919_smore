@@ -1,6 +1,7 @@
 package com.multi.smore.outdoor.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,10 +35,18 @@ public class TrackingController {
 	
 	
 	@GetMapping("/tracking")
-	public String  TrackingList(Model model, @RequestParam Map<String, Object> param,
+	public String  TrackingList(@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			Model model, @RequestParam Map<String, Object> param,
 			@RequestParam(required = false) String searchValue) {
 		
 		List<String> trackItem = new ArrayList<String>();
+		
+		int memNo = 0;
+		if(loginMember != null) {
+			memNo = loginMember.getMemNo();
+			param.put("memNo",""+ memNo);
+		}
+		
 		trackItem.add("507");
 		trackItem.add("333");
 		trackItem.add("1300");

@@ -31,6 +31,10 @@
   	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
     integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   	<script src="https://kit.fontawesome.com/dd4a6a23ab.js" crossorigin="anonymous"></script>
+  	<!-- Chatbot CSS -->
+  	<link rel="stylesheet" th:href="@{/css/chatStyle.css}" id="chatbot" type="text/css">
+  	<!-- jquery CDN -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 </head>
@@ -106,7 +110,7 @@
 		          <li class="list-inline-item dropdown">
 		            <a href="javascript:void(0)" class="header-item" id="userdropdown" data-bs-toggle="dropdown"
 		              aria-expanded="false">
-		              <img th:src="@{/images/user/avatar3.png}" alt="mdo" width="35" height="35" class="rounded-circle me-1"> <span
+		              <img th:src="@{/images/user/avatar2.png}" alt="mdo" width="35" height="35" class="rounded-circle me-1"> <span
 		                class="d-none d-md-inline-block fw-medium"><th:block th:text="${session.loginMember.name} + ' 님'"/></span>
 		            </a>
 		            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown">
@@ -122,8 +126,33 @@
 	    </nav>
 	    <!-- Navbar End -->
 	</header>
+	
+	<div id="chatbot">
+	  
+	</div>
 		
 	<footer id="footer">
+		<div class="floating-chat">
+		  <i class="fa fa-comments fa-2x" aria-hidden="true" style="color: #766df4 ;"></i>
+		  <div class="chat">
+		      <div class="header">
+		        <span class="title" style="color: black;">
+		            <h2 style="font-size: 18px; margin-top: 10px;">💬 챗봇과 대화하기</h2>
+		            <h4 style="font-size: 13px; margin-top: 5px;">스모어 챗봇을 통해 문의를 해결해보세요💜</h4>
+		          </span>
+		          <button>
+		              <i class="fa fa-times" aria-hidden="true"></i>
+		          </button>
+		      </div>
+		      <div class="separator-full separator-light mt-0 opacity-10"></div>
+		      <ul class="messages"></ul>
+		
+		      <div class="footer">
+		        <div class="text-box" id="user_msg" contenteditable="true" disabled="true" onkeyup="enterkey();"></div>
+		          <button id="sendMessage"><span class="mdi mdi-send"></span></button>
+		      </div>
+		  </div>
+		</div>
 		<div class="footer-alt">
 			<div class="container">
 				<div class="row">
@@ -150,6 +179,8 @@
 			</div>
 			<!--end container-->
 		</div>
+		
+		<script th:src="@{/js/pages/chatScript.js}"></script>
 	</footer>
 </body>
 </html>

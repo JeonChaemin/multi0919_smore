@@ -145,7 +145,7 @@
 												<div class="ms-sm-3 flex-grow-1">
 													<h6 class="fs-16 mt-sm-0 mt-3 mb-0">[[${replyTrade.writerId}]]</h6>
 													<p class="text-muted fs-14 mb-0 mb-2">[[${#dates.format(replyTrade.createDate, "yyyy-MM-dd HH:mm")}]]</p>
-													<p class="mb-0">[[${replyTrade.content}]]</p>
+													<p class="mb-0" th:id="|content${replyTrade.tradeRNo}|">[[${replyTrade.content}]]</p>
 												</div>
 											</div>
 											<div class="col-lg-3 text-end mt-3">
@@ -167,10 +167,10 @@
 							                  </div><!--end col-->
 							                </div><!--end row-->
 							                <div class="text-end">
-							                  <button id="submit" class="btn btn-purple py-1" 
-							                  th:onclick="|backBtn(${replyTrade.tradeRNo})|">취소</button>
-							                  <button type="submit" id="submit" class="btn btn-purple py-1" 
+							                  <button type="submit" id="submit" class="btn btn-outline-primary" style="padding: 5px 10px;" 
 							                  th:onclick="|updBtn(${replyTrade.tradeRNo}, ${replyTrade.tradeNo})|">확인</button>
+							                  <button id="submit" class="btn btn-outline-secondary" style="padding: 5px 10px;" 
+							                  th:onclick="|backBtn(${replyTrade.tradeRNo})|">취소</button>
 							                </div>
 		                          		  </div>
 										</th:block>
@@ -350,6 +350,7 @@
   		updateBtn.style.display = "none";
   		
   		var content = document.getElementById("content" + tradeRNo);
+  		console.dir(content);
   		content.style.display = "none";
   		
   		var updateForm = document.getElementById("updateReply" +tradeRNo);

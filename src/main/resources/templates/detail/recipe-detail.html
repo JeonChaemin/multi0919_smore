@@ -238,7 +238,7 @@
 		                      </div>
 		                      <div class="flex-grow-1 ms-sm-3">
 	                        	  <h6 class="fs-16 mt-sm-0 mt-3 mb-0" >[[${reply.writer}]]</h6>
-		                          <p class="text-muted fs-14 mb-0 mb-2">[[${#dates.format(reply.modifyDate)}]]</p>
+		                          <p class="text-muted fs-14 mb-0 mb-2">[[${#dates.format(reply.modifyDate, "yyyy-MM-dd HH:mm")}]]</p>
 		                          <p class="mb-0" th:id="|content${reply.rcprNo}|">[[${reply.content}]]</p>
 		                      </div>
 		                    </div>
@@ -262,12 +262,12 @@
 				                  </div><!--end col-->
 				                </div><!--end row-->
 				                <div class="text-end">
-				                  <button id="submit" class="btn btn-primary btn-hover" 
-				                  th:onclick="|backBtn(${reply.rcprNo})|">취소</button>
-				                  <button type="submit" id="submit" class="btn btn-primary btn-hover" 
+				                  <button type="submit" id="submit" class="btn btn-outline-primary" style="padding: 5px 10px;"
 				                  th:onclick="|updBtn(${reply.rcprNo}, ${recipe.rcpNo})|">확인</button>
+				                  <button id="submit" class="btn btn-outline-secondary" style="padding: 5px 10px;"
+				                  th:onclick="|backBtn(${reply.rcprNo})|">취소</button>
 				                </div>
-	                          </div>
+	                          </div><!-- updateReply -->
 		                      </div>
 		                    </div>
 		            	</th:block>   

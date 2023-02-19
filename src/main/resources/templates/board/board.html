@@ -4,8 +4,7 @@
 
 <head th:fragment="head" th:replace="~{common/layout :: head}"></head>
 <!--Custom Css-->
-<link th:href="@{/css/board.css}" id="news" rel="stylesheet"
-	type="text/css" />
+<link th:href="@{/css/board.css}" id="news" rel="stylesheet" type="text/css" />
 
 <body>
 	<!--start page Loader -->
@@ -211,7 +210,7 @@
 
 		<!-- 검색바 -->
 		<div class="row">
-			<div class="col-xl-4 mx-auto">
+			<div class="col-xl-4 mx-auto mb-4">
 				<form action="/board/list">
 					<div class="input-group">
 						<input class="form-control" type="text" th:value="${searchValue}"
@@ -225,18 +224,18 @@
 			</div>
 		</div>
 	</section>
+<!-- 	<div th:replace="~{common/layout :: #chatbot}"></div>	 -->
 
 	<footer th:replace="~{common/layout :: #footer}"></footer>
 
-		<!-- Style switcher -->
-		<a class="color-list color1" href="javascript: void(0);"
-			onclick="setColorGreen()"></a> <a class="color-list color2"
-			href="javascript: void(0);" onclick="setColor('blue')"></a> <a
-			class="color-list color3" href="javascript: void(0);"
-			onclick="setColor('green')"></a> <a href="javascript: void(0);"
-			id="mode"> <a href="javascript: void(0);"
-			class="settings rounded-end"></a>
-	</div>
+	<!-- Style switcher -->
+	<a class="color-list color1" href="javascript: void(0);"
+		onclick="setColorGreen()"></a> <a class="color-list color2"
+		href="javascript: void(0);" onclick="setColor('blue')"></a> <a
+		class="color-list color3" href="javascript: void(0);"
+		onclick="setColor('green')"></a> <a href="javascript: void(0);"
+		id="mode"> <a href="javascript: void(0);"
+		class="settings rounded-end"></a>
 	<!-- end switcher-->
 
 	<!--start back-to-top-->
@@ -244,7 +243,7 @@
 		<i class="mdi mdi-arrow-up"></i>
 	</button>
 	<!--end back-to-top-->
-
+	
 	</div>
 	<!-- end main content-->
 
