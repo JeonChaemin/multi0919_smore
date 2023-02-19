@@ -126,4 +126,8 @@ public class BoardService {
 		return mapper.likeCount(bbNo);
 	}
 	
+	public List<Board> getBoardListHome(Map<String, String> param){
+		return mapper.selectBoardListHome(param);
+	}
+
 }

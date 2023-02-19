@@ -167,5 +167,31 @@
 	<select id="likeCount" resultType="int" parameterType="int">
 		SELECT COUNT(*) FROM BOARD_LIKE WHERE BBNO=#{bbNo} 
 	</select>
+	
+	<select id="selectBoardListHome" resultMap="boardListResultMap" parameterType="map">
+		SELECT  
+			DISTINCT B.BBNO, B.TITLE, M1.ID, B.TYPE, B.CREATE_DATE, B.ORIGINAL_FILENAME, B.READCOUNT, B.STATUS
+			,(SELECT COUNT(*) FROM BOARD_LIKE LK WHERE B.BBNO = LK.BBNO) AS LIKECOUNT
+			<if test="memNo != 0">
+				,(SELECT COUNT(*) FROM BOARD_LIKE LK WHERE B.BBNO = LK.BBNO AND LK.MEMNO = #{memNo}) AS ISLIKE
+			</if>		
+			<if test="memNo == 0">
+				,(SELECT COUNT(*) FROM BOARD_LIKE LK WHERE B.BBNO = LK.BBNO AND LK.MEMNO = 0) AS ISLIKE
+			</if>	
+		FROM BOARD B
+		LEFT OUTER JOIN MEMBER M1 ON B.MEMNO = M1.MEMNO
+		LEFT OUTER JOIN BOARD_REPLY R ON R.BBNO = B.BBNO 
+		LEFT OUTER JOIN MEMBER M2 ON R.MEMNO = M2.MEMNO 
+		LEFT OUTER JOIN BOARD_LIKE LK ON LK.BBNO = B.BBNO
+		WHERE B.STATUS = 'Y'
+		AND TYPE=#{type}
+		<if test="all != null">
+			AND (
+				M1.ID LIKE '%${all}%'
+				OR B.TITLE LIKE '%${all}%'
+				OR B.CONTENT LIKE '%${all}%'
+		</if>
+		ORDER BY B.BBNO DESC LIMIT 5
+	</select>
 
 </mapper>

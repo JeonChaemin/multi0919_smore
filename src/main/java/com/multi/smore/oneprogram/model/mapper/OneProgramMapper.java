@@ -16,6 +16,7 @@ public interface OneProgramMapper {
 //	좋아요
 	int clipOneProgram(Map<String, String> map);
 	int unClipOneProgram(Map<String, String> map);
+	List<OneProgram> selectOneProgramListHome(Map<String, String> map);
 	
 //	int insertOneProgram(OneProgram op);
 //	int deleteAllOneProgramList1();

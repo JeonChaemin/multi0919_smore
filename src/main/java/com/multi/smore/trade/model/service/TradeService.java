@@ -148,7 +148,7 @@ public class TradeService {
 	}
 	
 	// 통합검색
-	public List<Trade> getTradeListHome(Map<String, Object> param){
-		return mapper.selectTradeListHome(param);
+	public List<Trade> getTradeListHome(Map<String, String> paramMap){
+		return mapper.selectTradeListHome(paramMap);
 	}
 }

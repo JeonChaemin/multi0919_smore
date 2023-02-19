@@ -190,47 +190,20 @@
 							<!--end col-->
 							<div
 								class="col-lg-2 justify-content-end align-items-center d-lg-flex">
-								<a class="text-reset" href="program.html">더보기<i
+								<a class="text-reset" th:href="@{/program}">더보기<i
 									class="fa-solid fa-angle-right"></i></a>
 							</div>
 							<!--end col-->
-<!-- 							<th:block th:each=""> -->
+							<th:block th:each="oneProgram : ${oprogramList}">
 								<div class="col-lg-3 text-center">
-									<a href="#"><img class="index-img"
-										th:src="@{/images/img/main_banner1.png}"></a> <a
-										class="text-reset text-start" href="#">
-										<h5 class="mt-2">1인가구 공구대여 서비스</h5>
-										<p class="text-primary">서울 강남구</p>
+									<a th:href="|/program-detail?onepNo=${oneProgram.onepNo}|"><img class="index-img"
+										th:src="|/images/programimage/program${oneProgram.onepNo}.jpg|"></a> <a
+										class="text-reset text-start">
+										<h5 class="mt-3 ellipsis" th:text="${oneProgram.partcptnSj}"></h5>
+										<p class="text-primary" style="margin-left: 12px;" th:text="'서울특별시 '+${oneProgram.atdrcNm}"></p>
 									</a>
 								</div>
-<!-- 							</th:block> -->
-							<!--end col-->
-							<div class="col-lg-3 text-center">
-								<a href="#"><img class="index-img"
-									th:src="@{/images/img/main_banner2.png}"></a> <a
-									class="text-reset text-start" href="#">
-									<h5 class="mt-2">1인 가구 포럼</h5>
-									<p class="text-primary">서울 종로구</p>
-								</a>
-							</div>
-							<!--end col-->
-							<div class="col-lg-3 text-center">
-								<a href="#"><img class="index-img"
-									th:src="@{/images/img/main_banner3.png}"></a> <a
-									class="text-reset text-start" href="#">
-									<h5 class="mt-2">설맞이 모듬전</h5>
-									<p class="text-primary">서울 강남구</p>
-								</a>
-							</div>
-							<!--end col-->
-							<div class="col-lg-3 text-center">
-								<a href="#"><img class="index-img"
-									th:src="@{/images/img/main_banner4.png}"></a> <a
-									class="text-reset text-start" href="#">
-									<h5 class="mt-2">1인가구 1취미개발</h5>
-									<p class="text-primary">서울 도봉구</p>
-								</a>
-							</div>
+							</th:block>
 							<!--end col-->
 						</div>
 						<!--end row-->
@@ -300,11 +273,11 @@
 									<div class="col-md-10 m-auto">
 										<div class="card mt-4">
 											<img class="card-img-top img-fluid index-rcp-img"
-												th:src="@{/images/img/rcp_rec1.png}" alt="Card image cap">
+												th:src="${recipeList[0].attFileNoMain}" alt="Card image cap">
 											<div class="card-body">
-												<h5 class="card-title mb-2">해물볶음우동</h5>
-												<p class="card-text">일품 • 볶기</p>
-												<a href="javascript:void(0)" class="card-link text-primary">레시피
+												<h5 class="card-title mb-2">[[${recipeList[0].rcpNm}]]</h5>
+												<p class="card-text">[[${recipeList[0].rcpPat2}]] • [[${recipeList[0].rcpWay2}]]</p>
+												<a th:href="|/detail/recipe-detail?rcpNo=${recipeList[0].rcpNo}|" class="card-link text-primary">레시피
 													보러가기<i class="fa-solid fa-angle-right"></i>
 												</a>
 											</div>
@@ -319,11 +292,11 @@
 									<div class="col-md-10 m-auto">
 										<div class="card mt-4">
 											<img class="card-img-top img-fluid index-rcp-img"
-												th:src="@{/images/img/rcp_rec2.png}" alt="Card image cap">
+												th:src="${recipeList[1].attFileNoMain}" alt="Card image cap">
 											<div class="card-body">
-												<h5 class="card-title mb-2">해물김치찌개</h5>
-												<p class="card-text">국/찌개 • 끓이기</p>
-												<a href="javascript:void(0)" class="card-link text-primary">레시피
+												<h5 class="card-title mb-2">[[${recipeList[1].rcpNm}]]</h5>
+												<p class="card-text">[[${recipeList[1].rcpPat2}]] • [[${recipeList[1].rcpWay2}]]</p>
+												<a th:href="|/detail/recipe-detail?rcpNo=${recipeList[1].rcpNo}|" class="card-link text-primary">레시피
 													보러가기<i class="fa-solid fa-angle-right"></i>
 												</a>
 											</div>
@@ -337,11 +310,11 @@
 									<div class="col-md-10 m-auto">
 										<div class="card mt-4">
 											<img class="card-img-top img-fluid index-rcp-img"
-												th:src="@{/images/img/rcp_rec3.png}" alt="Card image cap">
+												th:src="${recipeList[2].attFileNoMain}" alt="Card image cap">
 											<div class="card-body">
-												<h5 class="card-title mb-2">인삼떡갈비</h5>
-												<p class="card-text">반찬 • 굽기</p>
-												<a href="javascript:void(0)" class="card-link text-primary">레시피
+												<h5 class="card-title mb-2">[[${recipeList[2].rcpNm}]]</h5>
+												<p class="card-text">[[${recipeList[2].rcpPat2}]] • [[${recipeList[2].rcpWay2}]]</p>
+												<a th:href="|/detail/recipe-detail?rcpNo=${recipeList[2].rcpNo}|" class="card-link text-primary">레시피
 													보러가기<i class="fa-solid fa-angle-right"></i>
 												</a>
 											</div>

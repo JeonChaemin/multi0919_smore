@@ -13,13 +13,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.multi.smore.api.naver.NaverSearchAPI;
 import com.multi.smore.board.model.service.BoardService;
 import com.multi.smore.board.model.vo.Board;
 import com.multi.smore.common.util.PageInfo;
+import com.multi.smore.member.model.vo.Member;
 import com.multi.smore.news.model.service.NewsService;
 import com.multi.smore.news.model.vo.News;
+import com.multi.smore.oneprogram.model.service.OneProgramService;
+import com.multi.smore.oneprogram.model.vo.OneProgram;
 import com.multi.smore.recipe.model.service.RecipeService;
 import com.multi.smore.recipe.model.vo.Recipe;
 
@@ -37,10 +41,13 @@ public class HomeController {
 	@Autowired
 	private RecipeService recipeService;
 	
+	@Autowired
+	private OneProgramService oprogramService;
+	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model, HttpSession session) {
+	public String home(Locale locale, Model model, @SessionAttribute(name = "loginMember", required = false) Member loginMember) {
 		initDB();
 		Map<String, Object> newsMap = new HashMap<>();
 		newsMap.put("title", "1인 가구");
@@ -51,6 +58,27 @@ public class HomeController {
 		boardMap.put("type", "notice");
 		List<Board> boardList = boardService.getBoardList(pageInfo,boardMap);
 		
+		String memNo1 = "";
+		if (loginMember != null) {
+			memNo1 = ""+loginMember.getMemNo();
+		}
+		List<Recipe> recipeList = new ArrayList<>();
+		recipeList.add(recipeService.getRecipeByNo(711, memNo1));
+		recipeList.add(recipeService.getRecipeByNo(993, memNo1));
+		recipeList.add(recipeService.getRecipeByNo(773, memNo1));
+		
+		int memNo2 = 0;
+		if(loginMember != null) {
+			memNo2 = loginMember.getMemNo();
+		}
+		List<OneProgram> oprogramList = new ArrayList<>();
+		oprogramList.add(oprogramService.findByNo(372, memNo2));
+		oprogramList.add(oprogramService.findByNo(251, memNo2));
+		oprogramList.add(oprogramService.findByNo(496, memNo2));
+		oprogramList.add(oprogramService.findByNo(526, memNo2));
+		
+		model.addAttribute("oprogramList", oprogramList);
+		model.addAttribute("recipeList", recipeList);
 		model.addAttribute("newsList", newsList);
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("pageTitle", "smore | Home");

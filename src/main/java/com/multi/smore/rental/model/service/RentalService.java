@@ -31,8 +31,8 @@ public class RentalService {
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
-	public List<Rental> getRentalListHome(Map<String, Object> param){
-		return mapper.selectRentalListHome(param);
+	public List<Rental> getRentalListHome(Map<String, String> paramMap){
+		return mapper.selectRentalListHome(paramMap);
 	}	
 		
 	@Transactional(rollbackFor = Exception.class)

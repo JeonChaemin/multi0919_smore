@@ -57,6 +57,10 @@ public class OneProgramService {
 		return mapper.unClipOneProgram(map);
 	}
 	
+	public List<OneProgram> getOneProgramListHome(Map<String, String> param){
+		return mapper.selectOneProgramListHome(param);
+	}
+	
 //	public int deleteAllOneProgramList1() {
 //		return mapper.deleteAllOneProgramList1();
 //	}
