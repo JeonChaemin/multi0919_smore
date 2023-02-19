@@ -111,7 +111,7 @@ public class TradeController {
 		System.out.println("paramMap 후확인 : " + paramMap);
 
 		int TradeCount = service.getTradeCount(paramMap);
-		PageInfo pageInfo = new PageInfo(page, 4, TradeCount, 5);
+		PageInfo pageInfo = new PageInfo(page, 5, TradeCount, 5);
 		List<Trade> list = service.getTradeList(pageInfo, paramMap);
 
 		model.addAttribute("list", list);

@@ -164,7 +164,7 @@
 										<li class="page-item "
 											th:classappend="${pageInfo.currentPage == 1 ? 'disabled' : ''}">
 											<a class="page-link" href="javascript:void(0)"
-											th:onclick="|movePage('/recipe?page=${pageInfo.startPage');|"
+											th:onclick="|movePage('/recipe?page=${pageInfo.startPage}');|"
 											tabindex="-1"> <i
 												class="mdi mdi-chevron-double-left fs-15"></i>
 										</a>
@@ -216,7 +216,7 @@
 						<!-- START SIDE-BAR -->
               <div class="col-lg-3 mt-3">
                 <div class="side-bar mt-5 mt-lg-0">
-             <form th:action="@{/category/recipe}" method="get">
+             <form th:action="@{/recipe}" method="get">
                   <div class="position-relative mb-4"><!--검색 시작-->
                     <input class="form-control" id="all" type="search" name="all" th:value="${param.all}" placeholder="검색어를 입력하세요" style="height: 50px;">
                     <button class="bg-transparent border-0 position-absolute top-50 end-0 translate-middle-y me-2"

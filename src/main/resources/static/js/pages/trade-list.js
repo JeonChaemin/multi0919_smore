@@ -137,7 +137,7 @@ function onClickClip(id, tradeNo) {
 		success: (result) => {
 			$('#' + id).attr('value', '' + result[0]);
 			/*$('#' + id).html(result[1]);*/
-			$('#aazz' + id).html('스크랩 수 : ' + result[1]);
+			$('#count' + id).html('<p class="text-muted">스크랩 ' + result[1] + '</p>');
 			console.dir(result);
 			if (result[0] == 1) {
 				$('#' + id).addClass("active")

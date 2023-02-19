@@ -48,3 +48,9 @@
 	color: #fff !important;
   	background-color: #766df4 !important;
 }
+
+.ellipsis {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}

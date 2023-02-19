@@ -45,6 +45,7 @@ public class HousebudgetController {
 		Map<String, Object> searchMap = new HashMap<>();
 		int sum = 0;
 		if(loginMember == null) {
+			model.addAttribute("pageTitle", "smore | Login Required");
 			return "/common/error-login";
 		}
 		searchMap.put("memNo", loginMember.getMemNo());

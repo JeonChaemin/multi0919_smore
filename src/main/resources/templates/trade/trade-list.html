@@ -185,7 +185,7 @@
 																			th:src="|/trade/file/${trade.renamedFileName}|"
 																			alt="제품 사진" class="rounded-3 trade-item-img"
 																			onclick="doImgPop(this.src)" /> <!-- onclick="window.open(this.src)" /> -->
-																			<p class="text-center trade-mag mt-n4">
+																			<p class="text-center trade-mag mt-n4" style="cursor: pointer;" onclick="$('.trade-item-img').trigger('click');">
 																				<i class="uil uil-search-plus"></i> 크게보기
 																			</p>
 																		</a>
@@ -195,8 +195,8 @@
 																<div class="col-lg-8">
 																	<div class="mt-3 mt-lg-0">
 																		<div class="d-flex flex-row my-4">
-																			<span class="badge bg-soft-primary trade-badge">[[${trade.type}]]</span>
-																			<h4 class="p-0 m-0 ms-3">[[${trade.title}]]</h4>
+																			<span class="badge bg-soft-info trade-badge">[[${trade.type}]]</span>
+																			<h4 class="p-0 m-0 ms-3 ellipsis" style="height: 25px;">[[${trade.title}]]</h4>
 																		</div>
 																		<div class="d-flex d-flex justify-content-between">
 																			<p class="text-muted mb-1">[[${trade.category}]]</p>
@@ -217,7 +217,7 @@
 																			<li class="list-inline-item mb-0">
 																				<p class="text-muted">조회 [[${trade.readCount}]]</p>
 																			</li>
-																			<li class="list-inline-item mb-0">
+																			<li class="list-inline-item mb-0" th:id="|countclip${trade.tradeNo}|">
 																				<p class="text-muted">스크랩 [[${trade.clipCount}]]</p>
 																			</li>
 																		</ul>
@@ -286,7 +286,7 @@
 															<li class="page-item "
 																th:classappend="${pageInfo.currentPage == 1 ? 'disabled' : ''}">
 																<a class="page-link" href="javascript:void(0)"
-																th:onclick="|movePage('/trade?page=${pageInfo.startPage');|"
+																th:onclick="|movePage('/trade?page=${pageInfo.startPage}');|"
 																tabindex="-1"> <i
 																	class="mdi mdi-chevron-double-left fs-15"></i>
 															</a>

@@ -83,8 +83,8 @@ public class TrackingService {
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
-	public int deleteTrackingReply(int parkRno) {
-		return mapper.deleteTrackingReply(parkRno);
+	public int deleteTrackingReply(int tRno) {
+		return mapper.deleteTrackingReply(tRno);
 		
 	}
 	
@@ -97,18 +97,18 @@ public class TrackingService {
 	
 	// 스크랩		
 		@Transactional(rollbackFor = Exception.class)
-		public int insertTrackingClip(int memNo, int parkNo) {
+		public int insertTrackingClip(int memNo, int tNo) {
 			Map<String, String> map = new HashMap<>();
 			map.put("memNo", ""+memNo);
-			map.put("parkNo", ""+parkNo);
+			map.put("tNo", ""+tNo);
 			return mapper.insertTrackingClip(map);
 		}
 		// 스크랩 풀기
 		@Transactional(rollbackFor = Exception.class)
-		public int deleteTrackingClip(int memNo, int parkNo) {
+		public int deleteTrackingClip(int memNo, int tNo) {
 			Map<String, String> map = new HashMap<>();
 			map.put("memNo", ""+memNo);
-			map.put("parkNo", ""+parkNo);
+			map.put("tNo", ""+tNo);
 			return mapper.deleteTrackingClip(map);
 		}
 }

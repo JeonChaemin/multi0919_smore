@@ -75,7 +75,7 @@ public class MemberController {
 	
 	@GetMapping("/login")
 	String loginPage() {
-			return "member/login";
+		return "member/login";
 	}
 	
 	
@@ -227,8 +227,10 @@ public class MemberController {
 		paramOMap.put("memNo", ""+loginMember.getMemNo());
 		Map<String, String> paramSMap = new HashMap<>();
 		paramSMap.put("memNo", ""+loginMember.getMemNo());
-		PageInfo pageInfo = new PageInfo(1, 50, 50, 50);
+		int count = 0;
+		PageInfo pageInfo = new PageInfo(1, 1, count, count);
 		
+		count = tradeService.getTradeCount(paramOMap);
 		List<Trade> getTradeList = tradeService.getTradeList(pageInfo, paramOMap);
 		List<Trade> tradeList = new ArrayList<>();
 		for (Trade trade : getTradeList) {
@@ -237,6 +239,7 @@ public class MemberController {
 			}
 		}
 		
+		count = recipeService.getRecipeCount(paramOMap);
 		List<Recipe> getRecipeList = recipeService.getRecipeList(pageInfo, paramOMap);
 		List<Recipe> recipeList = new ArrayList<>();
 		for (Recipe recipe : getRecipeList) {
@@ -245,6 +248,7 @@ public class MemberController {
 			}
 		}
 		
+		count = parkService.selectParkCount(paramOMap);
 		List<Park> getParkList = parkService.selectParkList(pageInfo, paramOMap);
 		List<Park> parkList = new ArrayList<>();
 		for (Park park : getParkList) {
@@ -253,6 +257,7 @@ public class MemberController {
 			}
 		}
 		
+		count = trackingService.selectTrackCount(paramOMap);
 		List<Tracking> getTrackingList = trackingService.selectTrackingList(pageInfo, paramOMap);
 		List<Tracking> trackingList = new ArrayList<>();
 		for (Tracking tracking : getTrackingList) {
@@ -261,6 +266,7 @@ public class MemberController {
 			}
 		}
 		
+		count = rentalService.getRentalCount(paramOMap);
 		List<Rental> getRentalList = rentalService.getRentalList(pageInfo, paramOMap);
 		List<Rental> rentalList = new ArrayList<>();
 		for (Rental rental : getRentalList) {
@@ -269,6 +275,7 @@ public class MemberController {
 			}
 		}
 		
+		count = oneProgramService.getOneProgramCount(paramSMap);
 		List<OneProgram> getOprogramList = oneProgramService.getOneProgramList(pageInfo, paramSMap);
 		List<OneProgram> oprogramList = new ArrayList<>();
 		for (OneProgram oneprogram : getOprogramList) {

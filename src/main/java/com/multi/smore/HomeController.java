@@ -20,6 +20,8 @@ import com.multi.smore.board.model.vo.Board;
 import com.multi.smore.common.util.PageInfo;
 import com.multi.smore.news.model.service.NewsService;
 import com.multi.smore.news.model.vo.News;
+import com.multi.smore.recipe.model.service.RecipeService;
+import com.multi.smore.recipe.model.vo.Recipe;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -32,6 +34,9 @@ public class HomeController {
 	@Autowired
 	private BoardService boardService;
 	
+	@Autowired
+	private RecipeService recipeService;
+	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -39,7 +44,7 @@ public class HomeController {
 		initDB();
 		Map<String, Object> newsMap = new HashMap<>();
 		newsMap.put("title", "1인 가구");
-		PageInfo pageInfo = new PageInfo(1, 6, 6, 6);
+		PageInfo pageInfo = new PageInfo(1, 5, 5, 5);
 		List<News> newsList = newsService.getNewsList(pageInfo, newsMap);
 		
 		Map<String, String> boardMap = new HashMap<>();

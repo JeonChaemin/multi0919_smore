@@ -67,7 +67,7 @@ public class BoardController {
 		
 		searchMap.put("type", type);
 		int boardCount = service.getBoardCount(searchMap);
-		PageInfo pageInfo = new PageInfo(page, 10, boardCount, 10);
+		PageInfo pageInfo = new PageInfo(page, 5, boardCount, 10);
 		List<Board> list = service.getBoardList(pageInfo, searchMap);
 		
 		for (int i = 0; i < list.size(); i++) {

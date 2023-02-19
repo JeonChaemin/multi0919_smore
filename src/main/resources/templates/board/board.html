@@ -158,7 +158,7 @@
 									<li class="page-item "
 										th:classappend="${pageInfo.currentPage == 1 ? 'disabled' : ''}">
 										<a class="page-link" href="javascript:void(0)"
-										th:onclick="|movePage('/board/list?page=${pageInfo.startPage');|"
+										th:onclick="|movePage('/board/list?page=${pageInfo.startPage}');|"
 										tabindex="-1"> <i
 											class="mdi mdi-chevron-double-left fs-15"></i>
 									</a>
@@ -274,8 +274,12 @@
 		var searchValue = document.getElementById("searchValue");
 		var type = document.getElementById("type").value;
 		console.dir(type);
-	
-		pageUrl = pageUrl + '&type=' + type + '&searchValue=' + searchValue;
+		pageUrl = pageUrl + '&type=' + type;
+		
+		if (searchValue.value.length > 0) {
+			pageUrl = pageUrl + '&type=' + type + '&searchValue=' + searchValue;
+		}
+		
 		location.href = encodeURI(pageUrl);
 	}
 	</script>

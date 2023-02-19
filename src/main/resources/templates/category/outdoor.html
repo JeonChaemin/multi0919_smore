@@ -232,183 +232,74 @@
               </div>
              </th:block>
              
-              <!-- 페이지 카운트 -->
-		  <th:block th:unless="${list == null || list.size == 0}">
-            <div class="row">
-              <div class="col-lg-12 mt-5 mb-5">
-                <nav aria-label="Page navigation example">
-                  <ul class="pagination job-pagination mb-0 justify-content-center">
-                    <li class="page-item">
-                      <a class="page-link" th:onclick="|movePage('/outdoor?page=${pageInfo.prevPage}');|" tabindex="-1"><i class="mdi mdi-chevron-double-left fs-15"></i></a>
-                    </li>
-	              	<th:block th:each="num, status : ${#numbers.sequence(pageInfo.startPage, pageInfo.endPage)}">
-					  <th:block th:if="${status.current == pageInfo.currentPage}">
-	                    <li class="page-item active"><a class="page-link">[[${status.current}]]</a></li>
-					  </th:block>
-					  <th:block th:if="${status.current != pageInfo.currentPage}">
-                    	<li class="page-item"><a class="page-link" th:onclick="|movePage('/outdoor?page=${status.current}');|">[[${status.current}]]</a></li>
-					  </th:block>
-					</th:block>
-                    <li class="page-item">
-                      <a class="page-link" th:onclick="|movePage('/outdoor?page=${pageInfo.nextPage}');|">
-                        <i class="mdi mdi-chevron-double-right fs-15"></i>
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
-              </div><!--end col-->
-            </div><!-- end row -->
-          </th:block>  
-              
-              <!-- 산책로 시작부  -->
-			<th:block th:if="${param.searchType} == '산책로'">
-			<!-- 추천 키워드 -->
-            <div class="row mt-4">
-              <div class="col-lg-12">
-                <h6 class="fs-20 mb-3">추천 키워드</h6>
-                 <div class="choices__inner position-relative">
-                  <a th:href="@{/outdoor/outdoor-detail(tNo=5875)}" class="badge3 bg-soft-purple mt-2 mb-2">삼청공원</a>
-                  <a th:href="@{/outdoor/outdoor-detail(tNo=5866)}" class="badge3 bg-soft-purple mt-2 mb-2">사직공원</a>
-                  <a th:href="@{/outdoor/outdoor-detail(tNo=2844)}" class="badge3 bg-soft-purple mt-2 mb-2">독립문어린이공원</a>
-                  <a th:href="@{/outdoor/outdoor-detail(parkNo=5415)}" class="badge3 bg-soft-purple mt-2 mb-2">배봉산공원</a>
-                  <a th:href="@{/outdoor/outdoor-detail(parkNo=9185)}" class="badge3 bg-soft-purple mt-2 mb-2">성수공원</a>
-                  <a th:href="@{/outdoor/outdoor-detail(parkNo=159)}" class="badge3 bg-soft-purple mt-2 mb-2">왕송호수공원</a>
-                  <a th:href="@{/outdoor/outdoor-detail(parkNo=1628)}" class="badge3 bg-soft-purple mt-2 mb-2">두류공원</a>
-                  <a th:href="@{/outdoor/outdoor-detail(parkNo=1623)}" class="badge3 bg-soft-purple mt-2 mb-2">달성공원</a>
-                  <a th:href="@{/outdoor/outdoor-detail(parkNo=5338)}" class="badge3 bg-soft-purple mt-2 mb-2">동래사적공원</a>
-                  <a th:href="@{/outdoor/outdoor-detail(parkNo=628)}" class="badge3 bg-soft-purple mt-2 mb-2">바람모루공원</a>
-                </div>
-              </div><!--end col-->
-            </div><!--end row-->
-            
-            <!-- 인기게시글 4개 -->
-              <div class="row">
-              <div class="col-lg-12 col-md-12 mt-3">
-              	<div class="mt-3 mb-4"><h6 class="fs-22">인기 공원</h6></div>
-                <div class="blog-post">
-                  <div class="row ">
-                    <!-- 인기 1 -->
-                    <th:block th:each="item : ${parkList}">
-                    <div class="col-lg-3 mb-4">
-                      <div class="card blog-grid-box p-2"  >   
-                        <img th:src="@{/images/img/park1.jpeg}" alt="" class="rounded-2" th:style="${'width: 250px; height: 150px;'}">
-                        <div class="card-body">
-                          <ul class="list-inline d-flex justify-content-between mb-0">
-                            <li class="list-inline-item">
-                              <p class="text-muted mb-0">[[${item.COURSE_CATEGORY}]]</p>
-                            </li>
-                          </ul>
-                          <h6 class="fs-20 mb-3">
-                          	<a th:href="@{/outdoor/outdoor-detail(parkNo=${item.parkNo})}" class="primary-link">[[${item.parkNm}]]</a>
-                          </h6>
-                          <p class="text-muted fs-16"><i class="mdi mdi-map-marker"></i>[[${item.lnmadr}]]</p>
-                          <div class="text-md-end">
-                            <a th:href="@{/outdoor/outdoor-detail(parkNo=${item.parkNo}}" class="form-text text-primary">상세보기 <i
-                                class="mdi mdi-chevron-double-right"></i></a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    </th:block>
-                  </div>
-                </div>
-              </div>
-            </div>
-           
-		   <th:block th:each="item : ${list}" >
-            <div class="row">
-              <div class="col-lg-12">
-                <div class="job-box card mt-3">
-                  <div class="p-4">
-                    <div class="row align-items-center">
-                    
-                      <div class="col-md-1">
-                        <div class="text-center mb-4 mb-md-0">
-                          <a th:href="@{/outdoor/outdoor-detail(parkNo=${item.parkNo})}"><img th:src="@{/images/img/free-icon-park-433102.png}" alt=""
-                              th:style="'width: 50px; height: 50px;'"></a>
-                        </div>
-                      </div>
-                      <!--end col-->
-                      <div class="col-md-3">
-                        <div class="mb-2 mb-md-0 ms-2">
-                          <h5 class="fs-21 mb-1"><a th:href="@{/outdoor/outdoor-detail(parkNo=${item.parkNo})}" class="text-dark">[[${item.parkNm}]]</a>
-                          </h5>
-                          <p class="text-muted fs-14 mb-0">[[${item.parkSe}]]</p>
-                        </div>
-                      </div>
-                      <!--end col-->
-                      <div class="col-md-4">
-                        <div class="d-flex">
-                          <div class="flex-shrink-0">
-                            <i class="mdi mdi-map-marker text-primary"></i>
-                          </div>
-                          <div class="flex-grow-1 ms-2">
-                            <p class="text-muted fs-16 mb-0">[[${item.lnmadr}]]</p>
-                          </div>
-                        </div>
-                      </div>
-                      <!--end col-->
-                      <div class="col-md-3">
-                        <div class="d-flex">
-                          <div class="flex-shrink-0 text-primary">
-                            <i class="uil uil-phone-alt"></i>
-                          </div>
-                          <div class="flex-grow-1 ms-2">
-                            <p class="text-muted fs-16 mb-0">[[${item.phoneNumber}]]</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-1">
-                       <th:block th:if="${session.loginMember != null}" class="col-md-1">
-					 	<div class="clip clip2 text-end favorite-icon2" th:style="'line-height: 70px;'" th:id="|clip${item.parkNo}|" th:value="${item.isClip}" th:onclick="|onClickClip('clip${item.parkNo}', '${item.parkNo}');|">
-					 		<a th:style="'cursor: pointer;'"><i class="uil uil-heart-alt fs-20"></i></a>
-					 	</div>
-					   </th:block>
-					   </div>
-                      </div>
-                      <!--end col-->
-                    </div>
-                    <!--end row-->
-                  <div class="p-1 bg-light">
-                    <div class="text-end fs-14 me-3">
-                      <a th:href="@{/outdoor/outdoor-detail(parkNo=${item.parkNo})}" th:class="primary-link">상세보기 <i class="mdi mdi-chevron-double-right"></i></a>
-                    </div>
-                  </div>
-                  </div>
-                </div>
-              </div>
-             </th:block>
+		<!-- 페이징-->
+		<div class="row">
+			<div class="col-lg-12 mt-4 mb-5 pt-2">
+				<nav aria-label="Page navigation example">
+					<ul class="pagination job-pagination mb-0 justify-content-center">
+						<th:block th:if="${pageInfo.currentPage == pageInfo.startPage}">
+							<li class="page-item "
+								th:classappend="${pageInfo.currentPage == 1 ? 'disabled' : ''}">
+								<a class="page-link" href="javascript:void(0)"
+								th:onclick="|movePage('/outdoor?page=${pageInfo.prevPage}');|"
+								tabindex="-1"> <i
+									class="mdi mdi-chevron-double-left fs-15"></i>
+							</a>
+							</li>
+						</th:block>
+						<th:block th:if="${pageInfo.currentPage != pageInfo.startPage}">
+							<li class="page-item "
+								th:classappend="${pageInfo.currentPage == 1 ? 'disabled' : ''}">
+								<a class="page-link" href="javascript:void(0)"
+								th:onclick="|movePage('/outdoor?page=${pageInfo.startPage}');|"
+								tabindex="-1"> <i
+									class="mdi mdi-chevron-double-left fs-15"></i>
+							</a>
+							</li>
+						</th:block>
+
+						<th:block
+							th:each="num, status : ${#numbers.sequence(pageInfo.startPage, pageInfo.endPage)}">
+							<th:block th:if="${pageInfo.currentPage == status.current}">
+								<li class="page-item active"><a class="page-link"
+									th:text="${status.current}"></a></li>
+							</th:block>
+							<th:block
+								th:if="${pageInfo.currentPage != status.current && pageInfo.endPage != 0}">
+								<li class="page-item"><a class="page-link"
+									href="javascript:void(0)"
+									th:onclick="|movePage('/outdoor?page=${status.current}');|"
+									th:text="${status.current}"></a></li>
+							</th:block>
+						</th:block>
+
+						<th:block th:if="${pageInfo.currentPage == pageInfo.endPage}">
+							<li class="page-item"
+								th:classappend="${pageInfo.currentPage == pageInfo.maxPage ? 'disabled' : ''}">
+								<a class="page-link" href="javascript:void(0)"
+								th:onclick="|movePage('/outdoor?page=${pageInfo.nextPage}');|">
+									<i class="mdi mdi-chevron-double-right fs-15"></i>
+							</a>
+							</li>
+						</th:block>
+						<th:block th:if="${pageInfo.currentPage != pageInfo.endPage}">
+							<li class="page-item"
+								th:classappend="${pageInfo.currentPage == pageInfo.maxPage ? 'disabled' : ''}">
+								<a class="page-link" href="javascript:void(0)"
+								th:onclick="|movePage('/outdoor?page=${pageInfo.endPage}');|">
+									<i class="mdi mdi-chevron-double-right fs-15"></i>
+							</a>
+							</li>
+						</th:block>
+					</ul>
+				</nav>
+			</div>
+			<!--end col-->
+		</div>
+		<!-- end row -->
              
-              <!-- 페이지 카운트 -->
-		  <th:block th:unless="${list == null || list.size == 0}">
-            <div class="row">
-              <div class="col-lg-12 mt-5 mb-5">
-                <nav aria-label="Page navigation example">
-                  <ul class="pagination job-pagination mb-0 justify-content-center">
-                    <li class="page-item">
-                      <a class="page-link" th:onclick="|movePage('/outdoor?page=${pageInfo.prevPage}');|" tabindex="-1"><i class="mdi mdi-chevron-double-left fs-15"></i></a>
-                    </li>
-	              	<th:block th:each="num, status : ${#numbers.sequence(pageInfo.startPage, pageInfo.endPage)}">
-					  <th:block th:if="${status.current == pageInfo.currentPage}">
-	                    <li class="page-item active"><a class="page-link">[[${status.current}]]</a></li>
-					  </th:block>
-					  <th:block th:if="${status.current != pageInfo.currentPage}">
-                    	<li class="page-item"><a class="page-link" th:onclick="|movePage('/outdoor?page=${status.current}');|">[[${status.current}]]</a></li>
-					  </th:block>
-					</th:block>
-                    <li class="page-item">
-                      <a class="page-link" th:onclick="|movePage('/outdoor?page=${pageInfo.nextPage}');|">
-                        <i class="mdi mdi-chevron-double-right fs-15"></i>
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
-              </div><!--end col-->
-            </div><!-- end row -->
-          </th:block>  
-             
-		  </th:block> <!-- 산책로 끝  -->
-            </div>
+		  
+		  
         </section>
         </div><!--end container-->
         <!-- END JOB-LIST -->

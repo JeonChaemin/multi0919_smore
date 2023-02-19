@@ -207,33 +207,73 @@
               </div>
              </th:block>
              
-              <!-- 페이지 카운트 -->
-		  <th:block th:unless="${list == null || list.size == 0}">
-            <div class="row">
-              <div class="col-lg-12 mt-5 mb-5">
-                <nav aria-label="Page navigation example">
-                  <ul class="pagination job-pagination mb-0 justify-content-center">
-                    <li class="page-item">
-                      <a class="page-link" th:onclick="|movePage('/tracking?page=${pageInfo.prevPage}');|" tabindex="-1"><i class="mdi mdi-chevron-double-left fs-15"></i></a>
-                    </li>
-	              	<th:block th:each="num, status : ${#numbers.sequence(pageInfo.startPage, pageInfo.endPage)}">
-					  <th:block th:if="${status.current == pageInfo.currentPage}">
-	                    <li class="page-item active"><a class="page-link">[[${status.current}]]</a></li>
-					  </th:block>
-					  <th:block th:if="${status.current != pageInfo.currentPage}">
-                    	<li class="page-item"><a class="page-link" th:onclick="|movePage('/tracking?page=${status.current}');|">[[${status.current}]]</a></li>
-					  </th:block>
-					</th:block>
-                    <li class="page-item">
-                      <a class="page-link" th:onclick="|movePage('/tracking?page=${pageInfo.nextPage}');|">
-                        <i class="mdi mdi-chevron-double-right fs-15"></i>
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
-              </div><!--end col-->
-            </div><!-- end row -->
-          </th:block>  
+            <!-- 페이징-->
+			<div class="row">
+				<div class="col-lg-12 mt-4 mb-5 pt-2">
+					<nav aria-label="Page navigation example">
+						<ul class="pagination job-pagination mb-0 justify-content-center">
+							<th:block th:if="${pageInfo.currentPage == pageInfo.startPage}">
+								<li class="page-item "
+									th:classappend="${pageInfo.currentPage == 1 ? 'disabled' : ''}">
+									<a class="page-link" href="javascript:void(0)"
+									th:onclick="|movePage('/tracking?page=${pageInfo.prevPage}');|"
+									tabindex="-1"> <i
+										class="mdi mdi-chevron-double-left fs-15"></i>
+								</a>
+								</li>
+							</th:block>
+							<th:block th:if="${pageInfo.currentPage != pageInfo.startPage}">
+								<li class="page-item "
+									th:classappend="${pageInfo.currentPage == 1 ? 'disabled' : ''}">
+									<a class="page-link" href="javascript:void(0)"
+									th:onclick="|movePage('/tracking?page=${pageInfo.startPage}');|"
+									tabindex="-1"> <i
+										class="mdi mdi-chevron-double-left fs-15"></i>
+								</a>
+								</li>
+							</th:block>
+	
+							<th:block
+								th:each="num, status : ${#numbers.sequence(pageInfo.startPage, pageInfo.endPage)}">
+								<th:block th:if="${pageInfo.currentPage == status.current}">
+									<li class="page-item active"><a class="page-link"
+										th:text="${status.current}"></a></li>
+								</th:block>
+								<th:block
+									th:if="${pageInfo.currentPage != status.current && pageInfo.endPage != 0}">
+									<li class="page-item"><a class="page-link"
+										href="javascript:void(0)"
+										th:onclick="|movePage('/tracking?page=${status.current}');|"
+										th:text="${status.current}"></a></li>
+								</th:block>
+							</th:block>
+	
+							<th:block th:if="${pageInfo.currentPage == pageInfo.endPage}">
+								<li class="page-item"
+									th:classappend="${pageInfo.currentPage == pageInfo.maxPage ? 'disabled' : ''}">
+									<a class="page-link" href="javascript:void(0)"
+									th:onclick="|movePage('/tracking?page=${pageInfo.nextPage}');|">
+										<i class="mdi mdi-chevron-double-right fs-15"></i>
+								</a>
+								</li>
+							</th:block>
+							<th:block th:if="${pageInfo.currentPage != pageInfo.endPage}">
+								<li class="page-item"
+									th:classappend="${pageInfo.currentPage == pageInfo.maxPage ? 'disabled' : ''}">
+									<a class="page-link" href="javascript:void(0)"
+									th:onclick="|movePage('/tracking?page=${pageInfo.endPage}');|">
+										<i class="mdi mdi-chevron-double-right fs-15"></i>
+								</a>
+								</li>
+							</th:block>
+						</ul>
+					</nav>
+				</div>
+				<!--end col-->
+			</div>
+			<!-- end row -->
+          
+           
          </div>
         </section>
         </div><!--end container-->

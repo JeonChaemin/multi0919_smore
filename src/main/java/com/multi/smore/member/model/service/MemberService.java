@@ -46,6 +46,9 @@ public class MemberService {
 		}
 	}
 	
+	public List<Member> selectAll() {
+		return mapper.selectAll();
+	}
 	
 	public Member loginKaKao(String kakaoToken) {
 		Member member = mapper.selectMemberByKakaoToken(kakaoToken);
