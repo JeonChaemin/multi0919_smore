@@ -70,7 +70,7 @@
 				<div class="container">
 					<div class="row">
 						<!-- 왼쪽 내정보칸 -->
-						<div class="col-lg-4">
+						<div class="col-lg-4 mb-4">
 							<div class="card side-bar">
 								<div class="card-body p-4">
 									<div class="candidate-profile text-center">
@@ -138,21 +138,21 @@
 											
 											<!-- 탭 2 -->
 											<li class="nav-item" role="presentation">
-												<button class="nav-link active" id="overview-tab" data-bs-toggle="pill" data-bs-target="#clip" type="button"
+												<button class="nav-link active" id="overview-tab" data-bs-toggle="pill" data-bs-target="#tradeClip" type="button"
 													role="tab" aria-controls="overview" aria-selected="false" style="font-size:14px;">
 													거래</button>
 											</li>
 											
 											<!-- 탭3  -->
 											<li class="nav-item" role="presentation">
-												<button class="nav-link" id="settings-tab" data-bs-toggle="pill" data-bs-target="#clip"
+												<button class="nav-link" id="settings-tab" data-bs-toggle="pill" data-bs-target="#recipeClip"
 													type="button" role="tab" aria-controls="overview" aria-selected="false" style="font-size:14px;">레시피</button>
 											</li>
 											
 											
 											<!-- 탭4  -->
 											<li class="nav-item" role="presentation">
-												<button class="nav-link" id="settings-tab" data-bs-toggle="pill" data-bs-target="#clip"
+												<button class="nav-link" id="settings-tab" data-bs-toggle="pill" data-bs-target="#outdoorClip"
 													type="button" role="tab" aria-controls="overview" aria-selected="false" style="font-size:14px;">야외활동</button>
 											</li>
 											
@@ -172,56 +172,195 @@
 										</ul>
 
 										<div class="tab-content px-2 text-muted">
+										
 											<!-- 스크랩내역 -->
-											<div class="tab-pane active" id="clip" role="tabpanel">
-												
-												<!-- item1 -->
+											<div class="tab-pane active" id="tradeClip" role="tabpanel">
+												<!-- tradeClip -->
 												<div class="job-box card mb-2">
-													<div class="card-body p-3">
-														<div class="row">
-															<div class="col-lg-9">
-																<div class="mt-3 mt-lg-0">
-																	<h5 class="fs-17 mb-1">
-																		<a href="#" class="text-dark">종로구 1인가구 포럼</a>
-																	</h5>
-																	<p class="text-muted fs-14 mb-0">Jobcy Technology
-																		Pvt.Ltd</p>
+												  <th:block th:if="${tradeList != null}">
+													  <th:block th:each="trade : ${tradeList}">
+														<div class="card-body p-3">
+															<div class="row">
+																<div class="col-lg-9">
+																	<div class="mt-3 mt-lg-0">
+																		<h5 class="fs-17 mb-1">
+																			<a th:href="|/trade/detail?no=${trade.tradeNo}|" class="text-dark">[[${trade.title}]]</a>
+																		</h5>
+																		<p class="text-muted fs-14 mb-0">[[${#dates.format(trade.createDate,'yyyy-MM-dd')}]] 조회 [[${trade.readCount}]]</p>
+																	</div>
+																</div>
+																<!--end col-->
+																<div class="col-lg-3 align-self-center">
+																	<ul class="list-inline mb-0 float-end">
+																		<li class="list-inline-item" data-bs-toggle="tooltip"
+																			data-bs-placement="top" title=""
+																			data-bs-original-title="자세히 보기"><a
+																			th:href="|/trade/detail?no=${trade.tradeNo}|"
+																			class="avatar-xs bg-soft-success d-inline-block text-center rounded-circle fs-4">
+																				<i class="mdi mdi-eye"></i>
+																		</a></li>
+																		<li class="list-inline-item " data-bs-toggle="tooltip"
+																			data-bs-placement="top" title=""
+																			data-bs-original-title="삭제"><a
+																			href="javascript:void(0)" data-bs-toggle="modal"
+																			data-bs-target="#deleteModal"
+																			class="avatar-xs bg-soft-danger d-inline-block text-center rounded-circle fs-4">
+																				<i class="uil uil-trash-alt"></i>
+																		</a></li>
+																	</ul>
 																</div>
 															</div>
-															<!--end col-->
-															<div class="col-lg-3 align-self-center">
-																<ul class="list-inline mb-0 float-end">
-																	<li class="list-inline-item" data-bs-toggle="tooltip"
-																		data-bs-placement="top" title=""
-																		data-bs-original-title="자세히 보기"><a
-																		href="job-details.html"
-																		class="avatar-xs bg-soft-success d-inline-block text-center rounded-circle fs-4">
-																			<i class="mdi mdi-eye"></i>
-																	</a></li>
-																	<li class="list-inline-item " data-bs-toggle="tooltip"
-																		data-bs-placement="top" title=""
-																		data-bs-original-title="삭제"><a
-																		href="javascript:void(0)" data-bs-toggle="modal"
-																		data-bs-target="#deleteModal"
-																		class="avatar-xs bg-soft-danger d-inline-block text-center rounded-circle fs-4">
-																			<i class="uil uil-trash-alt"></i>
-																	</a></li>
-																</ul>
-															</div>
+															<!--end row-->
+														  </div>
+														</th:block>
+													</th:block>
+													<th:block th:if="${#lists.isEmpty(tradeList)}">
+														<div>
+															<p>스크랩 내역이 없습니다.</p>
 														</div>
-														<!--end row-->
-													</div>
+													</th:block>
 												</div>
 												<!-- item1 end -->
-
-											<!-- 
-												<div class="text-center my-3">
-													<button type="button" class="btn btn-primary btn-hover py-1 px-4"> 더보기 <i class="uil uil-angle-right-b"></i></button>
-												</div> 
-											 -->
-
 											</div>
 				
+											<!-- 스크랩내역 -->
+											<div class="tab-pane" id="recipeClip" role="tabpanel">
+												<!-- recipeClip -->
+												<div class="job-box card mb-2">
+												  <th:block th:if="${recipeList != null}">
+													  <th:block th:each="recipe : ${recipeList}">
+														<div class="card-body p-3">
+															<div class="row">
+																<div class="col-lg-9">
+																	<div class="mt-3 mt-lg-0">
+																		<h5 class="fs-17 mb-1">
+																			<a th:href="|/detail/recipe-detail?rcpNo=${recipe.rcpNo}|" class="text-dark">[[${recipe.rcpNm}]]</a>
+																		</h5>
+																		<p class="text-muted fs-14 mb-0">[[${recipe.rcpPat2}]] • [[${recipe.rcpWay2}]]</p>
+																	</div>
+																</div>
+																<!--end col-->
+																<div class="col-lg-3 align-self-center">
+																	<ul class="list-inline mb-0 float-end">
+																		<li class="list-inline-item" data-bs-toggle="tooltip"
+																			data-bs-placement="top" title=""
+																			data-bs-original-title="자세히 보기"><a
+																			th:href="|/detail/recipe-detail?rcpNo=${recipe.rcpNo}|"
+																			class="avatar-xs bg-soft-success d-inline-block text-center rounded-circle fs-4">
+																				<i class="mdi mdi-eye"></i>
+																		</a></li>
+																		<li class="list-inline-item " data-bs-toggle="tooltip"
+																			data-bs-placement="top" title=""
+																			data-bs-original-title="삭제"><a
+																			href="javascript:void(0)" data-bs-toggle="modal"
+																			data-bs-target="#deleteModal"
+																			class="avatar-xs bg-soft-danger d-inline-block text-center rounded-circle fs-4">
+																				<i class="uil uil-trash-alt"></i>
+																		</a></li>
+																	</ul>
+																</div>
+															</div>
+															<!--end row-->
+														  </div>
+														</th:block>
+													</th:block>
+													<th:block th:if="${#lists.isEmpty(recipeList)}">
+														<div>
+															<p>스크랩 내역이 없습니다.</p>
+														</div>
+													</th:block>
+												</div>
+												<!-- item1 end -->
+											</div>
+				
+											<!-- 스크랩내역 -->
+											<div class="tab-pane" id="outdoorClip" role="tabpanel">
+												<!-- outdoorClip -->
+												<div class="job-box card mb-2">
+												  <th:block th:if="${parkList != null}">
+													  <th:block th:each="park : ${parkList}">
+														<div class="card-body p-3">
+															<div class="row">
+																<div class="col-lg-9">
+																	<div class="mt-3 mt-lg-0">
+																		<h5 class="fs-17 mb-1">
+																			<a th:href="@{/outdoor/outdoor-detail(parkNo=${park.parkNo})}" class="text-dark">[[${park.parkNm}]]</a>
+																		</h5>
+																		<p class="text-muted fs-14 mb-0">[[${park.lnmadr}]]</p>
+																	</div>
+																</div>
+																<!--end col-->
+																<div class="col-lg-3 align-self-center">
+																	<ul class="list-inline mb-0 float-end">
+																		<li class="list-inline-item" data-bs-toggle="tooltip"
+																			data-bs-placement="top" title=""
+																			data-bs-original-title="자세히 보기"><a
+																			th:href="@{/outdoor/outdoor-detail(parkNo=${park.parkNo})}"
+																			class="avatar-xs bg-soft-success d-inline-block text-center rounded-circle fs-4">
+																				<i class="mdi mdi-eye"></i>
+																		</a></li>
+																		<li class="list-inline-item " data-bs-toggle="tooltip"
+																			data-bs-placement="top" title=""
+																			data-bs-original-title="삭제"><a
+																			href="javascript:void(0)" data-bs-toggle="modal"
+																			data-bs-target="#deleteModal"
+																			class="avatar-xs bg-soft-danger d-inline-block text-center rounded-circle fs-4">
+																				<i class="uil uil-trash-alt"></i>
+																		</a></li>
+																	</ul>
+																</div>
+															</div>
+															<!--end row-->
+														  </div>
+														</th:block>
+													</th:block>
+												  <th:block th:if="${trackingList != null}">
+													  <th:block th:each="tracking : ${trackingList}">
+														<hr>
+														<div class="card-body p-3">
+															<div class="row">
+																<div class="col-lg-9">
+																	<div class="mt-3 mt-lg-0">
+																		<h5 class="fs-17 mb-1">
+																			<a th:href="@{/tracking/track-detail(tNo=${tracking.tNo})}" class="text-dark">[[${tracking.courseName}]]</a>
+																		</h5>
+																		<p class="text-muted fs-14 mb-0">[[${tracking.cpiName}]]</p>
+																	</div>
+																</div>
+																<!--end col-->
+																<div class="col-lg-3 align-self-center">
+																	<ul class="list-inline mb-0 float-end">
+																		<li class="list-inline-item" data-bs-toggle="tooltip"
+																			data-bs-placement="top" title=""
+																			data-bs-original-title="자세히 보기"><a
+																			th:href="@{/tracking/track-detail(tNo=${tracking.tNo})}"
+																			class="avatar-xs bg-soft-success d-inline-block text-center rounded-circle fs-4">
+																				<i class="mdi mdi-eye"></i>
+																		</a></li>
+																		<li class="list-inline-item " data-bs-toggle="tooltip"
+																			data-bs-placement="top" title=""
+																			data-bs-original-title="삭제"><a
+																			href="javascript:void(0)" data-bs-toggle="modal"
+																			data-bs-target="#deleteModal"
+																			class="avatar-xs bg-soft-danger d-inline-block text-center rounded-circle fs-4">
+																				<i class="uil uil-trash-alt"></i>
+																		</a></li>
+																	</ul>
+																</div>
+															</div>
+															<!--end row-->
+														  </div>
+														</th:block>
+													</th:block>
+													
+													<th:block th:if="${#lists.isEmpty(recipeList)} and ${#lists.empty(trackingList)}">
+														<div>
+															<p>스크랩 내역이 없습니다.</p>
+														</div>
+													</th:block>
+												</div>
+												<!-- item1 end -->
+											</div>
 
 											<!-- 정보 변경 -->
 											<div class="tab-pane" id="mypinfo" role="tabpanel">

@@ -1,6 +1,7 @@
 package com.multi.smore.member.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,17 +17,25 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.multi.smore.board.model.vo.Board;
 import com.multi.smore.common.util.PageInfo;
 import com.multi.smore.kakao.KaKaoService;
 import com.multi.smore.member.model.service.MemberService;
 import com.multi.smore.member.model.vo.Member;
 import com.multi.smore.member.model.vo.MemberForm;
+import com.multi.smore.oneprogram.model.service.OneProgramService;
+import com.multi.smore.outdoor.model.service.ParkService;
+import com.multi.smore.outdoor.model.service.TrackingService;
+import com.multi.smore.outdoor.model.vo.Park;
+import com.multi.smore.outdoor.model.vo.Tracking;
+import com.multi.smore.recipe.model.service.RecipeService;
+import com.multi.smore.recipe.model.vo.Recipe;
+import com.multi.smore.rental.model.service.RentalService;
+import com.multi.smore.trade.model.service.TradeService;
+import com.multi.smore.trade.model.vo.Trade;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -42,6 +51,24 @@ public class MemberController {
 	
 	@Autowired
 	private KaKaoService kakaoService;
+	
+	@Autowired
+	private OneProgramService oneProgramService;
+	
+	@Autowired
+	private RentalService rentalService;
+	
+	@Autowired
+	private ParkService parkService;
+	
+	@Autowired
+	private TrackingService trackingService;
+	
+	@Autowired
+	private TradeService tradeService;
+	
+	@Autowired
+	private RecipeService recipeService;
 	
 	
 	@GetMapping("/login")
@@ -167,7 +194,6 @@ public class MemberController {
 			@ModelAttribute Member updateMember, // request에서 온 값
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember // 세션 값
 			) {
-		log.info("update 요청, updateMember : " + updateMember);
 		if(loginMember == null || loginMember.getId().equals(updateMember.getId()) == false) {
 			model.addAttribute("msg","잘못된 접근입니다.");
 			model.addAttribute("location","/");
@@ -190,8 +216,52 @@ public class MemberController {
 	
 	
 	@GetMapping("/member/view")
-	public String memberView() {
-		log.info("회원 정보 페이지 요청");
+	public String memberView(Model model, 
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember) {
+		if(loginMember == null) {
+			return "/common/error-login";
+		}
+		Map<String, Object> paramOMap = new HashMap<>();
+		paramOMap.put("memNo", ""+loginMember.getMemNo());
+		PageInfo pageInfo = new PageInfo(1, 50, 50, 50);
+		
+		List<Trade> getTradeList = tradeService.getTradeList(pageInfo, paramOMap);
+		List<Trade> tradeList = new ArrayList<>();
+		for (Trade trade : getTradeList) {
+			if (trade.getIsClip() == 1) {
+				tradeList.add(trade);
+			}
+		}
+		
+		List<Recipe> getRecipeList = recipeService.getRecipeList(pageInfo, paramOMap);
+		List<Recipe> recipeList = new ArrayList<>();
+		for (Recipe recipe : getRecipeList) {
+			if (recipe.getIsClip() == 1) {
+				recipeList.add(recipe);
+			}
+		}
+		
+		List<Park> getParkList = parkService.selectParkList(pageInfo, paramOMap);
+		List<Park> parkList = new ArrayList<>();
+		for (Park park : getParkList) {
+			if (park.getIsClip() == 1) {
+				parkList.add(park);
+			}
+		}
+		
+		List<Tracking> getTrackingList = trackingService.selectTrackingList(pageInfo, paramOMap);
+		List<Tracking> trackingList = new ArrayList<>();
+		for (Tracking tracking : getTrackingList) {
+			if (tracking.getIsClip() == 1) {
+				trackingList.add(tracking);
+			}
+		}
+		
+		
+		model.addAttribute("tradeList", tradeList);
+		model.addAttribute("recipeList", recipeList);
+		model.addAttribute("parkList", parkList);
+		model.addAttribute("trackingList", trackingList);
 		return "member/view";
 	}
 	
@@ -230,38 +300,4 @@ public class MemberController {
 		}
 		return  "/common/msg";
 	}
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

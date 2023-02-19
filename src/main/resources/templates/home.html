@@ -48,7 +48,7 @@
 							<form action="#">
 								<div class="registration-form">
 									<div class="row g-0">
-										<div class="col-md-8">
+										<div class="col-md-9">
 											<div class="filter-search-form mt-3 mt-md-0">
 												<input type="search" id="searchValue"
 													class="form-control filter-input-box fw-light"
@@ -56,7 +56,7 @@
 											</div>
 										</div>
 										<!--end col-->
-										<div class="col-md-4">
+										<div class="col-md-3">
 											<div class="mt-3 mt-md-0 h-100">
 												<button
 													class="btn btn-primary submit-btn w-100 h-100 fs-110"
@@ -382,23 +382,18 @@
 						<!--end col-->
 						<div
 							class="col-lg-2 justify-content-end align-items-center d-lg-flex">
-							<a class="text-reset" href="rental.html">더보기<i
+							<a class="text-reset" th:href="@{/rental}">더보기<i
 								class="fa-solid fa-angle-right"></i></a>
 						</div>
 						<!--end col-->
 						<div class="rental-div mb-4">
 							<img class="index-rental"
 								th:src="@{/images/img/main_banner_single.png}">
-							<button type="button" class="index-rental-btn"
-								style="left: 150px;" href="#">서울</button>
-							<button type="button" class="index-rental-btn"
-								style="left: 312px;" href="#">경기</button>
-							<button type="button" class="index-rental-btn"
-								style="left: 605px;" href="#">대전</button>
-							<button type="button" class="index-rental-btn"
-								style="left: 820px;" href="#">부산</button>
-							<button type="button" class="index-rental-btn"
-								style="left: 996px;" href="#">울산</button>
+							<button type="button" class="index-rental-btn" style="left: 150px;" onclick="location.href='http://localhost/rental?searchRegion=서울특별시'">서울</button>
+							<button type="button" class="index-rental-btn" style="left: 312px;" onclick="location.href='http://localhost/rental?searchRegion=경기도'">경기</button>
+							<button type="button" class="index-rental-btn" style="left: 605px;" onclick="location.href='http://localhost/rental?searchRegion=대전광역시'">대전</button>
+							<button type="button" class="index-rental-btn" style="left: 820px;" onclick="location.href='http://localhost/rental?searchRegion=부산광역시'">부산</button>
+							<button type="button" class="index-rental-btn" style="left: 996px;" onclick="location.href='http://localhost/rental?searchRegion=울산광역시'">울산</button>
 						</div>
 					</div>
 					<!--end row-->
@@ -413,35 +408,23 @@
 					<div class="row">
 						<div class="col-lg-6">
 							<div class="section-title text-start mb-4 pb-2">
-								<a class="text-reset" href="news.html"><h3
-										class="index-title mb-3">
-										1인가구 관련 뉴스 <i class="fa-solid fa-angle-right text-primary"
-											style="font-size: 1.3rem;"></i>
-									</h3></a> <a class="index-board-font" href="#">• 경기도, 1인가구 체계적 지원책
-									마련 5년간 5조6430억원 투입</a><br> <a class="index-board-font"
-									href="#">• 서초구 1인가구 건강검진… 청년대상 연1회 무료진행</a><br> <a
-									class="index-board-font" href="#">• 성동구, 내달 20일까지 1인가구 지원사업
-									공모사업 접수</a><br> <a class="index-board-font" href="#">•
-									[내집마련] 확 달라진 청약 제도…1인가구 ‘내 집 마련’ 체크포인트는?</a><br> <a
-									class="index-board-font" href="#">• TV보다 OTT 보는 인구 2배 늘었다…
-									1인가구 유료방송 가입률, 전체 가구보다 낮아</a><br>
+								<a class="text-reset" th:href="@{/news/list}">
+								  <h3 class="index-title mb-3">1인가구 관련 뉴스 <i class="fa-solid fa-angle-right text-primary"	style="font-size: 1.3rem;"></i></h3>
+								</a>
+							    <th:block th:each="news : ${newsList}">
+								  <a class="index-board-font" th:href="${news.originallink}">• [[${news.title}]]</a><br>
+							    </th:block>
 							</div>
 						</div>
 						<!--end col-->
 						<div class="col-lg-6">
 							<div class="section-title text-start mb-4 pb-2">
-								<a class="text-reset" href="notice.html"><h3
-										class="index-title mb-3">
-										공지사항 <i class="fa-solid fa-angle-right text-primary"
-											style="font-size: 1.3rem;"></i>
-									</h3></a> <a class="index-board-font" href="#">• 경기도, 1인가구 체계적 지원책
-									마련 5년간 5조6430억원 투입</a><br> <a class="index-board-font"
-									href="#">• 서초구 1인가구 건강검진… 청년대상 연1회 무료진행</a><br> <a
-									class="index-board-font" href="#">• 성동구, 내달 20일까지 1인가구 지원사업
-									공모사업 접수</a><br> <a class="index-board-font" href="#">•
-									[내집마련] 확 달라진 청약 제도…1인가구 ‘내 집 마련’ 체크포인트는?</a><br> <a
-									class="index-board-font" href="#">• TV보다 OTT 보는 인구 2배 늘었다…
-									1인가구 유료방송 가입률, 전체 가구보다 낮아</a><br>
+								<a class="text-reset" href="notice.html">
+								  <h3 class="index-title mb-3">공지사항 <i class="fa-solid fa-angle-right text-primary" style="font-size: 1.3rem;"></i></h3>
+								</a>
+							  	<th:block th:each="board : ${boardList}">  
+							      <a class="index-board-font" th:href="|/board/list?type=${board.type}&no=${board.bbNo}|">• [[${board.title}]]</a><br>
+							  	</th:block>
 							</div>
 						</div>
 						<!--end col-->

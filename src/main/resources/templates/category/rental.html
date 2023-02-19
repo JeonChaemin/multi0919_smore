@@ -33,33 +33,31 @@
 			<div class="main-content">
 				<div class="page-content">
 				
-					<!-- Start home -->
-					<section class="page-title-box hero-img">
-						<div class="container">
-							<div class="row justify-content-center">
-								<div class="col-md-6">
-									<div class="text-center text-white">
-										<h3 class="mb-4 hero-title" style="font-weight: 400;" th:href="@{/rental}">
-										<a class="text-white" th:href="@{/rental}">공공주택정보</a></h3>
-										<div class="page-next">
-											<nav class="d-inline-block"
-												aria-label="breadcrumb text-center">
-												<ol class="breadcrumb justify-content-center">
-													<li class="breadcrumb-item"><a th:href="@{/}">HOME</a></li>
-													<li class="breadcrumb-item"><a th:href="@{/rental}">INFORMATION</a></li>
-													<li class="breadcrumb-item"><a th:href="@{/rental}">RENTAL</a></li>
-												</ol>
-											</nav>
-										</div>
-									</div>
-								</div>
-								<!--end col-->
-							</div>
-							<!--end row-->
-						</div>
-						<!--end container-->
-					</section>
-					<!-- end home -->
+					<section class="page-title-box" th:style="'background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(' + @{/images/img/hero_rental.jpg} + '); height: 350px; padding-top: 130px; background-position: center bottom;'">
+			          <div class="container">
+			            <div class="row justify-content-center">
+			              <div class="col-md-6">
+			                <div class="text-center text-white">
+			                  <h3 class="mb-4 hero-title" style="font-weight: 400;">공공주택정보</h3>
+			                  <div class="page-next">
+			                    <nav class="d-inline-block" aria-label="breadcrumb text-center">
+			                      <ol class="breadcrumb justify-content-center">
+			                        <li class="breadcrumb-item"><a th:href="@{/index}">HOME</a></li>
+			                        <li class="breadcrumb-item"><a th:href="@{/rental}">INFORMATION</a></li>
+			                        <li class="breadcrumb-item active" aria-current="page"> RENTAL </li>
+			                      </ol>
+			                    </nav>
+			                  </div>
+			                </div>
+			              </div>
+			              <!--end col-->
+			            </div>
+			            <!--end row-->
+			          </div>
+			          <!--end container-->
+			        </section>
+			        <!-- end home -->
+					
 
 					<!-- START SHAPE -->
 					<div class="position-relative" style="z-index: 1">
@@ -94,6 +92,7 @@
                         aria-label="Default select example" placeholder="지역">
                         <option value="">지역</option>
                         <option value="서울특별시" th:selected="${paramMap.searchRegion} == '서울특별시'">서울특별시</option>
+                        <option value="대구광역시" th:selected="${paramMap.searchRegion} == '부산광역시'">부산광역시</option>
                         <option value="대구광역시" th:selected="${paramMap.searchRegion} == '대구광역시'">대구광역시</option>
                         <option value="인천광역시" th:selected="${paramMap.searchRegion} == '인천광역시'">인천광역시</option>
                         <option value="광주광역시" th:selected="${paramMap.searchRegion} == '광주광역시'">광주광역시</option>

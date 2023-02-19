@@ -38,13 +38,15 @@
                             <div class="row justify-content-center">
                                 <div class="col-lg-6">
                                     <div class="text-center">
-                                        <img th:src="@{/images/404.png}" alt="" class="img-fluid">
+                                        <img th:src="@{/images/404-login.png}" alt="" class="img-fluid">
                                         <div class="mt-5">
                                             <!-- <h1 class="fw-bold display-1">404</h1> -->
-                                            <h4 class="text-uppercase mt-3">페이지를 찾을 수 없습니다.</h4>
-                                            <p class="text-muted">요청하신 페이지를 찾을 수 없습니다. 관리자에게 문의하세요.</p>
+                                            <h4 class="text-uppercase mt-3">로그인이 필요한 페이지 입니다.</h4>
+                                            <p class="text-muted">요청하신 페이지는 로그인이 필요합니다. 로그인 또는 회원가입을 해주세요.</p>
                                             <div class="mt-4">
-                                                <a class="btn btn-primary waves-effect waves-light" th:href="@{/}"><i class="mdi mdi-home"></i> 메인 페이지</a>
+                                            	<a class="btn btn-soft-primary waves-effect waves-light mx-2" th:href="@{/}"><i class="mdi mdi-home"></i> 메인 페이지</a>
+                                                <a class="btn btn-primary waves-effect waves-light mx-2" th:href="@{/login}"><i class="uil uil-sign-in-alt"></i> 로그인</a>
+                                                <a class="btn btn-primary waves-effect waves-light mx-2" th:href="@{/member/enroll}"><i class="uil uil-user-plus"></i> 회원가입</a>
                                             </div>
                                         </div>
                                     </div>

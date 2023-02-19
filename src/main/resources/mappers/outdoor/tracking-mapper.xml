@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace="com.multi.smore.model.mapper.TrackingMapper">
+<mapper namespace="com.multi.smore.outdoor.model.mapper.TrackingMapper">
 	<sql id="selectTrackingSql">
 		SELECT  
 		T.TNO, T.COURSE_CATEGORY, T.COURSE_CATEGORY_NM, T.AREA_GU, T.DISTANCE, T.LEAD_TIME, T.COURSE_LEVEL, T.RELATE_SUBWAY, 

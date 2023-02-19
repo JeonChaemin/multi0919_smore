@@ -87,6 +87,7 @@ public class BoardController {
 		if (type.equals("free") || type.equals("question")) {
 			returnValue = "board/board";
 		} else if (type.equals("notice")) {
+			model.addAttribute("pageTitle", "smore | Notice");
 			returnValue = "category/notice";
 		}
 		return returnValue;

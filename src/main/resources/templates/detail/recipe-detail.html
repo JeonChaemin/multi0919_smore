@@ -69,9 +69,9 @@
                 <div class="page-next">
                   <nav class="d-inline-block" aria-label="breadcrumb text-center">
                     <ol class="breadcrumb justify-content-center">
-                      <li class="breadcrumb-item"><a tH:href="@{/}">HOME</a></li>
-                      <li class="breadcrumb-item"><a th:href="@{/category/recipe}">LIFE</a></li>
-                      <li class="breadcrumb-item"><a th:href="@{/category/recipe}">RECIPE</a></li>
+                      <li class="breadcrumb-item"><a th:href="@{/}">HOME</a></li>
+                      <li class="breadcrumb-item"><a th:href="@{/recipe}">LIFE</a></li>
+                      <li class="breadcrumb-item"><a th:href="@{/recipe}">RECIPE</a></li>
                       <li class="breadcrumb-item active" aria-current="page"> RECIPE DETAIL </li>
                     </ol>
                   </nav>
@@ -225,55 +225,59 @@
                   </th:block>
                   
                   <!--댓글부 시작-->
-                  <div class="mt-5 pt-5">
-                    <div class="mb-3">
-                      <h4>댓글</h4>
-                      <hr>
-                    </div>
+                  <div class="mt-5">
+                    <h4 class="border-bottom pb-3">댓글</h4>
+                    <div class="row mt-3">
                     <!--댓글 백엔드 시작-->
-                    <th:block th:if="${replyList != null}">
+                    <th:block th:if="${!#lists.isEmpty(replyList)}">
                     	<th:block  th:each="reply : ${replyList}"> 
-		                    <div class="d-sm-flex align-items-top mt-4">
+		                    <div class="col-lg-9 d-sm-flex align-items-top mt-4">
 		                      <div class="flex-shrink-0">
 		                        <img class="rounded-circle avatar-md img-thumbnail" th:src="@{/images/user/img-01.jpg}"
 		                          alt="img">
 		                      </div>
 		                      <div class="flex-grow-1 ms-sm-3">
-		                        <div class="row">
-		                        	<h6 class="col-lg-9 mt-3 mb-1" >[[${reply.writer}]]</h6>
-		                          <th:block th:if="${session.loginMember != null && 
-									(session.loginMember.id == reply.writer || session.loginMember.role == 'ROLE_ADMIN')}">
-		                         	<div class="col-lg-3 text-end">
-		                            	<button name="update" th:id="|updateBtn${reply.rcprNo}|" class="btn btn-primary btn-hover"
-		                            	th:onclick="|updateReply(${reply.rcprNo})|">수정</button>
-		                            	<button name="delete" class="btn btn-primary btn-hover" 
-		                            	th:onclick="|deleteReply(${reply.rcprNo},${recipe.rcpNo});|">삭제</button>
-		                          	</div>
-		                          </th:block>
-		                          <p class="col-lg-4 text-muted">[[${#dates.format(reply.modifyDate)}]]</p>
-		                          <p class="text-muted" th:id="|content${reply.rcprNo}|">[[${reply.content}]]</p>
-		                          <div class="mt-1 pt-3 mb-3 updateReply" th:id="|updateReply${reply.rcprNo}|" style="display: none">
-	                        		<div class="row">
-					                  <div class="col-lg-12">
-					                    <div class="mb-3">
-					                      <input type="hidden" name="rcpNo" th:value="${recipe.rcpNo}" />
-					                      <textarea class="form-control" th:id="|inputReply${reply.rcprNo}|" name="content" rows="3"
-					                        placeholder="내용을 입력해주세요." required>[[${reply.content}]]</textarea>
-					                    </div>
-					                  </div><!--end col-->
-					                </div><!--end row-->
-					                <div class="text-end">
-					                  <button id="submit" class="btn btn-primary btn-hover" 
-					                  th:onclick="|backBtn(${reply.rcprNo})|">취소</button>
-					                  <button type="submit" id="submit" class="btn btn-primary btn-hover" 
-					                  th:onclick="|updBtn(${reply.rcprNo}, ${recipe.rcpNo})|">확인</button>
-					                </div>
-		                          </div>
-		                        </div>
+	                        	  <h6 class="fs-16 mt-sm-0 mt-3 mb-0" >[[${reply.writer}]]</h6>
+		                          <p class="text-muted fs-14 mb-0 mb-2">[[${#dates.format(reply.modifyDate)}]]</p>
+		                          <p class="mb-0" th:id="|content${reply.rcprNo}|">[[${reply.content}]]</p>
+		                      </div>
+		                    </div>
+	                          <th:block th:if="${session.loginMember != null && 
+								(session.loginMember.id == reply.writer || session.loginMember.role == 'ROLE_ADMIN')}">
+	                         	<div class="col-lg-3 text-end mt-3">
+	                            	<button name="update" th:id="|updateBtn${reply.rcprNo}|" class="btn btn-outline-primary" style="padding: 5px 10px;"
+	                            	th:onclick="|updateReply(${reply.rcprNo})|">수정</button>
+	                            	<button name="delete" class="btn btn-outline-danger" style="padding: 5px 10px;"
+	                            	th:onclick="|deleteReply(${reply.rcprNo},${recipe.rcpNo});|">삭제</button>
+	                          	</div>
+	                          </th:block>
+	                          <div class="mt-1 pt-3 mb-3 updateReply" th:id="|updateReply${reply.rcprNo}|" style="display: none">
+                        		<div class="row">
+				                  <div class="col-lg-12">
+				                    <div class="mb-3">
+				                      <input type="hidden" name="rcpNo" th:value="${recipe.rcpNo}" />
+				                      <textarea class="form-control" th:id="|inputReply${reply.rcprNo}|" name="content" rows="3"
+				                        placeholder="내용을 입력해주세요." required>[[${reply.content}]]</textarea>
+				                    </div>
+				                  </div><!--end col-->
+				                </div><!--end row-->
+				                <div class="text-end">
+				                  <button id="submit" class="btn btn-primary btn-hover" 
+				                  th:onclick="|backBtn(${reply.rcprNo})|">취소</button>
+				                  <button type="submit" id="submit" class="btn btn-primary btn-hover" 
+				                  th:onclick="|updBtn(${reply.rcprNo}, ${recipe.rcpNo})|">확인</button>
+				                </div>
+	                          </div>
 		                      </div>
 		                    </div>
 		            	</th:block>   
                     </th:block>
+                    <th:block th:if="${#lists.isEmpty(replyList)}">
+					  <div>
+				        <p>등록된 댓글이 없습니다.</p>
+					  </div>
+				    </th:block>
+                    </div>
                     <!--댓글 백엔드 끝-->
                   </div>
                   <th:block th:if="${session.loginMember != null}">
@@ -281,11 +285,10 @@
                     <div class="row">
                       <div class="col-lg-12">
                         <div class="mb-3">
-                          <h4>댓글 작성</h4>
-                          <hr />
                           <input type="hidden" name="rcpNo" th:value="${recipe.rcpNo}" />
-                          <textarea class="form-control" id="inputcoment" name="content" rows="3"
-                            placeholder="내용을 입력해주세요." required></textarea>
+                          <h6 class="my-1 mx-3" style="margin-bottom: -2rem !important;" th:text="${session.loginMember.id}"></h6>
+                          <textarea class="form-control" id="inputcoment" name="content" rows="3" style="padding: 2rem 0 0 0.9rem !important;" 
+                            placeholder="댓글을 남겨보세요." required></textarea>
                         </div>
                       </div><!--end col-->
                     </div><!--end row-->

@@ -33,7 +33,7 @@
                         <li class="breadcrumb-item"><a th:href="@{/}">HOME</a></li>
                         <li class="breadcrumb-item"><a th:href="@{/outdoor}">LIFE</a></li>
                         <li class="breadcrumb-item"><a th:href="@{/outdoor}">OUTDOOR</a></li>
-                        <li class="breadcrumb-item" aria-current="page"><a th:href="@{/outdoor}">PARK</a></li>
+                        <li class="breadcrumb-item" aria-current="page">PARK</li>
                       </ol>
                     </nav>
                   </div>
@@ -67,7 +67,7 @@
               <div class="row g-2">
               	<div class="col-lg-2 col-md-5"> 
                   <div class="filler-job-form">
-                    <i class="uil uil-clipboard-notes"></i>
+                    <i class="uil uil-trees"></i>
                     <select class="form-select filter-job-input-box2" name="searchType" id="searchType">
                       <option value="공원" th:selected="${param.searchType} == '공원'">공원</option>
                     </select>
@@ -117,16 +117,16 @@
               <div class="col-lg-12">
                 <h6 class="fs-20 mb-3">추천 키워드</h6>
                  <div class="choices__inner position-relative">
-                  <a th:href="@{/outdoor/outdoor-detail(parkNo=5875)}" class="badge3 bg-soft-purple mt-2 mb-2">삼청공원</a>
+                  <a th:href="@{/outdoor/outdoor-detail(parkNo=5875)}" class="badge3 bg-soft-purple round-pill mt-2 mb-2">삼청공원</a>
                   <a th:href="@{/outdoor/outdoor-detail(parkNo=5866)}" class="badge3 bg-soft-purple mt-2 mb-2">사직공원</a>
                   <a th:href="@{/outdoor/outdoor-detail(parkNo=2844)}" class="badge3 bg-soft-purple mt-2 mb-2">독립문어린이공원</a>
                   <a th:href="@{/outdoor/outdoor-detail(parkNo=5415)}" class="badge3 bg-soft-purple mt-2 mb-2">배봉산공원</a>
                   <a th:href="@{/outdoor/outdoor-detail(parkNo=9185)}" class="badge3 bg-soft-purple mt-2 mb-2">성수공원</a>
-                  <a th:href="@{/outdoor/outdoor-detail(parkNo=159)}" class="badge3 bg-soft-purple mt-2 mb-2">왕송호수공원</a>
+                  <a th:href="@{/outdoor/outdoor-detail(parkNo=159)}"  class="badge3 bg-soft-purple mt-2 mb-2">왕송호수공원</a>
                   <a th:href="@{/outdoor/outdoor-detail(parkNo=1628)}" class="badge3 bg-soft-purple mt-2 mb-2">두류공원</a>
                   <a th:href="@{/outdoor/outdoor-detail(parkNo=1623)}" class="badge3 bg-soft-purple mt-2 mb-2">달성공원</a>
                   <a th:href="@{/outdoor/outdoor-detail(parkNo=5338)}" class="badge3 bg-soft-purple mt-2 mb-2">동래사적공원</a>
-                  <a th:href="@{/outdoor/outdoor-detail(parkNo=628)}" class="badge3 bg-soft-purple mt-2 mb-2">바람모루공원</a>
+                  <a th:href="@{/outdoor/outdoor-detail(parkNo=628)}"  class="badge3 bg-soft-purple mt-2 mb-2">바람모루공원</a>
                 </div>
               </div><!--end col-->
             </div><!--end row-->
@@ -153,7 +153,7 @@
                           <h6 class="fs-20 mb-3">
                           	<a th:href="@{/outdoor/outdoor-detail(parkNo=${item.parkNo})}" class="primary-link">[[${item.parkNm}]]</a>
                           </h6>
-                          <p class="text-muted fs-16"><i class="mdi mdi-map-marker"></i>[[${item.lnmadr}]]</p>
+                          <p class="text-muted fs-16"><i class="uil uil-map-pin-alt"></i> [[${item.lnmadr}]]</p>
                           <div class="text-md-end">
                             <a th:href="@{/outdoor/outdoor-detail(parkNo=${item.parkNo})}" class="form-text text-primary">상세보기 <i
                                 class="mdi mdi-chevron-double-right"></i></a>
@@ -185,8 +185,8 @@
                       <!--end col-->
                       <div class="col-md-3">
                         <div class="mb-2 mb-md-0 ms-2">
-                          <h5 class="fs-21 mb-1"><a th:href="@{/outdoor/outdoor-detail(parkNo=${item.parkNo})}" class="text-dark">[[${item.parkNm}]]</a>
-                          </h5>
+                          <h4 class="fs-21 mb-1"><a th:href="@{/outdoor/outdoor-detail(parkNo=${item.parkNo})}" class="text-dark">[[${item.parkNm}]]</a>
+                          </h4>
                           <p class="text-muted fs-14 mb-0">[[${item.parkSe}]]</p>
                         </div>
                       </div>
@@ -194,7 +194,7 @@
                       <div class="col-md-4">
                         <div class="d-flex">
                           <div class="flex-shrink-0">
-                            <i class="mdi mdi-map-marker text-primary"></i>
+                            <i class="uil uil-map-pin-alt"></i>
                           </div>
                           <div class="flex-grow-1 ms-2">
                             <p class="text-muted fs-16 mb-0">[[${item.lnmadr}]]</p>
@@ -204,7 +204,7 @@
                       <!--end col-->
                       <div class="col-md-3">
                         <div class="d-flex">
-                          <div class="flex-shrink-0 text-primary">
+                          <div class="flex-shrink-0">
                             <i class="uil uil-phone-alt"></i>
                           </div>
                           <div class="flex-grow-1 ms-2">
@@ -213,8 +213,8 @@
                         </div>
                       </div>
                        <th:block th:if="${session.loginMember != null}" class="col-md-1">
-					 	<div class="clip text-end favorite-icon2" th:style="'line-height: 70px;'" th:id="|clip${item.parkNo}|" th:value="${item.isClip}" th:onclick="|onClickClip('clip${item.parkNo}', '${item.parkNo}');|">
-					 		<a th:href="|javascript:void(0)|"><i class="uil uil-heart-alt fs-20"></i></a>
+					 	<div class="clip text-end favorite-icon" th:style="'line-height: 70px;'" th:id="|clip${item.parkNo}|" th:value="${item.isClip}" th:onclick="|onClickClip('clip${item.parkNo}', '${item.parkNo}');|">
+					 		<a th:href="|javascript:void(0)|"><i class="uil uil-heart-alt fs-18"></i></a>
 					 	</div>
 					  </th:block>
 				
@@ -517,8 +517,6 @@
   <!-- App Js -->
   <script th:src="@{/js/app.js}"></script>
 
-  <!-- Custom Js -->
-  <script th:src="@{/js/pages/favorite.js}"></script>
 </body>
 
 </html>

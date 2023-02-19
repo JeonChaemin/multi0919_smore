@@ -117,6 +117,7 @@ public class TradeController {
 		model.addAttribute("list", list);
 		model.addAttribute("paramMap", paramMap);
 		model.addAttribute("pageInfo", pageInfo);
+		model.addAttribute("pageTitle", "smore | Trade");
 
 		// 추천 카테고리
 		List<Trade> ctList = service.selectTradeRandomList();
@@ -142,9 +143,8 @@ public class TradeController {
 		}
 
 		model.addAttribute("trade", trade);
-		System.out.println(trade);
 		model.addAttribute("replyTradeList", replyTradeList);
-		System.out.println(replyTradeList);
+		model.addAttribute("pageTitle", "smore | Trade");
 		return "trade/trade-detail";
 	}
 

@@ -5,7 +5,8 @@
 <head th:fragment="head" th:replace="~{common/layout :: head}"></head>
   <!--Custom Css-->
   <link rel="stylesheet" id="custom" type="text/css" th:href="@{/css/outdoor.css}">
-	
+  <!--jquery CDN-->
+  <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
 
 <body>
   <!-- Begin page -->
@@ -332,9 +333,6 @@
 
   <!-- App Js -->
   <script th:src="@{/js/app.js}"></script>
-
-  <!-- Custom Js -->
-  <script th:src="@{/js/pages/favorite.js}"></script>
 </body>
 
 </html>

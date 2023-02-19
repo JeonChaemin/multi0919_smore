@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace="com.multi.smore.model.mapper.ParkMapper">
+<mapper namespace="com.multi.smore.outdoor.model.mapper.ParkMapper">
 	<sql id="selectParkSql">
 		SELECT  
 		P.PARKNO, P.MANAGENO, P.PARKNM, P.PARKSE, P.RDNMADR, P.LNMADR, P.LATITUDE, P.LONGITUDE, P.PARKAR
@@ -110,7 +110,7 @@
 		FROM PARK
 		WHERE parkNm IN 
 		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
-        #{item}
+        	#{item}
   		</foreach>
   		ORDER BY parkNm
 	</select>

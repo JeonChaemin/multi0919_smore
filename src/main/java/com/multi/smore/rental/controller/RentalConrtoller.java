@@ -104,8 +104,7 @@ public class RentalConrtoller {
 		model.addAttribute("list", list);
 		model.addAttribute("paramMap", paramMap);
 		model.addAttribute("pageInfo", pageInfo);
-
-
+		model.addAttribute("pageTitle", "smore | Rental");
 		return "category/rental";
 	}
 

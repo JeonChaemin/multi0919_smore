@@ -40,9 +40,13 @@ public class HousebudgetController {
 	
 	@GetMapping("/list")
 	public String list(Model model, @SessionAttribute(name = "loginMember", required = false) Member loginMember,
-			@RequestParam Map<String, String> paramMap) {// session 삭제하기
+			@RequestParam Map<String, String> paramMap) {
+		
 		Map<String, Object> searchMap = new HashMap<>();
 		int sum = 0;
+		if(loginMember == null) {
+			return "/common/error-login";
+		}
 		searchMap.put("memNo", loginMember.getMemNo());
 		try {
 			String searchStart = paramMap.get("search-start");
@@ -63,7 +67,7 @@ public class HousebudgetController {
 		}
 		model.addAttribute("list", list); 
 		model.addAttribute("pageTitle", "smore | HouseBudget");
-		System.out.println(list);
+		
 		return "category/housebudget";
 	}
 	
