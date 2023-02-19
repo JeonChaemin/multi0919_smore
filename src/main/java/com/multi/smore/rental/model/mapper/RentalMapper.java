@@ -15,4 +15,5 @@ public interface RentalMapper {
 	int clipRental(Map<String, String> map);
 	int unClipRental(Map<String, String> map);
 	int clipCount(int rentalNo);
+	//푸시
 }

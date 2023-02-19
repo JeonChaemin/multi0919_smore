@@ -18,15 +18,6 @@ public class RentalService {
 	@Autowired
 	private RentalMapper mapper;
 	
-//	@Transactional(rollbackFor = Exception.class)
-//	public int insertRental(Rental Rental) {
-//		return mapper.insertRental(Rental);
-//	}
-//	
-//	public int deleteAllRentalList() {
-//		return mapper.deleteAllRentalList();
-//	}
-	
 	@Transactional(rollbackFor = Exception.class)
 	public int getRentalCount(Map<String, Object> param) {
 		return mapper.selectRentalCount(param);
