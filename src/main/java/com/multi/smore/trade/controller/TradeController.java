@@ -204,9 +204,9 @@ public class TradeController {
 		int result = service.saveReplyTrade(replyTrade);
 
 		if (result > 0) {
-			model.addAttribute("msg", "리플이 등록되었습니다.");
+			model.addAttribute("msg", "댓글이 등록되었습니다.");
 		} else {
-			model.addAttribute("msg", "리플 등록에 실패하였습니다.");
+			model.addAttribute("msg", "댓글 등록에 실패하였습니다.");
 		}
 		model.addAttribute("location", "/trade/detail?no=" + replyTrade.getTradeNo());
 		return "common/msg";
@@ -237,9 +237,9 @@ public class TradeController {
 		int result = service.deleteReplyTrade(replyNo);
 
 		if (result > 0) {
-			model.addAttribute("msg", "리플 삭제가 정상적으로 완료되었습니다.");
+			model.addAttribute("msg", "댓글 삭제가 정상적으로 완료되었습니다.");
 		} else {
-			model.addAttribute("msg", "리플 삭제에 실패하였습니다.");
+			model.addAttribute("msg", "댓글 삭제에 실패하였습니다.");
 		}
 		model.addAttribute("location", "/trade/detail?no=" + tradeNo);
 		return "/common/msg";
@@ -253,9 +253,9 @@ public class TradeController {
 		int result = service.updateReplyTrade(replyTrade);
 
 		if (result > 0) {
-			model.addAttribute("msg", "리플이 수정되었습니다.");
+			model.addAttribute("msg", "댓글이 수정되었습니다.");
 		} else {
-			model.addAttribute("msg", "리플 수정에 실패하였습니다.");
+			model.addAttribute("msg", "댓글 수정에 실패하였습니다.");
 		}
 		model.addAttribute("location", "/trade/detail?no=" + tradeNo);
 		return "/common/msg";

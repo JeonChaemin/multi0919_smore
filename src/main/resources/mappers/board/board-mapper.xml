@@ -192,5 +192,12 @@
 		</if>
 		ORDER BY B.BBNO DESC LIMIT 5
 	</select>
+	
+	<update id="updateReply" parameterType="BoardReply">
+		UPDATE BOARD_REPLY
+		SET
+		content = #{content}, MODIFY_DATE = CURRENT_TIMESTAMP
+		WHERE bbNo = #{bbNo}
+	</update>
 
 </mapper>

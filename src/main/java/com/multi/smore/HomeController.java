@@ -24,10 +24,10 @@ import com.multi.smore.news.model.service.NewsService;
 import com.multi.smore.news.model.vo.News;
 import com.multi.smore.oneprogram.model.service.OneProgramService;
 import com.multi.smore.oneprogram.model.vo.OneProgram;
+import com.multi.smore.outdoor.model.service.ParkService;
+import com.multi.smore.outdoor.model.vo.Park;
 import com.multi.smore.recipe.model.service.RecipeService;
 import com.multi.smore.recipe.model.vo.Recipe;
-
-import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class HomeController {
@@ -43,6 +43,9 @@ public class HomeController {
 	
 	@Autowired
 	private OneProgramService oprogramService;
+	
+	@Autowired
+	private ParkService parkService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -77,10 +80,26 @@ public class HomeController {
 		oprogramList.add(oprogramService.findByNo(508, memNo2));
 		oprogramList.add(oprogramService.findByNo(558, memNo2));
 		
+		List<Park> parkList1 = new ArrayList<>();
+		parkList1.add(parkService.selectParkByNo(5849, memNo2));
+		parkList1.add(parkService.selectParkByNo(6456, memNo2));
+		parkList1.add(parkService.selectParkByNo(475, memNo2));
+		List<Park> parkList2 = new ArrayList<>();
+		parkList2.add(parkService.selectParkByNo(9185, memNo2));
+		parkList2.add(parkService.selectParkByNo(1654, memNo2));
+		parkList2.add(parkService.selectParkByNo(2146, memNo2));
+		List<Park> parkList3 = new ArrayList<>();
+		parkList3.add(parkService.selectParkByNo(9669, memNo2));
+		parkList3.add(parkService.selectParkByNo(2844, memNo2));
+		parkList3.add(parkService.selectParkByNo(984, memNo2));
+		
 		model.addAttribute("oprogramList", oprogramList);
 		model.addAttribute("recipeList", recipeList);
 		model.addAttribute("newsList", newsList);
 		model.addAttribute("boardList", boardList);
+		model.addAttribute("parkList1", parkList1);
+		model.addAttribute("parkList2", parkList2);
+		model.addAttribute("parkList3", parkList3);
 		model.addAttribute("pageTitle", "smore | Home");
 		return "home";
 	}

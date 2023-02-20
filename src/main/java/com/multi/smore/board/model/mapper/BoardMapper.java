@@ -23,4 +23,5 @@ public interface BoardMapper {
 	int unLikeBoard(Map<String, String> map);
 	int likeCount(int no);
 	List<Board> selectBoardListHome(Map<String, String> param);
+	int updateReply(BoardReply boardReply);
 }

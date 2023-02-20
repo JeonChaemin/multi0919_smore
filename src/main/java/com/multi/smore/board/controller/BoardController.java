@@ -33,6 +33,7 @@ import com.multi.smore.board.model.vo.BoardReply;
 import com.multi.smore.common.util.PageInfo;
 import com.multi.smore.member.model.service.MemberService;
 import com.multi.smore.member.model.vo.Member;
+import com.multi.smore.recipe.model.vo.RecipeReply;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
@@ -207,21 +208,37 @@ public class BoardController {
 		return "common/msg";
 	}
 	
+	@RequestMapping("/replyUpdate") 
+	public String updateReply(Model model, BoardReply boardReply, int bbNo){
+		
+		log.info("리플 수정 요청");
+		int result = service.updateReply(boardReply);
+		
+		if(result > 0) {
+			model.addAttribute("msg", "댓글 수정이 정상적으로 완료되었습니다.");
+		}else {
+			model.addAttribute("msg", "댓글 수정에 실패하였습니다.");
+		}
+		model.addAttribute("location", "/board/detail?no=" + bbNo);
+		
+		return "/common/msg";
+	}
+	
 	@RequestMapping("/replyDel")
 	public String deleteReply(Model model,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
-			int replyNo, int boardNo
+			int bbrNo, int bbNo
 			){
 		
 		log.info("댓글 삭제 요청");
-		int result = service.deleteReply(replyNo);
+		int result = service.deleteReply(bbrNo);
 		
 		if(result > 0) {
 			model.addAttribute("msg", "댓글이 삭제 되었습니다.");
 		}else {
 			model.addAttribute("msg", "댓글 삭제에 실패하였습니다.");
 		}
-		model.addAttribute("location", "/board/detail?no="+ boardNo);
+		model.addAttribute("location", "/board/detail?no="+ bbNo);
 		return "/common/msg";
 	}
 	
@@ -267,10 +284,10 @@ public class BoardController {
 
 		if(result > 0) {
 			model.addAttribute("msg", "게시글이 수정 되었습니다.");
-			model.addAttribute("location", "/board/list?type=" + board.getType());
+			model.addAttribute("location", "/board/detail?no=" + board.getBbNo());
 		}else {
 			model.addAttribute("msg", "게시글 수정에 실패하였습니다.");
-			model.addAttribute("location", "/board/list?type=" + board.getType());
+			model.addAttribute("location", "/board/detail?no=" + board.getBbNo());
 		}
 		
 		return "common/msg";

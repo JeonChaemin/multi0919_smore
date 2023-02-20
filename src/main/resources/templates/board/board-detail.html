@@ -112,7 +112,7 @@
 								<tr class="align-middle">
 									<th><label for="file-btn">첨부파일</label></th>
 									<td colspan="2">
-										<th:block th:if="${board.originalFileName != null}">
+										<th:block th:if="${!#lists.isEmpty(board.originalFileName)}">
 											<a th:href="|javascript:fileDownload('${board.originalFileName}','${board.renamedFileName}')|">
 												<i class="uil uil-scenery"></i>[[${board.originalFileName}]]				
 											</a><br>
@@ -127,8 +127,8 @@
 										}
 									</script>
 									</th:block>
-									<th:block th:if="${board.originalFileName == null}">
-										<span class="text-muted"><i class="uil uil-image-alt-slash"></i></span>
+									<th:block th:if="${#lists.isEmpty(board.originalFileName)}">
+										<span class="text-muted"><i class="uil uil-file-slash"></i></span>
 									</th:block>
 									</td>
 									<td colspan="3" class="text-end">
@@ -151,8 +151,6 @@
 
 								<tr>
 									<td colspan="2" class="border-0">
-										<!-- <input type="submit" value="등록">
-                                            <input type="reset" value="취소"> -->
 										<a class="btn btn-soft-secondary text-start" onclick="history.back()">목록</a>
 									</td>
 									<th colspan="1" class="border-0 m-auto text-center" th:if="${session.loginMember != null}">
@@ -187,14 +185,33 @@
 										<div class="flex-grow-1 ms-sm-3">
 											<h6 class="fs-16 mt-sm-0 mt-3 mb-0">[[${reply.id}]]</h6>
 											<p class="text-muted fs-14 mb-0 mb-2">[[${#dates.format(reply.createDate, "yyyy-MM-dd HH:mm")}]]</p>
-											<p class="mb-0">[[${reply.content}]]</p>
+											<p class="mb-0" th:id="|content${reply.bbrNo}|">[[${reply.content}]]</p>
 										</div>
 									</div>
-									<div class="col-lg-3 text-end mt-3">
 									<th:block th:if="${session.loginMember != null && (session.loginMember.id == reply.id || session.loginMember.role == 'ROLE_ADMIN')}">
+									  <div class="col-lg-3 text-end mt-3">
+										<button name="update" th:id="|updateBtn${reply.bbrNo}|" class="btn btn-outline-primary" style="padding: 5px 10px;" th:onclick="|updateReply(${reply.bbrNo})|">수정</button>
 										<button name="delete" class="btn btn-outline-danger" style="padding: 5px 10px;" th:onclick="|deleteReply(${reply.bbrNo},${board.bbNo});|">삭제</button>
+									  </div>
 									</th:block>
-									</div>
+									<div class="mt-1 pt-3 mb-3 updateReply" th:id="|updateReply${reply.bbrNo}|" style="display: none">
+		                        		<div class="row">
+						                  <div class="col-lg-12">
+						                    <div class="mb-3">
+						                      <input type="hidden" name="bbNo" th:value="${board.bbNo}" />
+						                      <textarea class="form-control" th:id="|inputReply${reply.bbrNo}|" name="content" rows="3"
+						                        placeholder="내용을 입력해주세요." required>[[${reply.content}]]</textarea>
+						                    </div>
+						                  </div><!--end col-->
+						                </div><!--end row-->
+						                <div class="text-end">
+						                  <button type="submit" id="submit" class="btn btn-outline-primary" style="padding: 5px 10px;"
+						                  th:onclick="|updBtn(${reply.bbrNo}, ${board.bbNo})|">확인</button>
+						                  <button id="submit" class="btn btn-outline-secondary" style="padding: 5px 10px;"
+						                  th:onclick="|backBtn(${reply.bbrNo})|">취소</button>
+						                </div>
+			                          </div><!-- updateReply -->
+				                  </div>
 								  </th:block>
 							  </th:block>
 							  <th:block th:if="${#lists.isEmpty(replyList)}">

@@ -123,9 +123,9 @@ public class RecipeController {
 		int result = service.insertRecipeReply(reply);
 		
 		if(result > 0) {
-			model.addAttribute("msg", "리플이 등록되었습니다.");
+			model.addAttribute("msg", "댓글이 등록되었습니다.");
 		}else {
-			model.addAttribute("msg", "리플 등록에 실패하였습니다.");
+			model.addAttribute("msg", "댓글 등록에 실패하였습니다.");
 		}
 		model.addAttribute("location", "/detail/recipe-detail?rcpNo=" + reply.getRcpNo());
 		return "common/msg";
@@ -140,9 +140,9 @@ public class RecipeController {
 		int result = service.deleteRecipeReply(rcprNo);
 		
 		if(result > 0) {
-			model.addAttribute("msg", "리플 삭제가 정상적으로 완료되었습니다.");
+			model.addAttribute("msg", "댓글 삭제가 정상적으로 완료되었습니다.");
 		}else {
-			model.addAttribute("msg", "리플 삭제에 실패하였습니다.");
+			model.addAttribute("msg", "댓글 삭제에 실패하였습니다.");
 		}
 		model.addAttribute("location", "/detail/recipe-detail?rcpNo=" + rcpNo);
 		return "/common/msg";
@@ -155,9 +155,9 @@ public class RecipeController {
 		int result = service.updateRecipeReply(recipeReply);
 		
 		if(result > 0) {
-			model.addAttribute("msg", "리플 수정이 정상적으로 완료되었습니다.");
+			model.addAttribute("msg", "댓글 수정이 정상적으로 완료되었습니다.");
 		}else {
-			model.addAttribute("msg", "리플 수정에 실패하였습니다.");
+			model.addAttribute("msg", "댓글 수정에 실패하였습니다.");
 		}
 		model.addAttribute("location", "/detail/recipe-detail?rcpNo=" + rcpNo);
 		

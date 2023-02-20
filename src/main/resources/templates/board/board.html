@@ -108,7 +108,7 @@
 										class="text-reset"
 										th:href="|/board/detail?type=${item.type}&no=${item.bbNo}|">
 											[[${item.title}]] <span class="text-muted"
-											th:if="${item.originalFileName != null}"> <i
+											th:if="${!#lists.isEmpty(item.originalFileName)}"> <i
 												class="uil uil-scenery"></i>
 										</span> <span class="text-muted my-2"><i
 												class="uil uil-thumbs-up ms-1"></i> [[${item.likeCount}]]</span>

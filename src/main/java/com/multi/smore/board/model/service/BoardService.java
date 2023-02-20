@@ -130,4 +130,9 @@ public class BoardService {
 		return mapper.selectBoardListHome(param);
 	}
 
+	@Transactional(rollbackFor = Exception.class)
+	public int updateReply(BoardReply boardReply) {
+		return mapper.updateReply(boardReply);
+	}
+
 }

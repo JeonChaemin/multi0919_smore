@@ -135,7 +135,17 @@
 	display: -webkit-box;
   	-webkit-line-clamp: 2;
   	-webkit-box-orient: vertical;
-  	height: 40px;
-  	width: 250px;
-  	margin-left: 12px;
+  	height: 20px;
+  	width: 13rem;
+  	margin-left: 27px;
+}
+
+.p-ellipsis {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+  	-webkit-line-clamp: 2;
+  	-webkit-box-orient: vertical;
+  	height: 20px;
+  	width: 300px;
 }

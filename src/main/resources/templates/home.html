@@ -200,7 +200,7 @@
 										th:src="|/images/programimage/program${oneProgram.onepNo}.png|"></a> <a
 										class="text-reset text-start">
 										<h5 class="mt-3 ellipsis" th:text="${oneProgram.partcptnSj}"></h5>
-										<p class="text-primary" style="margin-left: 12px;" th:text="'서울특별시 '+${oneProgram.atdrcNm}"></p>
+										<p class="text-primary" style="margin-left: 27px;" th:text="'서울특별시 '+${oneProgram.atdrcNm}"></p>
 									</a>
 								</div>
 							</th:block>
@@ -399,76 +399,43 @@
 								<div class="swiper-wrapper">
 									<div class="swiper-slide">
 										<div class="mb-4 row">
+										  <th:block th:each="item : ${parkList1}">
 											<div class="col-lg-4 justify-content-evenly trail-wrapper">
-												<a class="index-trail" href="outdoor-detail.html"> <img
-													class="index-trail-img" th:src="@{/images/img/trail1.jpg}"
+												<a class="index-trail" th:href="@{/outdoor/outdoor-detail(parkNo=${item.parkNo})}"> <img
+													class="index-trail-img" th:src="|/images/img/park${itemStat.index}.jpeg|"
 													alt="" />
-													<p class="index-trail-info">몽촌토성 • 서울 송파구</p>
+													<p class="index-trail-info">[[${item.parkNm}]] • [[${item.lnmadr}]]</p>
 												</a>
 											</div>
-											<div class="col-lg-4 justify-content-evenly trail-wrapper">
-												<a class="index-trail" href="outdoor-detail.html"><img
-													class="index-trail-img" th:src="@{/images/img/trail2.jpg}"
-													alt="" /></a>
-												<p class="index-trail-info">몽촌토성 • 서울 송파구</p>
-											</div>
-											<div class="col-lg-4 justify-content-evenly trail-wrapper">
-												<a class="index-trail" href="outdoor-detail.html"><img
-													class="index-trail-img" th:src="@{/images/img/trail3.jpg}"
-													alt="" /></a>
-												<p class="index-trail-info">몽촌토성 • 서울 송파구</p>
-											</div>
+										  </th:block>
 										</div>
 									</div>
-									<!--end swiper-slide-->
 									<div class="swiper-slide">
 										<div class="mb-4 row">
+										  <th:block th:each="item : ${parkList2}">
 											<div class="col-lg-4 justify-content-evenly trail-wrapper">
-												<a class="index-trail" href="#"> <img
-													class="index-trail-img" th:src="@{/images/img/trail1.jpg}"
+												<a class="index-trail" th:href="@{/outdoor/outdoor-detail(parkNo=${item.parkNo})}"> <img
+													class="index-trail-img" th:src="|/images/img/park${itemStat.index + 3}.jpeg|"
 													alt="" />
-													<p class="index-trail-info">몽촌토성 • 서울 송파구</p>
+													<p class="index-trail-info">[[${item.parkNm}]] • [[${item.lnmadr}]]</p>
 												</a>
 											</div>
-											<div class="col-lg-4 justify-content-evenly trail-wrapper">
-												<a class="index-trail" href="#"><img
-													class="index-trail-img" th:src="@{/images/img/trail2.jpg}"
-													alt="" /></a>
-												<p class="index-trail-info">몽촌토성 • 서울 송파구</p>
-											</div>
-											<div class="col-lg-4 justify-content-evenly trail-wrapper">
-												<a class="index-trail" href="#"><img
-													class="index-trail-img" th:src="@{/images/img/trail3.jpg}"
-													alt="" /></a>
-												<p class="index-trail-info">몽촌토성 • 서울 송파구</p>
-											</div>
+										  </th:block>
 										</div>
 									</div>
-									<!--end swiper-slide-->
 									<div class="swiper-slide">
 										<div class="mb-4 row">
+										  <th:block th:each="item : ${parkList3}">
 											<div class="col-lg-4 justify-content-evenly trail-wrapper">
-												<a class="index-trail" href="#"> <img
-													class="index-trail-img" th:src="@{/images/img/trail1.jpg}"
+												<a class="index-trail" th:href="@{/outdoor/outdoor-detail(parkNo=${item.parkNo})}"> <img
+													class="index-trail-img" th:src="|/images/img/park${itemStat.index + 6}.jpeg|"
 													alt="" />
-													<p class="index-trail-info">몽촌토성 • 서울 송파구</p>
+													<p class="index-trail-info">[[${item.parkNm}]] • [[${item.lnmadr}]]</p>
 												</a>
 											</div>
-											<div class="col-lg-4 justify-content-evenly trail-wrapper">
-												<a class="index-trail" href="#"><img
-													class="index-trail-img" th:src="@{/images/img/trail2.jpg}"
-													alt="" /></a>
-												<p class="index-trail-info">몽촌토성 • 서울 송파구</p>
-											</div>
-											<div class="col-lg-4 justify-content-evenly trail-wrapper">
-												<a class="index-trail" href="#"><img
-													class="index-trail-img" th:src="@{/images/img/trail3.jpg}"
-													alt="" /></a>
-												<p class="index-trail-info">몽촌토성 • 서울 송파구</p>
-											</div>
+										  </th:block>
 										</div>
 									</div>
-									<!--end swiper-slide-->
 								</div>
 								<!--end swiper-wrapper-->
 								<div class="swiper-pagination"></div>

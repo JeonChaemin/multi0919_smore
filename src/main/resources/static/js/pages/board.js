@@ -1,9 +1,3 @@
-function deleteReply(replyNo, boardNo){
-	var url = "/board/replyDel?replyNo=";
-	var requestURL = url + replyNo +"&boardNo=" + boardNo;
-	location.replace(requestURL);
-}
-
  // 초기화 문구
 $(function(){
     // 하트 class 초기화
@@ -56,4 +50,43 @@ function onClickHeart(id, bbNo){
 			alert('전송 실패!!');
 		}
 	});
+}
+
+function deleteReply(bbrNo, bbNo){
+	var url = "/board/replyDel?bbrNo=";
+	var requestURL = url + bbrNo +"&bbNo=" + bbNo;
+	location.replace(requestURL);
+}
+
+function updateReply(bbrNo){
+	var updateBtn = document.getElementById("updateBtn" + bbrNo);
+	updateBtn.style.display = "none";
+	
+	var content = document.getElementById("content" + bbrNo);
+	content.style.display = "none";
+	
+	var updateForm = document.getElementById("updateReply" + bbrNo);
+	updateForm.style.display = "inline-block";
+}
+
+function updBtn(bbrNo, bbNo){
+	var newContent = document.getElementById("inputReply" + bbrNo).value;
+	if(newContent.trim() === ''){
+		alert("내용을 입력해주세요.")
+		return;
+	}
+	
+	var requestURL = '/board/replyUpdate?bbrNo=' + bbrNo +'&content=' + newContent + '&bbNo=' + bbNo;
+	location.replace(requestURL);
+}
+
+function backBtn(bbrNo){
+	var updateBtn = document.getElementById("updateBtn" + bbrNo);
+	updateBtn.style.display = "inline-block";
+	
+	var content = document.getElementById("content" + bbrNo);
+	content.style.display = "inline-block";
+	
+	var updateForm = document.getElementById("updateReply" + bbrNo);
+	updateForm.style.display = "none";
 }
