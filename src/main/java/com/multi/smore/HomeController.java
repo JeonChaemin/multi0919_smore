@@ -72,10 +72,10 @@ public class HomeController {
 			memNo2 = loginMember.getMemNo();
 		}
 		List<OneProgram> oprogramList = new ArrayList<>();
-		oprogramList.add(oprogramService.findByNo(372, memNo2));
-		oprogramList.add(oprogramService.findByNo(251, memNo2));
-		oprogramList.add(oprogramService.findByNo(496, memNo2));
-		oprogramList.add(oprogramService.findByNo(526, memNo2));
+		oprogramList.add(oprogramService.findByNo(384, memNo2));
+		oprogramList.add(oprogramService.findByNo(59, memNo2));
+		oprogramList.add(oprogramService.findByNo(508, memNo2));
+		oprogramList.add(oprogramService.findByNo(558, memNo2));
 		
 		model.addAttribute("oprogramList", oprogramList);
 		model.addAttribute("recipeList", recipeList);

@@ -92,7 +92,7 @@
 								th:id="|clip${oneProgram.onepNo}|" th:value="${oneProgram.isClip}"
 								th:onclick="|onClickClip('clip${oneProgram.onepNo}', '${oneProgram.onepNo}');|">
 								<a href="javascript:void(0)">
-									<i class="uil uil-heart-alt fs-18"></i>
+									<i class="uil uil-bookmark-full"></i>
 								</a>
 							</div>
 						</th:block>
@@ -143,6 +143,7 @@
                 <h5 class="mb-3">대상</h5>
                 <div class="job-detail-desc mt-2">
                   <p class="text-muted" >[[${oneProgram.trgetInfo}]]</p>
+                  <p class="text-muted mb-0">[[${oneProgram.agrdeNm}]] / [[${oneProgram.sexdstnNm}]] 대상</p>
                 </div>
               </div>
 
@@ -183,6 +184,7 @@
                       <i class="uil uil-user icon bg-soft-primary"></i>
                       <div class="ms-3">
                         <h6 class="fs-14 mb-2" >참여 대상</h6>
+                        <p class="text-muted" >[[${oneProgram.trgetInfo}]]</p>
                         <p class="text-muted mb-0">[[${oneProgram.agrdeNm}]] / [[${oneProgram.sexdstnNm}]] 대상</p>
                       </div>
                     </div>
@@ -245,9 +247,9 @@
 
   <footer th:replace="~{common/layout :: #footer}"></footer>
 
-  <a href="javascript: void(0);" id="mode" class="mode-btn text-white rounded-3">
+  <a href="javascript: void(0);" id="mode" class="ext-white rounded-3">
           </a>
-      <a href="javascript: void(0);" class="settings rounded-end"><i class="mdi mdi-cog mdi-spin"></i></a>
+      <a href="javascript: void(0);" class="settings rounded-end"></a>
 
   <!--start back-to-top-->
   <button onclick="topFunction()" id="back-to-top">

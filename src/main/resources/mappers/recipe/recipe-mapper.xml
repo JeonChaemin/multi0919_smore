@@ -125,6 +125,28 @@
 		ORDER BY r.rcpNo DESC LIMIT 5
 	</select>
 	
+	<select id="selectRecipeMypageList" resultMap="recipeResultMap" parameterType="map">
+		SELECT 
+		r.rcpNo, r.RCP_NM, r.RCP_WAY2, r.RCP_PAT2, r.INFO_WGT, r.INFO_ENG, r.INFO_CAR, r.INFO_PRO, r.INFO_FAT, 
+		r.INFO_NA, r.HASH_TAG, r.ATT_FILE_NO_MAIN, r.ATT_FILE_NO_MK, r.RCP_PARTS_DTLS, r.MANUAL01, r.MANUAL_IMG01, r.MANUAL02, r.MANUAL_IMG02, 
+		r.MANUAL03, r.MANUAL_IMG03, r.MANUAL04, r.MANUAL_IMG04, r.MANUAL05, r.MANUAL_IMG05, r.MANUAL06, 
+		r.MANUAL_IMG06, r.MANUAL07, r.MANUAL_IMG07, r.MANUAL08, r.MANUAL_IMG08, r.MANUAL09, r.MANUAL_IMG09, r.MANUAL10, 
+		r.MANUAL_IMG10, r.MANUAL11, r.MANUAL_IMG11, r.MANUAL12, r.MANUAL_IMG12, r.MANUAL13, 
+		r.MANUAL_IMG13, r.MANUAL14, r.MANUAL_IMG14, r.MANUAL15, r.MANUAL_IMG15, r.MANUAL16, 
+		r.MANUAL_IMG16, r.MANUAL17, r.MANUAL_IMG17, r.MANUAL18, r.MANUAL_IMG18, r.MANUAL19, 
+		r.MANUAL_IMG19, r.MANUAL20, r.MANUAL_IMG20, 
+		(SELECT COUNT(*) FROM like_recipe l WHERE r.rcpNo = l.rcpNo) as likeCount,
+		(SELECT COUNT(*) FROM review_rcp rv WHERE r.rcpNo = rv.rcpNo AND rv.STATUS = 'Y') as reviewCount
+		,(SELECT COUNT(*) FROM like_recipe l WHERE r.rcpNo = l.rcpNo AND memNo = ${memNo}) as isLike
+		,(SELECT COUNT(*) FROM clip_rcp cr WHERE r.rcpNo = cr.rcpNo AND memNo = ${memNo}) as isClip
+		FROM recipe r
+		LEFT OUTER JOIN (SELECT DISTINCT rcpNo FROM like_recipe) As l on (r.rcpNo = l.rcpNo)
+		LEFT OUTER JOIN (SELECT DISTINCT rcpNo FROM review_rcp) As rv on (r.rcpNo = rv.rcpNo)
+		JOIN (SELECT DISTINCT rcpNo FROM clip_rcp WHERE memNo = ${memNo}) As cr on (r.rcpNo = cr.rcpNo)
+		WHERE 1 = 1
+		ORDER BY isClip DESC LIMIT ${limit} OFFSET ${offset}
+	</select>
+	
 	<select id="selectRecipeList" resultMap="recipeResultMap" parameterType="map">
 		<include refid="selectRecipeSql"/>
 		WHERE 1 = 1

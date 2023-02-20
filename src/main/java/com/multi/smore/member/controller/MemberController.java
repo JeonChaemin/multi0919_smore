@@ -197,6 +197,13 @@ public class MemberController {
 	) {
 		log.info("update 요청, updateMember : " + updateMember);
 
+    @PostMapping("/member/update")
+    public String update(Model model, 
+		@ModelAttribute Member updateMember, // request에서 온 값
+		@SessionAttribute(name = "loginMember", required = true) Member loginMember // 세션 값
+		) {
+		log.info("update 요청, updateMember : " + updateMember);
+		
 		updateMember.setMemNo(loginMember.getMemNo());
 		int result = service.save(updateMember);
 
@@ -209,7 +216,7 @@ public class MemberController {
 			model.addAttribute("location", "/member/view");
 		}
 		return "common/msg";
-	}
+		    }
 	
 	
 	@GetMapping("/member/view")
@@ -233,7 +240,7 @@ public class MemberController {
 		}
 		
 		PageInfo pageInfoRecipe = new PageInfo(1, 1, recipeService.getRecipeCount(paramOMap), recipeService.getRecipeCount(paramOMap));
-		List<Recipe> getRecipeList = recipeService.getRecipeList(pageInfoRecipe, paramOMap);
+		List<Recipe> getRecipeList = recipeService.getMypageRecipeList(pageInfoRecipe, paramOMap);
 		List<Recipe> recipeList = new ArrayList<>();
 		for (Recipe recipe : getRecipeList) {
 			if (recipe.getIsClip() == 1) {

@@ -59,6 +59,7 @@
 			 DEFAULT, DEFAULT, DEFAULT)
 	</insert>
 	
+<<<<<<< HEAD
 	 <update id="updateMember" parameterType="Member">
 		UPDATE MEMBER
 		SET
@@ -69,6 +70,18 @@
 		MODIFYDATE = DEFAULT
 		WHERE MEMNO = #{memNo}
 	</update>
+=======
+	   <update id="updateMember" parameterType="Member">
+		  UPDATE MEMBER
+		  SET
+		  NAME = #{name}, 
+		  PHONE = #{phone},
+		  EMAIL = #{email},
+		  ADDRESS = #{address},
+		  MODIFYDATE        = DEFAULT
+		  WHERE MEMNO = #{memNo}
+		</update>
+>>>>>>> branch 'master' of https://github.com/JeonChaemin/multi0919_smore
 	 
 	 <update id="updatePwd" parameterType="map">
 	 	UPDATE MEMBER 
