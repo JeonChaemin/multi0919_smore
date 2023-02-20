@@ -135,7 +135,7 @@ public class OneProgramController {
 			
 		model.addAttribute("oneProgram", oneProgram);
 		model.addAttribute("paramMap",paramMap);
-		model.addAttribute("pageTitle", "smore | 정부지원사업");
+		model.addAttribute("pageTitle", "smore | Program");
 		return "detail/program-detail";
 	}
 	 
