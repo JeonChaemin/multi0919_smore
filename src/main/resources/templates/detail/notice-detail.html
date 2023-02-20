@@ -82,7 +82,7 @@
 
 
 						</div><!--end row-->
-						<div class="row">
+						<div class="row mb-4">
 							<div class="col-lg-12 mb-4">
 								<div class="card text">
 									<div class="card-body px-4 py-5">
@@ -93,18 +93,18 @@
 										<hr>
 										<div class="mt-2">
 											<img class="m-auto" alt="" style="width: 300px" th:src="|/board/file/${board.renamedFileName}|">
-											<p class="mb-2">[[${board.content}]]</p>
+											<p class="mb-2" style="white-space: pre;">[[${board.content}]]</p>
 										</div>
 									</div>
 								</div>
 							</div><!--end col-->
 							<div class="col-lg-6">
-								<a class="btn btn-soft-primary text-start" th:href="@{/board/list?type='notice'}">목록</a>
+								<a class="btn btn-soft-secondary text-start" th:href="@{/board/list?type=notice}">목록</a>
 							</div>
 							<th:block th:if="${session.loginMember != null && (session.loginMember.id == board.id || session.loginMember.role == 'ROLE_ADMIN')}">
 							<div class="col-lg-6 text-end mb-4">
-								<button type="button" id="btnUpdate" class="btn btn-primary">수정</button>
-								<button type="button" id="btnDelete" class="btn btn-danger">삭제</button>
+								<button type="button" id="btnUpdate" class="btn btn-soft-primary">수정</button>
+								<button type="button" id="btnDelete" class="btn btn-soft-danger">삭제</button>
 							</div>
 							</th:block>
 						</div><!--end row-->
@@ -159,6 +159,20 @@
 
 	<!-- App Js -->
 	<script th:src="@{/js/app.js}"></script>
+	
+	<script type="text/javascript">
+	$(document).ready(() => {
+		$("#btnUpdate").on("click", (e) => {
+			location.href = "/board/update?no=[[${board.bbNo}]]";
+		});
+		
+		$("#btnDelete").on("click", (e) => {
+			if(confirm("정말로 게시글을 삭제 하시겠습니까?")) {
+				location.replace("/board/delete?boardNo=[[${board.bbNo}]]");
+			}
+		});
+	});
+</script>
 
 </body>
 
