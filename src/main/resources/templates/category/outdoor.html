@@ -158,7 +158,7 @@
                     <th:block th:each="item : ${parkList}">
                     <div class="col-lg-3 mb-4">
                       <div class="card blog-grid-box p-2"  >   
-                        <img th:src="|/images/img/park${item.parkNo}.jpeg|" alt="" class="rounded-2" th:style="${'width: 250px; height: 150px;'}">
+                        <img th:src="|/images/img/park${itemStat.index}.jpeg|" alt="" class="rounded-2" th:style="${'width: 250px; height: 150px;'}">
                         <div class="card-body">
                           <ul class="list-inline d-flex justify-content-between mb-0">
                             <li class="list-inline-item">
