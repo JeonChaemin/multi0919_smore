@@ -75,7 +75,7 @@
 										th:unless="${trade.renamedFileName == '' || trade.renamedFileName == null}">
 										<div class="text-center mt-4">
 											<a>
-												<img style="height: 300px; object-fit: contain;" th:src="|/trade/file/${trade.renamedFileName}|" alt="제품 사진" class="rounded-3 trade-item-img" onclick="doImgPop(this.src)"/>
+												<img style="height: 500px; object-fit: contain;" th:src="|/trade/file/${trade.renamedFileName}|" alt="제품 사진" class="rounded-3 trade-item-img" onclick="doImgPop(this.src)"/>
 												<p class="text-center trade-mag mt-n4" style="cursor: pointer;" onclick="$('.trade-item-img').trigger('click');">
 													<i class="uil uil-search-plus"></i> 크게보기
 												</p>
