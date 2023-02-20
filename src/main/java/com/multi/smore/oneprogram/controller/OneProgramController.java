@@ -119,8 +119,18 @@ public class OneProgramController {
 		System.out.println(paramMap);
 
 		
-		if(oneProgram.getRceptMthLink().toLowerCase().contains("http") == false) {
+		if(oneProgram.getPartcptnNmpr().equals("")) {
+			oneProgram.setPartcptnNmpr("0");
+		}
+		
+		if(oneProgram.getRceptMthLink().equals("")) {
+			oneProgram.setRceptMthLink("https://1in.seoul.go.kr/front/partcptn/partcptnListPage.do");
+		}else if(oneProgram.getRceptMthLink()!=null && oneProgram.getRceptMthLink().toLowerCase().contains("http") == false) {
 			oneProgram.setRceptMthLink("http://" + oneProgram.getRceptMthLink());
+		}
+		
+		if(oneProgram.getCn().equals(" ") || oneProgram.getCn().equals("")) {
+			oneProgram.setCn("기관에 문의");
 		}
 			
 		model.addAttribute("oneProgram", oneProgram);
