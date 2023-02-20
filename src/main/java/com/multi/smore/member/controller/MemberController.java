@@ -238,7 +238,7 @@ public class MemberController {
 		}
 		
 		PageInfo pageInfoRecipe = new PageInfo(1, 1, recipeService.getRecipeCount(paramOMap), recipeService.getRecipeCount(paramOMap));
-		List<Recipe> getRecipeList = recipeService.getRecipeList(pageInfoRecipe, paramOMap);
+		List<Recipe> getRecipeList = recipeService.getMypageRecipeList(pageInfoRecipe, paramOMap);
 		List<Recipe> recipeList = new ArrayList<>();
 		for (Recipe recipe : getRecipeList) {
 			if (recipe.getIsClip() == 1) {

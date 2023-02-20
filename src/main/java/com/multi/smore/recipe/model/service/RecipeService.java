@@ -24,6 +24,12 @@ public class RecipeService {
 		return mapper.selectRecipeSearchList(param);
 	}
 	
+	public List<Recipe> getMypageRecipeList(PageInfo pageInfo, Map<String, Object> param){
+		param.put("limit", "" + pageInfo.getListLimit());
+		param.put("offset", "" + (pageInfo.getStartList() - 1));
+		return mapper.selectRecipeMypageList(param);
+	}
+	
 	public List<Recipe> getRecipeList(PageInfo pageInfo, Map<String, Object> param){
 		param.put("limit", "" + pageInfo.getListLimit());
 		param.put("offset", "" + (pageInfo.getStartList() - 1));
