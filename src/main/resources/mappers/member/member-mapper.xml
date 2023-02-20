@@ -60,16 +60,15 @@
 	</insert>
 	
 	 <update id="updateMember" parameterType="Member">
-	 	UPDATE MEMBER
-	 	SET
-	 		NAME		= #{name}, 
-	 		PHONE		= #{phone},
-	 		EMAIL		= #{email},
-	 		ADDRESS		= #{address},
-	 		MODIFY_DATE	= #{modifyDate}
-	 		MODIFYDATE	= #{modifyDate}
-		 	WHERE MEMNO = #{memNo}
-	 </update>
+		UPDATE MEMBER
+		SET
+		NAME = #{name},
+		PHONE = #{phone},
+		EMAIL = #{email},
+		ADDRESS = #{address},
+		MODIFYDATE = DEFAULT
+		WHERE MEMNO = #{memNo}
+	</update>
 	 
 	 <update id="updatePwd" parameterType="map">
 	 	UPDATE MEMBER 

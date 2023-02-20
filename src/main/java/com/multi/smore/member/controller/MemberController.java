@@ -192,24 +192,19 @@ public class MemberController {
 	
 	
 	@PostMapping("/member/update")
-	public String update(Model model, 
-			@ModelAttribute Member updateMember, // request에서 온 값
-			@SessionAttribute(name = "loginMember", required = false) Member loginMember // 세션 값
-			) {
-		if(loginMember == null || loginMember.getId().equals(updateMember.getId()) == false) {
-			model.addAttribute("msg","잘못된 접근입니다.");
-			model.addAttribute("location","/");
-			return "common/msg";
-		}
-		
+	public String update(Model model, @ModelAttribute Member updateMember, // request에서 온 값
+			@SessionAttribute(name = "loginMember", required = true) Member loginMember // 세션 값
+	) {
+		log.info("update 요청, updateMember : " + updateMember);
+
 		updateMember.setMemNo(loginMember.getMemNo());
 		int result = service.save(updateMember);
-		
-		if(result > 0) {
+
+		if (result > 0) {
 			model.addAttribute("loginMember", service.findById(loginMember.getId())); // DB에서 있는 값을 다시 세션에 넣어주는 코드
 			model.addAttribute("msg", "회원정보를 수정하였습니다.");
 			model.addAttribute("location", "/member/view");
-		}else {
+		} else {
 			model.addAttribute("msg", "회원정보 수정에 실패하였습니다.");
 			model.addAttribute("location", "/member/view");
 		}

@@ -88,7 +88,7 @@ public class HomeController {
 	private void initDB() {
 		List<News> nlist = new ArrayList<>();
 		newsService.deleteAllNewsList();
-		nlist.addAll(NaverSearchAPI.getNewsList("1인 가구", 6, 1));
+		nlist.addAll(NaverSearchAPI.getNewsList("1인 가구", 20, 1));
 		for (News news : nlist) {
 			newsService.insertNews(news);
 		}
