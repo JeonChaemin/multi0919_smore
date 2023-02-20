@@ -227,11 +227,9 @@ public class MemberController {
 		paramOMap.put("memNo", ""+loginMember.getMemNo());
 		Map<String, String> paramSMap = new HashMap<>();
 		paramSMap.put("memNo", ""+loginMember.getMemNo());
-		int count = 0;
-		PageInfo pageInfo = new PageInfo(1, 1, count, count);
 		
-		count = tradeService.getTradeCount(paramOMap);
-		List<Trade> getTradeList = tradeService.getTradeList(pageInfo, paramOMap);
+		PageInfo pageInfoTrade = new PageInfo(1, 1, tradeService.getTradeCount(paramOMap), tradeService.getTradeCount(paramOMap));
+		List<Trade> getTradeList = tradeService.getTradeList(pageInfoTrade, paramOMap);
 		List<Trade> tradeList = new ArrayList<>();
 		for (Trade trade : getTradeList) {
 			if (trade.getIsClip() == 1) {
@@ -239,8 +237,8 @@ public class MemberController {
 			}
 		}
 		
-		count = recipeService.getRecipeCount(paramOMap);
-		List<Recipe> getRecipeList = recipeService.getRecipeList(pageInfo, paramOMap);
+		PageInfo pageInfoRecipe = new PageInfo(1, 1, recipeService.getRecipeCount(paramOMap), recipeService.getRecipeCount(paramOMap));
+		List<Recipe> getRecipeList = recipeService.getRecipeList(pageInfoRecipe, paramOMap);
 		List<Recipe> recipeList = new ArrayList<>();
 		for (Recipe recipe : getRecipeList) {
 			if (recipe.getIsClip() == 1) {
@@ -248,8 +246,8 @@ public class MemberController {
 			}
 		}
 		
-		count = parkService.selectParkCount(paramOMap);
-		List<Park> getParkList = parkService.selectParkList(pageInfo, paramOMap);
+		PageInfo pageInfoPark = new PageInfo(1, 1, parkService.selectParkCount(paramOMap), parkService.selectParkCount(paramOMap));
+		List<Park> getParkList = parkService.selectParkList(pageInfoPark, paramOMap);
 		List<Park> parkList = new ArrayList<>();
 		for (Park park : getParkList) {
 			if (park.getIsClip() == 1) {
@@ -257,8 +255,8 @@ public class MemberController {
 			}
 		}
 		
-		count = trackingService.selectTrackCount(paramOMap);
-		List<Tracking> getTrackingList = trackingService.selectTrackingList(pageInfo, paramOMap);
+		PageInfo pageInfoTracking = new PageInfo(1, 1, trackingService.selectTrackCount(paramOMap), trackingService.selectTrackCount(paramOMap));
+		List<Tracking> getTrackingList = trackingService.selectTrackingList(pageInfoTracking, paramOMap);
 		List<Tracking> trackingList = new ArrayList<>();
 		for (Tracking tracking : getTrackingList) {
 			if (tracking.getIsClip() == 1) {
@@ -266,8 +264,8 @@ public class MemberController {
 			}
 		}
 		
-		count = rentalService.getRentalCount(paramOMap);
-		List<Rental> getRentalList = rentalService.getRentalList(pageInfo, paramOMap);
+		PageInfo pageInfoRental = new PageInfo(1, 1, rentalService.getRentalCount(paramOMap), rentalService.getRentalCount(paramOMap));
+		List<Rental> getRentalList = rentalService.getRentalList(pageInfoRental, paramOMap);
 		List<Rental> rentalList = new ArrayList<>();
 		for (Rental rental : getRentalList) {
 			if (rental.getIsClip() == 1) {
@@ -275,8 +273,8 @@ public class MemberController {
 			}
 		}
 		
-		count = oneProgramService.getOneProgramCount(paramSMap);
-		List<OneProgram> getOprogramList = oneProgramService.getOneProgramList(pageInfo, paramSMap);
+		PageInfo pageInfoOneProgram = new PageInfo(1, 1, oneProgramService.getOneProgramCount(paramSMap), oneProgramService.getOneProgramCount(paramSMap));
+		List<OneProgram> getOprogramList = oneProgramService.getOneProgramList(pageInfoOneProgram, paramSMap);
 		List<OneProgram> oprogramList = new ArrayList<>();
 		for (OneProgram oneprogram : getOprogramList) {
 			if (oneprogram.getIsClip() == 1) {

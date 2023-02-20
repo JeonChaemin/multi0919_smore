@@ -267,10 +267,10 @@ public class BoardController {
 
 		if(result > 0) {
 			model.addAttribute("msg", "게시글이 수정 되었습니다.");
-			model.addAttribute("location", "/board/detail?type=" + board.getType() + "&no=" + board.getBbNo());
+			model.addAttribute("location", "/board/list?type=" + board.getType());
 		}else {
 			model.addAttribute("msg", "게시글 수정에 실패하였습니다.");
-			model.addAttribute("location", "/board/detail?type=" + board.getType() + "&no=" + board.getBbNo());
+			model.addAttribute("location", "/board/list?type=" + board.getType());
 		}
 		
 		return "common/msg";
