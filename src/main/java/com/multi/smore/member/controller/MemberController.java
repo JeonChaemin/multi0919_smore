@@ -192,18 +192,12 @@ public class MemberController {
 	
 	
 	@PostMapping("/member/update")
-	public String update(Model model, @ModelAttribute Member updateMember, // request에서 온 값
-			@SessionAttribute(name = "loginMember", required = true) Member loginMember // 세션 값
-	) {
-		log.info("update 요청, updateMember : " + updateMember);
-
-    @PostMapping("/member/update")
     public String update(Model model, 
 		@ModelAttribute Member updateMember, // request에서 온 값
 		@SessionAttribute(name = "loginMember", required = true) Member loginMember // 세션 값
 		) {
 		log.info("update 요청, updateMember : " + updateMember);
-		
+
 		updateMember.setMemNo(loginMember.getMemNo());
 		int result = service.save(updateMember);
 
@@ -216,7 +210,7 @@ public class MemberController {
 			model.addAttribute("location", "/member/view");
 		}
 		return "common/msg";
-		    }
+	}
 	
 	
 	@GetMapping("/member/view")

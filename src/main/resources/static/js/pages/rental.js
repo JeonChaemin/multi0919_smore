@@ -58,6 +58,7 @@ function onClickClip(id, rentalNo) {
 
 /* selelct - searchType - 정렬*/
 var searchRegion1 = new Choices("#searchRegion", {
+	shouldSort: false
 });
 
 /* selelct - searchType - 정렬*/
