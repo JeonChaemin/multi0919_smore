@@ -87,13 +87,13 @@
 								<div class="card text">
 									<div class="card-body px-4 py-5">
 										<a href="company-details.html" class="primary-link">
-											<h5>[[${board.title}]]</h6>
+											<h5>[[${board.title}]]</h5>
 										</a>
 										<p class="text-muted">[[${#dates.format(board.modifyDate, "yyyy-MM-dd HH:mm")}]] <span class="ms-2">조회 [[${board.readCount}]]</span></p>
 										<hr>
 										<div class="mt-2">
 											<img class="m-auto" alt="" style="width: 300px" th:src="|/board/file/${board.renamedFileName}|">
-											<p class="mb-2" style="white-space: pre;">[[${board.content}]]</p>
+											<p class="mb-2" style="white-space: pre-line;">[[${board.content}]]</p>
 										</div>
 									</div>
 								</div>

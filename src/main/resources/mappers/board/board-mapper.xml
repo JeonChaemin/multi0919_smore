@@ -23,6 +23,7 @@
 		<id 	property="bbrNo"			column="BBRNO"/>
 		<result property="bbNo" 			column="BBNO"/>
 		<result property="memNo" 			column="MEMNO"/>
+		<result property="id" 				column="ID"/>
 		<result property="content" 			column="CONTENT"/>
 		<result property="createDate" 		column="CREATE_DATE"/>
 		<result property="modifyDate" 		column="MODIFY_DATE"/>
@@ -197,7 +198,7 @@
 		UPDATE BOARD_REPLY
 		SET
 		content = #{content}, MODIFY_DATE = CURRENT_TIMESTAMP
-		WHERE bbNo = #{bbNo}
+		WHERE bbrNo = #{bbrNo}
 	</update>
 
 </mapper>

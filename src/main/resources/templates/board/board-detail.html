@@ -138,12 +138,14 @@
 								</tr>
 								<tr>
 									<th><label for="content">내용</label></th>
-									<td colspan="4" class="p-0">
-										<div class="text-center">
-											<img class="mt-2" alt="" style="width: 100%" th:src="|/board/file/${board.renamedFileName}|">
-										</div>
-										<div class="p-2 mt-1" name="content" id="content"
-											style="width: 95%; min-height: 180px; white-space: pre;">
+									<td colspan="4">
+										<th:block th:if="${!#lists.isEmpty(board.originalFileName)}">
+											<div class="text-center mb-3">
+												<img class="mt-2" alt="" style="width: 100%" th:src="|/board/file/${board.renamedFileName}|">
+											</div>
+										</th:block>
+										<div class="mt-n3" name="content" id="content"
+											style="min-height: 180px; white-space: pre-line;">
 											[[${board.content}]]
 										</div>
 									</td>
@@ -151,7 +153,7 @@
 
 								<tr>
 									<td colspan="2" class="border-0">
-										<a class="btn btn-soft-secondary text-start" onclick="history.back()">목록</a>
+										<a class="btn btn-soft-secondary text-start" th:href="|/board/list?type=${board.type}|">목록</a>
 									</td>
 									<th colspan="1" class="border-0 m-auto text-center" th:if="${session.loginMember != null}">
 										<button type="button" th:id="|heart${board.bbNo}|" th:value="${board.isLike}" th:onclick="|onClickHeart('heart${board.bbNo}', '${board.bbNo}');|"
