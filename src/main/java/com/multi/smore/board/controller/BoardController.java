@@ -263,15 +263,14 @@ public class BoardController {
 			}
 		}
 		
-		log.debug("board : " + board);
 		int result = service.saveBoard(board);
 
 		if(result > 0) {
 			model.addAttribute("msg", "게시글이 수정 되었습니다.");
-			model.addAttribute("location", "/board/list");
+			model.addAttribute("location", "/board/detail?type=" + board.getType() + "&no=" + board.getBbNo());
 		}else {
 			model.addAttribute("msg", "게시글 수정에 실패하였습니다.");
-			model.addAttribute("location", "/board/list");
+			model.addAttribute("location", "/board/detail?type=" + board.getType() + "&no=" + board.getBbNo());
 		}
 		
 		return "common/msg";

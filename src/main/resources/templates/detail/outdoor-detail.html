@@ -121,8 +121,8 @@
                     <div class="mt-4">
                       <div class="job-details-desc">
                         <div class="mt-4">
-                          <span class="badge2 bg-primary">#[[${park.parkNm}]]</span>
-                          <span class="badge2 bg-primary">#[[${park.parkSe}]]</span>
+                          <span class="badge2 bg-soft-info">#[[${park.parkNm}]]</span>
+                          <span class="badge2 bg-soft-info">#[[${park.parkSe}]]</span>
                         </div>
                       </div>
                     </div>
@@ -137,9 +137,9 @@
 				<th:block th:if="${replyList != null}">
 					<th:block th:each="replys : ${replyList}">
 						<div class="d-sm-flex align-items-top mt-4">
-							<div class="flex-shrink-0">
+							<div class="flex-shrink-0 mt-4">
 								<img class="rounded-circle avatar-md img-thumbnail"
-									th:src="@{/images/user/img-01.jpg}" alt="img">
+									th:src="@{/images/user/avatar2.png}" alt="img">
 							</div>
 							<div class="flex-grow-1 ms-sm-3">
 								<div class="row">
@@ -151,9 +151,9 @@
 										<div class="col-lg-3 text-end">
 											<button name="update"
 												th:id="|updateBtn${replys.parkRno}|"
-												class="btn btn-primary"
+												class="btn btn-outline-primary" style="padding: 5px 10px;"
 												th:onclick="|updateReply(${replys.parkRno})|">수정</button>
-											<button name="delete" class="btn btn-primary"
+											<button name="delete" class="btn btn-outline-danger" style="padding: 5px 10px;"
 												th:onclick="|deleteReply(${replys.parkRno},${park.parkNo});|">삭제</button>
 										</div>
 									</th:block>
@@ -174,11 +174,11 @@
 										</div>
 										<!--end row-->
 										<div class="text-end">
-											<button id="submit" class="btn btn-primary btn-hover"
-												th:onclick="|backBtn(${replys.parkRno})|">취소</button>
 											<button type="submit" id="submit"
-												class="btn btn-primary btn-hover"
+												class="btn btn-outline-primary" style="padding: 5px 10px;"
 												th:onclick="|updBtn(${replys.parkRno},${park.parkNo});|">확인</button>
+											<button id="submit" class="btn btn-outline-secondary" style="padding: 5px 10px;"
+												th:onclick="|backBtn(${replys.parkRno})|">취소</button>
 										</div>
 									</div>
 								</div>
@@ -198,8 +198,9 @@
 						<div class="col-lg-12">
 							<div class="mb-3">
 								<input type="hidden" name="parkNo" th:value="${park.parkNo}" />
-									<textarea class="form-control" id="inputcoment"
-										name="content" rows="3" placeholder="내용을 입력해주세요." required></textarea>
+								<h6 class="my-1 mx-3" style="margin-bottom: -2rem !important;" th:text="${session.loginMember.id}"></h6>
+								<textarea class="form-control" id="inputcoment" style="padding: 2rem 0 0 0.9rem !important;"
+									name="content" rows="3" placeholder="리뷰를 남겨보세요." required></textarea>
 							</div>
 						</div>
 					</div>

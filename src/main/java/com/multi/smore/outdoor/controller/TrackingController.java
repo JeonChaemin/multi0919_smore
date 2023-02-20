@@ -159,7 +159,7 @@ public class TrackingController {
 		int result = service.updateTrackingReply(reply);
 		
 		if(result > 0) {
-			model.addAttribute("msg", "리뷰 수정에 성공하습니다.");
+			model.addAttribute("msg", "리뷰 수정에 성공하였습니다.");
 		}else {
 			model.addAttribute("msg", "리뷰 수정에 실패하였습니다.");
 		}

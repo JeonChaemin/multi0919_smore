@@ -39,12 +39,12 @@
 									<p class="lead text-muted mb-0">현명한 소비습관을 위한 서비스와 건강한 생활을 위한 레시피,<br>
 										내 주변 산책코스 추천, 1인 가구에게 꼭 필요한 각종 정보까지 확인해보세요!</p>
 								</div>
-								<form action="#">
+								<form th:action="@{/search}" method="get">
 									<div class="registration-form">
 										<div class="row g-0">
 											<div class="col-md-9">
 												<div class="filter-search-form mt-3 mt-md-0">
-													<input type="search" id="searchValue" class="form-control filter-input-box fw-light"
+													<input type="search" id="searchValue" name="searchValue" th:value="${searchValue}" class="form-control filter-input-box fw-light"
 														placeholder="검색어를 입력해주세요.">
 												</div>
 											</div><!--end col-->

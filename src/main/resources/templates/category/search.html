@@ -3,6 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org">
 
 <head th:fragment="head" th:replace="~{common/layout :: head}"></head>
+<link rel="stylesheet" id="custom" type="text/css" th:href="@{/css/outdoor.css}">
 
 <body>
 
@@ -36,15 +37,16 @@
             <div class="row align-items-center">
               <div class="col-lg-7">
                 <div class="mb-4 pb-3 me-lg-5">
-                  <h1 class="display-6 mb-3 font-sangju"><span class="text-primary fw-bold">전체</span>검색결과</h1>
+                  <h1 class="display-6 mb-3 font-sangju"><span class="text-primary fw-bold">통합</span> 검색결과</h1>
                   <p class="lead text-muted mb-0">전체 카테고리에 대한 정보를 검색해 보세요!</p>
                 </div>
-                <form action="#">
+                <form th:action="@{/search}" method="get">
                   <div class="registration-form">
                     <div class="row g-0">
                       <div class="col-md-8">
                         <div class="filter-search-form mt-3 mt-md-0">
-                          <input type="search" id="searchValue" class="form-control filter-input-box fw-light" th:value="${searchValue}">
+                          <input type="search" id="searchValue" name="searchValue" th:value="${searchValue}" class="form-control filter-input-box fw-light"
+														placeholder="검색어를 입력해주세요.">
                         </div>
                       </div><!--end col-->
                       <div class="col-md-4">
@@ -60,7 +62,7 @@
               <!--end col-->
               <div class="col-lg-5">
                 <div class="mt-5 mt-md-0">
-                  <img src="assets/images/process-02.png" alt="" class="home-img" />
+                  <img th:src="@{/images/process-02.png}" alt="" class="home-img" />
                 </div>
               </div><!--end col-->
             </div>
@@ -70,94 +72,147 @@
         </section>
         <!-- End Home -->
 
-        <!-- START SHAPE -->
-        <div class="position-relative">
-          <div class="shape">
-            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"
-              width="1440" height="150" preserveAspectRatio="none" viewBox="0 0 1440 220">
-              <g mask="url(&quot;#SvgjsMask1004&quot;)" fill="none">
-                <path d="M 0,213 C 288,186.4 1152,106.6 1440,80L1440 250L0 250z" fill="rgba(255, 255, 255, 1)"></path>
-              </g>
-              <defs>
-                <mask id="SvgjsMask1004">
-                  <rect width="1440" height="250" fill="#ffffff"></rect>
-                </mask>
-              </defs>
-            </svg>
-          </div>
-        </div>
-        <!-- END SHAPE -->
+			<!-- START SHAPE -->
+			<div class="position-relative">
+				<div class="shape">
+					<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+						xmlns:xlink="http://www.w3.org/1999/xlink" width="1440"
+						height="150" preserveAspectRatio="none" viewBox="0 0 1440 220">
+							<g mask="url(&quot;#SvgjsMask1004&quot;)" fill="none">
+								<path d="M 0,213 C 288,186.4 1152,106.6 1440,80L1440 250L0 250z"
+							fill="rgba(255, 255, 255, 1)"></path>
+							</g>
+							<defs>
+								<mask id="SvgjsMask1004">
+									<rect width="1440" height="250" fill="#ffffff"></rect>
+								</mask>
+							</defs>
+						</svg>
+				</div>
+			</div>
+			<!-- END SHAPE -->
 
         <section class="py-2">
           <div class="container">
             <div class="row">
               <div class="col-lg-12">
-                <h4 class="highlight text-center mb-3 font-sangju">검색 결과</h4>
-                <h3 class="mb-5 text-center">검색어 <em style="color:#5257c2;">&quot;[[${searchValue}]]&quot;</em>&nbsp;에 대한 전체 <em
-                    style="color:#babef7;">10</em>&nbsp;개의 결과를 찾았습니다.</h3>
-
-                <br><br>
-
-                <!-- <div class="text-block">
-                  <ul class="result_list">
-                    <li>
-                      <p class="text-muted mt-5">
-                        <a style="font-size: 1.3rem" href="#"><span
-                            style="font-weight: 700"></span><span class="hl">/
-                            ${item.introduction}</span>
-                          <span class="hl" style="font-size: 1rem; line-height: 1rem; opacity: 80%">${item.tag}</span>
-                        </a>
-                    </li>
-                  </ul>
-                </div> -->
+                <h3 class="mb-5 text-center">검색어 <em style="color:#5257c2;">&quot;[[${searchValue}]]&quot;</em>&nbsp;에 대한 결과입니다.</h3>
 
                 <div class="job-detail-desc mt-2 ms-lg-5">
                   <ul class=" job-detail-list2 list-unstyled mb-0 text-muted fs-18">
                     <li><!-- 카테고리명 -->
                       <p class="category1">정부지원사업</p>
                     </li>
-                    <li><!-- 1 제목, 내용 -->
-                      <th:block th:if="${!#lists.isEmpty(oprogramList)}">
-	                      <th:block th:each="oneProgram : ${oprogramList}">
-		                      <i class="uil uil-circle" style="line-height: 30px;"></i>
-		                      <p style="font-size:1.2rem;">
-		                        <a style="text-decoration: none; color: none;" th:href="|/program-detail?onepNo=${oneProgram.onepNo}|">[[${oneProgram.partcptnSj}]]</a>
-		                      </p>
-	                      </th:block>
-                      </th:block>
-                      <th:block th:if="${#lists.isEmpty(oprogramList)}">
-	                      <i class="uil uil-circle" style="line-height: 30px;"></i>
-	                      <p style="font-size:1.2rem;">
-	                        검색된 결과가 없습니다.
-	                      </p>
-                      </th:block>
-                    </li>
-                    <li><!-- 2 제목, 내용 -->
-                      <i class="uil uil-circle" style="line-height: 30px;"></i>
-                      <p style="font-size:1.2rem;">
-                        <a style="text-decoration: none; color: none;" href="#">관악구, '여성 안전 서비스' <span class="highlight">지원</span>&nbsp;:&nbsp;서울 관악구가 여성 1인 가구의 안전한 주거생활을 위해 '안심 홈3종 세트'를 <span class="highlight">지원</span>합니다.</a>
-                      </p>
-                    </li>
+                    <th:block th:if="${!#lists.isEmpty(oprogramList)}">
+                     <th:block th:each="oneProgram : ${oprogramList}">
+                    	<p style="font-size:1.2rem;">
+	                      	<i class="uil uil-circle" style="line-height: 30px;"></i>
+	                        <a class="text-reset hl" th:href="|/program-detail?onepNo=${oneProgram.onepNo}|">[[${oneProgram.partcptnSj}]]</a>
+                   		</p>
+                     </th:block>
+                     	<a class="text-reset float-end text-muted mt-n4 fs-15" th:href="|program?searchValue=${searchValue}|">더보기 <i class="uil uil-angle-right"></i></a>
+                    </th:block>
+                    <th:block th:if="${#lists.isEmpty(oprogramList)}">
+	                     <p style="font-size:1.2rem;">
+	                     	<i class="uil uil-circle" style="line-height: 30px;"></i>
+	                     	검색된 결과가 없습니다.
+	                     </p>
+                    </th:block>
                     <hr class="mt-4 mb-4">
                     <li><!-- 카테고리명 -->
                       <p class="category1">공지사항</p>
                     </li>
-                    <li><!-- 1 제목, 내용 -->
-                      <i class="uil uil-circle" style="line-height: 30px;"></i>
-                      <p style="font-size:1.2rem;">
-                        검색된 결과가 없습니다.
-                      </p>
-                    </li>
+                    <th:block th:if="${!#lists.isEmpty(noticeList)}">
+                     <th:block th:each="notice : ${noticeList}">
+                    	<p style="font-size:1.2rem;">
+	                      	<i class="uil uil-circle" style="line-height: 30px;"></i>
+	                        <a class="text-reset hl" th:href="|/board/detail?type=notice&no=${notice.bbNo}|">[[${notice.title}]]</a>
+                   		</p>
+                     </th:block>
+                     	<a class="text-reset float-end text-muted mt-n4 fs-15" th:href="|board/list?type=notice&searchValue=${searchValue}|">더보기 <i class="uil uil-angle-right"></i></a>
+                    </th:block>
+                    <th:block th:if="${#lists.isEmpty(noticeList)}">
+	                     <p style="font-size:1.2rem;">
+	                     	<i class="uil uil-circle" style="line-height: 30px;"></i>
+	                     	검색된 결과가 없습니다.
+	                     </p>
+                    </th:block>
                     <hr class="mt-4 mb-4">
                     <li><!-- 카테고리명 -->
-                      <p class="category1">자유게시판</p>
+                      <p class="category1">공공임대주택</p>
                     </li>
-                    <li><!-- 1 제목, 내용 -->
-                      <i class="uil uil-circle" style="line-height: 30px;"></i>
-                      <p style="font-size:1.2rem;">
-                        <a style="text-decoration: none; color: none;" href="#">생활지원금 언제 <span class="highlight">지원</span>받을 수 있나요?&nbsp;:&nbsp;급합니다. 아시는 분 댓글 부탁드려요ㅠㅠ</a>
-                      </p>
+                    <th:block th:if="${!#lists.isEmpty(rentalList)}">
+                     <th:block th:each="rental : ${rentalList}">
+                    	<p style="font-size:1.2rem;">
+	                      	<i class="uil uil-circle" style="line-height: 30px;"></i>
+	                        <a class="text-reset hl" th:href="@{${rental.pcUrl}}">[[${rental.pblancNm}]]</a>
+                   		</p>
+                     </th:block>
+                     	<a class="text-reset float-end text-muted mt-n4 fs-15" th:href="|rental?searchValue=${searchValue}|">더보기 <i class="uil uil-angle-right"></i></a>
+                    </th:block>
+                    <th:block th:if="${#lists.isEmpty(rentalList)}">
+	                     <p style="font-size:1.2rem;">
+	                        <i class="uil uil-circle" style="line-height: 30px;"></i>
+	                     	검색된 결과가 없습니다.
+	                     </p>
+                    </th:block>
+                    <hr class="mt-4 mb-4">
+                    <li><!-- 카테고리명 -->
+                      <p class="category1">레시피</p>
                     </li>
+                    <th:block th:if="${!#lists.isEmpty(recipeList)}">
+                     <th:block th:each="recipe : ${recipeList}">
+                    	<p style="font-size:1.2rem;">
+	                      	<i class="uil uil-circle" style="line-height: 30px;"></i>
+	                        <a class="text-reset hl" th:href="|/detail/recipe-detail?rcpNo=${recipe.rcpNo}|">[[${recipe.rcpNm}]]</a>
+                   		</p>
+                     </th:block>
+                     	<a class="text-reset float-end text-muted mt-n4 fs-15" th:href="|recipe?all=${searchValue}|">더보기 <i class="uil uil-angle-right"></i></a>
+                    </th:block>
+                    <th:block th:if="${#lists.isEmpty(recipeList)}">
+	                     <p style="font-size:1.2rem;">
+	                     	<i class="uil uil-circle" style="line-height: 30px;"></i>
+	                      	검색된 결과가 없습니다.
+	                     </p>
+                    </th:block>
+                    <hr class="mt-4 mb-4">
+                    <li><!-- 카테고리명 -->
+                      <p class="category1">자유 게시판</p>
+                    </li>
+                    <th:block th:if="${!#lists.isEmpty(boardList)}">
+                     <th:block th:each="board : ${boardList}">
+                    	<p style="font-size:1.2rem;">
+	                      	<i class="uil uil-circle" style="line-height: 30px;"></i>
+	                        <a class="text-reset hl" th:href="|/board/detail?no=${board.bbNo}|">[[${board.title}]]</a>
+	                    </p>
+                     </th:block>
+	                    <a class="text-reset float-end text-muted mt-n4 fs-15" th:href="|board/list?type=free&searchValue=${searchValue}|">더보기 <i class="uil uil-angle-right"></i></a>
+                    </th:block>
+                    <th:block th:if="${#lists.isEmpty(boardList)}">
+	                     <p style="font-size:1.2rem;">
+	                     	<i class="uil uil-circle" style="line-height: 30px;"></i>
+	                     	검색된 결과가 없습니다.
+	                     </p>
+                    </th:block>
+                    <hr class="mt-4 mb-4">
+                    <li><!-- 카테고리명 -->
+                      <p class="category1">중고거래</p>
+                    </li>
+                    <th:block th:if="${!#lists.isEmpty(tradeList)}">
+                     <th:block th:each="trade : ${tradeList}">
+                    	<p style="font-size:1.2rem;">
+	                      	<i class="uil uil-circle" style="line-height: 30px;"></i>
+	                        <a class="text-reset hl" th:href="|/trade/detail?no=${trade.tradeNo}|">[[${trade.title}]]</a>
+                   		</p>
+                     </th:block>
+                     	<a class="text-reset float-end text-muted mt-n4 fs-15" th:href="|trade?searchValue=${searchValue}|">더보기 <i class="uil uil-angle-right"></i></a>
+                    </th:block>
+                    <th:block th:if="${#lists.isEmpty(tradeList)}">
+	                     <p style="font-size:1.2rem;">
+	                     	<i class="uil uil-circle" style="line-height: 30px;"></i>
+	                     	검색된 결과가 없습니다.
+	                     </p>
+                    </th:block>
                   </ul>
                 </div>
 
@@ -165,30 +220,6 @@
             </div>
           </div>
 
-          <!-- 페이지 카운트 -->
-          <div class="row mt-5">
-            <div class="col-lg-12 mt-5 mb-5">
-              <nav aria-label="Page navigation example">
-                <ul class="pagination job-pagination mb-0 justify-content-center">
-                  <li class="page-item disabled">
-                    <a class="page-link" href="javascript:void(0)" tabindex="-1">
-                      <i class="mdi mdi-chevron-double-left fs-15"></i>
-                    </a>
-                  </li>
-                  <li class="page-item active"><a class="page-link" href="javascript:void(0)">1</a></li>
-                  <li class="page-item"><a class="page-link" href="javascript:void(0)">2</a></li>
-                  <li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
-                  <li class="page-item"><a class="page-link" href="javascript:void(0)">4</a></li>
-                  <li class="page-item"><a class="page-link" href="javascript:void(0)">5</a></li>
-                  <li class="page-item">
-                    <a class="page-link" href="javascript:void(0)">
-                      <i class="mdi mdi-chevron-double-right fs-15"></i>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-            </div><!--end col-->
-          </div><!-- end row -->
         </section>
 
       </div>
@@ -218,26 +249,26 @@
   <!-- END layout-wrapper -->
 
   <!-- JAVASCRIPT -->
-  <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script th:src="@{/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
   <script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
 
 
   <!-- Choice Js -->
-  <script src="assets/libs/choices.js/public/assets/scripts/choices.min.js"></script>
+  <script th:src="@{/libs/choices.js/public/assets/scripts/choices.min.js}"></script>
 
   <!-- Swiper Js -->
-  <script src="assets/libs/swiper/swiper-bundle.min.js"></script>
+  <script th:src="@{/libs/swiper/swiper-bundle.min.js}"></script>
 
   <!-- Index Js -->
-  <script src="assets/js/pages/job-list.init.js"></script>
+  <script th:src="@{/js/pages/job-list.init.js}"></script>
 
   <!-- Switcher Js -->
-  <script src="assets/js/pages/switcher.init.js"></script>
+  <script th:src="@{/js/pages/switcher.init.js}"></script>
 
-  <script src="assets/js/pages/index.init.js"></script>
+  <script th:src="@{/js/pages/index.init.js}"></script>
 
   <!-- App Js -->
-  <script src="assets/js/app.js"></script>
+  <script th:src="@{/js/app.js}"></script>
   
   <script type="text/javascript">
 	window.onload = function () {
@@ -246,7 +277,7 @@
 		for (var i = 0; i < hlList.length; i++) {
 			let text =  hlList[i].innerHTML;
 			console.dir("text : "+text);
-			text = text.replaceAll(search,"<span style='color:#ffaC34; font-weight: 900;'>"+search+"</span>");
+			text = text.replaceAll(search,"<span style='color:#766df4; font-weight: 900;'>"+search+"</span>");
 			document.querySelectorAll(".hl")[i].innerHTML = text;
 		}
 	}

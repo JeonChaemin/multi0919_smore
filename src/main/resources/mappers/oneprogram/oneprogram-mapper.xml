@@ -116,24 +116,15 @@
 			O.onepNo, O.PARTCPTN_ID, O.PARTCPTN_SJ, O.TY_NM, O.SE_NM, O.ATDRC_NM, O.RCEPT_DE1, O.RCEPT_DE2
 			, O.PROGRS_DE1, O.PROGRS_DE2, O.AGRDE_NM, O.SEXDSTN_NM, O.TRGET_INFO, O.TME, O.PARTCPTN_NMPR , O.PARTCPT_CT_NM
 			, O.PARTCPT_AMOUNT , O.RCEPT_MTH_NM, O.RCEPT_MTH_LINK , O.PROGRS_INQRY , O.PLACE_ADRES1, O.PLACE_ADRES2, O.CN, O.REG_DATE2, O.INSTT_NM
-			, (SELECT COUNT(*) FROM CLIP_ONEPROGRAM CO WHERE O.onepNo = CO.onepNo) as likeCount
-			<if test="memNo !=  null">
-				, (SELECT COUNT(*) FROM CLIP_ONEPROGRAM CO WHERE O.onepNo = CO.onepNo AND CO.memNo = #{memNo}) as isClip
-			</if>
-			<if test="memNo == null">
-				, (SELECT COUNT(*) FROM CLIP_ONEPROGRAM CO WHERE O.onepNo = CO.onepNo AND CO.memNo = 0) as isClip
-			</if>
 		FROM ONEPROGRAM O
-		LEFT OUTER JOIN CLIP_ONEPROGRAM CO ON (O.onepNo = CO.onepNo)
-		LEFT OUTER JOIN MEMBER M ON (M.memNo = CO.memNo)
 		WHERE 1 = 1
 		<if test="all != null">
 			AND ( 
 				O.PARTCPTN_SJ LIKE '%${all}%'
-				O.SE_NM LIKE '%${all}%'
-				O.PARTCPTN_SJ LIKE '%${all}%'
-				O.TRGET_INFO LIKE '%${all}%'
-				O.CN LIKE '%${all}%'
+				OR O.SE_NM LIKE '%${all}%'
+				OR O.PARTCPTN_SJ LIKE '%${all}%'
+				OR O.TRGET_INFO LIKE '%${all}%'
+				OR O.CN LIKE '%${all}%'
 				)
 		</if>
 		ORDER BY O.PROGRS_DE2 DESC LIMIT 5

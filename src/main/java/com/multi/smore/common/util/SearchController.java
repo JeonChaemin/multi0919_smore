@@ -48,23 +48,25 @@ public class SearchController {
 			@RequestParam Map<String, String> paramMap) {
 		String searchValue = paramMap.get("searchValue");
 		Map<String, String> searchMap = new HashMap<>();
-		searchMap.put("searchValue", searchValue);
-		int count = 0;
+		searchMap.put("all", searchValue);
 		
-		List<Recipe> recipeList = recipeService.getSearchRecipeList(paramMap);
-		List<Trade> tradeList = tradeService.getTradeListHome(paramMap);
-		List<Rental> rentalList = rentalService.getRentalListHome(paramMap);
-		List<OneProgram> oprogramList = oprogramService.getOneProgramListHome(paramMap);
-		List<Board> boardList = boardService.getBoardListHome(paramMap);
+		List<Recipe> recipeList = recipeService.getSearchRecipeList(searchMap);
+		List<Trade> tradeList = tradeService.getTradeListHome(searchMap);
+		List<Rental> rentalList = rentalService.getRentalListHome(searchMap);
+		List<OneProgram> oprogramList = oprogramService.getOneProgramListHome(searchMap);
+		List<Board> getboardList = boardService.getBoardListHome(searchMap);
+		List<Board> boardList = new ArrayList<>();
 		List<Board> noticeList = new ArrayList<>();
-		for (Board board : boardList) {
-			if (board.getType().equals("notice")) {
-				noticeList.add(board);
-				boardList.remove(board);
+		for (Board board : getboardList) {
+			if(board.getType().equals("free")) {
+				boardList.add(board);
 			}
 		}
-		
-		count = recipeList.size() + tradeList.size() + rentalList.size() + oprogramList.size() + boardList.size() + noticeList.size();
+		for (Board board : getboardList) {
+			if (board.getType().equals("notice")) {
+				noticeList.add(board);
+			}
+		}
 		
 		model.addAttribute("recipeList", recipeList);
 		model.addAttribute("tradeList", tradeList);

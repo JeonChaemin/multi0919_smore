@@ -184,12 +184,11 @@
 		LEFT OUTER JOIN MEMBER M2 ON R.MEMNO = M2.MEMNO 
 		LEFT OUTER JOIN BOARD_LIKE LK ON LK.BBNO = B.BBNO
 		WHERE B.STATUS = 'Y'
-		AND TYPE=#{type}
 		<if test="all != null">
 			AND (
 				M1.ID LIKE '%${all}%'
 				OR B.TITLE LIKE '%${all}%'
-				OR B.CONTENT LIKE '%${all}%'
+				OR B.CONTENT LIKE '%${all}%')
 		</if>
 		ORDER BY B.BBNO DESC LIMIT 5
 	</select>

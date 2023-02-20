@@ -301,10 +301,10 @@ public class TradeController {
 
 		if (result > 0) {
 			model.addAttribute("msg", "게시글이 수정 되었습니다.");
-			model.addAttribute("location", "/trade");
+			model.addAttribute("location", "/trade/detail?no=" + trade.getTradeNo());
 		} else {
 			model.addAttribute("msg", "게시글 수정에 실패하였습니다.");
-			model.addAttribute("location", "/trade");
+			model.addAttribute("location", "/trade/detail?no=" + trade.getTradeNo());
 		}
 
 		return "common/msg";
