@@ -133,4 +133,10 @@ public class RentalConrtoller {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 	}
+	
+	@GetMapping("/rental/error")
+	public String error() {
+		return "common/error";
+	}
+	
 }

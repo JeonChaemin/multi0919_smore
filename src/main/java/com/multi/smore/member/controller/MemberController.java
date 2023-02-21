@@ -284,6 +284,7 @@ public class MemberController {
 		model.addAttribute("trackingList", trackingList);
 		model.addAttribute("rentalList", rentalList);
 		model.addAttribute("oprogramList", oprogramList);
+		model.addAttribute("pageTitle", "smore | My page");
 		return "member/view";
 	}
 	
@@ -323,7 +324,7 @@ public class MemberController {
 		return  "/common/msg";
 	}
 	
-	@GetMapping("/error")
+	@GetMapping("/member/error")
 	public String error() {
 		return "common/error";
 	}

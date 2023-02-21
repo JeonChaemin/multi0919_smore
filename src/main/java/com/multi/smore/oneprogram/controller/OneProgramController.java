@@ -191,6 +191,10 @@ public class OneProgramController {
 			}
 		}
 		
+		@GetMapping("/program/error")
+		public String error() {
+			return "common/error";
+		}
 		
 //	public void initDB() {
 //		List<OneProgram> list = new ArrayList<>();

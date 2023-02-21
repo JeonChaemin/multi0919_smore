@@ -78,4 +78,9 @@ public class SearchController {
 		return "/category/search";
 	}
 	
+	@GetMapping("/search/error")
+	public String error() {
+		return "common/error";
+	}
+	
 }

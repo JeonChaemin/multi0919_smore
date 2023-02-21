@@ -202,4 +202,9 @@ public class HousebudgetController {
 		return "common/msg";
 	}
 	
+	@GetMapping("/error")
+	public String error() {
+		return "common/error";
+	}
+	
 }

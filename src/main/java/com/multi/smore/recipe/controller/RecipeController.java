@@ -206,5 +206,10 @@ public class RecipeController {
 		
 		return resultList;
 	}
+	
+	@GetMapping("/recipe/error")
+	public String error() {
+		return "common/error";
+	}
 
 }
