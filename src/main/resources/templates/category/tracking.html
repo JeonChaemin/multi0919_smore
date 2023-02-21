@@ -5,8 +5,6 @@
 <head th:fragment="head" th:replace="~{common/layout :: head}"></head>
   <!--Custom Css-->
   <link rel="stylesheet" id="custom" type="text/css" th:href="@{/css/outdoor.css}">
-  <!--jquery CDN-->
-  <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
 
 <body>
   <!-- Begin page -->
@@ -83,9 +81,8 @@
               <div class="row g-2">
               	<div class="col-lg-3 col-md-5"> 
                   <div class="filler-job-form">
-                    <i class="uil uil-clipboard-notes"></i>
-                    <select class="form-select filter-job-input-box2" name="searchType" id="searchType">
-                      <option value="서울두드림길" th:value="${param.searchType}=='서울두드림길'">서울두드림길<option>
+                    <i class="uil uil-sign-alt"></i>
+                    <select class="form-select" data-trigger name="searchType" id="searchType" aria-label="Default select example">
                     </select>
                   </div>
                 </div><!--end col-->
@@ -391,7 +388,7 @@
   <script th:src="@{/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
   <script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
 
- <!-- jquery -->
+  <!-- jquery -->
   <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
   <!-- Choice Js -->
   <script th:src="@{/libs/choices.js/public/assets/scripts/choices.min.js}"></script>
@@ -407,6 +404,17 @@
 
   <!-- App Js -->
   <script th:src="@{/js/app.js}"></script>
+  
+  <script>
+  var searchType = new Choices("#searchType");
+  searchType.setChoices(
+  	[{value: '서울두드림길', label: '서울두드림길',
+  	  selected: true}],
+  	'value',
+  	'label',
+  	false
+  );
+  </script>
 </body>
 
 </html>

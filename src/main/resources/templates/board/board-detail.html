@@ -42,7 +42,7 @@
 								<div class="page-next">
 									<nav class="d-inline-block" aria-label="breadcrumb text-center">
 										<ol class="breadcrumb justify-content-center">
-											<li class="breadcrumb-item"><a th:href="@{/index}">HOME</a></li>
+											<li class="breadcrumb-item"><a th:href="@{/}">HOME</a></li>
 											<li class="breadcrumb-item"><a th:href="@{/board/list?type=free}">COMMUNITY</a></li>
 											<li class="breadcrumb-item"><a th:href="@{/board/list?type=free}">BOARD</a></li>
 											<li class="breadcrumb-item active" aria-current="page">
@@ -114,7 +114,7 @@
 									<td colspan="2">
 										<th:block th:if="${!#lists.isEmpty(board.originalFileName)}">
 											<a th:href="|javascript:fileDownload('${board.originalFileName}','${board.renamedFileName}')|">
-												<i class="uil uil-scenery"></i>[[${board.originalFileName}]]				
+												<i class="uil uil-scenery"></i>[[${board.renamedFileName}]]				
 											</a><br>
 									<script>
 										function fileDownload(oriname, rename) {

@@ -76,7 +76,7 @@
 		<if test="searchValue != null">
 			AND ( COURSE_NAME LIKE '%${searchValue}%'
 				OR COURSE_CATEGORY_NM LIKE '%${searchValue}%' 
-				OR CPI_NAME LIKE '%${cpiName}%'
+				OR CPI_NAME LIKE '%${searchValue}%'
 				)
 		</if>
 	</select>

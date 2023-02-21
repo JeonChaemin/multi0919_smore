@@ -83,7 +83,7 @@
               	<div class="col-lg-2 col-md-5"> 
                   <div class="filler-job-form">
                     <i class="uil uil-trees"></i>
-                    <select class="form-select filter-job-input-box2" name="searchType" id="searchType">
+                    <select class="form-select" data-trigger name="searchType" id="searchType" aria-label="Default select example">
                       <option value="공원" th:selected="${param.searchType} == '공원'">공원</option>
                     </select>
                   </div>
@@ -99,7 +99,7 @@
                 <div class="col-lg-2 col-md-2">
                   <div class="filler-job-form">
                     <i class="uil uil-location-point"></i>
-                    <select class="form-select filter-job-input-box2" name="regions" id="regions">
+                    <select class="form-select" name="regions" id="regions" data-trigger aria-label="Default select example">
                       <option value="서울특별시" th:selected="${#arrays.contains(regions, '서울특별시')  ? 'selected' : null}">서울특별시</option>
                       <option value="부산광역시" th:selected="${#arrays.contains(regions, '부산광역시')  ? 'selected' : null}">부산광역시</option>
                       <option value="인천광역시" th:selected="${#arrays.contains(regions, '인천광역시')  ? 'selected' : null}">인천광역시</option>
@@ -315,8 +315,8 @@
              
 		  
 		  
-        </section>
         </div><!--end container-->
+        </section>
         <!-- END JOB-LIST -->
       </div>
       <!-- End Page-content -->
@@ -418,7 +418,6 @@
   		location.href = encodeURI(pageUrl);	
   	}
   
-  	
   </script>
 	
 	
@@ -441,6 +440,16 @@
 
   <!-- App Js -->
   <script th:src="@{/js/app.js}"></script>
+  
+  <script>
+  var regions = new Choices("#regions", {
+	  shouldSort:false
+  });	
+  
+  var searchType = new Choices("#searchType", {
+	  shouldSort:false
+  });
+  </script>
 
 </body>
 
