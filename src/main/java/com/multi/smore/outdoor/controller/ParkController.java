@@ -101,6 +101,7 @@ public class ParkController {
 				
 		Park park = service.selectParkByNo(parkNo, memNo);
 		List<ParkReply> replyList = service.selectParkReplyListByNo(parkNo);
+		int img = (int) (Math.random() * 9);
 		
 		if(park == null) {
 			return "redirect:error";
@@ -111,6 +112,7 @@ public class ParkController {
 		model.addAttribute("searchType", searchType);
 		model.addAttribute("park", park);
 		model.addAttribute("replyList", replyList);
+		model.addAttribute("img", img);
 		model.addAttribute("pageTitle", "smore | Outdoor-detail");
 		
 		return "detail/outdoor-detail";
