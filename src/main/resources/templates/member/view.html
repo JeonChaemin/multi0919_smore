@@ -118,6 +118,9 @@
 											</div>
 										</li>
 									</ul>
+									<div class="mt-5">
+								  		<input type="button" id="deleteMember" class="text-muted text-decoration-underline" style="border: none; background-color: #fff !important;" value="회원탈퇴">
+									</div>
 								</div>
 								<!--end candidate-overview-->
 							</div>
@@ -606,6 +609,11 @@
 		open(url, "", status);
 	});
 	
+	$("#deleteMember").on("click", (e) => {
+		if(confirm("정말로 탈퇴하시겠습니까?!")) {
+			location.replace('/member/delete');
+		}
+	});
 	
     function showPopup() {
 		window.open("@{/member/updatePwd}", "비밀번호 변경", "width=400, height=300, left=100, top=50"); }
