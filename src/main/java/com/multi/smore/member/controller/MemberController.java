@@ -322,4 +322,10 @@ public class MemberController {
 		}
 		return  "/common/msg";
 	}
+	
+	@GetMapping("/error")
+	public String error() {
+		return "common/error";
+	}
+	
 }

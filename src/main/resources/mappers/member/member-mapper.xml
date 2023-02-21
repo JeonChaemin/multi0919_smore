@@ -6,7 +6,6 @@
 	<sql id="selectMemberSql">
 		SELECT 	
 			MEMNO, ID, PASSWORD, ROLE, NAME, PHONE,
-			EMAIL, ADDRESS,
 			EMAIL, ADDRESS, KAKAOTOKEN,
 			STATUS, ENROLLDATE, MODIFYDATE 
 		FROM MEMBER
@@ -22,7 +21,7 @@
 		<result property="phone" 		column="PHONE" />
 		<result property="email" 		column="EMAIL" />
 		<result property="address" 		column="ADDRESS" />
-		<result property="kakaotoken" 	column="KAKAOTOKEN" />
+		<result property="kakaoToken" 	column="KAKAOTOKEN" />
 		<result property="status" 		column="STATUS" />
 		<result property="enrollDate" 	column="ENROLLDATE" />
 		<result property="modifyDate" 	column="MODIFYDATE" />
@@ -41,7 +40,7 @@
 		WHERE ID = #{id} AND STATUS = 'Y'
 	</select>	
 	
-		<select id="selectMemberByKakaoToken" parameterType="string" resultMap="memberResultMap">
+	<select id="selectMemberByKakaoToken" parameterType="string" resultMap="memberResultMap">
 		<include refid="selectMemberSql"/>
 		WHERE KAKAOTOKEN = #{kakaoToKen} AND STATUS = 'Y'
 	</select>
