@@ -287,9 +287,9 @@ public class MemberController {
 		return "member/view";
 	}
 	
-	@GetMapping("/member/updatePwd")
+	@GetMapping("/member/reset-password")
 	public String updatePwdPage() {
-		return "member/updatePwd";
+		return "member/reset-password";
 	}
 	
 	@PostMapping("/member/updatePwd")

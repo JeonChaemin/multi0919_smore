@@ -27,10 +27,10 @@
                   <div class="page-next">
                     <nav class="d-inline-block" aria-label="breadcrumb text-center">
                       <ol class="breadcrumb justify-content-center">
-                        <li class="breadcrumb-item"><a href="@{/}">HOME</a></li>
-                        <li class="breadcrumb-item"><a href="@{/tracking}">LIFE</a></li>
-                        <li class="breadcrumb-item"><a href="@{/tracking}">OUTDOOR</a></li>
-                        <li class="breadcrumb-item"><a href="@{/tracking}">TRACKING</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/}">HOME</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/tracking}">LIFE</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/tracking}">OUTDOOR</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/tracking}">TRACKING</a></li>
                         <li class="breadcrumb-item" aria-current="page"> DETAIL </li>
                       </ol>
                     </nav>
@@ -63,7 +63,7 @@
               <div class="col-lg-8 mt-lg-4">
                 <div class="card job-detail overflow-hidden">
                   <div >
-                    <img th:src="@{/images/img/trail1.jpg}" alt="" th:style="'width: 800px; height:400px'">
+                    <img th:src="|/images/img/trail${img}.jpeg|" alt="" th:style="'width: 800px; height:400px'">
                   </div>
                   <div class="card-body p-4">
                     <div>

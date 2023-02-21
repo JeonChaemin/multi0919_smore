@@ -95,6 +95,8 @@ public class TrackingController {
 		Tracking tracking = service.selectTrackingByNo(tNo, memNo);
 		List<TrackingReply> replyList = service.selectTrackingReplyListByNo(tNo);
 		
+		int img = (int) (Math.random() * 9);
+		
 		if(tracking == null) {
 			return "redirect:error";
 		}
@@ -103,6 +105,7 @@ public class TrackingController {
 		
 		model.addAttribute("tracking", tracking);
 		model.addAttribute("replyList", replyList);
+		model.addAttribute("img", img);
 		model.addAttribute("pageTitle", "smore | Outdoor-detail");
 		
 		return "detail/track-detail";
