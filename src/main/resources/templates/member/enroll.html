@@ -176,7 +176,7 @@
                          	<div class="text-center"></div>
                           </th:block>
                          <th:block th:if="${kakaoMap} == null">
-                        	<button class="btn btn-hover kakao w-100" onMouseOver="this.style.background='#f9e000'"style="margin-top:10px;">
+                        	<button class="btn btn-hover kakao w-100" onMouseOver="this.style.background='#f9e000'"style="margin-top:10px;" onclick="location.href='https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=db9b4636697b685acdb60e2cfea3d1e0&redirect_uri=http://localhost/member/enroll/kakao';">
                           	<img class="btn-social-icon" th:src="@{/images/kakao.svg}">
                         	<a class="kakao" href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=db9b4636697b685acdb60e2cfea3d1e0&redirect_uri=http://localhost/member/enroll/kakao">카카오 아이디로 <span class="d-none d-sm-inline">시작하기</span></a></button>
                           </th:block>

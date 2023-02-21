@@ -114,7 +114,7 @@
 									<td colspan="2">
 										<th:block th:if="${!#lists.isEmpty(board.originalFileName)}">
 											<a th:href="|javascript:fileDownload('${board.originalFileName}','${board.renamedFileName}')|">
-												<i class="uil uil-scenery"></i>[[${board.renamedFileName}]]				
+												<i class="uil uil-scenery"></i>[[${board.originalFileName}]]				
 											</a><br>
 									<script>
 										function fileDownload(oriname, rename) {
