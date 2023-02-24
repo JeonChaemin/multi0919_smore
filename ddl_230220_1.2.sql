@@ -20,7 +20,6 @@ CREATE TABLE MEMBER (
     MODIFYDATE DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-SELECT * FROM MEMBER;
 
 -- ============================ 게시판 ============================
 -- DROP TABLE IF EXISTS BOARD;
@@ -38,7 +37,7 @@ CREATE TABLE BOARD (
     MODIFY_DATE DATETIME  DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY(MEMNO) REFERENCES MEMBER(MEMNO) ON DELETE SET NULL
 );
-SELECT * FROM BOARD;
+
 
 -- 리플
 CREATE TABLE BOARD_REPLY(
@@ -52,7 +51,6 @@ CREATE TABLE BOARD_REPLY(
 	FOREIGN KEY (MEMNO) REFERENCES MEMBER(MEMNO)
 );
 
-select * from board_reply;
 
 -- 좋아요
 CREATE TABLE BOARD_LIKE (
@@ -86,7 +84,6 @@ CREATE TABLE  TRADE (
     CONSTRAINT FK_TRADE_WRITER FOREIGN KEY(writer_No) REFERENCES MEMBER(memNo) ON DELETE SET NULL
 );
 
-select * from trade;
 
 -- 중고거래 리플1
 -- DROP TABLE IF EXISTS REPLY_TRADE;
@@ -112,7 +109,7 @@ CREATE TABLE CLIP_TRADE(
     FOREIGN KEY (memNo) REFERENCES MEMBER(memNo),
     FOREIGN KEY (tradeNo) REFERENCES TRADE(tradeNo)
 );
-select * from clip_trade;
+
 
 -- ============================ 공공주택 모집공고 조회 서비스 ============================
 -- DROP TABLE IF EXISTS rentalHouse;
@@ -152,7 +149,7 @@ mtRntchrg int,
 beginDe VARCHAR(200), 
 endDe VARCHAR(200)
 );
-SELECT * FROM rentalHouse;
+
 
 
 -- 공공주택 모집공고 조회 서비스 스크랩
@@ -162,7 +159,7 @@ CREATE TABLE CLIP_RENTALHOUSE(
     rentalNo          INT,
     PRIMARY KEY (memNo, rentalNo),
     FOREIGN KEY (memNo) REFERENCES MEMBER(memNo),
-    FOREIGN KEY (rentalNo) REFERENCES RENTALHOUSE(rentalNo)
+    FOREIGN KEY (rentalNo) REFERENCES rentalHouse(rentalNo)
 );
 
 -- ============================ 1인가구 정부지원사업정보 서비스 ============================
@@ -194,7 +191,7 @@ CN VARCHAR(10000),
 REG_DATE2 DATE,
 INSTT_NM VARCHAR(100)
 );
-SELECT * FROM ONEPROGRAM;
+
 -- 1인가구 정부지원사업정보 스크랩
 -- DROP TABLE IF EXISTS CLIP_ONEPROGRAM;
 CREATE TABLE CLIP_ONEPROGRAM(
@@ -262,7 +259,6 @@ MANUAL_IMG19 VARCHAR(100),
 MANUAL20 VARCHAR(100),
 MANUAL_IMG20 VARCHAR(100)
 );
-select * from recipe;
 
 -- 리플
 -- DROP TABLE IF EXISTS REVIEW_RCP;
@@ -333,7 +329,6 @@ CREATE TABLE REPLY_TRACKING(
   FOREIGN KEY (TNO) REFERENCES TRACKING(TNO),
   FOREIGN KEY (memNo) REFERENCES MEMBER(memNo)
 );
-SELECT * FROM TRACKING;
 
 CREATE TABLE CLIP_TRACKING(
     TNO       INT,
@@ -392,7 +387,6 @@ CREATE TABLE CLIP_PARK(
     FOREIGN KEY (memNo) REFERENCES MEMBER(memNo)
 );
 
-select * from clip_park;
 
 -- ============================ 가계부 ============================
 -- DROP TABLE IF EXISTS HOUSEBUDGET;
