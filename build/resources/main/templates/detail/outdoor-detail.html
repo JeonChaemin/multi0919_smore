@@ -1,0 +1,435 @@
+﻿<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+
+<head th:fragment="head" th:replace="~{common/layout :: head}"></head>
+  <!--Custom Css-->
+  <link rel="stylesheet" id="custom" type="text/css" th:href="@{/css/outdoor.css}">
+ 
+<body>
+  <!-- Begin page -->
+  <div>
+    <!--Navbar Start-->
+  	<header th:replace="~{common/layout :: #header}"></header>
+    
+    <div class="main-content">
+
+      <div class="page-content">
+
+        <!-- Start home -->
+        <section class="page-title-box"
+			th:style="'background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('+@{/images/img/hero_outdoor-detail.jpg}+'); height: 350px; padding-top: 130px; background-position: center;'">
+          <div class="container">
+            <div class="row justify-content-center">
+              <div class="col-md-6">
+                <div class="text-center text-white">
+                  <h3 class="mb-4 hero-title" th:style="'font-weight: 400;'">야외활동</h3>
+                  <div class="page-next">
+                    <nav class="d-inline-block" aria-label="breadcrumb text-center">
+                      <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a th:href="@{/}">HOME</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/outdoor}">LIFE</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/outdoor}">OUTDOOR</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/outdoor}">PARK</a></li>
+                        <li class="breadcrumb-item" aria-current="page"> DETAIL </li>
+                      </ol>
+                    </nav>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- end home -->
+
+        <!-- START SHAPE -->
+        <div class="position-relative" th:style="'z-index: 1'">
+          <div class="shape">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 250">
+              <path fill="#FFFFFF" fill-opacity="1"
+                d="M0,192L120,202.7C240,213,480,235,720,234.7C960,235,1200,213,1320,202.7L1440,192L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z">
+              </path>
+            </svg>
+          </div>
+        </div>
+        <!-- END SHAPE -->
+
+        <!-- START JOB-DEATILS -->
+        
+
+        <section class="section">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 mt-lg-4">
+                <div class="card job-detail overflow-hidden">
+                  <div>
+                    <img th:src="|/images/img/park${img}.jpeg|" alt="" th:style="'width: 800px; height:400px'">
+                  </div>
+                  <div class="card-body p-4">
+                    <div>
+                      <div class="row">
+                        <div class="col-md-10">
+                          <h2 class="mb-2" th:style="'letter-spacing:.5px;'">[[${park.parkNm}]]</h2>
+                          <ul class="list-inline text-muted mb-0">
+                            <li class="fs-18">[[${park.parkSe}]]</li>
+                          </ul>
+                        </div><!--end col-->
+                        <div class="col-lg-2">
+                          <ul class="list-inline mb-0 text-lg-end mt-3 mt-lg-0">
+                            <li class="list-inline-item">
+                              <th:block th:if="${session.loginMember != null}">
+				 				<div class="clip clip2 text-end favorite-icon2" th:style="'line-height: 70px;'" th:id="|clip${park.parkNo}|" th:value="${park.isClip}" th:onclick="|onClickClip('clip${park.parkNo}', '${park.parkNo}');|">
+				 				  <a th:href="|javascript:void(0)|"><i class="uil uil-heart-alt fs-20"></i></a>
+				 				</div>
+				  			  </th:block>
+                            </li>
+                          </ul>
+                        </div>
+                      </div><!--end row-->
+                    </div>
+
+                    <div class="mt-4">
+                      <div class="row g-2">
+                        <div class="col-lg-8">
+                          <div class="border rounded-start p-3">
+                            <p class="text-muted mb-0 fs-16">주소</p>
+                            <p class="fw-medium fs-17 mb-0">[[${park.lnmadr}]]</p>
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="border p-3">
+                            <p class="text-muted fs-16 mb-0">공원면적</p>
+                            <p class="fw-medium fs-17 mb-0">[[${park.parkAr}]]&nbsp;m<sup>2</sup></p>
+                          </div>
+                        </div>
+                      </div>
+                    </div><!--end Experience-->
+
+
+                    <div class="mt-5">
+                      <h4 class="mb-4">공원보유시설</h4>
+                      <div class="job-detail-desc mt-2">
+                        <ul class=" job-detail-list2 list-unstyled mb-0 text-muted fs-17">
+                          <li><i class="uil uil-circle"></i>운동시설&nbsp;:&nbsp;[[${park.mvmFclty}]]</li>
+                          <li><i class="uil uil-circle"></i>유희시설&nbsp;:&nbsp;[[${park.amsmtFclty}]]</li>
+                          <li><i class="uil uil-circle"></i>편익시설&nbsp;:&nbsp;[[${park.cnvnncFclty}]]</li>
+                          <li><i class="uil uil-circle"></i>교양시설&nbsp;:&nbsp;[[${park.cltrFclty}]]</li>
+                          <li><i class="uil uil-circle"></i>기타시설&nbsp;:&nbsp;[[${park.etcFclty}]]</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="mt-4">
+                      <div class="job-details-desc">
+                        <div class="mt-4">
+                          <span class="badge2 bg-soft-info">#[[${park.parkNm}]]</span>
+                          <span class="badge2 bg-soft-info">#[[${park.parkSe}]]</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div><!--end card-body-->
+                </div><!--end job-detail-->
+                
+           <!-- 리뷰 -->
+			<div class="mt-5 mb-5">
+				<div class="mt-5">
+					<h4 class="pb-1">리뷰</h4><hr>
+				</div>
+				<th:block th:if="${replyList != null}">
+					<th:block th:each="replys : ${replyList}">
+						<div class="d-sm-flex align-items-top mt-4">
+							<div class="flex-shrink-0 mt-4">
+								<img class="rounded-circle avatar-md img-thumbnail"
+									th:src="@{/images/user/avatar2.png}" alt="img">
+							</div>
+							<div class="flex-grow-1 ms-sm-3">
+								<div class="row">
+									<h6 class="col-lg-9 mt-3 mb-1">[[${replys.writer}]]</h6>
+									<p class="col-lg-9 text-muted">[[${#dates.format(replys.modifyDate)}]]</p>
+									<th:block
+										th:if="${session.loginMember != null && 
+                         									              (session.loginMember.id == replys.writer || session.loginMember.role == 'ROLE_ADMIN')}">
+										<div class="col-lg-3 text-end">
+											<button name="update"
+												th:id="|updateBtn${replys.parkRno}|"
+												class="btn btn-outline-primary" style="padding: 5px 10px;"
+												th:onclick="|updateReply(${replys.parkRno})|">수정</button>
+											<button name="delete" class="btn btn-outline-danger" style="padding: 5px 10px;"
+												th:onclick="|deleteReply(${replys.parkRno},${park.parkNo});|">삭제</button>
+										</div>
+									</th:block>
+									<p class="text-muted" th:id="|content${replys.parkRno}|">[[${replys.content}]]</p>
+									<div class="mt-1 pt-3 mb-3 updateReply"
+										th:id="|updateReply${replys.parkRno}|"
+										th:style="'display: none'">
+										<div class="row">
+											<div class="col-lg-12">
+												<div class="mb-3">
+													<input type="hidden" name="parkNo" th:value="${park.parkNo}" />
+													<textarea class="form-control"
+														th:id="|inputReply${replys.parkRno}|" name="content"
+														rows="3" placeholder="내용을 입력해주세요." required>[[${replys.content}]]</textarea>
+												</div>
+											</div>
+											<!--end col-->
+										</div>
+										<!--end row-->
+										<div class="text-end">
+											<button type="submit" id="submit"
+												class="btn btn-outline-primary" style="padding: 5px 10px;"
+												th:onclick="|updBtn(${replys.parkRno},${park.parkNo});|">확인</button>
+											<button id="submit" class="btn btn-outline-secondary" style="padding: 5px 10px;"
+												th:onclick="|backBtn(${replys.parkRno})|">취소</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</th:block>
+				</th:block>
+				<th:block th:if="${session.loginMember == null}">
+						<div class="mt-5 mb-5">
+							<p th:style="'text-align: center;'" class="text-muted fs-17">로그인 혹은 회원가입을 진행해주세요.</p>
+						</div>
+				</th:block>
+			</div>
+			<th:block th:if="${session.loginMember != null}">
+				<form th:action="@{outdoor-detail/parkReview}" method="post"class="mt-5 pt-3 mb-3">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="mb-3">
+								<input type="hidden" name="parkNo" th:value="${park.parkNo}" />
+								<h6 class="my-1 mx-3" style="margin-bottom: -2rem !important;" th:text="${session.loginMember.id}"></h6>
+								<textarea class="form-control" id="inputcoment" style="padding: 2rem 0 0 0.9rem !important;"
+									name="content" rows="3" placeholder="리뷰를 남겨보세요." required></textarea>
+							</div>
+						</div>
+					</div>
+					<div class="text-end">
+						<button name="submit" type="submit" id="submit"
+							class="btn btn-primary btn-hover">
+							등록하기 <i class="uil uil-message ms-1"></i>
+						</button>
+					</div>
+				</form>
+			</th:block>
+		</div>
+              
+              <!-- 사이드 메뉴 -->
+              <div class="col-lg-4 mt-4 mt-lg-4">
+                <!--start side-bar-->
+                <div class="side-bar ms-lg-4">
+                  <div class="card job-overview">
+                    <div class="card-body p-4">
+                      <h6 class="fs-20">세부 정보</h6>
+                      <ul class="list-unstyled mt-4 mb-0">
+                        <li>
+                          <div class="d-flex mt-4">
+                            <i class="uil uil-list-ul icon bg-soft-primary"></i>
+                            <div class="ms-3">
+                              <h6 class="fs-15 mb-1">관리번호</h6>
+                              <p class="text-muted mb-0 fs-17">[[${park.manageNo}]]</p>
+                            </div>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="d-flex mt-4">
+                            <i class="uil uil-building icon bg-soft-primary"></i>
+                            <div class="ms-3">
+                              <h6 class="fs-15 mb-1">관리기관명</h6>
+                              <p class="text-muted mb-0 fs-17" >[[${park.institutionNm}]]</p>
+                            </div>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="d-flex mt-4">
+                            <i class="uil uil-phone icon bg-soft-primary"></i>
+                            <div class="ms-3">
+                              <h6 class="fs-15 mb-1">전화번호</h6>
+                              <p class="text-muted mb-0 fs-17">[[${park.phoneNumber}]]</p>
+                            </div>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="d-flex mt-4">
+                            <i class="uil uil-calendar-alt icon bg-soft-primary"></i>
+                            <div class="ms-3">
+                              <h6 class="fs-15 mb-1">지정고시일</h6>
+                              <p class="text-muted mb-0 fs-17" th:text="${#dates.format(park.appnNtfcDate, 'yyyy-MM-dd')}">[[${park.appnNtfcDate}]]</p>
+                            </div>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="d-flex mt-4">
+                            <i class="uil uil-history icon bg-soft-primary"></i>
+                            <div class="ms-3">
+                              <h6 class="fs-15 mb-1">데이터기준일자</h6>
+                              <p class="text-muted mb-0 fs-17" th:text="${#dates.format(park.referenceDate, 'yyyy-MM-dd')}">[[${park.referenceDate}]]</p>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div><!--end card-body-->
+                  </div><!--end job-overview-->
+                  <div class="mt-4">
+                    <h6 class="fs-20 mb-3">위치 정보</h6>
+                    <div id="kakaomap" th:style="'width:100%; height:250px;'"></div>
+                  </div>
+                </div>
+                <!--end side-bar-->
+              </div><!--end col-->
+            </div><!-- end row -->
+          </div><!--end container-->
+        </section>
+    
+      </div>
+      <!-- End Page-content -->
+
+	  <!-- START FOOTER -->
+	  <footer th:replace="~{common/layout :: #footer}"></footer>
+	  <!-- END FOOTER -->
+      
+
+      <!--start back-to-top-->
+      <button th:onclick="|topFunction()|" id="back-to-top">
+        <i class="mdi mdi-arrow-up"></i>
+      </button>
+      <!--end back-to-top-->
+    </div>
+    <!-- end main content-->
+
+  </div>
+  <!-- END layout-wrapper -->
+
+
+
+  <!-- JAVASCRIPT -->
+  <script type="text/javascript" th:inline="javascript">
+
+	function updateReply(parkRno){
+		var updateBtn = document.getElementById("updateBtn" + parkRno);
+		updateBtn.style.display = "none";
+		
+		var content = document.getElementById("content" + parkRno);
+		content.style.display = "none";
+		
+		var updateForm = document.getElementById("updateReply" +parkRno);
+		updateForm.style.display = "inline-block";
+	}
+	
+	function updBtn(parkRno, parkNo){
+		var newContent = document.getElementById("inputReply" + parkRno).value;
+		if(newContent.trim() === ''){
+			alert("내용을 입력해주세요.")
+			return;
+		}
+ 		var requestURL = '/outdoor-detail/updateReply?parkRno=' +  parkRno +'&content=' + newContent + '&parkNo=' + parkNo; 
+		location.replace(requestURL);
+	}
+	
+	function backBtn(parkRno){
+  		var updateBtn = document.getElementById("updateBtn" + parkRno);
+  		updateBtn.style.display = "inline-block";
+  		
+  		var content = document.getElementById("content" + parkRno);
+  		content.style.display = "inline-block";
+  		
+  		var updateForm = document.getElementById("updateReply" +parkRno);
+  		updateForm.style.display = "none";
+  	}
+
+  
+  function deleteReply(parkRno, parkNo) {
+		var url = "/outdoor-detail/delReply?parkRno=";
+		var requestURL = url + parkRno + "&parkNo=" + parkNo;
+		location.replace(requestURL);
+	}
+  
+ 
+  </script>
+
+  
+  <script type="text/javascript" th:inline="javascript">
+  /* 스크랩  */
+  $(function(){
+      // 'clip' class 초기화
+      clipItems = document.getElementsByClassName('clip');
+      for(i = 0; i < clipItems.length; i++){
+    	  clipValue = JSON.parse(clipItems[i].getAttribute('value'));
+
+          if(clipValue == 1){
+        	  $(clipItems[i]).addClass("active");
+
+          }else{
+        	  $(clipItems[i]).removeClass("active");
+
+          }
+      }
+  });
+  function onClickClip(id, parkNo) {
+  	clipValue = JSON.parse($('#' + id).attr('value'));
+  	if (clipValue == 0) {
+  		clipValue = 1;
+  	} else {
+  		clipValue = 0;
+  	}
+  	// 여기에 AJAX로 DB 업데이트하는 코드 있어야함!!
+  	$.ajax({
+  		method: 'get',
+  		url: '/outdoor/clip?parkNo=' + parkNo + '&isClip=' + clipValue,
+  		contentType: 'application/json',
+  		dataType: 'json',
+  		success: (result) => {
+  			$('#' + id).attr('value', '' + result);
+  			if (result == 1) {
+  				$('#' + id).addClass("active")
+  			} else {
+  				$('#' + id).removeClass("active")
+  			}
+  		},
+  		error: (e) => {
+  			alert('전송 실패!!');
+  		}
+  	});
+  }
+  </script>
+  
+  
+
+
+  <!-- 카카오 지도 -->
+ <script type="text/javascript" th:inline="javascript" th:src="@{//dapi.kakao.com/v2/maps/sdk.js?appkey=e0216acf240302af61958af813b83190}"></script>
+  <script>
+  /*<![CDATA[*/
+    var mapContainer = document.getElementById('kakaomap'), // 지도를 표시할 div 
+   
+        mapOption = { 
+            center: new kakao.maps.LatLng([[${park.latitude}]], [[${park.longitude}]]),   // 지도의 중심좌표
+            level: 5  // 지도의 확대 레벨
+        };
+        
+    var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+    // 마커가 표시될 위치입니다 
+    var markerPosition  = new kakao.maps.LatLng([[${park.latitude}]], [[${park.longitude}]]); 
+
+    // 마커를 생성합니다
+    var marker = new kakao.maps.Marker({
+        position: markerPosition
+    });
+    // 마커가 지도 위에 표시되도록 설정합니다
+    marker.setMap(map);
+    
+    /*]]*/
+  </script>
+  
+  <script th:src="@{/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
+  <script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
+	<!-- jquery  -->
+	<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+  <!-- Switcher Js -->
+  <script th:src="@{/js/pages/switcher.init.js}"></script>
+  <!-- App Js -->
+  <script th:src="@{/js/app.js}"></script>
+</body>
+
+</html>

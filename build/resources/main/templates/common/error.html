@@ -1,0 +1,90 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="head" th:replace="~{common/layout :: head}"></head>
+<!--Custom Css-->
+<link th:href="@{/css/notice.css}" id="news" rel="stylesheet" type="text/css" />
+<!-- jquery CDN -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <body>
+         <!--start page Loader -->
+         <div id="preloader">
+            <div id="status">
+                <ul>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                  </ul>
+            </div>
+        </div>
+        <!--end page Loader -->
+
+        <!-- Begin page -->
+        <div>
+
+            
+            <div class="main-content">
+
+                <div class="page-content">
+
+                    <!-- START ERROR -->
+                    <section class="bg-error bg-auth text-dark">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-6">
+                                    <div class="text-center">
+                                        <img th:src="@{/images/404.png}" alt="" class="img-fluid">
+                                        <div class="mt-5">
+                                            <!-- <h1 class="fw-bold display-1">404</h1> -->
+                                            <h4 class="text-uppercase mt-3">페이지를 찾을 수 없습니다.</h4>
+                                            <p class="text-muted">요청하신 페이지를 찾을 수 없습니다. 관리자에게 문의하세요.</p>
+                                            <div class="mt-4">
+                                                <a class="btn btn-primary waves-effect waves-light" th:href="@{/}"><i class="mdi mdi-home"></i> 메인 페이지</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!--end col-->
+                            </div><!--end row-->
+                        </div><!--end container-->
+                    </section>
+                    <!-- END ERROR -->
+                    
+                </div>
+                <!-- End Page-content -->
+
+            </div>
+            <!-- end main content-->
+
+        </div>
+        <!-- END layout-wrapper -->
+        
+		<!-- Style switcher -->
+		<a class="color-list color1" href="javascript: void(0);"
+			onclick="setColorGreen()"></a> <a class="color-list color2"
+			href="javascript: void(0);" onclick="setColor('blue')"></a> <a
+			class="color-list color3" href="javascript: void(0);"
+			onclick="setColor('green')"></a> <a href="javascript: void(0);"
+			id="mode"> <a href="javascript: void(0);"
+			class="settings rounded-end"></a>
+	<!-- end switcher-->
+
+    <!--start back-to-top-->
+    <button onclick="topFunction()" id="back-to-top">
+        <i class="mdi mdi-arrow-up"></i>
+    </button>
+    <!--end back-to-top-->
+
+    <!-- JAVASCRIPT -->
+	<script th:src="@{/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
+
+	<!-- Switcher Js -->
+	<script th:src="@{/js/pages/switcher.init.js}"></script>
+
+    </body>
+</html>

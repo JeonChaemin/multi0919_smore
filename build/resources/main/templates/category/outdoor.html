@@ -1,0 +1,456 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+
+<head th:fragment="head" th:replace="~{common/layout :: head}"></head>
+  <!--Custom Css-->
+  <link rel="stylesheet" id="custom" type="text/css" th:href="@{/css/outdoor.css}">
+	
+
+<body>
+  <!-- Begin page -->
+  
+  <div>
+      <!--start page Loader -->
+	  <div id="preloader">
+	    <div id="status">
+	      <ul>
+	        <li></li>
+	        <li></li>
+	        <li></li>
+	        <li></li>
+	        <li></li>
+	        <li></li>
+	      </ul>
+	    </div>
+	  </div>
+	  <!--end page Loader -->
+  
+    <!--Navbar Start-->
+	<header th:replace="~{common/layout :: #header}"></header>
+    
+    <!-- Navbar End -->
+
+    <div class="main-content">
+
+      <div class="page-content">
+
+        <!-- Start home -->
+         <section class="page-title-box" th:style="'background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('+@{/images/img/hero_outdoor.jpg}+'); height: 350px; padding-top: 130px; background-position: center;'">
+          <div class="container">
+            <div class="row justify-content-center">
+              <div class="col-md-6">
+                <div class="text-center text-white">
+                  <h3 class="mb-4 hero-title" th:style="'font-weight: 400;'">야외활동</h3>
+                  <div class="page-next">
+                    <nav class="d-inline-block" aria-label="breadcrumb text-center">
+                      <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a th:href="@{/}">HOME</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/outdoor}">LIFE</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/outdoor}">OUTDOOR</a></li>
+                        <li class="breadcrumb-item" aria-current="page">PARK</li>
+                      </ol>
+                    </nav>
+                  </div>
+                </div>
+              </div>
+              <!--end col-->
+            </div>
+            <!--end row-->
+          </div>
+          <!--end container-->
+        </section>
+        <!-- end home -->
+
+        <!-- START SHAPE -->
+        <div class="position-relative" th:style="'z-index: 1'">
+          <div class="shape">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 250">
+              <path fill="#FFFFFF" fill-opacity="1"
+                d="M0,192L120,202.7C240,213,480,235,720,234.7C960,235,1200,213,1320,202.7L1440,192L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z">
+              </path>
+            </svg>
+          </div>
+        </div>
+        <!-- END SHAPE -->
+
+
+        <!-- START outdoor -->
+        <section class="section">
+          <div class="container mt-5">
+            <form th:action="@{/outdoor}" method="get">
+              <div class="row g-2">
+              	<div class="col-lg-2 col-md-5"> 
+                  <div class="filler-job-form">
+                    <i class="uil uil-trees"></i>
+                    <select class="form-select" data-trigger name="searchType" id="searchType" aria-label="Default select example">
+                      <option value="공원" th:selected="${param.searchType} == '공원'">공원</option>
+                    </select>
+                  </div>
+                </div><!--end col-->
+                <div class="col-lg-5 col-md-8">
+                  <div class="filler-job-form">
+                    <i class="mdi mdi-magnify"></i>
+                    <input type="search"  name="searchValue" id="searchValue" class="form-control filter-job-input-box2"
+                      th:value="${param.searchValue}" placeholder="검색어를 입력하세요. "> 
+                  </div>
+                </div><!--end col-->
+                
+                <div class="col-lg-2 col-md-2">
+                  <div class="filler-job-form">
+                    <i class="uil uil-location-point"></i>
+                    <select class="form-select" name="regions" id="regions" data-trigger aria-label="Default select example">
+                      <option value="서울특별시" th:selected="${#arrays.contains(regions, '서울특별시')  ? 'selected' : null}">서울특별시</option>
+                      <option value="부산광역시" th:selected="${#arrays.contains(regions, '부산광역시')  ? 'selected' : null}">부산광역시</option>
+                      <option value="인천광역시" th:selected="${#arrays.contains(regions, '인천광역시')  ? 'selected' : null}">인천광역시</option>
+                      <option value="대구광역시" th:selected="${#arrays.contains(regions, '대구광역시')  ? 'selected' : null}">대구광역시</option>
+                      <option value="대전광역시" th:selected="${#arrays.contains(regions, '대전광역시')  ? 'selected' : null}">대전광역시</option>
+                      <option value="광주광역시" th:selected="${#arrays.contains(regions, '광주광역시')  ? 'selected' : null}">광주광역시</option>
+                      <option value="울산광역시" th:selected="${#arrays.contains(regions, '울산광역시')  ? 'selected' : null}">울산광역시</option>
+                      <option value="세종특별자치시" th:selected="${#arrays.contains(regions, '세종특별자치시')  ? 'selected' : null}">세종특별자치시</option>
+                      <option value="경기도" th:selected="${#arrays.contains(regions, '경기도')  ? 'selected' : null}">경기도</option>
+                      <option value="강원도" th:selected="${#arrays.contains(regions, '강원도')  ? 'selected' : null}">강원도 </option>
+                      <option value="충청북도" th:selected="${#arrays.contains(regions, '충청북도')  ? 'selected' : null}">충청북도</option>
+                      <option value="충청남도" th:selected="${#arrays.contains(regions, '충청남도')  ? 'selected' : null}">충청남도</option>
+                      <option value="전라북도" th:selected="${#arrays.contains(regions, '전라북도')  ? 'selected' : null}">전라북도</option>
+                      <option value="전라남도" th:selected="${#arrays.contains(regions, '전라남도')  ? 'selected' : null}">전라남도</option>
+                      <option value="경상북도" th:selected="${#arrays.contains(regions, '경상북도')  ? 'selected' : null}">경상북도</option>
+                      <option value="경상남도" th:selected="${#arrays.contains(regions, '경상남도')  ? 'selected' : null}">경상남도</option>
+                      <option value="제주특별자치도" th:selected="${#arrays.contains(regions, '제주특별자치도')  ? 'selected' : null}">제주특별자치도</option>
+                    </select>
+                  </div>
+                </div><!--end col-->
+                <div class="col-lg-3 col-md-5">
+                  <button class="btn btn-primary w-100" type="submit"><i class="uil uil-filter"></i> 필터 적용</button>
+                </div><!--end col-->
+              </div><!--end row-->
+            </form>
+
+
+            <!-- 추천 키워드 -->
+            <div class="row mt-4">
+              <div class="col-lg-12">
+                <h6 class="fs-20 mb-3">추천 키워드</h6>
+                 <div class="choices__inner position-relative">
+                   <a th:href="@{/outdoor/outdoor-detail(parkNo=5852)}" class="badge3 bg-soft-purple round-pill mt-2 mb-2">삼청공원</a>
+                  <a th:href="@{/outdoor/outdoor-detail(parkNo=5843)}" class="badge3 bg-soft-purple mt-2 mb-2">사직공원</a>
+                  <a th:href="@{/outdoor/outdoor-detail(parkNo=2821)}" class="badge3 bg-soft-purple mt-2 mb-2">독립문어린이공원</a>
+                  <a th:href="@{/outdoor/outdoor-detail(parkNo=5392)}" class="badge3 bg-soft-purple mt-2 mb-2">배봉산공원</a>
+                  <a th:href="@{/outdoor/outdoor-detail(parkNo=9162)}" class="badge3 bg-soft-purple mt-2 mb-2">성수공원</a>
+                  <a th:href="@{/outdoor/outdoor-detail(parkNo=136)}"  class="badge3 bg-soft-purple mt-2 mb-2">왕송호수공원</a>
+                  <a th:href="@{/outdoor/outdoor-detail(parkNo=1605)}" class="badge3 bg-soft-purple mt-2 mb-2">두류공원</a>
+                  <a th:href="@{/outdoor/outdoor-detail(parkNo=1600)}" class="badge3 bg-soft-purple mt-2 mb-2">달성공원</a>
+                  <a th:href="@{/outdoor/outdoor-detail(parkNo=5315)}" class="badge3 bg-soft-purple mt-2 mb-2">동래사적공원</a>
+                  <a th:href="@{/outdoor/outdoor-detail(parkNo=605)}"  class="badge3 bg-soft-purple mt-2 mb-2">바람모루공원</a>
+                </div>
+              </div><!--end col-->
+            </div><!--end row-->
+
+
+			<!-- 공원 시작 부  -->
+            <!-- 인기게시글 4개 -->
+              <div class="row">
+              <div class="col-lg-12 col-md-12 mt-3">
+              	<div class="mt-3 mb-4"><h6 class="fs-22">인기 공원</h6></div>
+                <div class="blog-post">
+                  <div class="row ">
+                    <!-- 인기 1 -->
+                    <th:block th:each="item : ${parkList}">
+                    <div class="col-lg-3 mb-4">
+                      <div class="card blog-grid-box p-2"  >   
+                        <img th:src="|/images/img/park${itemStat.index}.jpeg|" alt="" class="rounded-2" th:style="${'width: 250px; height: 150px;'}">
+                        <div class="card-body">
+                          <ul class="list-inline d-flex justify-content-between mb-0">
+                            <li class="list-inline-item">
+                              <p class="text-muted mb-0">[[${item.parkSe}]]</p>
+                            </li>
+                          </ul>
+                          <h6 class="fs-20 mb-3">
+                          	<a th:href="@{/outdoor/outdoor-detail(parkNo=${item.parkNo})}" class="primary-link">[[${item.parkNm}]]</a>
+                          </h6>
+                          <p class="text-muted fs-16"><i class="uil uil-map-pin-alt"></i> [[${item.lnmadr}]]</p>
+                          <div class="text-md-end">
+                            <a th:href="@{/outdoor/outdoor-detail(parkNo=${item.parkNo})}" class="form-text text-primary">상세보기 <i
+                                class="mdi mdi-chevron-double-right"></i></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    </th:block>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 리스트 시작 -->
+            <div class="mt-3"><h6 class="fs-22">전체 보기</h6></div>
+            <th:block th:each="item : ${list}" >
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="job-box card mt-3">
+                  <div class="p-4">
+                    <div class="row align-items-center">
+                    
+                      <div class="col-md-1">
+                        <div class="text-center mb-4 mb-md-0">
+                          <a th:href="@{/outdoor/outdoor-detail(parkNo=${item.parkNo})}"><img th:src="@{/images/img/free-icon-park-433102.png}" alt=""
+                              th:style="'width: 50px; height: 50px;'"></a>
+                        </div>
+                      </div>
+                      <!--end col-->
+                      <div class="col-md-3">
+                        <div class="mb-2 mb-md-0 ms-2">
+                          <h4 class="fs-21 mb-1"><a th:href="@{/outdoor/outdoor-detail(parkNo=${item.parkNo})}" class="text-dark">[[${item.parkNm}]]</a>
+                          </h4>
+                          <p class="text-muted fs-14 mb-0">[[${item.parkSe}]]</p>
+                        </div>
+                      </div>
+                      <!--end col-->
+                      <div class="col-md-4">
+                        <div class="d-flex">
+                          <div class="flex-shrink-0">
+                            <i class="uil uil-map-pin-alt"></i>
+                          </div>
+                          <div class="flex-grow-1 ms-2">
+                            <p class="text-muted fs-16 mb-0">[[${item.lnmadr}]]</p>
+                          </div>
+                        </div>
+                      </div>
+                      <!--end col-->
+                      <div class="col-md-3">
+                        <div class="d-flex">
+                          <div class="flex-shrink-0">
+                            <i class="uil uil-phone-alt"></i>
+                          </div>
+                          <div class="flex-grow-1 ms-2">
+                            <p class="text-muted fs-16 mb-0">[[${item.phoneNumber}]]</p>
+                          </div>
+                        </div>
+                      </div>
+                       <th:block th:if="${session.loginMember != null}" class="col-md-1">
+					 	<div class="clip text-end favorite-icon" th:style="'line-height: 70px;'" th:id="|clip${item.parkNo}|" th:value="${item.isClip}" th:onclick="|onClickClip('clip${item.parkNo}', '${item.parkNo}');|">
+					 		<a th:href="|javascript:void(0)|"><i class="uil uil-heart-alt fs-18"></i></a>
+					 	</div>
+					  </th:block>
+				
+                      </div>
+                      <!--end col-->
+                    </div>
+                    <!--end row-->
+                  <div class="p-1 bg-light">
+                    <div class="text-end fs-14 me-3">
+                      <a th:href="@{/outdoor/outdoor-detail(parkNo=${item.parkNo})}" th:class="primary-link">상세보기 <i class="mdi mdi-chevron-double-right"></i></a>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+             </th:block>
+             
+		<!-- 페이징-->
+		<div class="row">
+			<div class="col-lg-12 mt-4 mb-5 pt-2">
+				<nav aria-label="Page navigation example">
+					<ul class="pagination job-pagination mb-0 justify-content-center">
+						<th:block th:if="${pageInfo.currentPage == pageInfo.startPage}">
+							<li class="page-item "
+								th:classappend="${pageInfo.currentPage == 1 ? 'disabled' : ''}">
+								<a class="page-link" href="javascript:void(0)"
+								th:onclick="|movePage('/outdoor?page=${pageInfo.prevPage}');|"
+								tabindex="-1"> <i
+									class="mdi mdi-chevron-double-left fs-15"></i>
+							</a>
+							</li>
+						</th:block>
+						<th:block th:if="${pageInfo.currentPage != pageInfo.startPage}">
+							<li class="page-item "
+								th:classappend="${pageInfo.currentPage == 1 ? 'disabled' : ''}">
+								<a class="page-link" href="javascript:void(0)"
+								th:onclick="|movePage('/outdoor?page=${pageInfo.startPage}');|"
+								tabindex="-1"> <i
+									class="mdi mdi-chevron-double-left fs-15"></i>
+							</a>
+							</li>
+						</th:block>
+
+						<th:block
+							th:each="num, status : ${#numbers.sequence(pageInfo.startPage, pageInfo.endPage)}">
+							<th:block th:if="${pageInfo.currentPage == status.current}">
+								<li class="page-item active"><a class="page-link"
+									th:text="${status.current}"></a></li>
+							</th:block>
+							<th:block
+								th:if="${pageInfo.currentPage != status.current && pageInfo.endPage != 0}">
+								<li class="page-item"><a class="page-link"
+									href="javascript:void(0)"
+									th:onclick="|movePage('/outdoor?page=${status.current}');|"
+									th:text="${status.current}"></a></li>
+							</th:block>
+						</th:block>
+
+						<th:block th:if="${pageInfo.currentPage == pageInfo.endPage}">
+							<li class="page-item"
+								th:classappend="${pageInfo.currentPage == pageInfo.maxPage ? 'disabled' : ''}">
+								<a class="page-link" href="javascript:void(0)"
+								th:onclick="|movePage('/outdoor?page=${pageInfo.nextPage}');|">
+									<i class="mdi mdi-chevron-double-right fs-15"></i>
+							</a>
+							</li>
+						</th:block>
+						<th:block th:if="${pageInfo.currentPage != pageInfo.endPage}">
+							<li class="page-item"
+								th:classappend="${pageInfo.currentPage == pageInfo.maxPage ? 'disabled' : ''}">
+								<a class="page-link" href="javascript:void(0)"
+								th:onclick="|movePage('/outdoor?page=${pageInfo.endPage}');|">
+									<i class="mdi mdi-chevron-double-right fs-15"></i>
+							</a>
+							</li>
+						</th:block>
+					</ul>
+				</nav>
+			</div>
+			<!--end col-->
+		</div>
+		<!-- end row -->
+             
+		  
+		  
+        </div><!--end container-->
+        </section>
+        <!-- END JOB-LIST -->
+      </div>
+      <!-- End Page-content -->
+
+  
+	  <footer th:replace="~{common/layout :: #footer}"></footer>		
+
+<!-- Style switcher -->
+  <div id="style-switcher" onclick="toggleSwitcher()" style="left: -165px;">
+    <div>
+      <div class="mt-3">
+        <div class="text-center mt-3">
+          <!-- light-dark mode -->
+          <a href="javascript: void(0);" id="mode" class="mode-btn text-white rounded-3">
+            <i class="uil uil-brightness mode-dark mx-auto"></i>
+            <i class="uil uil-moon mode-light"></i>
+          </a>
+          <!-- END light-dark Mode -->
+        </div>
+      </div>
+    </div>
+    <div class="bottom d-none d-md-block">
+    </div>
+  </div>
+  <!-- end switcher-->
+
+  <!--start back-to-top-->
+  <button onclick="topFunction()" id="back-to-top">
+    <i class="mdi mdi-arrow-up"></i>
+  </button>
+  <!--end back-to-top-->
+       
+    </div>
+    <!-- end main content-->
+ 	
+
+
+  <!-- JAVASCRIPT -->
+  <script type="text/javascript" th:inline="javascript">
+  $(function(){
+      // 'clip' class 초기화
+      clipItems = document.getElementsByClassName('clip');
+      for(i = 0; i < clipItems.length; i++){
+    	  clipValue = JSON.parse(clipItems[i].getAttribute('value'));
+
+          if(clipValue == 1){
+        	  $(clipItems[i]).addClass("active");
+
+          }else{
+        	  $(clipItems[i]).removeClass("active");
+          }
+      }
+  });
+
+  function onClickClip(id, parkNo) {
+  	clipValue = JSON.parse($('#' + id).attr('value'));
+  	if (clipValue == 0) {
+  		clipValue = 1;
+  	} else {
+  		clipValue = 0;
+  	}
+  	// 여기에 AJAX로 DB 업데이트하는 코드 있어야함!!
+  	$.ajax({
+  		method: 'get',
+  		url: '/outdoor/clip?parkNo=' + parkNo + '&isClip=' + clipValue,
+  		contentType: 'application/json',
+  		dataType: 'json',
+  		success: (result) => {
+  			$('#' + id).attr('value', '' + result);
+  			if (result == 1) {
+  				$('#' + id).addClass("active")
+  			} else {
+  				$('#' + id).removeClass("active")
+  			}
+  		},
+  		error: (e) => {
+  			alert('전송 실패!!');
+  		}
+  	});
+  }
+
+  /* 페이징  */
+  function movePage(pageUrl){
+  		var searchValue = document.getElementById("searchValue"); 
+  		if(searchValue != null){
+  			pageUrl += '&searchValue=' + searchValue.value;
+  		}
+  		
+  		var searchTypes = document.getElementById("searchType");  		
+  		var value = (searchTypes.options[searchTypes.selectedIndex].value);
+  		pageUrl += '&searchType=' + value;
+  		
+  		var region = document.getElementById("regions");
+  		var value2 = (region.options[region.selectedIndex].value);
+  		pageUrl += '&regions=' + value2;
+  		
+  		
+  		// alert(pageUrl);
+  		location.href = encodeURI(pageUrl);	
+  	}
+  
+  </script>
+	
+	
+  <script th:src="@{/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
+  <script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
+
+ <!-- jquery -->
+  <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+  <!-- Choice Js -->
+  <script th:src="@{/libs/choices.js/public/assets/scripts/choices.min.js}"></script>
+
+  <!-- Job Init Js -->
+  <script th:src="@{/js/pages/job-list.init.js}"></script>
+
+  <!-- Job-Grid Js -->
+  <script th:src="@{/js/pages/job-grid.init.js}"></script>
+
+  <!-- Switcher Js -->
+  <script th:src="@{/js/pages/switcher.init.js}"></script>
+
+  <!-- App Js -->
+  <script th:src="@{/js/app.js}"></script>
+  
+  <script>
+  var regions = new Choices("#regions", {
+	  shouldSort:false
+  });	
+  
+  var searchType = new Choices("#searchType", {
+	  shouldSort:false
+  });
+  </script>
+
+</body>
+
+</html>

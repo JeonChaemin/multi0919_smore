@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="ko">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head" th:replace="~{common/layout :: head}">
+</head>	
+	<!--Program Css-->
+	<link th:href="@{/css/program.css}" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	
+<body>
+
+	<!--start page Loader -->
+	<div id="preloader">
+		<div id="status">
+			<ul>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>
+	</div>
+	<!--end page Loader -->
+	<!-- Begin page -->
+	<!--Navbar Start-->
+<header th:replace="~{common/layout :: #header}"></header>
+
+	<!-- Start home -->
+	<section class="page-title-box programbackimage" >
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6">
+					<div class="text-center text-white">
+						<h3 class="mb-4 hero-title" style="font-weight: 400;">정부지원사업</h3>
+						<div class="page-next">
+							<nav class="d-inline-block" aria-label="breadcrumb text-center">
+								<ol class="breadcrumb justify-content-center">
+									<li class="breadcrumb-item"><a th:href="@{/}">HOME</a></li>
+									<li class="breadcrumb-item"><a th:href="@{/program}">LIFE</a></li>
+									<li class="breadcrumb-item" aria-current="page">PROGRAM</li>
+								</ol>
+							</nav>
+						</div>
+					</div>
+				</div>
+				<!--end col-->
+			</div>
+			<!--end row-->
+		</div>
+		<!--end container-->
+	</section>
+	<!-- end home -->
+
+	<!-- START SHAPE -->
+	<div class="position-relative" style="z-index: 1">
+		<div class="shape">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 250">
+				<path fill="#FFFFFF" fill-opacity="1"
+					d="M0,192L120,202.7C240,213,480,235,720,234.7C960,235,1200,213,1320,202.7L1440,192L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z">
+				</path>
+			</svg>
+		</div>
+	</div>
+	<!-- END SHAPE -->
+
+	<section class="section">
+		<div class="container mt-5">
+			<form th:action="@{/program}" method="post" name="oneprosearch" class="my-5 formbox">
+				<div class="row g-2">
+					<div class="col-lg-5 col-md-6">
+						<div class="filler-job-form">
+							<i class="mdi mdi-magnify"></i>
+							<input type="search" class="form-control filter-job-input-box" id="searchValue" name="searchValue" th:value="${searchValue}" 
+								placeholder="검색어를 입력하세요">
+						</div>
+					</div><!--end col-->
+					<div class="col-lg-2 col-md-2">
+						<div class="filler-job-form">
+							<i class="uil uil-location-point"></i>
+							<select class="form-select" data-trigger name="choices-single-location" id="choices-single-location"
+								aria-label="Default select example">
+								<option value="전체">전체</option>
+								<option value="서울">서울특별시</option>
+								<option value="부산">부산광역시</option>
+								<option value="인천">인천광역시</option>
+								<option value="대구">대구광역시</option>
+								<option value="대전">대전광역시</option>
+								<option value="광주">광주광역시</option>
+								<option value="울산">울산광역시</option>
+								<option value="세종">세종특별자치시</option>
+								<option value="경기">경기도</option>
+								<option value="강원">강원도 </option>
+								<option value="충북">충청북도</option>
+								<option value="충남">충청남도</option>
+								<option value="전북">전라북도</option>
+								<option value="전남">전라남도</option>
+								<option value="경북">경상북도</option>
+								<option value="경남">경상남도</option>
+								<option value="제주">제주특별자치도</option>
+							</select>
+						</div>
+					</div><!--end col-->
+					<div class="col-lg-2 col-md-2">
+						<div class="filler-job-form">
+							<i class="uil uil-clipboard-notes"></i>
+							<select class="form-select choices" th:value="${tyNm}" type="select-one" name="tyNm"
+								id="choices-single-categories" aria-label="Default select example">
+								<option value="전체"  name="tyNm" th:selected="${tyNm}=='전체'">전체</option>
+								<option value="상담"  name="tyNm" th:selected="${tyNm}=='상담'">상담</option>
+								<option value="소모임"  name="tyNm" th:selected="${tyNm}=='소모임'">소모임</option>
+								<option value="프로그램"  name="tyNm" th:selected="${tyNm}=='프로그램'">프로그램</option>
+								<option value="행사"  name="tyNm" th:selected="${tyNm}=='행사'">행사</option>
+							</select>
+						</div>
+					</div><!--end col-->
+
+					<div class="col-lg-3 col-md-5">
+						<button type="submit" class="btn btn-primary w-100"><i class="uil uil-filter"></i>&nbsp;필터 검색</a>
+					</div><!--end col-->
+				</div><!--end row-->
+			</form>
+		</div>
+	</section>
+
+	<section class="section backgray">
+		<div class="container">
+			<h4 class="mb-2">추천 프로그램</h4>
+			<div class="row">
+				<div class="blog-post">
+					<div class="row">
+					<th:block th:each="oneProgram : ${list}">
+						<div class="col-lg-3 mb-4 blogbox">
+							<div class="card blog-grid-box p-2">
+								<img th:src="|/images/programimage/program${oneProgram.onepNo}.jpg|" alt="" class="img-fluid"
+									style="height: 280px; width: auto; object-fit: cover;">
+								<div class="card-body">
+									<a th:href="|/program-detail?onepNo=${oneProgram.onepNo}|" class="primary-link">
+										<h6 class="fs-17" th:text="${oneProgram.partcptnSj}"></h6>
+									</a>
+									<div>
+										<a th:href="|/program-detail?onepNo=${oneProgram.onepNo}|"  class="form-text text-primary" th:text="'서울특별시 '+${oneProgram.atdrcNm}"><i class="uil uil-angle-right-b"></i></a>
+									</div>
+								</div>
+							</div><!--end blog-grid-box-->
+						</div><!--end col-->
+					</th:block>
+
+					</div><!--end row-->
+				</div><!--end blog-post-->
+			</div><!--end col-->
+		</div>
+		<!--end sidebar-->
+	</section>
+ 
+	<section>
+		<th:block th:each="oneProgram : ${list2}"> 
+		<div class="container">
+			<div class="job-box card mt-4 w-100">
+				<div class="p-4">
+					<div class="row">
+						<div class="col-lg-1">
+						
+							<a th:href="|/program-detail?onepNo=${oneProgram.onepNo}|" ><img th:src="|/images/programimage/program${oneProgram.onepNo%211}.jpg|" alt=""
+									class="img-fluid rounded-3 imground" style="height:70px; width:70px; object-fit:cover;"></a>
+						</div><!--end col-->
+						<div class="col-lg-10">
+							<div class="mt-3 mt-lg-0">
+								<h5 class="fs-17 mt-2 mb-3"><a th:href="|/program-detail?onepNo=${oneProgram.onepNo}|"  class="text-dark" >[[${oneProgram.partcptnSj}]] </a></h5>
+								<ul class="list-inline mb-0">
+									<li class="list-inline-item">
+										<p class="text-muted fs-14 mb-0"><i class="uil uil-map-pin-alt"></i> 서울특별시 [[${oneProgram.atdrcNm}]]</p>
+									</li>
+									<li class="list-inline-item">
+										<p class="text-muted fs-14 mb-0"><i class="uil uil-calender"></i> [[${#dates.format(oneProgram.progrsDe1, 'yyyy-MM-dd')}]] ~ [[${#dates.format(oneProgram.progrsDe2, 'yyyy-MM-dd')}]]</p>
+									</li>
+								</ul>
+							</div>
+						</div><!--end col-->
+					</div><!--end row-->
+					<th:block th:if="${session.loginMember != null}">
+							<div class="clip clipbtn favorite-icon"
+								th:id="|clip${oneProgram.onepNo}|" th:value="${oneProgram.isClip}"
+								th:onclick="|onClickClip('clip${oneProgram.onepNo}', '${oneProgram.onepNo}');|">
+								<a href="javascript:void(0)">
+									<i class="uil uil-bookmark-full"></i>
+								</a>
+							</div>
+					</th:block>
+				</div>
+			<!--end job-box-->
+		</div>
+		</div>
+			</th:block>
+			<th:block th:if="${list2.size == 0}">
+				<p style="text-align: center; font-size: 1.2rem;" class="mt-10 mb-10">검색 결과가 없습니다.</p>
+			</th:block>
+			
+			<th:block th:if="${list2.size != 0}">
+				<div class="row">
+					<div class="col-lg-12 mt-4 mb-5 pt-2">
+						<nav aria-label="Page navigation example">
+							<ul class="pagination job-pagination mb-0 justify-content-center">
+								<th:block th:if="${pageInfo.currentPage == pageInfo.startPage}">
+									<li class="page-item "
+										th:classappend="${pageInfo.currentPage == 1 ? 'disabled' : ''}">
+										<a class="page-link" href="javascript:void(0)"
+										th:onclick="|movePage('/program?page=${pageInfo.prevPage}');|"
+										tabindex="-1"> <i
+											class="mdi mdi-chevron-double-left fs-15"></i>
+									</a>
+									</li>
+								</th:block>
+								<th:block th:if="${pageInfo.currentPage != pageInfo.startPage}">
+									<li class="page-item "
+										th:classappend="${pageInfo.currentPage == 1 ? 'disabled' : ''}">
+										<a class="page-link" href="javascript:void(0)"
+										th:onclick="|movePage('/program?page=${pageInfo.startPage}');|"
+										tabindex="-1"> <i
+											class="mdi mdi-chevron-double-left fs-15"></i>
+									</a>
+									</li>
+								</th:block>
+		
+								<th:block
+									th:each="num, status : ${#numbers.sequence(pageInfo.startPage, pageInfo.endPage)}">
+									<th:block th:if="${pageInfo.currentPage == status.current}">
+										<li class="page-item active"><a class="page-link"
+											th:text="${status.current}"></a></li>
+									</th:block>
+									<th:block
+										th:if="${pageInfo.currentPage != status.current && pageInfo.endPage != 0}">
+										<li class="page-item"><a class="page-link"
+											href="javascript:void(0)"
+											th:onclick="|movePage('/program?page=${status.current}');|"
+											th:text="${status.current}"></a></li>
+									</th:block>
+								</th:block>
+		
+								<th:block th:if="${pageInfo.currentPage == pageInfo.endPage}">
+									<li class="page-item"
+										th:classappend="${pageInfo.currentPage == pageInfo.maxPage ? 'disabled' : ''}">
+										<a class="page-link" href="javascript:void(0)"
+										th:onclick="|movePage('/program?page=${pageInfo.nextPage}');|">
+											<i class="mdi mdi-chevron-double-right fs-15"></i>
+									</a>
+									</li>
+								</th:block>
+								<th:block th:if="${pageInfo.currentPage != pageInfo.endPage}">
+									<li class="page-item"
+										th:classappend="${pageInfo.currentPage == pageInfo.maxPage ? 'disabled' : ''}">
+										<a class="page-link" href="javascript:void(0)"
+										th:onclick="|movePage('/program?page=${pageInfo.endPage}');|">
+											<i class="mdi mdi-chevron-double-right fs-15"></i>
+									</a>
+									</li>
+								</th:block>
+							</ul>
+						</nav>
+					</div>
+					<!--end col-->
+				</div>
+				<!-- end row -->
+			</th:block>
+ 			
+	</section>
+
+	<footer th:replace="~{common/layout :: #footer}"></footer>
+
+	<a href="javascript: void(0);" id="mode" class="text-white rounded-3">
+	</a>
+	<a href="javascript: void(0);" class="settings rounded-end"></a>
+
+	<!--start back-to-top-->
+	<button onclick="topFunction()" id="back-to-top">
+		<i class="mdi mdi-arrow-up"></i>
+	</button>
+	<!--end back-to-top-->
+	</div>
+	<!-- end main content-->
+
+	</div>
+	<!-- END layout-wrapper -->
+
+	<!-- JAVASCRIPT -->
+	<script th:src="@{/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
+	<!-- Choice Js -->
+	<script th:src="@{/libs/choices.js/public/assets/scripts/choices.min.js}"></script>
+	<!-- Swiper Js -->
+	<script th:src="@{/libs/swiper/swiper-bundle.min.js}"></script>
+	<!-- Switcher Js -->
+	<script th:src="@{/js/pages/switcher.init.js}"></script>
+	<script th:src="@{/js/pages/index.init.js}"></script>
+	<!-- App Js -->
+	<script th:src="@{/js/app.js}"></script>
+	
+</body>
+<script>
+
+	var singleCategory = new Choices("#choices-single-categories", {
+		shouldSort: false
+	});
+	singleCategory = new Choices("#choices-single-location", {
+		shouldSort: false
+	});
+</script>
+<script type="text/javascript">
+	function movePage(pageUrl){
+		var searchValue = document.getElementById("searchValue"); 
+		var tyNms = document.getElementsByName("tyNm"); 
+		var tyNm = '상담';
+		if(searchValue.value.length > 0){
+			for(var i = 0; i <tyNms.length; i++){
+				if(tyNms[i].checked == true){
+					tyNm = tyNms[i].value;
+				}
+			}
+			pageUrl = pageUrl + '&searchType=' + tyNm + '&searchValue=' + searchValue.value; 
+		}
+		location.href = encodeURI(pageUrl);	
+	}
+	
+	 // 초기화 문구
+    $(function(){
+        // 하트 class 초기화
+        clipItems = document.getElementsByClassName('clip');
+
+	for (i = 0; i < clipItems.length; i++) {
+		clipValue = JSON.parse(clipItems[i].getAttribute('value'));
+		console.log(clipValue);
+
+		if (clipValue == 1) {
+			$(clipItems[i]).addClass("active")
+		}
+		else {
+			$(clipItems[i]).removeClass("active")
+		}
+	}
+    });
+
+    function onClickLike(id, addLike){
+        likeValue = new Number($('#'+id).text());
+        likeValue += new Number(addLike);
+        // 여기에 AJAX로 DB 업데이트하는 코드 있어야함!!
+
+        $('#'+id).text((likeValue > 0 ? '+' : '') + likeValue);
+    }
+
+    function onClickClip(id, onepNo){
+    	clipValue = JSON.parse($('#'+id).attr('value'));
+        if(clipValue == 0){
+        	clipValue = 1;
+        }else{
+        	clipValue = 0;
+        }
+//         var sendurl = '/program/clip?onepNo=' + onepNo +'&isClip=' + clipValue;
+//         alert(sendurl)
+        // 여기에 AJAX로 DB 업데이트하는 코드 있어야함!!
+        $.ajax({
+			type:'get',
+			url:'/program/clip?onepNo=' + onepNo +'&isClip=' + clipValue,
+			contentType: 'application/json',
+			dataType : 'json',
+			success: (result) =>{
+				$('#'+id).attr('value', ''+result);
+		        if(result == 1){
+		        	$('#' + id).addClass("active")
+// 					alert("스크랩에 추가 되었습니다.");
+		        }else{
+		        	$('#' + id).removeClass("active")
+// 					alert("스크랩에서 제거 되었습니다.");
+		        }
+			},
+			error : (e) => {
+				alert('전송 실패!!');
+			}
+		});
+    }
+</script>
+</html>

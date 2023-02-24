@@ -1,0 +1,86 @@
+/*
+Template Name: Jobcy
+Author: Themesdesign
+Version: 1.0.0
+Website: https://themeforest.net/search/themesdesign
+Contact: themesdesign.in@gmail.com
+File: Main Css File
+*/
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard-dynamic-subset.css");
+@font-face {
+  font-family: 'SANJUGotgam';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/SANJUGotgam.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+/********************TOP-BAR********************/
+.font-sangju {
+  font-family: 'SANJUGotgam';
+}
+.font-sangju{
+  font-family: 'SANJUGotgam';
+}
+
+.hero-title {
+  font-size: 2rem;
+  font-weight: 400;
+  font-family: 'SANJUGotgam';
+}
+
+/* 메인배너 사진  */
+.page-title-box {
+  background-size: cover;
+  position: relative;
+  padding-top: 200px;
+  padding-bottom: 110px;
+  background-position: center;
+}
+
+/*레시피 보기*/
+#show-recipe{
+  height:44px;
+  background-color: white; 
+  color: #766df4;
+}
+
+#show-recipe:hover{
+  background-color: #766df4;
+  border: none;
+  color: white;
+}
+
+#category-tag{
+  background-color: rgb(241, 243, 255);
+  color: #766df4;
+}
+
+/* 하트 버튼  */
+.bookmark-post .favorite-icon2 a, .job-box.bookmark-post .favorite-icon2 a {
+  background-color: #766df4;
+  color: #fff;
+  border-color: danger;
+}
+.favorite-icon2 a {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  font-size: 22px;
+  line-height: 40px;
+  text-align: center;
+  border: 1px solid #eff0f2;
+  border-radius: 6px;
+  color: rgba(173, 181, 189, .55);
+  -webkit-transition: all .5s ease;
+  transition: all .5s ease
+}
+
+.favorite-icon2 a:hover {
+  color: #fff;
+  background-color: #766df4;
+  border-color: #766df4;
+}
+
+/* 댓글 수정 */
+.updateReply {
+	display: none;
+}

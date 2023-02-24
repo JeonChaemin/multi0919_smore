@@ -1,0 +1,286 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="head" th:replace="~{common/layout :: head}"></head>
+<!--Custom Css-->
+<link th:href="@{/css/board.css}" id="news" rel="stylesheet" type="text/css" />
+
+<body>
+	<!--start page Loader -->
+	<div id="preloader">
+		<div id="status">
+			<ul>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>
+	</div>
+	<!--end page Loader -->
+
+	<!-- Begin page -->
+	<header th:replace="~{common/layout :: #header}"></header>
+
+	<div class="main-content">
+
+		<div class="page-content">
+
+			<!-- Start home -->
+			<section class="page-title-box"
+				th:style="'background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(' + @{/images/img/hero_community.jpg} + '); height: 350px; padding-top: 130px; background-position: center;'">
+				<div class="container">
+					<div class="row justify-content-center">
+						<div class="col-md-6">
+							<div class="text-center text-white">
+								<h3 class="mb-4 hero-title" style="font-weight: 400;">게시판</h3>
+								<div class="page-next">
+									<nav class="d-inline-block" aria-label="breadcrumb text-center">
+										<ol class="breadcrumb justify-content-center">
+											<li class="breadcrumb-item"><a th:href="@{/}">HOME</a></li>
+											<li class="breadcrumb-item"><a
+												th:href="@{/board/list?type=free}">COMMUNITY</a></li>
+											<li class="breadcrumb-item active" aria-current="page">
+												BOARD</li>
+										</ol>
+									</nav>
+								</div>
+							</div>
+						</div>
+						<!--end col-->
+					</div>
+					<!--end row-->
+				</div>
+				<!--end container-->
+			</section>
+			<!-- end home -->
+
+			<!-- START SHAPE -->
+			<div class="position-relative" style="z-index: 1">
+				<div class="shape">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 250">
+                                <path fill="#FFFFFF" fill-opacity="1"
+							d="M0,192L120,202.7C240,213,480,235,720,234.7C960,235,1200,213,1320,202.7L1440,192L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"></path>
+                            </svg>
+				</div>
+			</div>
+			<!-- END SHAPE -->
+
+
+			<!-- START BOARD -->
+			<section class="py-6">
+				<div class="container mb-3">
+					<div class="row mb-6">
+						<div class="col-md-4">
+							<!-- 자유게시판 건의게시판 버튼 -->
+							<div class="col-sm-11 pe-4" style="text-align: left;">
+								<button class="btn btn-soft-primary"
+									th:classappend="${type} == 'free' ? 'active'"
+									th:onclick="|location.href='@{/board/list?type=free}'|">자유게시판</button>
+								<button class="btn btn-soft-primary"
+									th:classappend="${type} == 'question' ? 'active'"
+									th:onclick="|location.href='@{/board/list?type=question}'|">건의게시판</button>
+							</div>
+						</div>
+					</div>
+					<!-- 자유게시판 -->
+					<div class="table-responsive">
+						<table class="table text-gray-700 table-hover">
+							<tr>
+								<th class="py-4 text-center align-middle">번호</th>
+								<th class="py-4 text-center align-middle">제목</th>
+								<th class="py-4 text-center align-middle">작성일</th>
+								<th class="py-4 text-center align-middle">작성자</th>
+								<th class="py-4 text-center align-middle">조회수</th>
+							</tr>
+							<th:block th:if="${list == null}">
+								<tr>
+									<td colspan="6">게시글이 없습니다.</td>
+								</tr>
+							</th:block>
+							<th:block th:if="${list != null}">
+								<tr th:each="item : ${list}">
+									<td class="py-4 text-center align-middle">[[${item.viewNo}]]</td>
+									<td class="py-4 text-start align-start"><a
+										class="text-reset"
+										th:href="|/board/detail?type=${item.type}&no=${item.bbNo}|">
+											[[${item.title}]] <span class="text-muted"
+											th:if="${!#lists.isEmpty(item.originalFileName)}"> <i
+												class="uil uil-scenery"></i>
+										</span> <span class="text-muted my-2"><i
+												class="uil uil-thumbs-up ms-1"></i> [[${item.likeCount}]]</span>
+									</a></td>
+									<td class="py-4 text-center align-middle"
+										th:text="${#dates.format(item.createDate, 'yyyy-MM-dd')}"></td>
+									<td class="py-4 text-center align-middle" th:text="${item.id}"></td>
+									<td class="py-4 text-center align-middle"
+										th:text="${item.readCount}"></td>
+								</tr>
+							</th:block>
+						</table>
+					</div>
+
+					<!-- 글쓰기 버튼-->
+					<div th:if="${session.loginMember != null}">
+						<div class="text-end">
+							<button class="btn btn-primary btn-hover"
+								th:if="${type} == 'free'"
+								th:onclick="|location.href='@{/board/write?type=free}'|">
+								글쓰기 <i class="uil uil-edit-alt"></i>
+							</button>
+							<button class="btn btn-primary btn-hover"
+								th:if="${type} == 'question'"
+								th:onclick="|location.href='@{/board/write?type=question}'|">
+								글쓰기 <i class="uil uil-edit-alt"></i>
+							</button>
+						</div>
+					</div>
+
+				<!-- 페이징-->
+				<div class="row">
+					<div class="col-lg-12 mt-4 mb-5 pt-2">
+						<nav aria-label="Page navigation example">
+							<ul class="pagination job-pagination mb-0 justify-content-center">
+								<th:block th:if="${pageInfo.currentPage == pageInfo.startPage}">
+									<li class="page-item "
+										th:classappend="${pageInfo.currentPage == 1 ? 'disabled' : ''}">
+										<a class="page-link" href="javascript:void(0)"
+										th:onclick="|movePage('/board/list?page=${pageInfo.prevPage}');|"
+										tabindex="-1"> <i
+											class="mdi mdi-chevron-double-left fs-15"></i>
+									</a>
+									</li>
+								</th:block>
+								<th:block th:if="${pageInfo.currentPage != pageInfo.startPage}">
+									<li class="page-item "
+										th:classappend="${pageInfo.currentPage == 1 ? 'disabled' : ''}">
+										<a class="page-link" href="javascript:void(0)"
+										th:onclick="|movePage('/board/list?page=${pageInfo.startPage}');|"
+										tabindex="-1"> <i
+											class="mdi mdi-chevron-double-left fs-15"></i>
+									</a>
+									</li>
+								</th:block>
+
+								<th:block
+									th:each="num, status : ${#numbers.sequence(pageInfo.startPage, pageInfo.endPage)}">
+									<th:block th:if="${pageInfo.currentPage == status.current}">
+										<li class="page-item active"><a class="page-link"
+											th:text="${status.current}"></a></li>
+									</th:block>
+									<th:block
+										th:if="${pageInfo.currentPage != status.current && pageInfo.endPage != 0}">
+										<li class="page-item"><a class="page-link"
+											href="javascript:void(0)"
+											th:onclick="|movePage('/board/list?page=${status.current}');|"
+											th:text="${status.current}"></a></li>
+									</th:block>
+								</th:block>
+
+								<th:block th:if="${pageInfo.currentPage == pageInfo.endPage}">
+									<li class="page-item"
+										th:classappend="${pageInfo.currentPage == pageInfo.maxPage ? 'disabled' : ''}">
+										<a class="page-link" href="javascript:void(0)"
+										th:onclick="|movePage('/board/list?page=${pageInfo.nextPage}');|">
+											<i class="mdi mdi-chevron-double-right fs-15"></i>
+									</a>
+									</li>
+								</th:block>
+								<th:block th:if="${pageInfo.currentPage != pageInfo.endPage}">
+									<li class="page-item"
+										th:classappend="${pageInfo.currentPage == pageInfo.maxPage ? 'disabled' : ''}">
+										<a class="page-link" href="javascript:void(0)"
+										th:onclick="|movePage('/board/list?page=${pageInfo.endPage}');|">
+											<i class="mdi mdi-chevron-double-right fs-15"></i>
+									</a>
+									</li>
+								</th:block>
+								<input type="hidden" id="type" th:value="${type}">
+							</ul>
+						</nav>
+					</div>
+					<!--end col-->
+				</div>
+				<!-- end row -->
+		</div>
+		<!--end container-->
+
+		<!-- 검색바 -->
+		<div class="row">
+			<div class="col-xl-4 mx-auto mb-4">
+				<form action="/board/list">
+					<div class="input-group">
+						<input class="form-control" type="text" th:value="${searchValue}"
+							id="searchValue" name="searchValue" placeholder="검색어를 입력하세요">
+						<input type="hidden" th:value="${type}" id="type" name="type">
+						<button class="btn btn-primary" type="submit">
+							<i class="fa fa-search"></i> 검색
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</section>
+
+	<footer th:replace="~{common/layout :: #footer}"></footer>
+
+	<!-- Style switcher -->
+	<a class="color-list color1" href="javascript: void(0);"
+		onclick="setColorGreen()"></a> <a class="color-list color2"
+		href="javascript: void(0);" onclick="setColor('blue')"></a> <a
+		class="color-list color3" href="javascript: void(0);"
+		onclick="setColor('green')"></a> <a href="javascript: void(0);"
+		id="mode"> <a href="javascript: void(0);"
+		class="settings rounded-end"></a>
+	<!-- end switcher-->
+
+	<!--start back-to-top-->
+	<button onclick="topFunction()" id="back-to-top">
+		<i class="mdi mdi-arrow-up"></i>
+	</button>
+	<!--end back-to-top-->
+	
+	</div>
+	<!-- end main content-->
+
+	</div>
+	<!-- END layout-wrapper -->
+	
+	<!-- JAVASCRIPT -->
+	<script th:src="@{/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
+
+	<!-- Choice Js -->
+	<script th:src="@{/libs/choices.js/public/assets/scripts/choices.min.js}"></script>
+
+	<!-- Candidate Init Js -->
+	<script th:src="@{/js/pages/candidate.init.js}"></script>
+	
+	<!-- Job-list Init Js -->
+	<script th:src="@{/js/pages/job-list.init.js}"></script>
+	
+	<!-- Switcher Js -->
+	<script th:src="@{/js/pages/switcher.init.js}"></script>
+	
+	<!-- App Js -->
+	<script th:src="@{/js/app.js}"></script>
+	
+	<script	type="text/javascript">
+	function movePage(pageUrl) {
+		var searchValue = document.getElementById("searchValue");
+		var type = document.getElementById("type").value;
+		console.dir(type);
+		pageUrl = pageUrl + '&type=' + type;
+		
+		if (searchValue.value.length > 0) {
+			pageUrl = pageUrl + '&type=' + type + '&searchValue=' + searchValue;
+		}
+		
+		location.href = encodeURI(pageUrl);
+	}
+	</script>
+</body>
+</html>

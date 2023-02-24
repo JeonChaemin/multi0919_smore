@@ -1,0 +1,58 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard-dynamic-subset.css");
+@font-face {
+  font-family: 'SANJUGotgam';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/SANJUGotgam.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.font-sangju{
+  font-family: 'SANJUGotgam';
+}
+
+.hero-title {
+  font-size: 2rem;
+  font-weight: 400;
+  font-family: 'SANJUGotgam';
+}
+
+.hero-img {
+	background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), 
+	url("/images/img/hero_trade.jpg");
+	height: 350px; 
+	padding-top: 130px; 
+	background-position: center 80%;
+}
+
+.bw-tbl th{
+  text-align: center;
+  vertical-align: middle;
+}
+
+.bw-tbl select {
+  width: 90%;
+  border-radius: 5px;
+}
+
+.bw-tbl input[type="text"] {
+  width: 90%;
+  height: 35px;
+  padding-left:10px;
+  padding-right:10px;
+  border: 1px solid #e2e5e8;
+  border-radius: 5px;
+}
+
+.bw-tbl textarea{
+  width: 95%;
+  border-radius: 5px;
+}
+
+.input-file-button {
+  padding: 6px 25px;
+  background-color:#766df4;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+}
+

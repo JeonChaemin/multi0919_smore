@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="ko">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head" th:replace="~{common/layout :: head}">
+</head>
+  <!--Program-detail Css-->
+  <link th:href="@{/css/program-detail.css}" rel="stylesheet" type="text/css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+
+<body>
+  <!--start page Loader -->
+  <div id="preloader">
+    <div id="status">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
+  </div>
+  <!--end page Loader -->
+  <!-- Begin page -->
+<header th:replace="~{common/layout :: #header}"></header>
+  <!-- Start home -->
+  <section class="page-title-box programbackimage">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="text-center text-white">
+            <h1 class="mb-4 hero-title" style="font-weight: 400;">정부지원 사업</h1>
+            <div class="page-next">
+              <nav class="d-inline-block" aria-label="breadcrumb text-center">
+                <ol class="breadcrumb justify-content-center">
+                  <li class="breadcrumb-item"><a th:href="@{/}">HOME</a></li>
+				  <li class="breadcrumb-item"><a th:href="@{/program}">LIFE</a></li>
+				  <li class="breadcrumb-item"><a th:href="@{/program}">PROGRAM</a></li>
+				  <li class="breadcrumb-item" aria-current="page">PROGRAM</li>
+                </ol>
+              </nav>
+            </div>
+          </div>
+        </div>
+        <!--end col-->
+      </div>
+      <!--end row-->
+    </div>
+    <!--end container-->
+  </section>
+  <!-- end home -->
+  <!-- 배너 쉐잎 -->
+  <div class="position-relative" style="z-index: 1">
+    <div class="shape">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 250">
+        <path fill="#FFFFFF" fill-opacity="1"
+          d="M0,192L120,202.7C240,213,480,235,720,234.7C960,235,1200,213,1320,202.7L1440,192L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z">
+        </path>
+      </svg>
+    </div>
+  </div>
+  <!-- 배너 쉐잎 끝 -->
+  <!-- 프로그램 소개------------------------------------- -->
+  <section class="section">
+    <div class="container mb-30">
+    <h4 class="my-4">프로그램 소개</h4>
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="card job-detail overflow-hidden">
+            <div class="card-body p-4">
+              <div>
+                <div class="row">
+                  <div class="col-md-8">
+                    <h4 class="mb-4 mt-4">[[${oneProgram.partcptnSj}]]</h4>
+                    <ul class="list-inline text-muted mb-3 ml-1 position-absolute">
+                      <li class="list-inline-item partifont">
+                        <i class="uil uil-user-plus"></i>참여 인원 : [[${oneProgram.partcptnNmpr}]]명
+                      </li>
+                      <li class="list-inline-item text-warning review-rating categoryyellow position-relative">
+                        <span class="badge bg-warning">[[${oneProgram.tyNm}]]</span>
+                      </li>
+                    </ul>
+                  </div><!--end col-->
+                  <div class="col-lg-4">
+                    <ul class="list-inline mb-0 text-lg-end mt-6 mt-lg-2">
+                      <li class="list-inline-item">
+                       <th:block th:if="${session.loginMember != null}">
+							<div class="favorite-icon clip clipbtn"
+								th:id="|clip${oneProgram.onepNo}|" th:value="${oneProgram.isClip}"
+								th:onclick="|onClickClip('clip${oneProgram.onepNo}', '${oneProgram.onepNo}');|">
+								<a href="javascript:void(0)">
+									<i class="uil uil-bookmark-full"></i>
+								</a>
+							</div>
+						</th:block>
+                      </li>
+                    </ul>
+                  </div><!--end col-->
+                </div><!--end row-->
+              </div>
+
+              <div class="mt-11">
+                <div class="row g-2">
+                  <div class="col-lg-3">
+                    <div class="border rounded-start p-3">
+                      <p class="text-muted mb-0 fs-13" >카테고리</p>
+                      <p class="fw-medium fs-15 mb-0">[[${oneProgram.seNm}]]</p>
+                    </div>
+                  </div>
+                  <div class="col-lg-3">
+                    <div class="border p-3">
+                      <p class="text-muted fs-13 mb-0" >지역(소속)</p>
+                      <p class="fw-medium mb-0" >[[${oneProgram.atdrcNm}]]</p>
+                    </div>
+                  </div>
+                  <div class="col-lg-3">
+                    <div class="border p-3">
+                      <p class="text-muted fs-13 mb-0" >회기수</p>
+                      <p class="fw-medium mb-0">[[${oneProgram.tme}]]</p>
+                    </div>
+                  </div>
+                  <div class="col-lg-3">
+                    <div class="border rounded-end p-3">
+                      <p class="text-muted fs-13 mb-0" >접수방법</p>
+                      <p class="fw-medium mb-0" >[[${oneProgram.rceptMthNm}]]</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--end 카테고리-->
+              <!-- 내용----------------------- -->
+              <div class="mt-5">
+                <h5 class="mb-3">내용</h5>
+                <div class="job-detail-desc mb-3">
+                  <p class="text-muted mb-0" >[[${oneProgram.cn}]]</p>
+                </div>
+              </div>
+
+              <div class="mt-5">
+                <h5 class="mb-3">대상</h5>
+                <div class="job-detail-desc mt-2">
+                  <p class="text-muted" >[[${oneProgram.trgetInfo}]]</p>
+                  <p class="text-muted mb-0">[[${oneProgram.agrdeNm}]] / [[${oneProgram.sexdstnNm}]] 대상</p>
+                </div>
+              </div>
+
+              <div class="mt-5">
+                <h5 class="mb-3" >주소</h5>
+                <div class="job-detail-desc mt-2">
+                  <p class="text-muted" >[[${oneProgram.placeAdres1}]] [[${oneProgram.placeAdres2}]]</p>
+                </div>
+              </div>
+
+              <div class="mt-5">
+                <h5 class="mb-3" >진행문의</h5>
+                <div class="job-details-desc">
+                  <p class="text-muted" >[[${oneProgram.progrsInqry}]]</p>
+                </div>
+              </div>
+
+              <div class="mt-5">
+                <h5 class="mb-3" >접수 방법</h5>
+                <div class="job-details-desc">
+                  <p class="text-muted" >[[${oneProgram.rceptMthNm}]]</p>
+                  <p class="text-muted"><a th:href="|${oneProgram.rceptMthLink}|" >[[${oneProgram.rceptMthLink}]]</a></p>
+                </div>
+              </div>
+            </div><!--end card-body-->
+          </div><!--end job-detail-->
+        </div><!--end col-->
+        <!-- 사이드바---------------------------------------------------- -->
+        <div class="col-lg-4 mt-4 mt-lg-0">
+          <!--start side-bar-->
+          <div class="side-bar ms-lg-4">
+            <div class="card job-overview">
+              <div class="card-body p-4">
+                <h4 class="mt-2">간략하게 보기</h4>
+                <ul class="list-unstyled mt-4 mb-0">
+                  <li>
+                    <div class="d-flex mt-40px">
+                      <i class="uil uil-user icon bg-soft-primary"></i>
+                      <div class="ms-3" style="width: 220px;">
+                        <h6 class="fs-14 mb-2" >참여 대상</h6>
+                        <p class="text-muted" >[[${oneProgram.trgetInfo}]]</p>
+                        <p class="text-muted mb-0">[[${oneProgram.agrdeNm}]] / [[${oneProgram.sexdstnNm}]] 대상</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="d-flex mt-40px">
+                      <i class="uil uil-star-half-alt icon bg-soft-primary"></i>
+                      <div class="ms-3" style="width: 220px;">
+                        <h6 class="fs-14 mb-2">접수기간</h6>
+                        <p class="text-muted mb-0">[[${#dates.format(oneProgram.rceptDe1, 'yyyy-MM-dd')}]]~[[${#dates.format(oneProgram.rceptDe2, 'yyyy-MM-dd')}]]</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="d-flex mt-40px">
+                      <i class="uil uil-history icon bg-soft-primary"></i>
+                      <div class="ms-3" style="width: 220px;">
+                        <h6 class="fs-14 mb-2" >진행기간</h6>
+                        <p class="text-muted mb-0" >[[${#dates.format(oneProgram.progrsDe1, 'yyyy-MM-dd')}]]~[[${#dates.format(oneProgram.progrsDe2, 'yyyy-MM-dd')}]]</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="d-flex mt-40px">
+                      <i class="uil uil-usd-circle icon bg-soft-primary"></i>
+                      <div class="ms-3" style="width: 220px;">
+                        <h6 class="fs-14 mb-2">참가비</h6>
+                        <p class="text-muted mb-0">[[${oneProgram.partcptCtNm}]]</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="d-flex mt-40px">
+                      <i class="uil uil-building icon bg-soft-primary"></i>
+                      <div class="ms-3" style="width: 220px;">
+                        <h6 class="fs-14 mb-2" >기관명</h6>
+                        <p class="text-muted mb-0" >[[${oneProgram.insttNm}]]</p>
+                      </div>
+                    </div>
+                  </li>
+
+                </ul>
+                <div class="mt-5 mb-3">
+<!--                   <a th:href="${oneProgram.rceptMthLink}" data-bs-toggle="modal" class="btn btn-primary btn-hover w-100 mt-2">페이지 이동 -->
+                  <a th:href="${oneProgram.rceptMthLink}" class="btn btn-primary btn-hover w-100 mt-2">페이지 이동
+                    <i class="uil uil-arrow-right"></i></a>
+                </div>
+              </div><!--end card-body-->
+            </div><!--end job-overview-->
+          </div>
+        </div>
+        <!--end side-bar-->
+</th:block>
+</th:block>
+      </div><!--end row-->
+    </div><!--end container-->
+  </section>
+  <!-- START JOB-DEATILS -->
+ 
+
+  <footer th:replace="~{common/layout :: #footer}"></footer>
+
+  <a href="javascript: void(0);" id="mode" class="ext-white rounded-3">
+          </a>
+      <a href="javascript: void(0);" class="settings rounded-end"></a>
+
+  <!--start back-to-top-->
+  <button onclick="topFunction()" id="back-to-top">
+    <i class="mdi mdi-arrow-up"></i>
+  </button>
+  <!--end back-to-top-->
+  </div>
+  <!-- end main content-->
+
+  </div>
+  <!-- END layout-wrapper -->
+
+  <!-- JAVASCRIPT -->
+	<script th:src="@{/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
+	<!-- Choice Js -->
+	<script th:src="@{/libs/choices.js/public/assets/scripts/choices.min.js}"></script>
+	<!-- Swiper Js -->
+	<script th:src="@{/libs/swiper/swiper-bundle.min.js}"></script>
+	<!-- Switcher Js -->
+	<script th:src="@{/js/pages/switcher.init.js}"></script>
+	<script th:src="@{/js/pages/index.init.js}"></script>
+	<!-- App Js -->
+	<script th:src="@{/js/app.js}"></script>
+	<!-- Custom Js -->
+	<script th:src="@{/js/pages/favorite.js}"></script>
+	<!-- Index Js -->
+	<script th:src="@{/js/pages/job-list.init.js}"></script>
+
+
+</body>
+<script>
+// 초기화 문구
+$(function(){
+    // 하트 class 초기화
+    clipItems = document.getElementsByClassName('clip');
+
+for (i = 0; i < clipItems.length; i++) {
+	clipValue = JSON.parse(clipItems[i].getAttribute('value'));
+	console.log(clipValue);
+
+	if (clipValue == 1) {
+		$(clipItems[i]).addClass("active")
+	}
+	else {
+		$(clipItems[i]).removeClass("active")
+	}
+}
+});
+
+function onClickLike(id, addLike){
+    likeValue = new Number($('#'+id).text());
+    likeValue += new Number(addLike);
+    // 여기에 AJAX로 DB 업데이트하는 코드 있어야함!!
+
+    $('#'+id).text((likeValue > 0 ? '+' : '') + likeValue);
+}
+
+function onClickClip(id, onepNo){
+	clipValue = JSON.parse($('#'+id).attr('value'));
+    if(clipValue == 0){
+    	clipValue = 1;
+    }else{
+    	clipValue = 0;
+    }
+    var sendurl = '/program-detail/clip?onepNo=' + onepNo +'&isClip=' + clipValue;
+//     alert(sendurl)
+    // 여기에 AJAX로 DB 업데이트하는 코드 있어야함!!
+    $.ajax({
+		type:'get',
+		url:sendurl ,
+		contentType: 'application/json',
+		dataType : 'json',
+		success: (result) =>{
+			$('#'+id).attr('value', ''+result);
+	        if(result == 1){
+	        	$('#' + id).addClass("active")
+//					alert("스크랩에 추가 되었습니다.");
+	        }else{
+	        	$('#' + id).removeClass("active")
+//					alert("스크랩에서 제거 되었습니다.");
+	        }
+		},
+		error : (e) => {
+			alert('전송 실패!!');
+		}
+	});
+}
+</script>
+</html>

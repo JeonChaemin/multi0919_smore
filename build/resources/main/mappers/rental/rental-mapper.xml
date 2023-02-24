@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper
+	namespace="com.multi.smore.rental.model.mapper.RentalMapper">
+
+	<resultMap type="Rental" id="rentalListResultMap">
+		<id property="rentalNo" column="rentalNo" />
+		<result property="rentalType" column="rentalType" />
+		<result property="suplyHoCo" column="suplyHoCo" />
+		<result property="pblancId" column="pblancId" />
+		<result property="houseSn" column="houseSn" />
+		<result property="sttusNm" column="sttusNm" />
+		<result property="pblancNm" column="pblancNm" />
+		<result property="suplyInsttNm" column="suplyInsttNm" />
+		<result property="houseTyNm" column="houseTyNm" />
+		<result property="suplyTyNm" column="suplyTyNm" />
+		<result property="beforePblancId" column="beforePblancId" />
+		<result property="rcritPblancDe" column="rcritPblancDe" />
+		<result property="przwnerPresnatnDe" column="przwnerPresnatnDe" />
+		<result property="refrnc" column="refrnc" />
+		<result property="url" column="url" />
+		<result property="pcUrl" column="pcUrl" />
+		<result property="mobileUrl" column="mobileUrl" />
+		<result property="hsmpNm" column="hsmpNm" />
+		<result property="brtcNm" column="brtcNm" />
+		<result property="signguNm" column="signguNm" />
+		<result property="fullAdres" column="fullAdres" />
+		<result property="rnCodeNm" column="rnCodeNm" />
+		<result property="refrnLegaldongNm" column="refrnLegaldongNm" />
+		<result property="pnu" column="pnu" />
+		<result property="heatMthdNm" column="heatMthdNm" />
+		<result property="totHshldCo" column="totHshldCo" />
+		<result property="sumSuplyCo" column="sumSuplyCo" />
+		<result property="rentGtn" column="rentGtn" />
+		<result property="enty" column="enty" />
+		<result property="prtpay" column="prtpay" />
+		<result property="surlus" column="surlus" />
+		<result property="mtRntchrg" column="mtRntchrg" />
+		<result property="beginDe" column="beginDe" />
+		<result property="endDe" column="endDe" />
+		<result property="isClip" column="isClip" />
+		<result property="clipCount" column="clipCount" />
+	</resultMap>
+
+	<select id="selectRentalList" resultMap="rentalListResultMap" parameterType="map">
+		SELECT DISTINCT
+		*
+		,(SELECT COUNT(*) FROM CLIP_RENTALHOUSE CR WHERE R.rentalNo = CR.rentalNo) as clipCount
+		<if test="memNo != null">
+			,(SELECT COUNT(*) FROM CLIP_RENTALHOUSE CR WHERE R.rentalNo = CR.rentalNo AND CR.MEMNO = #{memNo}) as isClip
+		</if>
+		<if test="memNo == null">
+			,(SELECT COUNT(*) FROM CLIP_RENTALHOUSE CR WHERE R.rentalNo = CR.rentalNo AND CR.MEMNO = 0) as isClip
+		</if>
+		FROM RentalHouse R
+		LEFT OUTER JOIN CLIP_RENTALHOUSE CR ON CR.rentalNo = R.rentalNo
+		WHERE 1=1
+		<if test="searchValue != null">
+			AND pblancNm LIKE '%${searchValue}%'
+		</if>
+		<if test="searchRegion != null">
+			AND brtcNm LIKE '%${searchRegion}%'
+		</if>
+		<if test="searchHouseType != null">
+			AND houseTyNm LIKE '%${searchHouseType}%'
+		</if>
+		<if test="searchSuplyType != null">
+			AND (
+			<foreach collection="searchSuplyType" item="item"
+				separator="or" index="index">
+				suplyTyNm LIKE '%${item}%'
+			</foreach>
+			)
+		</if>
+		ORDER BY R.rentalNo DESC LIMIT ${limit} OFFSET ${offset}
+	</select>
+
+	<select id="selectRentalCount" resultType="int"
+		parameterType="map">
+		SELECT 
+			COUNT(DISTINCT R.rentalNo)
+		,(SELECT COUNT(*) FROM CLIP_RENTALHOUSE CR WHERE R.rentalNo = CR.rentalNo) as
+		clipCount
+		<if test="memNo != null">
+			,(SELECT COUNT(*) FROM CLIP_RENTALHOUSE CR WHERE R.rentalNo = CR.rentalNo AND
+			CR.MEMNO = #{memNo}) as isClip
+		</if>
+		<if test="memNo == null">
+			,(SELECT COUNT(*) FROM CLIP_RENTALHOUSE CR WHERE R.rentalNo = CR.rentalNo AND
+			CR.MEMNO = 0) as isClip
+		</if>
+		FROM RentalHouse R
+		LEFT OUTER JOIN CLIP_RENTALHOUSE CR ON CR.rentalNo =
+		R.rentalNo
+		WHERE 1=1
+		<if test="searchValue != null">
+			AND pblancNm LIKE '%${searchValue}%'
+		</if>
+		<if test="searchRegion != null">
+			AND brtcNm LIKE '%${searchRegion}%'
+		</if>
+		<if test="searchHouseType != null">
+			AND houseTyNm LIKE '%${searchHouseType}%'
+		</if>
+		<if test="searchSuplyType != null">
+			AND (
+			<foreach collection="searchSuplyType" item="item"
+				separator="or" index="index">
+				suplyTyNm LIKE '%${item}%'
+			</foreach>
+			)
+		</if>
+	</select>
+
+	<insert id="clipRental" parameterType="map">
+		INSERT INTO CLIP_RENTALHOUSE VALUES(#{memNo}, #{rentalNo})
+	</insert>
+
+	<insert id="unClipRental" parameterType="map">
+		DELETE FROM CLIP_RENTALHOUSE WHERE MEMNO=#{memNo} AND rentalNo=#{rentalNo}
+	</insert>
+
+		<!-- 스크랩 수 실시간 -->
+	<select id="clipCount" resultType="int" parameterType="int">
+		SELECT COUNT(*) FROM CLIP_RENTALHOUSE WHERE rentalNo=#{tradeNO}
+	</select> 
+
+	<!-- 공공임대 스크랩목록 불러오기 -->
+	<select id="selectClipRentalList" resultMap="rentalListResultMap" parameterType="map">
+	SELECT
+	RH.rentalNo, RH.rentalType, RH.suplyHoCo, RH.pblancId, RH.houseSn, RH.sttusNm, RH.pblancNm, 
+	RH.suplyInsttNm, RH.houseTyNm, RH.suplyTyNm, RH.beforePblancId, RH.rcritPblancDe, RH.przwnerPresnatnDe,
+	RH.refrnc, RH.url, RH.pcUrl, RH.mobileUrl, RH.hsmpNm, RH.brtcNm, RH.signguNm, RH.fullAdres, 
+	RH.rnCodeNm, RH.refrnLegaldongNm, RH.pnu, RH.heatMthdNm, RH.totHshldCo, RH.sumSuplyCo,
+	RH.rentGtn, RH.enty, RH.prtpay, RH.surlus, RH.mtRntchrg, RH.beginDe, RH.endDe
+	<if test='memNo != null and memNo != "" '>
+	, (SELECT COUNT(*) FROM CLIP_RENTALHOUSE CR WHERE RH.rentalNo = CR.rentalNo AND memNo = #{memNo}) as isClip
+	</if>
+	FROM RentalHouse RH
+	LEFT OUTER JOIN  CLIP_RENTALHOUSE CR on (CR.rentalNo = RH.rentalNo)
+	WHERE CR.memNo = #{memNo};
+</select>
+
+<!-- 통합검색 --> 
+	<select id="selectRentalListHome" resultMap="rentalListResultMap" parameterType="map">
+		SELECT DISTINCT
+		*
+		,(SELECT COUNT(*) FROM CLIP_RENTALHOUSE CR WHERE R.rentalNo = CR.rentalNo) as clipCount
+		<if test="memNo != null">
+			,(SELECT COUNT(*) FROM CLIP_RENTALHOUSE CR WHERE R.rentalNo = CR.rentalNo AND CR.MEMNO = #{memNo}) as isClip
+		</if>
+		<if test="memNo == null">
+			,(SELECT COUNT(*) FROM CLIP_RENTALHOUSE CR WHERE R.rentalNo = CR.rentalNo AND CR.MEMNO = 0) as isClip
+		</if>
+		FROM RentalHouse R
+		LEFT OUTER JOIN CLIP_RENTALHOUSE CR ON CR.rentalNo = R.rentalNo
+		WHERE 1=1
+		<if test="all != null">
+			AND (
+				pblancNm LIKE '%${all}%'
+				OR brtcNm LIKE '%${all}%'
+				OR houseTyNm LIKE '%${all}%'
+				OR suplyTyNm LIKE '%${all}%'
+				OR fullAdres LIKE '%${all}%'
+				)
+		</if>
+		ORDER BY R.rentalNo DESC LIMIT 5
+	</select>
+
+
+
+</mapper>

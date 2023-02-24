@@ -31,6 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequestMapping("/housebudget")
 @Controller
+@SuppressWarnings("unchecked")
 public class HousebudgetController {
 	
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

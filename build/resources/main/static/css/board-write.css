@@ -1,0 +1,45 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard-dynamic-subset.css");
+@font-face {
+  font-family: 'SANJUGotgam';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/SANJUGotgam.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+/*채민*/
+.font-sangju{
+  font-family: 'SANJUGotgam';
+}
+
+.hero-title {
+  font-size: 2rem;
+  font-weight: 400;
+  font-family: 'SANJUGotgam';
+}
+
+input[type=file]::file-selector-button {
+  display: inline-block;
+  padding: 0.5em 0.5em;
+  font-size: 75%;
+  font-weight: 600;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25rem;
+  -webkit-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+  color: #fff;
+  background-color: #74788d;
+  border: none;
+}
+a.badge-secondary:hover, a.badge-secondary:focus {
+    color: #fff;
+    background-color: #5d6071;
+}
+a.badge-secondary:focus, a.badge-secondary.focus {
+  outline: 0;
+  -webkit-box-shadow: 0 0 0 0.15rem rgba(116, 120, 141, 0.5);
+          box-shadow: 0 0 0 0.15rem rgba(116, 120, 141, 0.5);
+}

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.multi.smore.outdoor.model.mapper.TrackingMapper">
+	<sql id="selectTrackingSql">
+		SELECT  
+		T.TNO, T.COURSE_CATEGORY, T.COURSE_CATEGORY_NM, T.AREA_GU, T.DISTANCE, T.LEAD_TIME, T.COURSE_LEVEL, T.RELATE_SUBWAY, 
+		T.TRAFFIC_INFO, T.CONTENT, T.COURSE_NAME, T.DETAIL_COURSE, T.CPI_NAME, T.CPI_CONTENT, T.LATITUDE, T.LONGITUDE
+		,(SELECT COUNT(*) FROM REPLY_TRACKING R WHERE T.TNO = R.TNO AND R.STATUS='Y') as reviewCount
+			<if test="memNo != null and memNo != ''">
+			,(SELECT COUNT(*) FROM CLIP_TRACKING C WHERE T.TNO = C.TNO AND MEMNO = ${memNo}) as isClip
+			</if>
+		FROM TRACKING T
+		LEFT OUTER JOIN (SELECT DISTINCT TNO FROM REPLY_TRACKING) as R ON (T.TNO = R.TNO)
+		LEFT OUTER JOIN (SELECT DISTINCT TNO FROM CLIP_TRACKING) as C ON (T.TNO = C.TNO)
+		
+	</sql>
+
+	<resultMap type="Tracking" id="TrackingListResultMap">
+		<id property="tNo" column="TNO"/>
+		<result property="courseCategory" column="COURSE_CATEGORY"/>
+		<result property="courseCategoryNm" column="COURSE_CATEGORY_NM"/>
+		<result property="areaGu" column="AREA_GU"/>
+		<result property="distance" column="DISTANCE"/>
+		<result property="leadTime" column="LEAD_TIME"/>
+		<result property="courseLevel" column="COURSE_LEVEL"/>
+		<result property="relateSubway" column="RELATE_SUBWAY"/>
+		<result property="trafficInfo" column="TRAFFIC_INFO"/>
+		<result property="content" column="CONTENT"/>
+		<result property="courseName" column="COURSE_NAME"/>
+		<result property="detailCourse" column="DETAIL_COURSE"/>
+		<result property="cpiName" column="CPI_NAME"/>
+		<result property="cpiContent" column="CPI_CONTENT"/>
+		<result property="latitude" column="LATITUDE"/>
+		<result property="longitude" column="LONGITUDE"/>
+		<result property="isClip" column="isClip"/>
+	</resultMap>
+	
+	<resultMap type="TrackingReply" id="TrackingReplyResultMap">
+		<id 	property="tRno"		column="TRNO"/>
+		<result property="tNo" 		column="TNO"/>
+		<result property="memNo" 		column="memNo"/>
+		<result property="writer" 		column="WRITER"/>
+		<result property="writerName" 	column="WRITER_NAME"/>
+		<result property="content" 		column="CONTENT"/>
+		<result property="status" 		column="STATUS"/>
+		<result property="createDate" 	column="CREATE_DATE"/>
+		<result property="modifyDate" 	column="MODIFY_DATE"/>
+	</resultMap>
+	
+	<resultMap type="TrackingClip" id="TrackingClipResultMap">
+		<id property="tNo" 	column="tNo"/>
+		<result property="memNo" 	column="memNo"/>
+	</resultMap>
+
+
+
+
+	<select id="selectTrackingList" resultMap="TrackingListResultMap" parameterType="map">
+		<include refid="selectTrackingSql" />
+		where 1=1
+		<if test="searchValue != null">
+			AND (COURSE_NAME LIKE '%${searchValue}%'
+				OR COURSE_CATEGORY_NM LIKE '%${searchValue}%'
+				OR CPI_NAME LIKE '%${searchValue}%'
+				OR AREA_GU LIKE '%${searchValue}%')
+		</if>
+		ORDER BY TNO DESC LIMIT ${limit} OFFSET ${offset}
+	</select>
+	
+	
+	<select id="selectTrackingCount" resultType="int" parameterType="map">
+		SELECT COUNT(*)
+		FROM TRACKING
+		where 1=1
+		<if test="searchValue != null">
+			AND ( COURSE_NAME LIKE '%${searchValue}%'
+				OR COURSE_CATEGORY_NM LIKE '%${searchValue}%' 
+				OR CPI_NAME LIKE '%${searchValue}%'
+				)
+		</if>
+	</select>
+	
+	<select id="selectTrackingByNo" parameterType="int" resultMap="TrackingListResultMap">
+		<include refid="selectTrackingSql" />
+		WHERE T.TNO = ${tNo}
+	</select>
+	
+
+	<select id="selectTrackingListHot" resultMap="TrackingListResultMap" parameterType="map">
+		SELECT *
+		FROM TRACKING
+		WHERE TNO IN 
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+        #{item}
+  		</foreach>
+  		ORDER BY TNO
+	</select>
+	
+	
+	<select id="selectTrackingReplyListByNo" parameterType="int" resultMap="TrackingReplyResultMap">
+		SELECT
+			tRno, tNo, memNo, WRITER, WRITER_NAME, CONTENT, STATUS, CREATE_DATE, MODIFY_DATE
+		FROM REPLY_TRACKING
+		WHERE STATUS ='Y'
+		AND tNo= ${tNo}	
+	</select>
+
+	
+	<select id="selectTrackingClipList" parameterType="map" resultMap="TrackingClipResultMap">
+		SELECT tNo, memNo FROM CLIP_TRACKING
+		WHERE memNo = ${memNo}
+		LIMIT ${limit} OFFSET ${offset}
+	</select>
+
+	
+	<select id="selectTrackingClipByNo" parameterType="map" resultMap="TrackingClipResultMap">
+		SELECT tNo, memNo 
+		FROM CLIP_TRACKING
+		WHERE tNo = ${tNo}
+		AND memNo = ${memNo}
+	</select>
+
+	<select id="selectTrackingListRamd" parameterType="map" resultMap="TrackingListResultMap" >
+		SELECT * 
+		FROM TRACKING
+		
+        ORDER BY RAND() 
+        limit 8; 
+	
+	</select>
+	
+	
+	
+	<insert id="insertTracking" parameterType="Tracking">
+		INSERT INTO TRACKING(
+			TNO, COURSE_CATEGORY, COURSE_CATEGORY_NM, AREA_GU, DISTANCE, LEAD_TIME, 
+			COURSE_LEVEL, RELATE_SUBWAY, TRAFFIC_INFO, CONTENT, COURSE_NAME, DETAIL_COURSE, 
+			CPI_NAME, CPI_CONTENT, LATITUDE, LONGITUDE
+		) VALUES (
+			0, #{courseCategory}, #{courseCategoryNm}, #{areaGu}, #{distance}, #{leadTime}, #{courseLevel},
+			#{relateSubway}, #{trafficInfo}, #{content}, #{courseName}, #{detailCourse}, 
+			#{cpiName}, #{cpiContent}, #{latitude}, #{longitude}	
+		)
+	</insert>
+	
+	<insert id="insertTrackingReply" parameterType="TrackingReply">
+		INSERT INTO REPLY_TRACKING(
+			TRno, tNo, memNo, WRITER, WRITER_NAME,
+			CONTENT, STATUS, CREATE_DATE, MODIFY_DATE
+		) VALUES(
+			0, #{tNo}, #{memNo}, #{writer}, #{writerName},
+			#{content}, DEFAULT, DEFAULT, DEFAULT
+		)
+	</insert>
+	
+
+	<delete id="deleteTrackingReply" parameterType="int">
+		DELETE FROM REPLY_TRACKING WHERE TRNO=#{tRno}
+	</delete>
+	
+	<update id="updateTrackingReply" parameterType="TrackingReply">
+		UPDATE REPLY_TRACKING
+		SET 
+			CONTENT=#{content},
+			MODIFY_DATE= CURRENT_TIMESTAMP
+		WHERE
+			TRNO=#{tRno}	
+	</update>
+	
+	<!-- 스크랩 -->
+	<insert id="insertTrackingClip" parameterType="map">
+		INSERT INTO CLIP_TRACKING	(tNo, memNo) VALUES (#{tNo}, #{memNo})
+	</insert>
+	
+	<!-- 스크랩 풀기-->
+	<insert id="deleteTrackingClip" parameterType="map">
+		DELETE FROM CLIP_TRACKING  WHERE MEMNO=#{memNo} AND TNO=#{tNo}
+	</insert>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>

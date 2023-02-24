@@ -1,0 +1,102 @@
+
+.hero-title {
+    font-size: 2rem;
+    font-weight: 400;
+    font-family: 'SANJUGotgam';
+}
+
+.programintrotitle{
+    margin-left: 20%;
+    margin-top: 5%;
+    margin-bottom: 3%;
+}
+.iconsize{
+    font-size: 1.5rem;
+    top: 2px;
+} 
+.programbackimage{
+	background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/images/img/hero_program.jpg"); 
+	background-position: center; 
+	height: 350px; 
+	padding-top: 130px;
+}
+.partifont{
+    font-size: 1.1rem;
+    
+}
+.categoryyellow{
+    bottom: 2px;
+}
+.mt-11{
+    margin-top: 11%;
+}
+.mb-30{
+    margin-bottom: 30%;
+}
+.mt-40px{
+    margin-top: 35px;
+}
+.favorite-icon a:hover {
+    color: #fff;
+    background-color: #766df4;
+    border-color: rgb(172, 172, 172);
+}
+.favorite-icon a {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    line-height: 30px;
+    text-align: center;
+    border: 1px solid rgb(172, 172, 172);
+    border-radius: 6px;
+    color: #766df4;
+    -webkit-transition: all .5s ease;
+    transition: all .5s ease;
+}
+.favorite-icon-active a {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    line-height: 30px;
+    text-align: center;
+    border: 1px solid rgb(172, 172, 172);
+    border-radius: 6px;
+    color: rgb(255, 255, 255);
+    -webkit-transition: all .5s ease;
+    transition: all .5s ease;
+    background-color: #766df4;
+}
+.active a{
+	color: #fff !important;
+  background-color: #766df4 !important;
+}
+
+.active >a :hover{
+	color: #fff !important;
+  background-color: #766df4 !important;
+}
+.card {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid #bdbdbd;
+    border-radius: 0.4rem;
+}
+.border{
+    border: 1px solid #bdbdbd !important;
+    border-radius: 0px !important;
+}
+.w-30{
+	width: 150px;
+}

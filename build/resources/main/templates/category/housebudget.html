@@ -1,0 +1,319 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="head" th:replace="~{common/layout :: head}"></head>
+<!-- Custom Css-->
+<link th:href="@{/css/housebudget.css}" id="custom" rel="stylesheet" type="text/css" />
+<!-- Full Calender -->
+<!-- jquery CDN -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- fullcalendar CDN -->
+<link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css' rel='stylesheet' />
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js'></script>
+<!-- fullcalendar 언어 CDN -->
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
+<!-- bootsrap DatePicker CSS -->
+<link rel="stylesheet" th:href="@{/datepicker/css/bootstrap-datepicker3.css}">
+<!-- bootsrap DatePicker Script -->
+<script th:src="@{/datepicker/js/bootstrap-datepicker.js}"></script>
+<script th:src="@{/datepicker/locales/bootstrap-datepicker.ko.min.js}" charset="UTF-8"></script>
+
+<body>
+    <!--start page Loader -->
+	<div id="preloader">
+		<div id="status">
+			<ul>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>
+	</div>
+	<!--end page Loader -->
+
+	<!-- Begin page -->
+	<header th:replace="~{common/layout :: #header}"></header>		
+
+    <div class="main-content">
+
+      <div class="page-content">
+
+        <!-- Start home -->
+        <section class="page-title-box" th:style="'background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(' + @{/images/img/hero_housebudget.jpg} + '); height: 350px; padding-top: 130px; background-position: center;'">
+          <div class="container">
+            <div class="row justify-content-center">
+              <div class="col-md-6">
+                <div class="text-center text-white">
+                  <h3 class="mb-4 hero-title" style="font-weight: 400;">가계부</h3>
+                  <div class="page-next">
+                    <nav class="d-inline-block" aria-label="breadcrumb text-center">
+                      <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a th:href="@{/}">HOME</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/mypage}">MY PAGE</a></li>
+                        <li class="breadcrumb-item active" aria-current="page"> HOUSEBUDGET </li>
+                      </ol>
+                    </nav>
+                  </div>
+                </div>
+              </div>
+              <!--end col-->
+            </div>
+            <!--end row-->
+          </div>
+          <!--end container-->
+        </section>
+        <!-- end home -->
+
+        <!-- START SHAPE -->
+        <div class="position-relative" style="z-index: 1">
+          <div class="shape">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 250">
+              <path fill="#FFFFFF" fill-opacity="1"
+              d="M0,192L120,202.7C240,213,480,235,720,234.7C960,235,1200,213,1320,202.7L1440,192L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z">
+            </path>
+          </svg>
+          </div>
+        </div>
+        <!-- END SHAPE -->
+
+        <!-- START PAGE CONTENT -->
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12 calendar my-3" id='calendar'>
+            </div>
+            <div class="job-list-header">
+                <div class="row g-2">
+                  <div class="col-lg-2 col-md-6">
+                    <div class="filler-job-form">
+                      <i class="uil uil-calender"></i>
+                      <input type="text" class="form-control filter-job-input-box" id="start" placeholder="날짜">
+                    </div>
+                  </div><!--end col-->
+                  <div class="col-lg-2 col-md-6">
+                    <div class="filler-job-form">
+                      <i class="uil uil-exposure-alt"></i>
+                      <select class="form-select" data-trigger name="type"
+                        id="type" aria-label="Default select example">
+                        <option value="" selected>타입</option>
+                        <option value="수입">수입</option>
+                        <option value="지출">지출</option>
+                      </select>
+                    </div>
+                  </div><!--end col-->
+                  <!-- if choices-single-part == "수입" -->
+                  <div class="col-lg-2 col-md-6">
+                    <div class="filler-job-form">
+                      <i class="uil uil-clipboard-notes"></i>
+                      <select class="form-select" data-trigger name="title"
+                        id="title" aria-label="Default select example">
+                        <option value="" selected>내용</option>
+                      </select>
+                    </div>
+                  </div><!--end col-->
+                  <div class="col-lg-2 col-md-6">
+                    <div class="filler-job-form">
+                      <i class="uil uil-calculator"></i>
+                      <input type="number" class="form-control filter-job-input-box" id="amount"
+                        placeholder="금액">
+                    </div>
+                  </div><!--end col-->
+                  <div class="col-lg-2 col-md-6">
+                    <div class="filler-job-form">
+                      <i class="uil uil-comment-alt-notes"></i>
+                      <input type="search" class="form-control filter-job-input-box" id="memo"
+                        placeholder="메모 ">
+                    </div>
+                  </div><!--end col-->
+                  <div class="col-lg-2 text-end">
+                    <button class="btn btn-primary mx-1" onclick="regist()">등록</button>
+                    <button class="btn btn-secondary mx-1" onclick="cancel()">취소</button>
+                  </div>
+                </div><!--end row-->
+            </div><!--end job-list-header-->
+          
+            <div class="job-list-header mt-5">
+              <h4>내역</h4>
+              <hr>
+	              <form th:action="@{/housebudget/list}" method="get">
+	                <div class="row g-2">
+	                  <div class="col-lg-2 col-md-6">
+	                    <div class="filler-job-form">
+	                      <i class="uil uil-calender"></i>
+	                      <select class="form-select" data-trigger name="search-range"
+	                        id="search-range" aria-label="Default select example">
+	                        <option value="전체" selected>전체</option>
+	                        <option value="월간">월간</option>
+	                        <option value="연간">연간</option>
+	                      </select>
+	                    </div>
+	                  </div><!--end col-->
+	                  <!-- if choices-single-part == "수입" -->
+	                  <div class="col-lg-2 col-md-6">
+	                    <div class="filler-job-form">
+	                      <i class="uil uil-calendar-alt"></i>
+	                      <select class="form-select" data-trigger name="search-start"
+	                        id="search-start" aria-label="Default select example">
+	                          <option value="" selected>전체</option>
+	                      </select>
+	                    </div>
+	                  </div><!--end col-->
+	                  <div class="col-lg-2 col-md-6">
+	                    <div class="filler-job-form">
+	                      <i class="uil uil-exposure-alt"></i>
+	                      <select class="form-select" data-trigger name="search-type"
+	                        id="search-type" aria-label="Default select example">
+	                        <option value="" selected>전체</option>
+	                        <option value="수입">수입</option>
+	                        <option value="지출">지출</option>
+	                      </select>
+	                    </div>
+	                  </div><!--end col-->
+	                  <div class="col-lg-6 text-end">
+	                    <button type="submit" class="btn btn-primary mx-1">조회</button>
+	                  </div>
+	                </div><!--end row-->
+	              </form>
+              
+            </div><!--end job-list-header-->
+          </div><!-- end row -->
+          <div class="mt-4">
+            <table class="housebudget-report">
+              <tbody>
+                <th class="text-center" scope="col">날짜</th>
+                <th class="text-center" scope="col">구분</th>
+                <th class="text-center" scope="col">금액</th>
+                <th class="text-center" scope="col">메모</th>
+                <th class="text-center" scope="col">잔액</th>
+                
+                <tr th:each="item : ${list}">
+                  <td class="text-center" th:text="${#dates.format(item.start,'yyyy-MM-dd')}"></td>
+                  <td class="text-center" th:text="${item.type} + ' - ' + ${item.title}"></td>
+                  <td class="text-center" th:text="${#numbers.formatInteger(item.amount, 3, 'COMMA')}"></td>
+                  <td class="text-center" th:text="${not #strings.isEmpty(item.memo)} ? ${item.memo} : '-'"></td>
+                  <td class="text-center" th:text="${#numbers.formatInteger(item.sum, 3, 'COMMA')}"></td>
+                </tr>
+                
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- END PAGE CONTENT -->
+
+        <!-- SIMPLE MODALS -->
+        <button id="budgetTrigger" type="button" class="btn btn-primary waves-effect waves-light hidden" data-bs-toggle="modal" data-bs-target="#budgetModal">모달실행</button>
+        <div id="budgetModal" class="modal fade" tabindex="-1" aria-labelledby="budgetModalLabel" style="display: none;" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title mt-0" id="myModalLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <table class="w-100">
+                  <tr>
+                    <td class="text-center" id="modal_type_title"></td>
+                    <td class="text-center" id="modal_amount"></td>
+                    <td class="text-center" id="modal_memo"></td>
+                  </tr>
+                </table>
+              </div>
+              <div class="job-list-header mx-2">
+                <form th:action="@{/housebudget/update}" method="post">
+                  <input type="hidden" id="old_start" name="old_start">
+                  <input type="hidden" id="old_title" name="old_title">
+                  <input type="hidden" id="old_type" name="old_type">
+                  <div class="row g-2">
+                    <div class="col-lg-3 col-md-6">
+                      <div class="filler-job-form">
+                        <i class="uil uil-wallet"></i>
+                        <select class="form-select" data-trigger name="modal-type"
+                          id="modal-type" aria-label="Default select example">
+                          <option value="" selected>타입</option>
+                          <option value="수입">수입</option>
+                          <option value="지출">지출</option>
+                        </select>
+                      </div>
+                    </div><!--end col-->
+                    <!-- if choices-single-part == "수입" -->
+                    <div class="col-lg-3 col-md-6">
+                      <div class="filler-job-form">
+                        <i class="uil uil-clipboard-notes"></i>
+                        <select class="form-select" data-trigger name="modal-title"
+                          id="modal-title" aria-label="Default select example">
+                          <option value="" selected>내용</option>
+                        </select>
+                      </div>
+                    </div><!--end col-->
+                    <div class="col-lg-3 col-md-6">
+                      <div class="filler-job-form">
+                        <i class="uil uil-calculator"></i>
+                        <input type="number" class="form-control filter-job-input-box" id="modal-amount"
+                          placeholder="금액" name="modal-amount">
+                      </div>
+                    </div><!--end col-->
+                    <div class="col-lg-3 col-md-6">
+                      <div class="filler-job-form">
+                        <i class="uil uil-comment-alt-notes"></i>
+                        <input type="search" class="form-control filter-job-input-box" id="modal-memo"
+                          placeholder="메모 " name="modal-memo">
+                      </div>
+                    </div><!--end col-->
+                  </div><!--end row-->
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary waves-effect waves-light">수정</button>
+                  <button type="button" class="btn btn-secondary waves-effect waves-light" onclick="deleteHb()">삭제</button>
+                </div>
+              </form>
+              </div>
+              
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- SIMPLE MODALS -->
+
+      </div>
+      <!-- End Page-content -->
+
+	  <footer th:replace="~{common/layout :: #footer}"></footer>
+
+      <!-- Style switcher -->
+              <a class="color-list color1" href="javascript: void(0);" onclick="setColorGreen()"></a>
+              <a class="color-list color2" href="javascript: void(0);" onclick="setColor('blue')"></a>
+              <a class="color-list color3" href="javascript: void(0);" onclick="setColor('green')"></a>
+              <a href="javascript: void(0);" id="mode">
+          <a href="javascript: void(0);" class="settings rounded-end"></a>
+      </div>
+      <!-- end switcher-->
+
+      <!--start back-to-top-->
+      <button onclick="topFunction()" id="back-to-top">
+        <i class="mdi mdi-arrow-up"></i>
+      </button>
+      <!--end back-to-top-->
+    </div>
+    <!-- end main content-->
+
+  </div>
+  <!-- END layout-wrapper -->
+
+  <!-- JAVASCRIPT -->
+  <script th:src="@{/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
+  <script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
+
+  <!-- Choice Js -->
+  <script th:src="@{/libs/choices.js/public/assets/scripts/choices.min.js}"></script>
+
+  <!-- Custom Js -->
+  <script th:src="@{/js/pages/housebudget.js}"></script>
+
+  <!-- Switcher Js -->
+  <script th:src="@{/js/pages/switcher.init.js}"></script>
+  
+  <script th:src="@{/js/app.js}"></script>
+  
+</body>
+
+</html>

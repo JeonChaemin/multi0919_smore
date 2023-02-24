@@ -1,0 +1,47 @@
+/*
+Template Name: Jobcy
+Author: Themesdesign
+Version: 1.0.0
+Website: https://themeforest.net/search/themesdesign
+Contact: themesdesign.in@gmail.com
+File: Main Css File
+*/
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard-dynamic-subset.css");
+@font-face {
+  font-family: 'SANJUGotgam';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/SANJUGotgam.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+/********************TOP-BAR********************/
+.font-sangju {
+  font-family: 'SANJUGotgam';
+}
+
+.hero-title {
+  font-size: 2rem;
+  font-weight: 400;
+  font-family: 'SANJUGotgam';
+}
+/* 메인배너 사진  */
+.page-title-box {
+  background-size: cover;
+  position: relative;
+  padding-top: 200px;
+  padding-bottom: 110px;
+  background-position: center;
+  background-color: rgb(255, 255, 255);
+}
+
+/* 좋아요 스크랩 */
+.btn-clip{
+  display: inline-block;
+  background-color: rgba(247, 204, 83, 0.15);
+  border-color: transparent;
+  color: #f7cc53;
+}
+.btn-clip:hover{
+	color: #fff;
+  background: #f7cc53;
+}
+

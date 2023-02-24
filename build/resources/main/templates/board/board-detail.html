@@ -1,0 +1,314 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="head" th:replace="~{common/layout :: head}"></head>
+<!--Custom Css-->
+<link th:href="@{/css/board.css}" id="news" rel="stylesheet" type="text/css" />
+<!-- jquery CDN -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<body>
+	<!--start page Loader -->
+	<div id="preloader">
+		<div id="status">
+			<ul>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>
+	</div>
+	<!--end page Loader -->
+
+	<!-- Begin page -->
+	<header th:replace="~{common/layout :: #header}"></header>
+
+	<div class="main-content">
+
+		<div class="page-content">
+
+			<!-- Start home -->
+			<section class="page-title-box"
+				th:style="'background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(' + @{/images/img/hero_community.jpg} + '); height: 350px; padding-top: 130px; background-position: center;'">
+				<div class="container">
+					<div class="row justify-content-center">
+						<div class="col-md-6">
+							<div class="text-center text-white">
+								<h3 class="mb-4 hero-title" style="font-weight: 400;">게시판</h3>
+								<div class="page-next">
+									<nav class="d-inline-block" aria-label="breadcrumb text-center">
+										<ol class="breadcrumb justify-content-center">
+											<li class="breadcrumb-item"><a th:href="@{/}">HOME</a></li>
+											<li class="breadcrumb-item"><a th:href="@{/board/list?type=free}">COMMUNITY</a></li>
+											<li class="breadcrumb-item"><a th:href="@{/board/list?type=free}">BOARD</a></li>
+											<li class="breadcrumb-item active" aria-current="page">
+												BOARD DETAIL</li>
+										</ol>
+									</nav>
+								</div>
+							</div>
+						</div>
+						<!--end col-->
+					</div>
+					<!--end row-->
+				</div>
+				<!--end container-->
+			</section>
+			<!-- end home -->
+
+			<!-- START SHAPE -->
+			<div class="position-relative" style="z-index: 1">
+				<div class="shape">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 250">
+              <path fill="#FFFFFF" fill-opacity="1"
+							d="M0,192L120,202.7C240,213,480,235,720,234.7C960,235,1200,213,1320,202.7L1440,192L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z">
+              </path>
+            </svg>
+				</div>
+			</div>
+			<!-- END SHAPE -->
+
+
+			<!-- START CATEGORIES -->
+			<section class="section my-5">
+				<div class="container mb-3">
+					<div class="row ">
+						<div
+							class="col-lg-12 d-flex align-items-center justify-content-between">
+							<div class="d-inline-block">
+								<h4 class="d-inline-block m-0 p-0">자유게시판/건의게시판</h4>
+							</div>
+						</div>
+						<!--end col-->
+					</div>
+					<!--end row-->
+				</div>
+				<!-- 목록 -->
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-12">
+							<!-- <form action="${path}/board/write" method="post" enctype="multipart/form-data"> -->
+							<table class="table bw-tbl">
+								<colgroup>
+									<col width=20%>
+									<col width=20%>
+									<col width=20%>
+									<col width=20%>
+									<col width=20%>
+								</colgroup>
+								<tr>
+									<th><label for="title">제목</label></th>
+									<td colspan="4">[[${board.title}]]</td>
+								</tr>
+								<tr>
+									<th>작성자</th>
+									<!-- <td><input type="text" name="writerId" value="${loginMember.id}" readonly></td> -->
+									<td colspan="4">[[${board.id}]]</td>
+								</tr>
+								<tr class="align-middle">
+									<th><label for="file-btn">첨부파일</label></th>
+									<td colspan="2">
+										<th:block th:if="${!#lists.isEmpty(board.originalFileName)}">
+											<a th:href="|javascript:fileDownload('${board.originalFileName}','${board.renamedFileName}')|">
+												<i class="uil uil-scenery"></i>[[${board.originalFileName}]]				
+											</a><br>
+									<script>
+										function fileDownload(oriname, rename) {
+											const url = "/board/fileDown";
+											
+											let oName = encodeURIComponent(oriname);
+											let rName = encodeURIComponent(rename);
+											
+											location.assign(url + "?oriname=" + oName + "&rename=" + rName);
+										}
+									</script>
+									</th:block>
+									<th:block th:if="${#lists.isEmpty(board.originalFileName)}">
+										<span class="text-muted"><i class="uil uil-file-slash"></i></span>
+									</th:block>
+									</td>
+									<td colspan="3" class="text-end">
+										<div class="d-inline-block me-2">[[${#dates.format(board.modifyDate, "yyyy-MM-dd HH:mm")}]]</div>
+										<div class="d-inline-block">조회 [[${board.readCount}]]</div>
+									</td>
+								</tr>
+								<tr>
+									<th><label for="content">내용</label></th>
+									<td colspan="4">
+										<th:block th:if="${!#lists.isEmpty(board.originalFileName)}">
+											<div class="text-center mb-3">
+												<img class="mt-2" alt="" style="width: 100%" th:src="|/board/file/${board.renamedFileName}|">
+											</div>
+										</th:block>
+										<div class="mt-n3" name="content" id="content"
+											style="min-height: 180px; white-space: pre-line;">
+											[[${board.content}]]
+										</div>
+									</td>
+								</tr>
+
+								<tr>
+									<td colspan="2" class="border-0">
+										<a class="btn btn-soft-secondary text-start" th:href="|/board/list?type=${board.type}|">목록</a>
+									</td>
+									<th colspan="1" class="border-0 m-auto text-center" th:if="${session.loginMember != null}">
+										<button type="button" th:id="|heart${board.bbNo}|" th:value="${board.isLike}" th:onclick="|onClickHeart('heart${board.bbNo}', '${board.bbNo}');|"
+											class="heart btn btn-soft-warning bg-soft-warning">
+											<i class="uil uil-thumbs-up ms-1"></i> 좋아요 [[${board.likeCount}]]
+										</button>
+									</th>
+									<th colspan="3" class="border-0 text-end">
+									<th:block th:if="${session.loginMember != null && (session.loginMember.id == board.id || session.loginMember.role == 'ROLE_ADMIN')}">
+										<button type="button" id="btnUpdate" class="btn btn-soft-primary">수정</button>
+										<button type="button" id="btnDelete" class="btn btn-soft-danger">삭제</button>
+									</th:block>
+									</th>
+								</tr>
+							</table>
+							<!-- </form> -->
+						</div>
+						<!--end-->
+
+						<!-- 등록된 댓글 -->
+						<div class="mt-5">
+							<h4 class="border-bottom pb-3">댓글</h4>
+							<div class="row mt-3">
+							  <th:block th:if="${!#lists.isEmpty(replyList)}">
+								  <th:block th:each="reply : ${replyList}"> 
+									<div class="col-lg-9 d-sm-flex align-items-top mt-3">
+										<div class="flex-shrink-0">
+											<img class="rounded-circle avatar-md img-thumbnail"
+												th:src="@{/images/user/avatar.png}" alt="img" />
+										</div>
+										<div class="flex-grow-1 ms-sm-3">
+											<h6 class="fs-16 mt-sm-0 mt-3 mb-0">[[${reply.id}]]</h6>
+											<p class="text-muted fs-14 mb-0 mb-2">[[${#dates.format(reply.createDate, "yyyy-MM-dd HH:mm")}]]</p>
+											<p class="mb-0" th:id="|content${reply.bbrNo}|">[[${reply.content}]]</p>
+										</div>
+									</div>
+									<th:block th:if="${session.loginMember != null && (session.loginMember.id == reply.id || session.loginMember.role == 'ROLE_ADMIN')}">
+									  <div class="col-lg-3 text-end mt-3">
+										<button name="update" th:id="|updateBtn${reply.bbrNo}|" class="btn btn-outline-primary" style="padding: 5px 10px;" th:onclick="|updateReply(${reply.bbrNo})|">수정</button>
+										<button name="delete" class="btn btn-outline-danger" style="padding: 5px 10px;" th:onclick="|deleteReply(${reply.bbrNo},${board.bbNo});|">삭제</button>
+									  </div>
+									</th:block>
+									<div class="mt-1 pt-3 mb-3 updateReply" th:id="|updateReply${reply.bbrNo}|" style="display: none">
+		                        		<div class="row">
+						                  <div class="col-lg-12">
+						                    <div class="mb-3">
+						                      <input type="hidden" name="bbNo" th:value="${board.bbNo}" />
+						                      <textarea class="form-control" th:id="|inputReply${reply.bbrNo}|" name="content" rows="3"
+						                        placeholder="내용을 입력해주세요." required>[[${reply.content}]]</textarea>
+						                    </div>
+						                  </div><!--end col-->
+						                </div><!--end row-->
+						                <div class="text-end">
+						                  <button type="submit" id="submit" class="btn btn-outline-primary" style="padding: 5px 10px;"
+						                  th:onclick="|updBtn(${reply.bbrNo}, ${board.bbNo})|">확인</button>
+						                  <button id="submit" class="btn btn-outline-secondary" style="padding: 5px 10px;"
+						                  th:onclick="|backBtn(${reply.bbrNo})|">취소</button>
+						                </div>
+			                          </div><!-- updateReply -->
+				                  </div>
+								  </th:block>
+							  </th:block>
+							  <th:block th:if="${#lists.isEmpty(replyList)}">
+								<div>
+							      <p>등록된 댓글이 없습니다.</p>
+								</div>
+							  </th:block>
+							</div>
+							<th:block th:if="${session.loginMember != null}">
+							<form action="/board/reply" class="contact-form mt-5" method="post">
+								<div class="row mt-5">
+									<div class="col-lg-12">
+										<div class="position-relative mb-3">
+											<h6 class="my-1 mx-3" style="margin-bottom: -2rem !important;" th:text="${session.loginMember.id}"></h6>
+											<textarea name="content" id="content" rows="4" class="form-control" style="padding: 2rem 0 0 0.9rem !important;" placeholder="댓글을 남겨보세요."></textarea>
+											<input type="hidden" name="bbNo" th:value="${board.bbNo}" />
+											<input type="hidden" name="memNo" th:value="${session.loginMember.memNo}" />
+										</div>
+									</div>
+								</div>
+								<div class="row mb-5">
+									<div class="col-sm-12 text-end">
+										<button name="submit" type="submit" id="submit" class="btn btn-primary btn-hover">등록하기 <i class="uil uil-message ms-1"></i>
+										</button>
+									</div>
+								</div>
+							</form>
+							</th:block>
+							<!--end form-->
+						</div>
+					</div>
+				</div>
+				<!--end col-->
+	<!--end container-->
+	</section>
+	
+		  <footer th:replace="~{common/layout :: #footer}"></footer>
+
+			      <!-- Style switcher -->
+              <a class="color-list color1" href="javascript: void(0);" onclick="setColorGreen()"></a>
+              <a class="color-list color2" href="javascript: void(0);" onclick="setColor('blue')"></a>
+              <a class="color-list color3" href="javascript: void(0);" onclick="setColor('green')"></a>
+              <a href="javascript: void(0);" id="mode">
+          <a href="javascript: void(0);" class="settings rounded-end"></a>
+      </div>
+      <!-- end switcher-->
+
+      <!--start back-to-top-->
+      <button onclick="topFunction()" id="back-to-top">
+        <i class="mdi mdi-arrow-up"></i>
+      </button>
+      <!--end back-to-top-->
+      
+      </div>
+	  <!-- end main content-->
+
+	</div>
+	<!-- END layout-wrapper -->
+
+	<!-- JAVASCRIPT -->
+	<script th:src="@{/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
+
+	<!-- Choice Js -->
+	<script th:src="@{/libs/choices.js/public/assets/scripts/choices.min.js}"></script>
+
+	<!-- Candidate Init Js -->
+	<script th:src="@{/js/pages/candidate.init.js}"></script>
+
+	<!-- Job-list Init Js -->
+	<script th:src="@{/js/pages/job-list.init.js}"></script>
+
+	<!-- Switcher Js -->
+	<script th:src="@{/js/pages/switcher.init.js}"></script>
+
+	<!-- App Js -->
+	<script th:src="@{/js/app.js}"></script>
+	
+	<!-- Custom Js -->
+	<script th:src="@{/js/pages/board.js}"></script>
+
+<script type="text/javascript">
+$(document).ready(() => {
+	$("#btnUpdate").on("click", (e) => {
+		location.href = "/board/update?no=[[${board.bbNo}]]";
+	});
+	
+	$("#btnDelete").on("click", (e) => {
+		if(confirm("정말로 게시글을 삭제 하시겠습니까?")) {
+			location.replace("/board/delete?boardNo=[[${board.bbNo}]]");
+		}
+	});
+});
+</script>
+
+</body>
+
+</html>

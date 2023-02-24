@@ -1,0 +1,145 @@
+
+.hero-title {
+    font-size: 2rem;
+    font-weight: 400;
+    font-family: 'SANJUGotgam';
+}
+
+.w-20{
+    width: 20%;
+}
+.w-50{
+    width: 50%;
+}
+.w-60{
+    width: 60%;
+}
+.w-70{
+    width: 70%;
+}
+.w-80{
+    width: 80%;
+    margin-left: 10%;
+}
+.w-90{
+    width: 90%;
+} 
+.mt-10{
+	margin-top: 100px;
+}
+.mb-10{
+	margin-bottom: 100px;
+}
+.programbackimage{
+	background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/images/img/hero_program.jpg"); 
+	background-position: center; 
+	height: 350px; 
+	padding-top: 130px;
+}
+.selectsmall2{
+    margin-left: 35px;
+    margin-top: 10px;
+    font-size: 100%;
+    color: black;
+}
+.selectdetail{
+    margin-right: 50px;
+}
+.mappin{
+    margin-top: 1px;
+}
+.col-lg-15 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    width: 15%;
+    margin-right: 10px;
+}
+.col-lg-20 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    width: 30%;
+    margin-right: 10px;
+}
+.marginleft10{
+    margin-left: 11%;
+}
+.selectborder {
+    border: 0.8px solid rgb(168, 168, 168) ;
+    border-radius: 10px 10px 10px 10px !important;
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
+    border-bottom-right-radius: 10px !important;
+    border-bottom-left-radius: 10px !important;
+}
+.registration-form .choices[data-type*=select-one] .choices__inner {
+    border-radius: 10px;
+}
+.registration-form .form-control {
+    border-radius: 10px 10px 10px 10px !important;
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
+    border-bottom-right-radius: 10px !important;
+    border-bottom-left-radius: 10px !important;
+}
+.registration-form .submit-btn {
+    border-radius: 10px 10px 10px 10px;
+}
+.filter-border::before {
+    content: "";
+    border-right: 1px solid rgb(255, 255, 255);
+    position: absolute;
+    right: 4px;
+    height: 60px;
+    top: 0px;
+    z-index: 1;
+}
+.blogbox{
+    margin: 0px 0px;
+}
+.reprotitle{
+    margin-left: 10%;
+    margin-bottom: 30px;
+}
+.backgray{
+    background-image: linear-gradient(rgb(255, 255, 255) 30%, #F2F2F2 30%);
+}
+.card-body {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 0.5rem 0rem;
+}
+.container1{
+    width: 80%;
+    margin-left: 10%;
+}
+.imgborder{
+    border-radius: 15px;
+}
+.imground{
+    border: 0.5px solid rgb(226, 226, 226) ;
+    width: auto; 
+    height: 70px;
+}
+.job-box .favorite-icon {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+.job-box .favorite-icon-active {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+.active a{
+	color: #fff !important;
+  background-color: #766df4 !important;
+}
+
+.active >a :hover{
+	color: #fff !important;
+  background-color: #766df4 !important;
+}

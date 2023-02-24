@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="ko">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head" th:replace="~{common/layout :: head}"></head>
+
+<head>
+  <!-- Nouislider Css -->
+  <link rel="stylesheet" th:href="@{/libs/nouisliderribute/nouislider.min.css}">
+  <!-- App Css-->
+  <link th:href="@{/css/app.min.css}" id="app-style" rel="stylesheet" type="text/css" />
+  <!--Custom Css-->
+  <link th:href="@{/css/recipe.css}" id="app-style" rel="stylesheet" type="text/css" />
+  <!--jquery CDN-->
+  <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+
+
+</head>
+
+<body>
+<header th:replace="~{common/layout :: #header}"></header>
+
+  <!--start page Loader -->
+  <div id="preloader">
+    <div id="status">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
+  </div>
+  <!--end page Loader -->
+
+    <div class="main-content">
+
+      <div class="page-content">
+
+        <!-- Start home -->
+        <section class="page-title-box" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(/images/img/hero_recipe.jpg); height: 350px; padding-top: 130px; background-position: center;">
+          <div class="container">
+            <div class="row justify-content-center">
+              <div class="col-md-6">
+                <div class="text-center text-white">
+                  <h3 class="mb-4 hero-title" style="font-weight: 400;">레시피</h3>
+                  <div class="page-next">
+                    <nav class="d-inline-block" aria-label="breadcrumb text-center">
+                      <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a th:href="@{/}">HOME</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/recipe}">LIFE</a></li>
+                        <li class="breadcrumb-item active" aria-current="page"> RECIPE </li>
+                      </ol>
+                    </nav>
+                  </div>
+                </div>
+              </div>
+              <!--end col-->
+            </div>
+            <!--end row-->
+          </div>
+          <!--end container-->
+        </section>
+        <!-- end home -->
+
+        <!-- START SHAPE -->
+        <div class="position-relative" style="z-index: 1">
+          <div class="shape">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 250">
+              <path fill="#FFFFFF" fill-opacity="1"
+                d="M0,192L120,202.7C240,213,480,235,720,234.7C960,235,1200,213,1320,202.7L1440,192L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z">
+              </path>
+            </svg>
+          </div>
+        </div>
+        <!-- END SHAPE -->
+
+
+        <!-- START JOB-LIST -->
+        <section class="section">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-9">
+                <div class="row">
+                  <div class="lg-4">
+                    <!-- Job-list -->
+                    <div class="row mt-3">
+                    
+                      <!--객체 시작-->
+                      <th:block th:if="${list != null}">
+                      <div class="job-box card col-sm-5 mb-3 ms-5 position-relative p-4" th:each="recipe : ${list}">
+                        <div class="featured-label">
+                          <span class="featured" th:text="${recipe.rcpPat2}"></span>
+                        </div>
+                        <div>
+                          <div class="row align-items-center">
+                            <div class="">
+                              <div class="text-center">
+                                <a th:href="|/detail/recipe-detail?rcpNo=${recipe.rcpNo}|">
+                                  <img th:src="${recipe.attFileNoMain}" class="rounded-3 w-100" style="height: 220px; object-fit: cover;"></a>
+                              </div>
+                            </div>
+                            <!--end col-->
+                          </div>
+                          <!--end row-->
+                        </div>
+                        <div class="pt-2">
+                          <div class="row justify-content-between">
+                            <h5 class="col-lg-12"><a th:href="|/detail/recipe-detail?rcpNo=${recipe.rcpNo}|" class="text-reset" th:text="${recipe.rcpNm}"></a></h5>
+                            <div class="list-inline d-flex justify-content-between align-items-center">
+                              <div>
+                                <span class="text-muted d-inline"><i class="uil uil-comment-dots"></i>[[${recipe.reviewCount}]]</span>
+                                <span class="text-muted ms-3 d-inline"><i class="uil uil-thumbs-up"></i>[[${recipe.likeCount}]]</span>
+                              </div>
+                              <th:block th:if="${session.loginMember != null}">
+                              <div class="favorite-icon mt-n4" >
+                              	<input type="hidden" th:id="|value${recipe.rcpNo}|" th:value="${recipe.isClip}">
+                                <a href="javascript:void(0)" name="clip" th:id="|clip${recipe.rcpNo}|" th:value="${recipe.isClip}"
+                                	th:onclick="|onClip(${recipe.rcpNo});|">
+                                </a>
+                              </div>
+                              </th:block>
+                            </div>
+                          </div>
+                          <!--end row-->
+                        </div>
+                        <div class="col-lg-12 mt-3">
+                          <a th:href="|/detail/recipe-detail?rcpNo=${recipe.rcpNo}|" class="btn btn-primary w-100 p-2" id="show-recipe"><i class="uil uil-book-alt"></i> 레시피 보기 </a>
+                        </div><!--end col-->
+                      </div>
+                      </th:block>
+                      <!--객체 끝-->
+                      <th:block th:if="${list.size() < 0}">
+                      	<div class="col-lg-12 mb-3 ms-5 p-4">
+                      		<h1>검색</h1>
+                      	</div>
+                      </th:block>
+                      <!--recipe end-->
+                    </div>
+
+                  </div>
+                  <!--end job-box-->
+
+                  <!-- End Job-list -->
+                  
+	                <!-- 페이징-->
+					<div class="row">
+						<div class="col-lg-12 mt-4 mb-5 pt-2">
+							<nav aria-label="Page navigation example">
+								<ul class="pagination job-pagination mb-0 justify-content-center">
+									<th:block th:if="${pageInfo.currentPage == pageInfo.startPage}">
+										<li class="page-item "
+											th:classappend="${pageInfo.currentPage == 1 ? 'disabled' : ''}">
+											<a class="page-link" href="javascript:void(0)"
+											th:onclick="|movePage('/recipe?page=${pageInfo.prevPage}');|"
+											tabindex="-1"> <i
+												class="mdi mdi-chevron-double-left fs-15"></i>
+										</a>
+										</li>
+									</th:block>
+									<th:block th:if="${pageInfo.currentPage != pageInfo.startPage}">
+										<li class="page-item "
+											th:classappend="${pageInfo.currentPage == 1 ? 'disabled' : ''}">
+											<a class="page-link" href="javascript:void(0)"
+											th:onclick="|movePage('/recipe?page=${pageInfo.startPage}');|"
+											tabindex="-1"> <i
+												class="mdi mdi-chevron-double-left fs-15"></i>
+										</a>
+										</li>
+									</th:block>
+	
+									<th:block
+										th:each="num, status : ${#numbers.sequence(pageInfo.startPage, pageInfo.endPage)}">
+										<th:block th:if="${pageInfo.currentPage == status.current}">
+											<li class="page-item active"><a class="page-link"
+												th:text="${status.current}"></a></li>
+										</th:block>
+										<th:block
+											th:if="${pageInfo.currentPage != status.current && pageInfo.endPage != 0}">
+											<li class="page-item"><a class="page-link"
+												href="javascript:void(0)"
+												th:onclick="|movePage('/recipe?page=${status.current}');|"
+												th:text="${status.current}"></a></li>
+										</th:block>
+									</th:block>
+	
+									<th:block th:if="${pageInfo.currentPage == pageInfo.endPage}">
+										<li class="page-item"
+											th:classappend="${pageInfo.currentPage == pageInfo.maxPage ? 'disabled' : ''}">
+											<a class="page-link" href="javascript:void(0)"
+											th:onclick="|movePage('/recipe?page=${pageInfo.nextPage}');|">
+												<i class="mdi mdi-chevron-double-right fs-15"></i>
+										</a>
+										</li>
+									</th:block>
+									<th:block th:if="${pageInfo.currentPage != pageInfo.endPage}">
+										<li class="page-item"
+											th:classappend="${pageInfo.currentPage == pageInfo.maxPage ? 'disabled' : ''}">
+											<a class="page-link" href="javascript:void(0)"
+											th:onclick="|movePage('/recipe?page=${pageInfo.endPage}');|">
+												<i class="mdi mdi-chevron-double-right fs-15"></i>
+										</a>
+										</li>
+									</th:block>
+								</ul>
+							</nav>
+						</div>
+						<!--end col-->
+					</div>
+					<!-- end row -->
+                </div>
+              </div><!--end col-->
+
+						<!-- START SIDE-BAR -->
+              <div class="col-lg-3 mt-3">
+                <div class="side-bar mt-5 mt-lg-0">
+             <form th:action="@{/recipe}" method="get">
+                  <div class="position-relative mb-4"><!--검색 시작-->
+                    <input class="form-control" id="all" type="search" name="all" th:value="${param.all}" placeholder="검색어를 입력하세요" style="height: 50px;">
+                    <button class="bg-transparent border-0 position-absolute top-50 end-0 translate-middle-y me-2"
+                      type="submit"><span class="mdi mdi-magnify text-muted"></span></button>
+                  </div><!--검색 시작, 끝-->
+
+                    <div class="col-lg-12 col-md-6 mb-3">
+                      <button type="submit" class="btn btn-primary w-100 p-2 fs-5" style="height:44px;"><i
+                          class="uil uil-filter"></i> 필터 검색 </button>
+                    </div><!--end col-->
+                    <div class="accordion" id="accordionExample">
+                      <div class="accordion-item mt-3">
+                        <h2 class="accordion-header" id="jobType">
+                          <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#jobtype" aria-expanded="false" aria-controls="jobtype">
+                            카테고리
+                          </button>
+                        </h2>
+                        <div id="jobtype" class="accordion-collapse collapse show" aria-labelledby="jobType">
+                          <div class="accordion-body">
+                            <div class="side-title">
+                              <div class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" name="rcpPat2" id="category1"  value="일품" 
+                                th:checked="${#arrays.contains(paramMap.rcpPat2, '일품')  ? 'checked' : null}" />
+                                <label class="form-check-label ms-2 text-muted" for="category1">
+                                  일품
+                                </label>
+                              </div>
+                              <div class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" name="rcpPat2" id="category2"  value="찌개"
+                                th:checked="${#arrays.contains(paramMap.rcpPat2, '찌개')  ? 'checked' : null}" />
+                                <label class="form-check-label ms-2 text-muted" for="category2">
+                                  국&찌개
+                                </label>
+                              </div>
+                              <div class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" name="rcpPat2" id="category3"  value="반찬"
+                                th:checked="${#arrays.contains(paramMap.rcpPat2, '반찬')  ? 'checked' : null}" />
+                                <label class="form-check-label ms-2 text-muted" for="category3">
+                                  반찬
+                                </label>
+                              </div>
+                              <div class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" name="rcpPat2" id="category4"  value="밥"
+                                th:checked="${#arrays.contains(paramMap.rcpPat2, '밥')  ? 'checked' : null}" />
+                                <label class="form-check-label ms-2 text-muted" for="category4">
+                                  밥
+                                </label>
+                              </div>
+                              <div class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" name="rcpPat2" id="category5"  value="후식"
+                                th:checked="${#arrays.contains(paramMap.rcpPat2, '후식')  ? 'checked' : null}" />
+                                <label class="form-check-label ms-2 text-muted" for="category5">
+                                  후식
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div><!-- end accordion-item -->
+                      <div class="accordion-item">
+                        <h2 class="accordion-header" id="experienceOne">
+                          <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#experience" aria-expanded="true" aria-controls="experience">
+                            인기재료
+                          </button>
+                        </h2>
+                        <div id="experience" class="accordion-collapse collapse show" aria-labelledby="experienceOne">
+                          <div class="accordion-body">
+                            <div class="side-title">
+                              <div class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" value="소고기" name="rcpPartsDtls"
+                                  id="ingredient1" 
+                                  th:checked="${#arrays.contains(paramMap.rcpPartsDtls, '소고기')  ? 'checked' : null}" />
+                                <label class="form-check-label ms-2 text-muted" for="ingredient1">소고기</label>
+                              </div>
+                              <div class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" value="돼지고기" name="rcpPartsDtls"
+                                  id="ingredient2"
+                                  th:checked="${#arrays.contains(paramMap.rcpPartsDtls, '돼지고기')  ? 'checked' : null}" />
+                                <label class="form-check-label ms-2 text-muted" for="ingredient2">돼지고기</label>
+                              </div>
+                              <div class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" value="닭가슴살" name="rcpPartsDtls"
+                                  id="ingredient3" 
+                                  th:checked="${#arrays.contains(paramMap.rcpPartsDtls, '닭가슴살')  ? 'checked' : null}" />
+                                <label class="form-check-label ms-2 text-muted" for="ingredient3">닭가슴살</label>
+                              </div>
+                              <div class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" value="닭고기" name="rcpPartsDtls"
+                                  id="ingredient4" 
+                                  th:checked="${#arrays.contains(paramMap.rcpPartsDtls, '닭고기')  ? 'checked' : null}" />
+                                <label class="form-check-label ms-2 text-muted" for="ingredient4">닭고기</label>
+                              </div>
+                              <div class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" value="두부" name="rcpPartsDtls"
+                                  id="ingredient5" 
+                                  th:checked="${#arrays.contains(paramMap.rcpPartsDtls, '두부')  ? 'checked' : null}" />
+                                <label class="form-check-label ms-2 text-muted" for="ingredient5">두부</label>
+                              </div>
+                              <div class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" value="새우" name="rcpPartsDtls"
+                                  id="ingredient6" 
+                                  th:checked="${#arrays.contains(paramMap.rcpPartsDtls, '새우')  ? 'checked' : null}" />
+                                <label class="form-check-label ms-2 text-muted" for="ingredient6">새우</label>
+                              </div>
+                              <div class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" value="고등어" name="rcpPartsDtls"
+                                  id="ingredient7" 
+                                  th:checked="${#arrays.contains(paramMap.rcpPartsDtls, '고등어')  ? 'checked' : null}" />
+                                <label class="form-check-label ms-2 text-muted" for="ingredient7">고등어</label>
+                              </div>
+                              <div class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" value="스파게티" name="rcpPartsDtls"
+                                  id="ingredient8" 
+                                  th:checked="${#arrays.contains(paramMap.rcpPartsDtls, '스파게티')  ? 'checked' : null}" />
+                                <label class="form-check-label ms-2 text-muted" for="ingredient8">스파게티</label>
+                              </div>
+                              <div class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" value="고구마" name="rcpPartsDtls"
+                                  id="ingredient9" 
+                                  th:checked="${#arrays.contains(paramMap.rcpPartsDtls, '고구마')  ? 'checked' : null}" />
+                                <label class="form-check-label ms-2 text-muted" for="ingredient9">고구마</label>
+                              </div>
+                              <div class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" value="감자" name="rcpPartsDtls"
+                                  id="ingredient10" 
+                                  th:checked="${#arrays.contains(paramMap.rcpPartsDtls, '감자')  ? 'checked' : null}" />
+                                <label class="form-check-label ms-2 text-muted" for="ingredient10">감자</label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div><!-- end accordion-item -->
+                      <div class="accordion-item">
+                        <h2 class="accordion-header" id="locationOne">
+                          <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#location" aria-expanded="true" aria-controls="location">
+                            칼로리
+                          </button>
+                        </h2>
+                        <div id="location" class="accordion-collapse collapse show" aria-labelledby="locationOne">
+                          <div class="accordion-body">
+                            <div class="side-title">
+                              <div class="mb-1">
+                              </div>
+                              <div class="area-range mb-1">
+                                <div class="form-label mb-3">
+                                	<span class="example-val mt-2" id="slider1-span">
+                                	</span>
+                                	<input type="hidden" name="infoEng" id="infoEng" th:value="${param.infoEng}" />
+                                  Kcal
+                               	</div>
+                                <div id="slider1"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div><!-- end accordion-item -->
+
+                      <!--인기레시피 시작-->
+                      <div class="accordion-item mb-3">
+                        <h2 class="accordion-header" id="datePosted">
+                          <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#dateposted" aria-expanded="false" aria-controls="dateposted">
+                            인기 레시피
+                          </button>
+                        </h2>
+                        <div id="dateposted" class="accordion-collapse collapse show" aria-labelledby="datePosted">
+                          <div class="accordion-body">
+                            <!--객체 시작-->
+                            <th:block th:if="${hotList != null}">
+	                            <div class="rmt-2" th:each="recipe : ${hotList}">
+	                              <a th:href="|/detail/recipe-detail?rcpNo=${recipe.rcpNo}|" class="row text-reset">
+	                                <div class="col-lg-6">
+	                                  <img th:src="${recipe.attFileNoMain}"
+	                                      alt="" style="width: 100px; height: 100px;" class="rounded-3">
+	                                </div>
+	                                <div class="col-lg-6 text-md-start mt-3">
+	                                  <p class="fw-semibold">[[${recipe.rcpNm}]]</p>
+	                                  <p class="text-muted mt-n2">[[${recipe.rcpPat2}]] • [[${recipe.rcpWay2}]]</p>
+	                                </div>
+	                              </a>
+	                            <hr />
+	                            </div>
+                            </th:block>
+                            <!--객체 끝-->
+                            
+                          </div>
+                        </div>
+                      </div>
+                    </div><!-- end accordion-item -->
+                    <!--인기레시피 끝-->
+                  </form>
+                </div><!--end accordion-->
+              </div><!--end side-bar-->
+            </div><!--end col-->
+            <!-- END SIDE-BAR -->
+          </div><!--end row-->
+      </div><!--end container-->
+      </section>
+      <!-- END JOB-LIST -->
+    </div>
+    <!-- End Page-content -->
+  </div>
+  <!-- end main content-->
+
+	<!-- Style switcher -->
+  <div id="style-switcher" onclick="toggleSwitcher()" style="left: -165px;">
+    <div>
+      <div class="mt-3">
+        <div class="text-center mt-3">
+          <!-- light-dark mode -->
+          <a href="javascript: void(0);" id="mode" class="mode-btn text-white rounded-3">
+            <i class="uil uil-brightness mode-dark mx-auto"></i>
+            <i class="uil uil-moon mode-light"></i>
+          </a>
+          <!-- END light-dark Mode -->
+        </div>
+      </div>
+    </div>
+    <div class="bottom d-none d-md-block">
+    </div>
+  </div>
+  <!-- end switcher-->
+
+  <!--start back-to-top-->
+  <button onclick="topFunction()" id="back-to-top">
+    <i class="mdi mdi-arrow-up"></i>
+  </button>
+  <!--end back-to-top-->
+  </div>
+  <!-- end main content-->
+
+  </div>
+  <!-- END layout-wrapper -->
+  
+  
+  <footer th:replace="~{common/layout :: #footer}"></footer>
+
+  <!-- JAVASCRIPT -->
+  <script th:src="@{/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
+  <script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
+
+
+  <!-- Choice Js -->
+  <script th:src="@{/libs/choices.js/public/assets/scripts/choices.min.js}"></script>
+
+  <!-- Nouislider Js -->
+  <script th:src="@{/libs/nouisliderribute/nouislider.min.js}"></script>
+  <script th:src="@{/js/pages/area-filter-range.init.js}"></script>
+
+  <!-- Checkbox Init Js -->
+  <script th:src="@{/js/pages/checkbox.init.js}"></script>
+
+  <!-- Job Init Js -->
+  <script th:src="@{/js/pages/job-list.init.js}"></script>
+
+  <!-- Switcher Js -->
+  <script th:src="@{/js/pages/switcher.init.js}"></script>
+
+  <script th:src="@{/js/app.js}"></script>
+  
+    <script type="text/javascript">
+  	function movePage(pageUrl) {
+		/* 검색 값*/
+		var all = document.getElementById('all').value;
+		pageUrl += '&all=' + all;
+		
+		/* 카테고리 */
+		var rcpPat2List = document.getElementsByName('rcpPat2');
+		for(i = 0; i < rcpPat2List.length; i++){
+			if(rcpPat2List[i].checked == true){
+				pageUrl += '&rcpPat2=' + rcpPat2List[i].value;
+			}
+		}
+		
+		/* 재료 */
+		var rcpPartsDtlsList = document.getElementsByName('rcpPartsDtls');
+		for(i = 0; i < rcpPartsDtlsList.length; i++){
+			if(rcpPartsDtlsList[i].checked == true){
+				pageUrl += '&rcpPartsDtls=' + rcpPartsDtlsList[i].value;
+			}
+		}
+		
+		/* 칼로리 */
+		var infoEng = document.getElementById('infoEng').value;
+		pageUrl += '&infoEng=' + infoEng;
+
+		location.href = encodeURI(pageUrl);
+	}
+  
+	//초기화 문구
+  	$(function(){
+      // 하트 class 초기화
+      clipItems = document.getElementsByName('clip');
+      for(i = 0; i < clipItems.length; i++){
+          clipValue = JSON.parse(clipItems[i].getAttribute('value'));
+
+          if(clipValue == 1){
+        	  clipItems[i].innerHTML = '<i class="uil uil-bookmark-full" name="clipOn"></i>';
+        	  $("[name='clipOn']").css({"background-color":"#766df4", "color" : "#fff", "border-color" : "#766df4" });
+        	  $("[name='clipOn']").parents("a").css({"background-color":"#766df4", "color" : "#fff", "border-color" : "danger" });
+        	  
+          }else{
+        	  clipItems[i].innerHTML = '<i class="uil uil-bookmark-full" name="clipOff"></i>';
+          }
+      }
+  	});
+	
+	
+  	function onClip(rcpNo){
+ 		var id = 'value' + rcpNo;
+  		var value = document.getElementById(id).value;
+        if(value == 0){
+        	value = 1;
+        }else{
+        	value = 0;
+        }
+        // 여기에 AJAX로 DB 업데이트하는 코드 있어야함!!
+        $.ajax({
+			method:'get',
+			url:'/recipe/clip?rcpNo=' + rcpNo +'&isClip=' + value,
+			contentType: 'application/json',
+			dataType : 'json',
+			success: (result) =>{
+				$('#'+id).attr('value', ''+result);
+		        if(result === 1){
+		            $('#clip' + rcpNo).html('<i class="uil uil-bookmark-full" name="clipOff"></i>');
+		            $('#clip' + rcpNo).css({"background-color":"#766df4", "color" : "#fff", "border-color" : "#766df4" });
+		        	$('#clip' + rcpNo).children("i").css({"background-color":"#766df4", "color" : "#fff", "border-color" : "danger" });
+		        }else{
+		            $('#clip' + rcpNo).html('<i class="uil uil-bookmark-full" name="clipOff"></i>');
+		            $('#clip' + rcpNo).css({"background-color":"#fff", "color" : "#fff", "border-color" : "#eff0f2" });
+		        	$('#clip' + rcpNo).children("i").css({"background-color":"#fff", "color" : "rgba(173, 181, 189, .55)", "border-color" : "#fff" });
+		        }
+			},
+			error : (e) => {
+				alert('전송 실패!!');
+			}
+		});
+    }
+	</script>
+	
+
+</body>
+
+</html>

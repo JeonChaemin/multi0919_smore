@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.multi.smore.board.model.mapper.BoardMapper">
+
+	<resultMap 	type="Board" 				id="boardListResultMap">
+		<id		property="bbNo" 			column="BBNO"/>
+		<result property="memNo" 			column="MEMNO"/>
+		<result property="id" 				column="ID"/>
+		<result property="title" 			column="TITLE"/>
+		<result property="content" 			column="CONTENT"/>
+		<result property="type" 			column="TYPE"/>
+		<result property="readCount" 		column="READCOUNT"/>
+		<result property="originalFileName" column="ORIGINAL_FILENAME"/>
+		<result property="renamedFileName" 	column="RENAMED_FILENAME"/>
+		<result property="createDate" 		column="CREATE_DATE"/>
+		<result property="modifyDate" 		column="MODIFY_DATE"/>
+		<result property="likeCount" 		column="LIKECOUNT"/>
+		<result property="isLike" 			column="ISLIKE"/>
+	</resultMap>
+
+	<resultMap 	type="BoardReply" 			id="boardReplyResultMap">
+		<id 	property="bbrNo"			column="BBRNO"/>
+		<result property="bbNo" 			column="BBNO"/>
+		<result property="memNo" 			column="MEMNO"/>
+		<result property="id" 				column="ID"/>
+		<result property="content" 			column="CONTENT"/>
+		<result property="createDate" 		column="CREATE_DATE"/>
+		<result property="modifyDate" 		column="MODIFY_DATE"/>
+	</resultMap>
+	
+	<resultMap type="Board" id="boardDetailResultMap" extends="boardListResultMap">
+		<collection property="replyList" javaType="arrayList" columnPrefix="R_" 
+												resultMap="boardReplyResultMap"/>
+	</resultMap>
+	
+	<select id="selectBoardList" resultMap="boardListResultMap" parameterType="map">
+		SELECT  
+			DISTINCT B.BBNO, B.TITLE, M1.ID, B.TYPE, B.CREATE_DATE, B.ORIGINAL_FILENAME, B.READCOUNT, B.STATUS
+			,(SELECT COUNT(*) FROM BOARD_LIKE LK WHERE B.BBNO = LK.BBNO) AS LIKECOUNT
+			<if test="memNo != 0">
+				,(SELECT COUNT(*) FROM BOARD_LIKE LK WHERE B.BBNO = LK.BBNO AND LK.MEMNO = #{memNo}) AS ISLIKE
+			</if>		
+			<if test="memNo == 0">
+				,(SELECT COUNT(*) FROM BOARD_LIKE LK WHERE B.BBNO = LK.BBNO AND LK.MEMNO = 0) AS ISLIKE
+			</if>	
+		FROM BOARD B
+		LEFT OUTER JOIN MEMBER M1 ON B.MEMNO = M1.MEMNO
+		LEFT OUTER JOIN BOARD_REPLY R ON R.BBNO = B.BBNO 
+		LEFT OUTER JOIN MEMBER M2 ON R.MEMNO = M2.MEMNO 
+		LEFT OUTER JOIN BOARD_LIKE LK ON LK.BBNO = B.BBNO
+		WHERE B.STATUS = 'Y'
+		AND TYPE=#{type}
+		<if test="searchValue != null">
+			AND (M1.ID LIKE '%${searchValue}%'
+			OR B.TITLE LIKE '%${searchValue}%'
+			OR B.CONTENT LIKE '%${searchValue}%'
+			OR R.CONTENT LIKE '%${searchValue}%'
+			OR M2.ID LIKE '%${searchValue}%')
+		</if>
+		ORDER BY B.BBNO DESC LIMIT ${limit} OFFSET ${offset}
+	</select>
+	
+	<select id="selectBoardCount" resultType="int" parameterType="map">
+		SELECT  
+			 COUNT(DISTINCT B.BBNO)
+		FROM BOARD B
+		LEFT OUTER JOIN MEMBER M1 ON B.MEMNO = M1.MEMNO
+		LEFT OUTER JOIN BOARD_REPLY R ON R.BBNO = B.BBNO
+		LEFT OUTER JOIN MEMBER M2 ON R.MEMNO = M2.MEMNO 
+		WHERE B.STATUS = 'Y'
+		AND TYPE=#{type}
+		<if test="searchValue != null">
+			AND (M1.ID LIKE '%${searchValue}%'
+			OR B.TITLE LIKE '%${searchValue}%'
+			OR B.CONTENT LIKE '%${searchValue}%'
+			OR R.CONTENT LIKE '%${searchValue}%'
+			OR M2.ID LIKE '%${searchValue}%')
+		</if>	
+	</select>
+	
+	<select id="selectBoardByNo" parameterType="int" resultMap="boardDetailResultMap">
+		SELECT  
+			B.BBNO, B.TITLE, B.MEMNO, M.ID, B.READCOUNT, B.TYPE, B.ORIGINAL_FILENAME, B.RENAMED_FILENAME, B.CONTENT, B.CREATE_DATE, B.MODIFY_DATE,
+			R.BBRNO AS R_BBRNO, 
+		    R.BBNO AS R_BBNO,
+		    R.CONTENT  AS R_CONTENT, 
+		    M2.ID  AS R_ID,
+		    R.CREATE_DATE  AS R_CREATE_DATE, 
+		    R.MODIFY_DATE  AS R_MODIFY_DATE,
+		    (SELECT COUNT(*) FROM BOARD_LIKE LK WHERE B.BBNO = LK.BBNO) AS LIKECOUNT
+			<if test="memNo != 0">
+				,(SELECT COUNT(*) FROM BOARD_LIKE LK WHERE B.BBNO = LK.BBNO AND LK.MEMNO = #{memNo}) AS ISLIKE
+			</if>		
+			<if test="memNo == 0">
+				,(SELECT COUNT(*) FROM BOARD_LIKE LK WHERE B.BBNO = LK.BBNO AND LK.MEMNO = 0) AS ISLIKE
+			</if>
+		FROM BOARD B
+		JOIN MEMBER M ON(B.MEMNO = M.MEMNO)
+		LEFT OUTER JOIN BOARD_REPLY R ON (B.BBNO = R.BBNO)
+		LEFT OUTER JOIN MEMBER M2 ON (R.MEMNO = M2.MEMNO)
+		LEFT OUTER JOIN BOARD_LIKE LK ON LK.BBNO = B.BBNO
+		WHERE B.STATUS = 'Y' AND B.BBNO = #{bbNo}
+	</select>
+	
+	<insert id="insertBoard" parameterType="Board">
+		INSERT INTO BOARD(
+			BBNO, MEMNO, TITLE,
+			CONTENT, TYPE, ORIGINAL_FILENAME,
+			RENAMED_FILENAME, READCOUNT, STATUS,
+			CREATE_DATE, MODIFY_DATE	
+		) VALUES (
+			0, #{memNo}, #{title}, 
+			#{content}, #{type}, #{originalFileName}, 
+			#{renamedFileName}, DEFAULT, DEFAULT, 
+			DEFAULT, DEFAULT
+		)
+	</insert>
+	
+
+	<insert id="insertReply" parameterType="BoardReply">
+		INSERT INTO BOARD_REPLY(
+				BBRNO, BBNO, MEMNO, CONTENT,
+				CREATE_DATE, MODIFY_DATE) 
+			VALUES(
+				0, #{bbNo}, #{memNo}, #{content}, 
+				DEFAULT, DEFAULT
+			)
+	</insert>
+	
+	<update id="updateBoard" parameterType="Board">
+		UPDATE BOARD
+		SET
+			TITLE=#{title},
+			CONTENT=#{content},
+			TYPE=#{type},
+			<if test="originalFileName != null">
+				ORIGINAL_FILENAME=#{originalFileName},
+			</if>
+			<if test="renamedFileName != null">
+				RENAMED_FILENAME=#{renamedFileName},
+			</if>
+			MODIFY_DATE = CURRENT_TIMESTAMP
+		WHERE
+			BBNO=#{bbNo}
+	</update>
+	
+	<update id="updateReadCount" parameterType="map">
+		UPDATE BOARD SET READCOUNT=#{readCount} WHERE BBNO=#{bbNo}
+	</update>
+	
+	<update id="deleteBoard" parameterType="int">
+		UPDATE BOARD SET STATUS='N' WHERE BBNO=#{bbNo}
+	</update>
+	
+	<delete id="deleteReply" parameterType="int">
+		DELETE FROM BOARD_REPLY WHERE BBRNO=#{bbrNo}
+	</delete>
+	
+	<insert id="likeBoard" parameterType="map">
+		INSERT INTO BOARD_LIKE VALUES(#{memNo}, #{bbNo})
+	</insert>
+	
+	<insert id="unLikeBoard" parameterType="map">
+		DELETE FROM BOARD_LIKE WHERE MEMNO=#{memNo} AND BBNO=#{bbNo}
+	</insert>
+	
+	<select id="likeCount" resultType="int" parameterType="int">
+		SELECT COUNT(*) FROM BOARD_LIKE WHERE BBNO=#{bbNo} 
+	</select>
+	
+	<select id="selectBoardListHome" resultMap="boardListResultMap" parameterType="map">
+		SELECT  
+			DISTINCT B.BBNO, B.TITLE, M1.ID, B.TYPE, B.CREATE_DATE, B.ORIGINAL_FILENAME, B.READCOUNT, B.STATUS
+			,(SELECT COUNT(*) FROM BOARD_LIKE LK WHERE B.BBNO = LK.BBNO) AS LIKECOUNT
+			<if test="memNo != 0">
+				,(SELECT COUNT(*) FROM BOARD_LIKE LK WHERE B.BBNO = LK.BBNO AND LK.MEMNO = #{memNo}) AS ISLIKE
+			</if>		
+			<if test="memNo == 0">
+				,(SELECT COUNT(*) FROM BOARD_LIKE LK WHERE B.BBNO = LK.BBNO AND LK.MEMNO = 0) AS ISLIKE
+			</if>	
+		FROM BOARD B
+		LEFT OUTER JOIN MEMBER M1 ON B.MEMNO = M1.MEMNO
+		LEFT OUTER JOIN BOARD_REPLY R ON R.BBNO = B.BBNO 
+		LEFT OUTER JOIN MEMBER M2 ON R.MEMNO = M2.MEMNO 
+		LEFT OUTER JOIN BOARD_LIKE LK ON LK.BBNO = B.BBNO
+		WHERE B.STATUS = 'Y'
+		<if test="all != null">
+			AND (
+				M1.ID LIKE '%${all}%'
+				OR B.TITLE LIKE '%${all}%'
+				OR B.CONTENT LIKE '%${all}%')
+		</if>
+		ORDER BY B.BBNO DESC LIMIT 5
+	</select>
+	
+	<update id="updateReply" parameterType="BoardReply">
+		UPDATE BOARD_REPLY
+		SET
+		content = #{content}, MODIFY_DATE = CURRENT_TIMESTAMP
+		WHERE bbrNo = #{bbrNo}
+	</update>
+
+</mapper>

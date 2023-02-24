@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<!-- 향후 Mapper interface가 정의 될 위치 -->
+<mapper namespace="com.multi.smore.recipe.model.mapper.RecipeMapper">
+	<sql id="selectRecipeSql">
+		SELECT 
+		r.rcpNo, r.RCP_NM, r.RCP_WAY2, r.RCP_PAT2, r.INFO_WGT, r.INFO_ENG, r.INFO_CAR, r.INFO_PRO, r.INFO_FAT, 
+		r.INFO_NA, r.HASH_TAG, r.ATT_FILE_NO_MAIN, r.ATT_FILE_NO_MK, r.RCP_PARTS_DTLS, r.MANUAL01, r.MANUAL_IMG01, r.MANUAL02, r.MANUAL_IMG02, 
+		r.MANUAL03, r.MANUAL_IMG03, r.MANUAL04, r.MANUAL_IMG04, r.MANUAL05, r.MANUAL_IMG05, r.MANUAL06, 
+		r.MANUAL_IMG06, r.MANUAL07, r.MANUAL_IMG07, r.MANUAL08, r.MANUAL_IMG08, r.MANUAL09, r.MANUAL_IMG09, r.MANUAL10, 
+		r.MANUAL_IMG10, r.MANUAL11, r.MANUAL_IMG11, r.MANUAL12, r.MANUAL_IMG12, r.MANUAL13, 
+		r.MANUAL_IMG13, r.MANUAL14, r.MANUAL_IMG14, r.MANUAL15, r.MANUAL_IMG15, r.MANUAL16, 
+		r.MANUAL_IMG16, r.MANUAL17, r.MANUAL_IMG17, r.MANUAL18, r.MANUAL_IMG18, r.MANUAL19, 
+		r.MANUAL_IMG19, r.MANUAL20, r.MANUAL_IMG20, 
+		(SELECT COUNT(*) FROM like_recipe l WHERE r.rcpNo = l.rcpNo) as likeCount,
+		(SELECT COUNT(*) FROM review_rcp rv WHERE r.rcpNo = rv.rcpNo AND rv.STATUS = 'Y') as reviewCount
+		<if test='memNo != null and memNo != "" '>
+		,(SELECT COUNT(*) FROM like_recipe l WHERE r.rcpNo = l.rcpNo AND memNo = ${memNo}) as isLike
+		</if>
+		<if test='memNo != null and memNo != "" '>
+		,(SELECT COUNT(*) FROM clip_rcp cr WHERE r.rcpNo = cr.rcpNo AND memNo = ${memNo}) as isClip
+		</if>
+		FROM recipe r
+		LEFT OUTER JOIN (SELECT DISTINCT rcpNo FROM like_recipe) As l on (r.rcpNo = l.rcpNo)
+		LEFT OUTER JOIN (SELECT DISTINCT rcpNo FROM review_rcp) As rv on (r.rcpNo = rv.rcpNo)
+		LEFT OUTER JOIN (SELECT DISTINCT rcpNo FROM clip_rcp) As cr on (r.rcpNo = cr.rcpNo)
+	</sql>
+
+	<resultMap type="Recipe" id="recipeResultMap">
+		<id property="rcpNo" column="rcpNo" />
+		<result property="rcpNm" column="RCP_NM" />
+		<result property="rcpWay2" column="RCP_WAY2" />
+		<result property="rcpPat2" column="RCP_PAT2" />
+		<result property="infoWgt" column="INFO_WGT" />
+		<result property="infoEng" column="INFO_ENG" />
+		<result property="infoCar" column="INFO_CAR" />
+		<result property="infoPro" column="INFO_PRO" />
+		<result property="infoFat" column="INFO_FAT" />
+		<result property="infoNa" column="INFO_NA" />
+		<result property="hashTag" column="HASH_TAG" />
+		<result property="attFileNoMain" column="ATT_FILE_NO_MAIN" />
+		<result property="attFileNoMk" column="ATT_FILE_NO_MK" />
+		<result property="rcpPartsDtls" column="RCP_PARTS_DTLS" />
+		<result property="manual01" column="MANUAL01" />
+		<result property="manualImg01" column="MANUAL_IMG01" />
+		<result property="manual02" column="MANUAL02" />
+		<result property="manualImg02" column="MANUAL_IMG02" />
+		<result property="manual03" column="MANUAL03" />
+		<result property="manualImg03" column="MANUAL_IMG03" />
+		<result property="manual04" column="MANUAL04" />
+		<result property="manualImg04" column="MANUAL_IMG04" />
+		<result property="manual05" column="MANUAL05" />
+		<result property="manualImg05" column="MANUAL_IMG05" />
+		<result property="manual06" column="MANUAL06" />
+		<result property="manualImg06" column="MANUAL_IMG06" />
+		<result property="manual07" column="MANUAL07" />
+		<result property="manualImg07" column="MANUAL_IMG07" />
+		<result property="manual08" column="MANUAL08" />
+		<result property="manualImg08" column="MANUAL_IMG08" />
+		<result property="manual09" column="MANUAL09" />
+		<result property="manualImg09" column="MANUAL_IMG09" />
+		<result property="manual10" column="MANUAL10" />
+		<result property="manualImg10" column="MANUAL_IMG10" />
+		<result property="manual11" column="MANUAL11" />
+		<result property="manualImg11" column="MANUAL_IMG11" />
+		<result property="manual12" column="MANUAL12" />
+		<result property="manualImg12" column="MANUAL_IMG12" />
+		<result property="manual13" column="MANUAL13" />
+		<result property="manualImg13" column="MANUAL_IMG13" />
+		<result property="manual14" column="MANUAL14" />
+		<result property="manualImg14" column="MANUAL_IMG14" />
+		<result property="manual15" column="MANUAL15" />
+		<result property="manualImg15" column="MANUAL_IMG15" />
+		<result property="manual16" column="MANUAL16" />
+		<result property="manualImg16" column="MANUAL_IMG16" />
+		<result property="manual17" column="MANUAL17" />
+		<result property="manualImg17" column="MANUAL_IMG17" />
+		<result property="manual18" column="MANUAL18" />
+		<result property="manualImg18" column="MANUAL_IMG18" />
+		<result property="manual19" column="MANUAL19" />
+		<result property="manualImg19" column="MANUAL_IMG19" />
+		<result property="manual20" column="MANUAL20" />
+		<result property="manualImg20" column="MANUAL_IMG20" />
+		<result property="isLike" column="isLike" />
+		<result property="likeCount" column="likeCount" />
+		<result property="reviewCount" column="reviewCount" />
+		<result property="isClip" column="isClip" />
+	</resultMap>
+	
+	<resultMap type="RecipeReply" id="RecipeReplyResultMap">
+		<id property="rcprNo" column="rcprNo" />
+		<result property="rcpNo" column="rcpNo" />
+		<result property="memNo" column="memNo" />
+		<result property="writer" column="WRITER" />
+		<result property="writerName" column="WRITER_NAME" />
+		<result property="content" column="CONTENT" />
+		<result property="score" column="SCORE" />
+		<result property="status" column="STATUS" />
+		<result property="createDate" column="CREATE_DATE" />
+		<result property="modifyDate" column="MODIFY_DATE" />
+	</resultMap>
+
+	<resultMap type="RecipeLike" id="RecipeLikeResultMap">
+		<result property="createDate" column="CREATE_DATE" />
+		<result property="modifyDate" column="MODIFY_DATE" />
+	</resultMap>
+
+	<resultMap type="RecipeClip" id="RecipeClipResultMap">
+		<result property="createDate" column="CREATE_DATE" />
+		<result property="modifyDate" column="MODIFY_DATE" />
+	</resultMap>
+	
+	<select id="selectRecipeSearchList" resultMap="recipeResultMap" parameterType="map">
+		<include refid="selectRecipeSql"/>
+		WHERE 1 = 1
+		<if test="all != null">
+		AND( 
+			r.RCP_NM LIKE '%${all}%'
+			OR r.RCP_PARTS_DTLS LIKE '%${all}%'
+			OR r.RCP_PAT2 LIKE '%${all}%'
+		)
+		</if>
+		ORDER BY r.rcpNo DESC LIMIT 5
+	</select>
+	
+	<select id="selectRecipeMypageList" resultMap="recipeResultMap" parameterType="map">
+		SELECT 
+		r.rcpNo, r.RCP_NM, r.RCP_WAY2, r.RCP_PAT2, r.INFO_WGT, r.INFO_ENG, r.INFO_CAR, r.INFO_PRO, r.INFO_FAT, 
+		r.INFO_NA, r.HASH_TAG, r.ATT_FILE_NO_MAIN, r.ATT_FILE_NO_MK, r.RCP_PARTS_DTLS, r.MANUAL01, r.MANUAL_IMG01, r.MANUAL02, r.MANUAL_IMG02, 
+		r.MANUAL03, r.MANUAL_IMG03, r.MANUAL04, r.MANUAL_IMG04, r.MANUAL05, r.MANUAL_IMG05, r.MANUAL06, 
+		r.MANUAL_IMG06, r.MANUAL07, r.MANUAL_IMG07, r.MANUAL08, r.MANUAL_IMG08, r.MANUAL09, r.MANUAL_IMG09, r.MANUAL10, 
+		r.MANUAL_IMG10, r.MANUAL11, r.MANUAL_IMG11, r.MANUAL12, r.MANUAL_IMG12, r.MANUAL13, 
+		r.MANUAL_IMG13, r.MANUAL14, r.MANUAL_IMG14, r.MANUAL15, r.MANUAL_IMG15, r.MANUAL16, 
+		r.MANUAL_IMG16, r.MANUAL17, r.MANUAL_IMG17, r.MANUAL18, r.MANUAL_IMG18, r.MANUAL19, 
+		r.MANUAL_IMG19, r.MANUAL20, r.MANUAL_IMG20, 
+		(SELECT COUNT(*) FROM like_recipe l WHERE r.rcpNo = l.rcpNo) as likeCount,
+		(SELECT COUNT(*) FROM review_rcp rv WHERE r.rcpNo = rv.rcpNo AND rv.STATUS = 'Y') as reviewCount
+		,(SELECT COUNT(*) FROM like_recipe l WHERE r.rcpNo = l.rcpNo AND memNo = ${memNo}) as isLike
+		,(SELECT COUNT(*) FROM clip_rcp cr WHERE r.rcpNo = cr.rcpNo AND memNo = ${memNo}) as isClip
+		FROM recipe r
+		LEFT OUTER JOIN (SELECT DISTINCT rcpNo FROM like_recipe) As l on (r.rcpNo = l.rcpNo)
+		LEFT OUTER JOIN (SELECT DISTINCT rcpNo FROM review_rcp) As rv on (r.rcpNo = rv.rcpNo)
+		JOIN (SELECT DISTINCT rcpNo FROM clip_rcp WHERE memNo = ${memNo}) As cr on (r.rcpNo = cr.rcpNo)
+		WHERE 1 = 1
+		ORDER BY isClip DESC LIMIT ${limit} OFFSET ${offset}
+	</select>
+	
+	<select id="selectRecipeList" resultMap="recipeResultMap" parameterType="map">
+		<include refid="selectRecipeSql"/>
+		WHERE 1 = 1
+		<if test="rcpPartsDtls != null">
+			AND (
+				<foreach collection="rcpPartsDtls" item="item" separator="or">
+					r.RCP_PARTS_DTLS LIKE '%${item}%'
+				</foreach>
+			)
+		</if>
+		<if test="rcpPat2 != null">
+			AND (
+				<foreach collection="rcpPat2" item="item" separator="or">
+					r.RCP_PAT2 LIKE '%${item}%'
+				</foreach>
+			)
+		</if>
+		<if test="infoEng != null">
+			AND convert(r.INFO_ENG,signed) <![CDATA[<]]> ${infoEng}
+		</if>
+		<if test="all != null">
+		AND( 
+			r.RCP_NM LIKE '%${all}%'
+			OR r.RCP_PARTS_DTLS LIKE '%${all}%'
+			OR r.RCP_PAT2 LIKE '%${all}%'
+		)
+		</if>
+		ORDER BY r.rcpNo DESC LIMIT ${limit} OFFSET ${offset}
+	</select>
+	
+	<select id="selectRecipeCount" resultType="int" parameterType="map">
+		SELECT COUNT(*) FROM recipe
+		WHERE 1 = 1
+		<if test="rcpPartsDtls != null">
+			AND (
+				<foreach collection="rcpPartsDtls" item="item" separator="or">
+					RCP_PARTS_DTLS LIKE '%${item}%'
+				</foreach>
+			)
+		</if>
+		<if test="rcpPat2 != null">
+			AND (
+				<foreach collection="rcpPat2" item="item" separator="or">
+					RCP_PAT2 LIKE '%${item}%'
+				</foreach>
+			)
+		</if>
+		<if test="infoEng != null">
+			AND convert(INFO_ENG,signed) <![CDATA[<]]> ${infoEng}
+		</if>
+		<if test="all != null">
+		AND( 
+			RCP_NM LIKE '%${all}%'
+			OR RCP_PARTS_DTLS LIKE '%${all}%'
+			OR RCP_PAT2 LIKE '%${all}%'
+		)
+		</if>
+	</select>
+	
+	<select id="selectHotRecipeList" resultMap="recipeResultMap" >
+		<include refid="selectRecipeSql"/>
+		ORDER BY likeCount DESC LIMIT 5
+	</select>
+	
+	<select id="selectRecipeByNo" resultMap="recipeResultMap" parameterType="map">
+		<include refid="selectRecipeSql"/>
+		WHERE r.rcpNo = #{rcpNo}
+	</select>
+	
+	<select id="selectRecipeClipList" resultMap="RecipeClipResultMap" parameterType="map">
+		SELECT rcpNo, memNo FROM CLIP_RCP
+		WHERE memNo = ${memNo}
+		LIMIT ${limit} OFFSET ${offset}
+	</select>
+	
+	<select id="selectRecipeClipCount" resultType="int" parameterType="int">
+		SELECT COUNT(*) FROM CLIP_RCP
+		WHERE memNo = #{memNo}
+	</select>
+	
+	<select id="selectRecipeClipByNo" resultMap="RecipeClipResultMap" parameterType="map">
+		SELECT rcpNo, memNo FROM CLIP_RCP
+		rcpNo = ${rcpNo}
+		AND memNo = ${memNo}
+	</select>
+	
+	<select id="selectRecipeReplyCountByNo" resultType="int" parameterType="int">
+		SELECT COUNT(*) FROM REVIEW_RCP
+		WHERE status = 'Y'
+		AND rcpNo = ${rcpNo}
+	</select>
+	
+	<select id="selectRecipeReplyListByNo" resultMap="RecipeReplyResultMap" parameterType="int">
+		SELECT rcprNo, rcpNo, memNo, WRITER, WRITER_NAME, CONTENT, SCORE, STATUS, CREATE_DATE, MODIFY_DATE
+		FROM REVIEW_RCP
+		WHERE status = 'Y'
+		AND rcpNo = ${rcpNo}
+	</select>
+	
+	<select id="selectRecipeLikeByNo" resultMap="RecipeLikeResultMap" parameterType="map">
+		SELECT rcpNo, memNo FROM LIKE_RECIPE
+		WHERE rcpNo = ${rcpNo}
+		AND memNo = ${memNo}
+	</select>
+	
+	<select id="selectRecipeLikeCountByNo" resultType="int" parameterType="int">
+		SELECT COUNT(*) FROM LIKE_RECIPE
+		WHERE rcpNo = ${rcpNo}
+	</select>
+	
+	<insert id="insertRecipe" parameterType="Recipe">
+		INSERT INTO RECIPE(
+			rcpNo, RCP_NM, RCP_WAY2, RCP_PAT2, INFO_WGT, INFO_ENG, INFO_CAR, INFO_PRO, 
+			INFO_FAT, INFO_NA, HASH_TAG, ATT_FILE_NO_MAIN, ATT_FILE_NO_MK, RCP_PARTS_DTLS, 
+			MANUAL01, MANUAL_IMG01, MANUAL02, MANUAL_IMG02, MANUAL03, MANUAL_IMG03, MANUAL04, 
+			MANUAL_IMG04, MANUAL05, MANUAL_IMG05, MANUAL06, MANUAL_IMG06, MANUAL07, MANUAL_IMG07, 
+			MANUAL08, MANUAL_IMG08, MANUAL09, MANUAL_IMG09, MANUAL10, MANUAL_IMG10, MANUAL11, MANUAL_IMG11, 
+			MANUAL12, MANUAL_IMG12, MANUAL13, MANUAL_IMG13, MANUAL14, MANUAL_IMG14, MANUAL15, MANUAL_IMG15, 
+			MANUAL16, MANUAL_IMG16, MANUAL17, MANUAL_IMG17, MANUAL18, MANUAL_IMG18, MANUAL19, MANUAL_IMG19, 
+			MANUAL20, MANUAL_IMG20 
+		) VALUES (
+			#{rcpNo},#{RCP_NM},#{RCP_WAY2},#{RCP_PAT2},#{INFO_WGT},#{INFO_ENG},#{INFO_CAR},#{INFO_PRO},
+			#{INFO_FAT},#{INFO_NA},#{HASH_TAG},#{ATT_FILE_NO_MAIN},#{ATT_FILE_NO_MK},#{RCP_PARTS_DTLS},
+			#{MANUAL01},#{MANUAL_IMG01},#{MANUAL02},#{MANUAL_IMG02},#{MANUAL03},#{MANUAL_IMG03},#{MANUAL04},
+			#{MANUAL_IMG04},#{MANUAL05},#{MANUAL_IMG05},#{MANUAL06},#{MANUAL_IMG06},#{MANUAL07},#{MANUAL_IMG07},
+			#{MANUAL08},#{MANUAL_IMG08},#{MANUAL09},#{MANUAL_IMG09},#{MANUAL10},#{MANUAL_IMG10},#{MANUAL11},#{MANUAL_IMG11},
+			#{MANUAL12},#{MANUAL_IMG12},#{MANUAL13},#{MANUAL_IMG13},#{MANUAL14},#{MANUAL_IMG14},#{MANUAL15},#{MANUAL_IMG15},
+			#{MANUAL16},#{MANUAL_IMG16},#{MANUAL17},#{MANUAL_IMG17},#{MANUAL18},#{MANUAL_IMG18},#{MANUAL19},#{MANUAL_IMG19},
+			#{MANUAL20},#{MANUAL_IMG20}
+			 )
+	</insert>
+	
+	<insert id="insertRecipeReply" parameterType="RecipeReply">
+		INSERT INTO REVIEW_RCP(
+			rcprNo, rcpNo, memNo, writer, 
+			WRITER_NAME, content, score, status, 
+			CREATE_DATE, MODIFY_DATE
+		) VALUES (
+			0,#{rcpNo},#{memNo},#{writer},
+			#{writerName},#{content},5,DEFAULT,
+			DEFAULT,DEFAULT
+			 )
+	</insert>
+	
+	<insert id="insertRecipeClip" parameterType="map">
+		INSERT INTO CLIP_RCP(
+			rcpNo, memNo
+		) VALUES (
+			#{rcpNo}, #{memNo}
+			 )
+	</insert>
+	
+	<insert id="insertRecipeLike" parameterType="map">
+		INSERT INTO LIKE_RECIPE(
+			rcpNo, memNo
+		) VALUES (
+			#{rcpNo}, #{memNo}
+			 )
+	</insert>
+	
+	<update id="updateRecipe" parameterType="Recipe">
+	 	UPDATE recipe
+	 	SET
+	 		RCP_NM = #{rcpNm}, RCP_WAY2 = #{rcpWay2}, RCP_PAT2 = #{rcpPat2}, INFO_WGT = #{infoWgt}, INFO_ENG = #{infoEng}, INFO_CAR = #{infoCar}, INFO_PRO = #{infoPro}, 
+			INFO_FAT = #{infoFat}, INFO_NA = #{infoNa}, HASH_TAG = #{hashTag}, ATT_FILE_NO_MAIN = #{attFileNoMain}, ATT_FILE_NO_MK = #{attFileNoMk}, RCP_PARTS_DTLS = #{rcpPartsDtls}, 
+			MANUAL01 = #{manual01}, MANUAL_IMG01 = #{manualImg01}, MANUAL02 = #{manual02}, MANUAL_IMG02 = #{manualImg02}, MANUAL03 = #{manual03}, MANUAL_IMG03 = #{manualImg03}, MANUAL04 = #{manual04}, 
+			MANUAL_IMG04 = #{manualImg04}, MANUAL05 = #{manual05}, MANUAL_IMG05 = #{manualImg05}, MANUAL06 = #{manual06}, MANUAL_IMG06 = #{manualImg06}, MANUAL07 = #{manual07}, MANUAL_IMG07 = #{manualImg07}, 
+			MANUAL08 = #{manual08}, MANUAL_IMG08 = #{manualImg08}, MANUAL09 = #{manual09}, MANUAL_IMG09 = #{manualImg09}, MANUAL10 = #{manual10}, MANUAL_IMG10 = #{manualImg10}, MANUAL11 = #{manual11}, MANUAL_IMG11 = #{manualImg11}, 
+			MANUAL12 = #{manual12}, MANUAL_IMG12 = #{manualImg12}, MANUAL13 = #{manual13}, MANUAL_IMG13 = #{manualImg13}, MANUAL14 = #{manual14}, MANUAL_IMG14 = #{manualImg14}, MANUAL15 = #{manual15}, MANUAL_IMG15 = #{manualImg15}, 
+			MANUAL16 = #{manual16}, MANUAL_IMG16 = #{manualImg16}, MANUAL17 = #{manual17}, MANUAL_IMG17 = #{manualImg17}, MANUAL18 = #{manual18}, MANUAL_IMG18 = #{manualImg18}, MANUAL19 = #{manual19}, MANUAL_IMG19 = #{manualImg19}, 
+			MANUAL20 = #{manual20}, MANUAL_IMG20  = #{manualImg20}
+	 	WHERE rcpNo = #{rcpNo}
+	</update>
+
+	<update id="updateRecipeReply" parameterType="RecipeReply">
+		UPDATE REVIEW_RCP
+		SET
+		content = #{content}, MODIFY_DATE = CURRENT_TIMESTAMP
+		WHERE rcprNo = #{rcprNo}
+	</update>
+
+	<delete id="deleteRecipe" parameterType="int">
+		DELETE FROM recipe WHERE
+		rcpNo = #{rcpNo}
+	</delete>
+	
+	<update id="deleteRecipeReply" parameterType="int">
+		UPDATE REVIEW_RCP
+		SET
+		STATUS = 'N', MODIFY_DATE = CURRENT_TIMESTAMP
+		WHERE rcprNo = #{rcprNo}
+	</update>
+	
+	<delete id="deleteRecipeClip" parameterType="map">
+		DELETE FROM CLIP_RCP 
+		WHERE rcpNo = ${rcpNo}
+		AND memNo = ${memNo}
+	</delete>
+	
+	<delete id="deleteRecipeLike" parameterType="map">
+		DELETE FROM LIKE_RECIPE 
+		WHERE rcpNo = ${rcpNo}
+		AND memNo = ${memNo}
+	</delete>
+
+</mapper>

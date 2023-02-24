@@ -1,0 +1,685 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="head" th:replace="~{common/layout :: head}"></head>
+
+<!-- Custom Css-->
+<link th:href="@{/css/index.css}" id="custom" rel="stylesheet" type="text/css" />
+<link th:href="@{/css/mypage.css}" id="custom" rel="stylesheet" type="text/css" />
+
+
+<body>
+	<!--start page Loader -->
+	<div id="preloader">
+		<div id="status">
+			<ul>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>
+	</div>
+	<!--end page Loader -->
+
+	<header th:replace="~{common/layout :: #header}"></header>
+
+	<div class="main-content">
+		<div class="page-content">
+
+			<!-- Start home -->
+			  <section class="page-title-box"
+  th:style="'background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(' + @{/images/img/hero_mypage.jpg} + '); height: 350px; padding-top: 130px; background-position: center;'">
+				<div class="container">
+					<div class="row justify-content-center">
+						<div class="col-md-6">
+							<div class="text-center text-white">
+								<h3 class="mb-4 hero-title font-sangju" style="font-weight:400;">마이페이지</h3>
+								<div class="page-next">
+									<nav class="d-inline-block" aria-label="breadcrumb text-center">
+										<ol class="breadcrumb justify-content-center">
+											<li class="breadcrumb-item "><a th:href="@{/}"> HOME </a></li>
+											<li class="breadcrumb-item"><a th:href="@{/member/view}"> MY PAGE </a></li>
+										</ol>
+									</nav>
+								</div>
+							</div>
+						</div>
+						<!--end col-->
+					</div>
+					<!--end row-->
+				</div>
+				<!--end container-->
+			</section>
+			<!-- end home -->
+
+			<!-- START SHAPE -->
+			<div class="position-relative" style="z-index: 1">
+				<div class="shape">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 250">
+	                           <path fill="#FFFFFF" fill-opacity="1" d="M0,192L120,202.7C240,213,480,235,720,234.7C960,235,1200,213,1320,202.7L1440,192L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"></path>
+	                       </svg>
+				</div>
+			</div>
+			<!-- END SHAPE -->
+
+
+			<!-- START CANDIDATE-DETAILS -->
+			<section class="section mt-3">
+				<div class="container">
+					<div class="row">
+						<!-- 왼쪽 내정보칸 -->
+						<div class="col-lg-4 mb-4">
+							<div class="card side-bar">
+								<div class="card-body p-4">
+									<div class="candidate-profile text-center">
+										<img th:src="@{/images/user/avatar2.png}" alt="" class="avatar-lg rounded-circle img-thumbnail">
+										<h6 class="fs-18 mb-2 mt-4">[[${session.loginMember.id}]]</h6>
+									</div>
+								</div>
+								<!--end candidate-profile-->
+
+								<div class="candidate-contact-details card-body p-4 border-top">
+									<h6 class="fs-17 fw-semibold mb-3">내정보</h6>
+									<ul class="list-unstyled mb-0">
+										<li>
+											<div class="d-flex align-items-center mt-4">
+												<div class="icon bg-soft-primary flex-shrink-0">
+													<i class="uil uil-phone"></i>
+												</div>
+												<div class="ms-3">
+													<h6 class="fs-14 mb-1">Phone</h6>
+													<p class="text-muted mb-0">[[${session.loginMember.phone}]]</p>
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="d-flex align-items-center mt-4">
+												<div class="icon bg-soft-primary flex-shrink-0">
+													<i class="uil uil-envelope-alt"></i>
+												</div>
+												<div class="ms-3">
+													<h6 class="fs-14 mb-1">Email</h6>
+													<p class="text-muted mb-0">[[${session.loginMember.email}]]</p>
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="d-flex align-items-center mt-4">
+												<div class="icon bg-soft-primary flex-shrink-0">
+													<i class="uil uil-map-marker"></i>
+												</div>
+												<div class="ms-3">
+													<h6 class="fs-14 mb-1">Address</h6>
+													<p class="text-muted mb-0">우) [[${session.loginMember.address}]]</p>
+												</div>
+											</div>
+										</li>
+									</ul>
+									<div class="mt-5">
+								  		<input type="button" id="deleteMember" class="text-muted text-decoration-underline" style="border: none; background-color: #fff !important;" value="회원탈퇴">
+									</div>
+								</div>
+								<!--end candidate-overview-->
+							</div>
+							<!--end card-->
+						</div>
+						<!--end col-->
+						<!-- 오른쪽 탭칸 -->
+						<div class="col-lg-8 mb-5">
+							<div class="card candidate-details ms-lg-4 mt-4 mt-lg-0">
+								<div class="card-body p-2 candidate-personal-detail">
+									<div class="">
+										<ul class="profile-content-nav nav nav-pills border-bottom mb-3" id="pills-tab" role="tablist">
+											
+											<!-- 탭1  -->
+											<li class="nav-item" role="presentation">
+												<button class="nav-link" id="settings-tab" data-bs-toggle="pill" data-bs-target="#mypinfo"
+													type="button" role="tab" aria-controls="settings" aria-selected="true" style="font-size:14px;">정보 변경</button>
+											</li>
+											
+											<!-- 탭 2 -->
+											<li class="nav-item" role="presentation">
+												<button class="nav-link active" id="overview-tab" data-bs-toggle="pill" data-bs-target="#tradeClip" type="button"
+													role="tab" aria-controls="overview" aria-selected="false" style="font-size:14px;">
+													거래</button>
+											</li>
+											
+											<!-- 탭3  -->
+											<li class="nav-item" role="presentation">
+												<button class="nav-link" id="settings-tab" data-bs-toggle="pill" data-bs-target="#recipeClip"
+													type="button" role="tab" aria-controls="overview" aria-selected="false" style="font-size:14px;">레시피</button>
+											</li>
+											
+											
+											<!-- 탭4  -->
+											<li class="nav-item" role="presentation">
+												<button class="nav-link" id="settings-tab" data-bs-toggle="pill" data-bs-target="#outdoorClip"
+													type="button" role="tab" aria-controls="overview" aria-selected="false" style="font-size:14px;">야외활동</button>
+											</li>
+											
+											<!-- 탭5  -->
+											<li class="nav-item" role="presentation">
+												<button class="nav-link" id="settings-tab" data-bs-toggle="pill" data-bs-target="#rentalClip"
+													type="button" role="tab" aria-controls="overview" aria-selected="false" style="font-size:14px;">공공주택</button>
+											</li>
+											
+											<!-- 탭6  -->
+											<li class="nav-item" role="presentation">
+												<button class="nav-link" id="settings-tab" data-bs-toggle="pill" data-bs-target="#oprogramClip"
+													type="button" role="tab" aria-controls="overview" aria-selected="false" style="font-size:14px;">프로그램</button>
+											</li>
+											
+											
+										</ul>
+
+										<div class="tab-content px-2 text-muted">
+										
+											<!-- 스크랩내역 -->
+											<div class="tab-pane active" id="tradeClip" role="tabpanel">
+												<!-- tradeClip -->
+												<th:block th:if="${tradeList != null}">
+											     <th:block th:each="trade : ${tradeList}">
+												  <div class="job-box card mb-2">
+														<div class="card-body p-3">
+															<div class="row">
+																<div class="col-lg-9">
+																	<div class="mt-3 mt-lg-0">
+																		<h5 class="fs-17 mb-1">
+																			<a th:href="|/trade/detail?no=${trade.tradeNo}|" class="text-dark">[[${trade.title}]]</a>
+																		</h5>
+																		<p class="text-muted fs-14 mb-0">[[${#dates.format(trade.createDate,'yyyy-MM-dd')}]] 조회 [[${trade.readCount}]]</p>
+																	</div>
+																</div>
+																<!--end col-->
+																<div class="col-lg-3 align-self-center">
+																	<ul class="list-inline mb-0 float-end">
+																		<li class="list-inline-item" data-bs-toggle="tooltip"
+																			data-bs-placement="top" title=""
+																			data-bs-original-title="자세히 보기"><a
+																			th:href="|/trade/detail?no=${trade.tradeNo}|"
+																			class="avatar-xs bg-soft-success d-inline-block text-center rounded-circle fs-4">
+																				<i class="mdi mdi-eye"></i>
+																		</a></li>
+																		<li class="list-inline-item " data-bs-toggle="tooltip"
+																			data-bs-placement="top" title=""
+																			data-bs-original-title="삭제" th:id="|clip${trade.tradeNo}|" th:value="${trade.isClip}"
+																			th:onclick="|onClickClip('clip${trade.tradeNo}', '${trade.tradeNo}', 'trade');|">
+																			<a href="javascript:void(0)" class="avatar-xs bg-soft-danger d-inline-block text-center rounded-circle fs-4">
+																				<i class="uil uil-trash-alt"></i>
+																			</a>
+																		</li>
+																	</ul>
+																</div>
+															</div>
+															<!--end row-->
+														  </div>
+														</div>
+												      </th:block>
+													</th:block>
+													<th:block th:if="${#lists.isEmpty(tradeList)}">
+														<div class="text-center mt-3">
+															<p>스크랩 내역이 없습니다.</p>
+														</div>
+													</th:block>
+												<!-- item1 end -->
+											</div>
+				
+											<!-- 스크랩내역 -->
+											<div class="tab-pane" id="recipeClip" role="tabpanel">
+												<!-- recipeClip -->
+												  <th:block th:if="${recipeList != null}">
+													<th:block th:each="recipe : ${recipeList}">
+													  <div class="job-box card mb-2">
+														<div class="card-body p-3">
+															<div class="row">
+																<div class="col-lg-9">
+																	<div class="mt-3 mt-lg-0">
+																		<h5 class="fs-17 mb-1">
+																			<a th:href="|/detail/recipe-detail?rcpNo=${recipe.rcpNo}|" class="text-dark">[[${recipe.rcpNm}]]</a>
+																		</h5>
+																		<p class="text-muted fs-14 mb-0">[[${recipe.rcpPat2}]] • [[${recipe.rcpWay2}]]</p>
+																	</div>
+																</div>
+																<!--end col-->
+																<div class="col-lg-3 align-self-center">
+																	<ul class="list-inline mb-0 float-end">
+																		<li class="list-inline-item" data-bs-toggle="tooltip"
+																			data-bs-placement="top" title=""
+																			data-bs-original-title="자세히 보기"><a
+																			th:href="|/detail/recipe-detail?rcpNo=${recipe.rcpNo}|"
+																			class="avatar-xs bg-soft-success d-inline-block text-center rounded-circle fs-4">
+																				<i class="mdi mdi-eye"></i>
+																		</a></li>
+																		<li class="list-inline-item " data-bs-toggle="tooltip"
+																			data-bs-placement="top" title=""
+																			data-bs-original-title="삭제" th:id="|clip${recipe.rcpNo}|" th:value="${recipe.isClip}"
+																			th:onclick="|onClickClip('clip${recipe.rcpNo}', '${recipe.rcpNo}', 'recipe');|">
+																			<a href="javascript:void(0)" class="avatar-xs bg-soft-danger d-inline-block text-center rounded-circle fs-4">
+																				<i class="uil uil-trash-alt"></i>
+																			</a>
+																		</li>
+																	</ul>
+																</div>
+															</div>
+															<!--end row-->
+														  </div>
+														</div>
+													  </th:block>
+													</th:block>
+													<th:block th:if="${#lists.isEmpty(recipeList)}">
+														<div class="text-center mt-3">
+															<p>스크랩 내역이 없습니다.</p>
+														</div>
+													</th:block>
+												<!-- item1 end -->
+											</div>
+				
+											<!-- 스크랩내역 -->
+											<div class="tab-pane" id="outdoorClip" role="tabpanel">
+												<!-- outdoorClip -->
+												  <th:block th:if="${parkList != null}">
+													<th:block th:each="park : ${parkList}">
+													  <div class="job-box card mb-2">
+														<div class="card-body p-3">
+															<div class="row">
+																<div class="col-lg-9">
+																	<div class="mt-3 mt-lg-0">
+																		<h5 class="fs-17 mb-1">
+																			<a th:href="@{/outdoor/outdoor-detail(parkNo=${park.parkNo})}" class="text-dark">[[${park.parkNm}]]</a>
+																		</h5>
+																		<p class="text-muted fs-14 mb-0">[[${park.lnmadr}]]</p>
+																	</div>
+																</div>
+																<!--end col-->
+																<div class="col-lg-3 align-self-center">
+																	<ul class="list-inline mb-0 float-end">
+																		<li class="list-inline-item" data-bs-toggle="tooltip"
+																			data-bs-placement="top" title=""
+																			data-bs-original-title="자세히 보기"><a
+																			th:href="@{/outdoor/outdoor-detail(parkNo=${park.parkNo})}"
+																			class="avatar-xs bg-soft-success d-inline-block text-center rounded-circle fs-4">
+																				<i class="mdi mdi-eye"></i>
+																		</a></li>
+																		<li class="list-inline-item " data-bs-toggle="tooltip"
+																			data-bs-placement="top" title=""
+																			data-bs-original-title="삭제" th:id="|clip${park.parkNo}|" th:value="${park.isClip}"
+																			th:onclick="|onClickClip('clip${park.parkNo}', '${park.parkNo}', 'park');|">
+																			<a href="javascript:void(0)" class="avatar-xs bg-soft-danger d-inline-block text-center rounded-circle fs-4">
+																				<i class="uil uil-trash-alt"></i>
+																			</a>
+																		</li>
+																	</ul>
+																</div>
+															</div>
+															<!--end row-->
+														  </div>
+														 </div>
+													  </th:block>
+													</th:block>
+													<th:block th:if="${trackingList != null}">
+														<hr>
+													  <th:block th:each="tracking : ${trackingList}">
+													  <div class="job-box card mb-2">
+														<div class="card-body p-3">
+															<div class="row">
+																<div class="col-lg-9">
+																	<div class="mt-3 mt-lg-0">
+																		<h5 class="fs-17 mb-1">
+																			<a th:href="@{/tracking/track-detail(tNo=${tracking.tNo})}" class="text-dark">[[${tracking.courseName}]]</a>
+																		</h5>
+																		<p class="text-muted fs-14 mb-0">[[${tracking.cpiName}]]</p>
+																	</div>
+																</div>
+																<!--end col-->
+																<div class="col-lg-3 align-self-center">
+																	<ul class="list-inline mb-0 float-end">
+																		<li class="list-inline-item" data-bs-toggle="tooltip"
+																			data-bs-placement="top" title=""
+																			data-bs-original-title="자세히 보기"><a
+																			th:href="@{/tracking/track-detail(tNo=${tracking.tNo})}"
+																			class="avatar-xs bg-soft-success d-inline-block text-center rounded-circle fs-4">
+																				<i class="mdi mdi-eye"></i>
+																		</a></li>
+																		<li class="list-inline-item " data-bs-toggle="tooltip"
+																			data-bs-placement="top" title=""
+																			data-bs-original-title="삭제" th:id="|clip${tracking.tNo}|" th:value="${tracking.isClip}"
+																			th:onclick="|onClickClip('clip${tracking.tNo}', '${tracking.tNo}', 'tracking');|">
+																			<a href="javascript:void(0)" class="avatar-xs bg-soft-danger d-inline-block text-center rounded-circle fs-4">
+																				<i class="uil uil-trash-alt"></i>
+																			</a>
+																		</li>
+																	</ul>
+																</div>
+															</div>
+															<!--end row-->
+														  </div>
+														</div>
+													  </th:block>
+													</th:block>
+													<th:block th:if="${#lists.isEmpty(parkList)} and ${#lists.isEmpty(trackingList)}">
+														<div class="text-center mt-3">
+															<p>스크랩 내역이 없습니다.</p>
+														</div>
+													</th:block>
+												<!-- item1 end -->
+											</div>
+
+											<!-- 스크랩내역 -->
+											<div class="tab-pane" id="rentalClip" role="tabpanel">
+												<!-- rentalClip -->
+												  <th:block th:if="${rentalList != null}">
+													<th:block th:each="rental : ${rentalList}">
+													  <div class="job-box card mb-2">
+														<div class="card-body p-3">
+															<div class="row">
+																<div class="col-lg-9">
+																	<div class="mt-3 mt-lg-0">
+																		<h5 class="fs-17 mb-1">
+																			<a th:href="@{${rental.pcUrl}}" class="text-dark">[[${rental.pblancNm}]]</a>
+																		</h5>
+																		<p class="text-muted fs-14 mb-0">[[${rental.beginDe}]] ~ [[${rental.endDe}]]</p>
+																	</div>
+																</div>
+																<!--end col-->
+																<div class="col-lg-3 align-self-center">
+																	<ul class="list-inline mb-0 float-end">
+																		<li class="list-inline-item" data-bs-toggle="tooltip"
+																			data-bs-placement="top" title=""
+																			data-bs-original-title="자세히 보기"><a
+																			th:href="@{${rental.pcUrl}}"
+																			class="avatar-xs bg-soft-success d-inline-block text-center rounded-circle fs-4">
+																				<i class="mdi mdi-eye"></i>
+																		</a></li>
+																		<li class="list-inline-item " data-bs-toggle="tooltip"
+																			data-bs-placement="top" title=""
+																			data-bs-original-title="삭제" th:id="|clip${rental.rentalNo}|" th:value="${rental.isClip}"
+																			th:onclick="|onClickClip('clip${rental.rentalNo}', '${rental.rentalNo}', 'rental');|">
+																			<a href="javascript:void(0)" class="avatar-xs bg-soft-danger d-inline-block text-center rounded-circle fs-4">
+																				<i class="uil uil-trash-alt"></i>
+																			</a>
+																		</li>
+																	</ul>
+																</div>
+															</div>
+															<!--end row-->
+														  </div>
+														</div>
+													  </th:block>
+													</th:block>
+													<th:block th:if="${#lists.isEmpty(rentalList)}">
+														<div class="text-center mt-3">
+															<p>스크랩 내역이 없습니다.</p>
+														</div>
+													</th:block>
+												<!-- item1 end -->
+											</div>
+											
+											<!-- 스크랩내역 -->
+											<div class="tab-pane" id="oprogramClip" role="tabpanel">
+												<!-- oprogramClip -->
+											  <th:block th:if="${oprogramList != null}">
+												<th:block th:each="oneProgram : ${oprogramList}">
+													<div class="job-box card mb-2">
+														<div class="card-body p-3">
+															<div class="row">
+																<div class="col-lg-9">
+																	<div class="mt-3 mt-lg-0">
+																		<h5 class="fs-17 mb-1">
+																			<a th:href="|/program-detail?onepNo=${oneProgram.onepNo}|" class="text-dark">[[${oneProgram.partcptnSj}]]</a>
+																		</h5>
+																		<p class="text-muted fs-14 mb-0">[[${#dates.format(oneProgram.progrsDe1, "yyyy-MM-dd")}]] ~ [[${#dates.format(oneProgram.progrsDe2, "yyyy-MM-dd")}]]</p>
+																	</div>
+																</div>
+																<!--end col-->
+																<div class="col-lg-3 align-self-center">
+																	<ul class="list-inline mb-0 float-end">
+																		<li class="list-inline-item" data-bs-toggle="tooltip"
+																			data-bs-placement="top" title=""
+																			data-bs-original-title="자세히 보기"><a
+																			th:href="|/program-detail?onepNo=${oneProgram.onepNo}|"
+																			class="avatar-xs bg-soft-success d-inline-block text-center rounded-circle fs-4">
+																				<i class="mdi mdi-eye"></i>
+																		</a></li>
+																		<li class="list-inline-item " data-bs-toggle="tooltip"
+																			data-bs-placement="top" title=""
+																			data-bs-original-title="삭제" th:id="|clip${oneProgram.onepNo}|" th:value="${oneProgram.isClip}"
+																			th:onclick="|onClickClip('clip${oneProgram.onepNo}', '${oneProgram.onepNo}', 'program');|">
+																			<a href="javascript:void(0)" class="avatar-xs bg-soft-danger d-inline-block text-center rounded-circle fs-4">
+																				<i class="uil uil-trash-alt"></i>
+																			</a>
+																		</li>
+																	</ul>
+																</div>
+															</div>
+															<!--end row-->
+														  </div>
+														</div>
+													  </th:block>
+													</th:block>
+													<th:block th:if="${#lists.isEmpty(oprogramList)}">
+														<div class="text-center mt-3">
+															<p>스크랩 내역이 없습니다.</p>
+														</div>
+													</th:block>
+												<!-- item1 end -->
+											</div>
+											
+											
+											<!-- 정보 변경 -->
+											<div class="tab-pane" id="mypinfo" role="tabpanel">
+												<p class="mb-0">
+												<form id="enroll-container" th:action="@{/member/update}" method="post" >
+													<div class="text-center">
+														<div class="mb-4 profile-user">
+															<img th:src="@{/images/user/avatar2.png}"
+																class="rounded-circle img-thumbnail profile-img"
+																id="profile-img" alt="">
+															<div class="p-0 rounded-circle profile-photo-edit">
+																<input id="profile-img-file-input" type="file"
+																	class="profile-img-file-input" onchange="previewImg()">
+																<label for="profile-img-file-input" class="profile-photo-edit avatar-xs"> 
+																<i class="uil uil-edit"></i>
+																</label>
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-lg-12">
+															<div class="mb-3">
+																<label for="inputname" class="form-label">이름</label> 
+																<input type="text" class="form-control" name="name" th:value="${session.loginMember.name}" required />
+															</div>
+														</div>
+														<!--end col-->
+
+														<div class="col-lg-12">
+															<div class="mb-3">
+																<label for="inputphone" class="form-label">연락처</label> 
+																<input type="tel" class="form-control" name="phone" th:value="${session.loginMember.phone}" maxlength="11" placeholder="(-없이)01012345678" />
+															</div>
+														</div>
+														<!--end col-->
+
+														<div class="col-lg-12">
+															<div class="mb-3">
+																<label for="inputemail" class="form-label">이메일</label> 
+																<input type="email" class="form-control" name="email" th:value="${session.loginMember.email}">
+															</div>
+														</div>
+														<!--end col-->
+
+													<div class="col-lg-12">
+															<div class="mb-3">
+																<label for="inputaddress" class="form-label">주소</label>
+																<input type="text" class="form-control" name="address" th:value="${session.loginMember.address}">
+															</div>
+														</div>
+														<!--end col-->
+	
+										<!-- 
+														<div class="col-lg-12">
+																<form th:action="@{/member/updatePwd}" method="POST">
+															<div class="mb-3">
+																<label for="inputaddress" class="form-label">변경할 비밀번호</label>
+																<input type="password" class="form-control" name="userPwd" id="pass1" required>
+															</div>
+														</div>
+										 -->
+														<!--end col-->
+														<!--
+															<div class="col-lg-12">
+															<div class="mb-3">
+																<label for="inputaddress" class="form-label">비밀번호 확인</label>
+																<input type="password" class="form-control"  id="pass2">
+															</div>
+										 						
+														</div>
+														  -->
+														<!--end col-->
+													</div>
+													<!--end row-->
+													
+													
+												<div class="text-end">
+												<button type="submit"  id="updateSubmit"  onclick="return validate();" class="btn btn-primary btn-hover"  value="정보수정"> 정보 수정 <i class="uil uil-angle-right-b"></i>
+														</button>
+							                 </div>
+							                 
+							                 
+	
+							                 </div>
+                                                    </form>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!--end card-body-->
+                                </div><!--end card-->
+                            </div><!--end col-->
+                        </div><!--end row-->
+                   
+                        
+                    </div><!--end container-->
+                    
+                </section>
+                <!-- END CANDIDATE-DETAILS -->
+
+            </div>
+            <!-- End Page-content -->
+
+
+    <div class="bottom d-none d-md-block">
+      <a href="javascript: void(0);" class="settings rounded-end">
+ </a>
+    </div>
+  </div>
+
+
+<!-- Style switcher -->
+  <a class="color-list color1" href="javascript: void(0);" onclick="setColorGreen()"></a>
+  <a class="color-list color2" href="javascript: void(0);" onclick="setColor('blue')"></a>
+  <a class="color-list color3" href="javascript: void(0);" onclick="setColor('green')"></a>
+  <a href="javascript: void(0);" id="mode">
+  <a href="javascript: void(0);" class="settings rounded-end"></a>
+  </div>
+  <!-- end switcher-->
+
+  <!--start back-to-top-->
+  <button onclick="topFunction()" id="back-to-top">
+    <i class="mdi mdi-arrow-up"></i>
+  </button>
+  <!--end back-to-top-->
+		
+		<footer th:replace="~{common/layout :: #footer}"></footer>
+	
+	</div>
+	<!-- end main content-->
+
+	</div>
+	<!-- END layout-wrapper -->
+
+
+ 	<script>
+	$("#updatePwd").on("click", (e) => {
+		const url = "/member/updatePwd";
+		const status = "left=500px,top=200px,width=400px,height=210px"
+		open(url, "", status);
+	});
+	
+	$("#deleteMember").on("click", (e) => {
+		if(confirm("정말로 탈퇴하시겠습니까?!")) {
+			location.replace('/member/delete');
+		}
+	});
+	
+    function showPopup() {
+		window.open("@{/member/updatePwd}", "비밀번호 변경", "width=400, height=300, left=100, top=50"); }
+	  
+	function onClickClip(id, no, table) {
+		clipValue = JSON.parse($('#'+id).attr('value'));
+		if (clipValue == 0) {
+			clipValue = 1;
+		} else {
+			clipValue = 0;
+		}
+		let delUrl = "";
+		if (table == 'trade') {
+			delUrl = '/trade/clip?tradeNo=' + no + '&isClip=' + clipValue;
+		} else if (table == 'recipe') {
+			delUrl = '/recipe/clip?rcpNo=' + no +'&isClip=' + clipValue;
+		} else if (table == 'park') {
+			delUrl = '/outdoor/clip?parkNo=' + no + '&isClip=' + clipValue;
+		} else if (table == 'tracking') {
+			delUrl = '/tracking/clip?tNo=' + no + '&isClip=' + clipValue;
+		} else if (table == 'rental') {
+			delUrl = '/rental/clip?rentalNo=' + no + '&isClip=' + clipValue;
+		} else if (table == 'program') {
+			delUrl = '/program/clip?onepNo=' + no +'&isClip=' + clipValue
+		}
+		// 여기에 AJAX로 DB 업데이트하는 코드 있어야함!!
+		$.ajax({
+			method: 'get',
+			url: delUrl,
+			contentType: 'application/json',
+			dataType: 'json',
+			success: (result) => {
+				alert('스크랩이 삭제 되었습니다.');
+				location.reload();
+			},
+			error: (e) => {
+				alert('전송 실패!!');
+			}
+		});
+	}
+  </script>
+	
+	
+
+	<!-- JAVASCRIPT -->
+	<script th:src="@{/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
+
+	<!-- Choice Js -->
+	<script th:src="@{/libs/choices.js/public/assets/scripts/choices.min.js}"></script>
+
+	<!-- Swiper Js -->
+	<script th:src="@{/libs/swiper/swiper-bundle.min.js}"></script>
+
+	<!-- Index Js -->
+	<script th:src="@{/js/pages/job-list.init.js}"></script>
+
+	<!-- Switcher Js -->
+	<script th:src="@{/js/pages/switcher.init.js}"></script>
+
+	<script th:src="@{/js/pages/index.init.js}"></script>
+
+	<!-- App Js -->
+	<script th:src="@{/js/app.js}"></script>
+
+	
+</body>
+
+</html>

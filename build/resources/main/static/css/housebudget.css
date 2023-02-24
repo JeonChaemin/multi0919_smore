@@ -1,0 +1,103 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard-dynamic-subset.css");
+@font-face {
+  font-family: 'SANJUGotgam';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/SANJUGotgam.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+/*채민*/
+.font-sangju{
+  font-family: 'SANJUGotgam';
+}
+
+.hero-title {
+  font-size: 2rem;
+  font-weight: 400;
+  font-family: 'SANJUGotgam';
+}
+
+.fc-day-mon a {
+  color: #495057;
+}
+
+.fc-day-tue a {
+  color: #495057;
+}
+
+.fc-day-wed a {
+  color: #495057;
+}
+
+.fc-day-thu a {
+  color: #495057;
+}
+
+.fc-day-fri a {
+  color: #495057;
+}
+
+.fc-col-header-cell {
+  background-color: #FFF;
+}
+
+.fc-view-harness {
+  background-color: #f7f7f7;
+}
+
+.fc-daygrid-day-top {
+  justify-content: start;
+}
+
+.fc-scrollgrid-sync-table {
+  border-color: #FFF;
+}
+
+.fc-day-today .fc-daygrid-day-frame {
+  background-color: #E5E7FF;
+}
+
+.fc-button-primary {
+  color: #495057 !important;
+  background-color: #FFF !important;
+  border: 0px !important;
+  height: 2.3rem !important;
+}
+
+.fc-prev-button:hover {
+  color: #766df4 !important;
+}
+
+.fc-next-button:hover {
+  color: #766df4 !important;
+}
+
+.fc-theme-standard .fc-scrollgrid {
+  border-color: #FFF !important;
+}
+
+.fc-highlight {
+  background-color: #FEF7E5 !important;
+}
+
+tbody, td, tfoot, th, thead, tr {
+  border-color: #FFF !important;
+}
+
+.housebudget-report {
+  width: 100%;
+  margin-bottom: 3rem;
+}
+
+.housebudget-report th {
+  background-color: #f7f7f7;
+  height: 3rem;
+}
+
+.housebudget-report td {
+  height: 3rem;
+  border-bottom: 1px solid #f7f7f7 !important;
+}
+
+.hidden {
+  display: none !important;
+}

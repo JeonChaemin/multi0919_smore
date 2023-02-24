@@ -1,0 +1,509 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="head" th:replace="~{common/layout :: head}"></head>
+<!-- Custom Css-->
+<link th:href="@{/css/index.css}" id="custom" rel="stylesheet" type="text/css" />
+
+<body>
+	<!--start page Loader -->
+	<div id="preloader">
+		<div id="status">
+			<ul>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>
+	</div>
+	<!--end page Loader -->
+
+	<header th:replace="~{common/layout :: #header}"></header>
+
+	<div class="main-content">
+
+		<div class="page-content">
+
+			<!-- START HOME -->
+			<section class="bg-home2" id="home">
+				<div class="container">
+					<div class="row align-items-center">
+							<div class="col-lg-7">
+								<div class="mb-4 pb-3 me-lg-5">
+									<h1 class="display-6 mb-3 font-sangju"><span class="text-primary fw-bold">S</span>ingle Life를 살아가는 당신, <span
+											class="text-primary fw-bold">MORE</span> 멋진 삶을 원하지 않나요?</h1>
+									<p class="lead text-muted mb-0">현명한 소비습관을 위한 서비스와 건강한 생활을 위한 레시피,<br>
+										내 주변 산책코스 추천, 1인 가구에게 꼭 필요한 각종 정보까지 확인해보세요!</p>
+								</div>
+								<form th:action="@{/search}" method="get">
+									<div class="registration-form">
+										<div class="row g-0">
+											<div class="col-md-9">
+												<div class="filter-search-form mt-3 mt-md-0">
+													<input type="search" id="searchValue" name="searchValue" th:value="${searchValue}" class="form-control filter-input-box fw-light"
+														placeholder="검색어를 입력해주세요.">
+												</div>
+											</div><!--end col-->
+											<div class="col-md-3">
+												<div class="mt-3 mt-md-0 h-100">
+													<button class="btn btn-primary submit-btn w-100 h-100 fs-110 text-center" type="submit"><i
+															class="uil uil-search me-1"></i> 검색</button>
+												</div>
+											</div><!--end col-->
+										</div><!--end row-->
+									</div>
+								</form>
+							</div>
+							<!--end col-->
+						<div class="col-lg-5">
+							<div class="mt-5 mt-md-0">
+								<img th:src="@{/images/hero_main.png}" alt="" class="home-img" />
+							</div>
+						</div>
+						<!--end col-->
+					</div>
+					<!--end row-->
+				</div>
+				<!--end container-->
+			</section>
+			<!-- End Home -->
+
+			<!-- START SHAPE -->
+			<div class="position-relative">
+				<div class="shape">
+					<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+						xmlns:xlink="http://www.w3.org/1999/xlink" width="1440"
+						height="150" preserveAspectRatio="none" viewBox="0 0 1440 220">
+							<g mask="url(&quot;#SvgjsMask1004&quot;)" fill="none">
+								<path d="M 0,213 C 288,186.4 1152,106.6 1440,80L1440 250L0 250z"
+							fill="rgba(255, 255, 255, 1)"></path>
+							</g>
+							<defs>
+								<mask id="SvgjsMask1004">
+									<rect width="1440" height="250" fill="#ffffff"></rect>
+								</mask>
+							</defs>
+						</svg>
+				</div>
+			</div>
+			<!-- END SHAPE -->
+
+			<!-- START CATEGORY -->
+			<section class="section">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg col-md-6 mt-4 pt-2">
+							<div class="popu-category-box rounded text-center">
+								<div class="popu-category-icon icons-md">
+									<img class="popu-category-img"
+										th:src="@{/images/img/calculation.png}">
+								</div>
+								<div class="popu-category-content mt-4">
+									<a th:href="@{/housebudget/list}" class="text-dark stretched-link">
+										<h5 class="fs-18">가계부</h5>
+									</a>
+								</div>
+							</div>
+							<!--end popu-category-box-->
+						</div>
+						<!--end col-->
+						<div class="col-lg col-md-6 mt-4 pt-2">
+							<div class="popu-category-box rounded text-center">
+								<div class="popu-category-icon icons-md">
+									<img class="popu-category-img"
+										th:src="@{/images/img/agreement.png}">
+								</div>
+								<div class="popu-category-content mt-4">
+									<a th:href="@{/trade}" class="text-dark stretched-link">
+										<h5 class="fs-18">중고거래</h5>
+									</a>
+								</div>
+							</div>
+							<!--end popu-category-box-->
+						</div>
+						<!--end col-->
+						<div class="col-lg col-md-6 mt-4 pt-2">
+							<div class="popu-category-box rounded text-center">
+								<div class="popu-category-icon icons-md">
+									<img class="popu-category-img" th:src="@{/images/img/care.png}">
+								</div>
+								<div class="popu-category-content mt-4">
+									<a th:href="@{/program}" class="text-dark stretched-link">
+										<h5 class="fs-18">정부지원사업</h5>
+									</a>
+								</div>
+							</div>
+							<!--end popu-category-box-->
+						</div>
+						<!--end col-->
+						<div class="col-lg col-md-6 mt-4 pt-2">
+							<div class="popu-category-box rounded text-center">
+								<div class="popu-category-icon icons-md">
+									<img class="popu-category-img"
+										th:src="@{/images/img/office-building.png}">
+								</div>
+								<div class="popu-category-content mt-4">
+									<a th:href="@{/rental}" class="text-dark stretched-link">
+										<h5 class="fs-18">공공임대주택</h5>
+									</a>
+								</div>
+							</div>
+							<!--end popu-category-box-->
+						</div>
+						<!--end col-->
+						<div class="col-lg col-md-6 mt-4 pt-2">
+							<div class="popu-category-box rounded text-center">
+								<div class="popu-category-icon icons-md">
+									<img class="popu-category-img"
+										th:src="@{/images/img/free-icon-park-433102.png}">
+								</div>
+								<div class="popu-category-content mt-4">
+									<a th:href="@{/outdoor}" class="text-dark stretched-link">
+										<h5 class="fs-18">야외활동</h5>
+									</a>
+								</div>
+							</div>
+							<!--end popu-category-box-->
+						</div>
+						<!--end col-->
+					</div>
+				</div>
+				<!--end container-->
+			</section>
+			<!-- END CATEGORY -->
+
+			<!-- START JOB-LIST -->
+			<section class="section mt-4">
+				<div class="bg-lightgray">
+					<div class="bg-index"></div>
+					<div class="container">
+						<div class="row justify-content-center">
+							<div class="col-lg-10">
+								<div class="section-title mb-4 pb-2">
+									<h4 class="index-title">1인가구 프로그램 안내</h4>
+								</div>
+							</div>
+							<!--end col-->
+							<div
+								class="col-lg-2 justify-content-end align-items-center d-lg-flex">
+								<a class="text-reset" th:href="@{/program}">더보기<i
+									class="fa-solid fa-angle-right"></i></a>
+							</div>
+							<!--end col-->
+							<th:block th:each="oneProgram : ${oprogramList}">
+								<div class="col-lg-3 text-center">
+									<a th:href="|/program-detail?onepNo=${oneProgram.onepNo}|"><img class="index-img"
+										th:src="|/images/programimage/program${oneProgram.onepNo}.png|"></a> <a
+										class="text-reset text-start">
+										<h5 class="mt-3 ellipsis" th:text="${oneProgram.partcptnSj}"></h5>
+										<p class="text-primary" style="margin-left: 27px;" th:text="'서울특별시 '+${oneProgram.atdrcNm}"></p>
+									</a>
+								</div>
+							</th:block>
+							<!--end col-->
+						</div>
+						<!--end row-->
+					</div>
+					<!--end container-->
+				</div>
+				<!--end container-->
+			</section>
+			<!-- END JOB-LIST -->
+
+			<!-- START PROCESS -->
+			<section class="section mt-5">
+				<div class="container">
+					<div class="row align-items-center">
+						<div class="col-lg-6">
+							<div class="section-title me-5 mt-5">
+								<a class="text-reset" th:href=@{/recipe}>
+									<h4 class="index-title">
+										혼자니까 더 맛있게!<br>든든한 레시피 모음.zip
+									</h4>
+								</a>
+								<p class="text-muted">
+									배달음식, 간편식보다 맛있고 건강한 집밥 레시피를 공유합니다.<br>스모어와 함께라면 어렵지 않아요!
+								</p>
+								<div class="process-menu nav flex-column nav-pills"
+									id="v-pills-tab" role="tablist" aria-orientation="vertical">
+									<a class="nav-link active" id="v-pills-home-tab"
+										data-bs-toggle="pill" href="#v-pills-home" role="tab"
+										aria-controls="v-pills-home" aria-selected="true">
+										<div class="d-flex">
+											<div class="number flex-shrink-0">1</div>
+											<div class="flex-grow-1 text-start ms-3">
+												<h5 class="fs-18">일품</h5>
+												<p class="text-muted mb-4">한번에 간편하고 푸짐하게 먹을 수 있는 일품요리</p>
+											</div>
+										</div>
+									</a> <a class="nav-link" id="v-pills-profile-tab"
+										data-bs-toggle="pill" href="#v-pills-profile" role="tab"
+										aria-controls="v-pills-profile" aria-selected="false">
+										<div class="d-flex">
+											<div class="number flex-shrink-0">2</div>
+											<div class="flex-grow-1 text-start ms-3">
+												<h5 class="fs-18">국/찌개</h5>
+												<p class="text-muted mb-4">빈 속을 따뜻하고 부드럽게 데워주는 국과 입맛 돋우는
+													찌개</p>
+											</div>
+										</div>
+									</a> <a class="nav-link" id="v-pills-messages-tab"
+										data-bs-toggle="pill" href="#v-pills-messages" role="tab"
+										aria-controls="v-pills-messages" aria-selected="false">
+										<div class=" d-flex">
+											<div class="number flex-shrink-0">3</div>
+											<div class="flex-grow-1 text-start ms-3">
+												<h5 class="fs-18">반찬</h5>
+												<p class="text-muted mb-4">밥만 있어도 맛있는 한끼를 채울 수 있는 다양한 반찬</p>
+											</div>
+										</div>
+									</a>
+								</div>
+							</div>
+						</div>
+						<!--end col-->
+						<div class="col-lg-6">
+							<div class="tab-content" id="v-pills-tabContent">
+								<div class="tab-pane fade show active" id="v-pills-home"
+									role="tabpanel" aria-labelledby="v-pills-home-tab">
+									<div class="col-md-10 m-auto">
+										<div class="card mt-4">
+											<img class="card-img-top img-fluid index-rcp-img"
+												th:src="${recipeList[0].attFileNoMain}" alt="Card image cap">
+											<div class="card-body">
+												<h5 class="card-title mb-2">[[${recipeList[0].rcpNm}]]</h5>
+												<p class="card-text">[[${recipeList[0].rcpPat2}]] • [[${recipeList[0].rcpWay2}]]</p>
+												<a th:href="|/detail/recipe-detail?rcpNo=${recipeList[0].rcpNo}|" class="card-link text-primary">레시피
+													보러가기<i class="fa-solid fa-angle-right"></i>
+												</a>
+											</div>
+										</div>
+										<!-- end card -->
+									</div>
+									<!-- end col -->
+								</div>
+								<!--end tabpanel-->
+								<div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
+									aria-labelledby="v-pills-profile-tab">
+									<div class="col-md-10 m-auto">
+										<div class="card mt-4">
+											<img class="card-img-top img-fluid index-rcp-img"
+												th:src="${recipeList[1].attFileNoMain}" alt="Card image cap">
+											<div class="card-body">
+												<h5 class="card-title mb-2">[[${recipeList[1].rcpNm}]]</h5>
+												<p class="card-text">[[${recipeList[1].rcpPat2}]] • [[${recipeList[1].rcpWay2}]]</p>
+												<a th:href="|/detail/recipe-detail?rcpNo=${recipeList[1].rcpNo}|" class="card-link text-primary">레시피
+													보러가기<i class="fa-solid fa-angle-right"></i>
+												</a>
+											</div>
+										</div>
+										<!-- end card -->
+									</div>
+									<!-- end col -->
+								</div>
+								<div class="tab-pane fade" id="v-pills-messages" role="tabpanel"
+									aria-labelledby="v-pills-messages-tab">
+									<div class="col-md-10 m-auto">
+										<div class="card mt-4">
+											<img class="card-img-top img-fluid index-rcp-img"
+												th:src="${recipeList[2].attFileNoMain}" alt="Card image cap">
+											<div class="card-body">
+												<h5 class="card-title mb-2">[[${recipeList[2].rcpNm}]]</h5>
+												<p class="card-text">[[${recipeList[2].rcpPat2}]] • [[${recipeList[2].rcpWay2}]]</p>
+												<a th:href="|/detail/recipe-detail?rcpNo=${recipeList[2].rcpNo}|" class="card-link text-primary">레시피
+													보러가기<i class="fa-solid fa-angle-right"></i>
+												</a>
+											</div>
+										</div>
+										<!-- end card -->
+									</div>
+									<!-- end col -->
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--end row-->
+				</div>
+				<!--end container-->
+			</section>
+			<!-- END PROCESS -->
+
+			<!--START CTA-->
+			<section class="section mt-5">
+				<div class="container">
+					<div class="row justify-content-center">
+						<div class="col-lg-10">
+							<div class="section-title mb-4 pb-2">
+								<h4 class="index-title">지역별 공공임대주택 정보</h4>
+							</div>
+						</div>
+						<!--end col-->
+						<div
+							class="col-lg-2 justify-content-end align-items-center d-lg-flex">
+							<a class="text-reset" th:href="@{/rental}">더보기<i
+								class="fa-solid fa-angle-right"></i></a>
+						</div>
+						<!--end col-->
+						<div class="rental-div mb-4">
+							<img class="index-rental"
+								th:src="@{/images/img/main_banner_single.png}">
+							<button type="button" class="index-rental-btn" style="left: 150px;" onclick="location.href='http://localhost/rental?searchRegion=서울특별시'">서울</button>
+							<button type="button" class="index-rental-btn" style="left: 312px;" onclick="location.href='http://localhost/rental?searchRegion=경기도'">경기</button>
+							<button type="button" class="index-rental-btn" style="left: 605px;" onclick="location.href='http://localhost/rental?searchRegion=대전광역시'">대전</button>
+							<button type="button" class="index-rental-btn" style="left: 820px;" onclick="location.href='http://localhost/rental?searchRegion=부산광역시'">부산</button>
+							<button type="button" class="index-rental-btn" style="left: 996px;" onclick="location.href='http://localhost/rental?searchRegion=울산광역시'">울산</button>
+						</div>
+					</div>
+					<!--end row-->
+				</div>
+				<!--end container-->
+			</section>
+			<!--END CTA-->
+
+			<!-- START TESTIMONIAL -->
+			<section class="section mt-5">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="section-title text-start mb-4 pb-2">
+								<a class="text-reset" th:href="@{/news}">
+								  <h3 class="index-title mb-3">1인가구 관련 뉴스 <i class="fa-solid fa-angle-right text-primary"	style="font-size: 1.3rem;"></i></h3>
+								</a>
+							    <th:block th:each="news : ${newsList}">
+								  <a class="index-board-font" th:href="${news.originallink}">• [[${news.title}]]</a><br>
+							    </th:block>
+							</div>
+						</div>
+						<!--end col-->
+						<div class="col-lg-6">
+							<div class="section-title text-start mb-4 pb-2">
+								<a class="text-reset" th:href="@{/board/list?type=notice}">
+								  <h3 class="index-title mb-3">공지사항 <i class="fa-solid fa-angle-right text-primary" style="font-size: 1.3rem;"></i></h3>
+								</a>
+							  	<th:block th:each="board : ${boardList}">  
+							      <a class="index-board-font" th:href="|/board/list?type=${board.type}&no=${board.bbNo}|">• [[${board.title}]]</a><br>
+							  	</th:block>
+							</div>
+						</div>
+						<!--end col-->
+					</div>
+					<!--end row-->
+
+					<div class="row justify-content-center">
+						<div class="col-lg-12">
+							<div class="swiper testimonialSlider pb-5">
+								<div class="swiper-wrapper">
+									<div class="swiper-slide">
+										<div class="mb-4 row">
+										  <th:block th:each="item : ${parkList1}">
+											<div class="col-lg-4 justify-content-evenly trail-wrapper">
+												<a class="index-trail" th:href="@{/outdoor/outdoor-detail(parkNo=${item.parkNo})}"> <img
+													class="index-trail-img" th:src="|/images/img/park${itemStat.index}.jpeg|"
+													alt="" />
+													<p class="index-trail-info">[[${item.parkNm}]] • [[${item.lnmadr}]]</p>
+												</a>
+											</div>
+										  </th:block>
+										</div>
+									</div>
+									<div class="swiper-slide">
+										<div class="mb-4 row">
+										  <th:block th:each="item : ${parkList2}">
+											<div class="col-lg-4 justify-content-evenly trail-wrapper">
+												<a class="index-trail" th:href="@{/outdoor/outdoor-detail(parkNo=${item.parkNo})}"> <img
+													class="index-trail-img" th:src="|/images/img/park${itemStat.index + 3}.jpeg|"
+													alt="" />
+													<p class="index-trail-info">[[${item.parkNm}]] • [[${item.lnmadr}]]</p>
+												</a>
+											</div>
+										  </th:block>
+										</div>
+									</div>
+									<div class="swiper-slide">
+										<div class="mb-4 row">
+										  <th:block th:each="item : ${parkList3}">
+											<div class="col-lg-4 justify-content-evenly trail-wrapper">
+												<a class="index-trail" th:href="@{/outdoor/outdoor-detail(parkNo=${item.parkNo})}"> <img
+													class="index-trail-img" th:src="|/images/img/park${itemStat.index + 6}.jpeg|"
+													alt="" />
+													<p class="index-trail-info">[[${item.parkNm}]] • [[${item.lnmadr}]]</p>
+												</a>
+											</div>
+										  </th:block>
+										</div>
+									</div>
+								</div>
+								<!--end swiper-wrapper-->
+								<div class="swiper-pagination"></div>
+							</div>
+							<!--end swiper-container  -->
+						</div>
+						<!--end col-->
+					</div>
+					<!--end row-->
+				</div>
+			</section>
+			<!-- END TESTIMONIAL -->
+<!-- 			<div th:replace="~{common/layout :: #chatbot}"></div> -->
+		</div>
+		<!-- End Page-content -->
+		<footer th:replace="~{common/layout :: #footer}"></footer>
+
+		<!-- Style switcher -->
+		<div id="style-switcher" onclick="toggleSwitcher()"
+			style="left: -165px;">
+			<div>
+				<h6>Select your color</h6>
+				<ul class="pattern list-unstyled mb-0">
+					<li><a class="color-list color1" href="javascript: void(0);"
+						onclick="setColorGreen()"></a></li>
+					<li><a class="color-list color2" href="javascript: void(0);"
+						onclick="setColor('blue')"></a></li>
+					<li><a class="color-list color3" href="javascript: void(0);"
+						onclick="setColor('green')"></a></li>
+				</ul>
+				<a href="javascript: void(0);" id="mode"
+					class="mode-btn text-white rounded-3"> </a>
+			</div>
+		</div>
+	</div>
+	<div class="bottom d-none d-md-block">
+		<a href="javascript: void(0);" class="settings rounded-end"></a>
+	</div>
+	<!-- end switcher-->
+
+	<!--start back-to-top-->
+	<button onclick="topFunction()" id="back-to-top">
+		<i class="mdi mdi-arrow-up"></i>
+	</button>
+	<!--end back-to-top-->
+
+
+	<!-- JAVASCRIPT -->
+	<script th:src="@{/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
+
+	<!-- Choice Js -->
+	<script th:src="@{/libs/choices.js/public/assets/scripts/choices.min.js}"></script>
+
+	<!-- Swiper Js -->
+	<script th:src="@{/libs/swiper/swiper-bundle.min.js}"></script>
+
+	<!-- Index Js -->
+	<script th:src="@{/js/pages/job-list.init.js}"></script>
+
+	<!-- Switcher Js -->
+	<script th:src="@{/js/pages/switcher.init.js}"></script>
+
+	<script th:src="@{/js/pages/index.init.js}"></script>
+
+	<!-- App Js -->
+	<script th:src="@{/js/app.js}"></script>
+	
+</body>
+
+</html>

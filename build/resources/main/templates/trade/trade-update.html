@@ -1,0 +1,272 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="head" th:replace="~{common/layout :: head}"></head>
+<!--Custom Css-->
+<link th:href="@{/css/trade-write.css}" id="trade" rel="stylesheet"
+	type="text/css" />
+
+
+<body>
+
+	<!--Navbar Start-->
+	<header th:replace="~{common/layout :: #header}"></header>
+	<!-- Navbar End -->
+
+	<!-- Begin page -->
+	<div>
+
+		<div class="main-content">
+
+			<div class="page-content">
+
+				<!-- Start home -->
+
+				<section class="page-title-box hero-img">
+					<div class="container">
+						<div class="row justify-content-center">
+							<div class="col-md-6">
+								<div class="text-center text-white">
+									<h3 class="mb-4 hero-title">
+										<a class="text-white" th:href="@{/trade}">중고/재능 거래</a>
+									</h3>
+									<div class="page-next">
+										<nav class="d-inline-block"
+											aria-label="breadcrumb text-center">
+											<ol class="breadcrumb justify-content-center">
+												<li class="breadcrumb-item"><a th:href="@{/}">HOME</a></li>
+												<li class="breadcrumb-item"><a th:href="@{/trade}">LIFE</a></li>
+												<li class="breadcrumb-item"><a th:href="@{/trade}">TRADE</a></li>
+												<li class="breadcrumb-item active" aria-current="page">
+													TRADE WRITE</li>
+											</ol>
+										</nav>
+									</div>
+								</div>
+							</div>
+							<!--end col-->
+						</div>
+						<!--end row-->
+					</div>
+					<!--end container-->
+				</section>
+				<!-- end home -->
+
+				<!-- START SHAPE -->
+				<div class="position-relative" style="z-index: 1">
+					<div class="shape">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 250">
+              <path fill="#FFFFFF" fill-opacity="1"
+								d="M0,192L120,202.7C240,213,480,235,720,234.7C960,235,1200,213,1320,202.7L1440,192L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z">
+              </path>
+            </svg>
+					</div>
+				</div>
+				<!-- END SHAPE -->
+
+
+				<!-- START CATEGORIES -->
+				<section class="section my-5">
+					<div class="container mb-4" style="padding: 0 150px 0 160px;">
+						<div class="row justify-content-center">
+							<div class="col-lg-12 align-self-center">
+								<div class="text-start ps-3 align-middle">
+									<h2 class="m-0 p-0 ">거래글 수정</h2>
+								</div>
+							</div>
+							<!--end col-->
+						</div>
+						<!--end row-->
+					</div>
+					<!-- 목록 -->
+					<div class="container"
+						style="padding: 0 150px 0 150px; margin-bottom: 100px;">
+						<div class="row px-3">
+							<div class="col-lg-12">
+								<form action="/trade/update" method="post" enctype="multipart/form-data">
+									<input type="hidden" name="tradeNo" th:value="${trade.tradeNo}" />
+									<input type="hidden" name="originalFileName" th:value="${trade.originalFileName}" /> 
+									<input type="hidden" name="renamedFileName" th:value="${trade.renamedFileName}" />
+									<table class="table bw-tbl">
+										<colgroup>
+											<col width=20%>
+											<col width=80%>
+										</colgroup>
+										<tr>
+											<th>거래종류</th>
+											<td><label> <input type="radio" name="type"
+													value="중고구매"
+													th:checked="${trade.type=='중고구매'} ? 'checked' :''">
+													중고구매&ensp;&ensp;&ensp;
+											</label> <label> <input type="radio" name="type" value="중고판매"
+													th:checked="${trade.type=='중고판매'} ? 'checked' :''">
+													중고판매&ensp;&ensp;&ensp;
+											</label> <label> <input type="radio" name="type" value="재능구매"
+													th:checked="${trade.type=='재능구매'} ? 'checked' :''">
+													재능구매&ensp;&ensp;&ensp;
+											</label> <label> <input type="radio" name="type" value="재능판매"
+													th:checked="${trade.type=='재능판매'} ? 'checked' :''">
+													재능판매&ensp;&ensp;&ensp;
+											</label> <label> <input type="radio" name="type" value="나눔"
+													th:checked="${trade.type=='나눔'} ? 'checked' :''">
+													나눔&ensp;&ensp;&ensp;
+											</label></td>
+										</tr>
+										<tr>
+											<th>카테고리</th>
+											<td><select class="form-select" name="category"
+												aria-label="Default select example">
+													<option value="디지털기기" th:selected="${trade.category} == '디지털기기'">디지털기기</option>
+													<option value="생활가전" th:selected="${trade.category} == '생활가전'">생활가전</option>
+													<option value="가구/인테리어" th:selected="${trade.category} == '가구/인테리어'">가구/인테리어</option>
+													<option value="생활/주방" th:selected="${trade.category} == '생활/주방'">생활/주방</option>
+													<option value="유아용" th:selected="${trade.category} == '유아용'">유아용</option>
+													<option value="여성의류/잡화" th:selected="${trade.category} == '여성의류/잡화'">여성의류/잡화</option>
+													<option value="남성의류/잡화" th:selected="${trade.category} == '남성의류/잡화'">남성의류/잡화</option>
+													<option value="뷰티/미용" th:selected="${trade.category} == '뷰티/미용'">뷰티/미용</option>
+													<option value="스포츠/레저" th:selected="${trade.category} == '스포츠/레저'">스포츠/레저</option>
+													<option value="취미/게임/음반" th:selected="${trade.category} == '취미/게임/음반'">취미/게임/음반</option>
+													<option value="도서/티켓/교환권" th:selected="${trade.category} == '도서/티켓/교환권'">도서/티켓/교환권</option>
+													<option value="가공식품" th:selected="${trade.category} == '가공식품'">가공식품</option>
+													<option value="반려동물물품" th:selected="${trade.category} == '반려동물물품'">반려동물물품</option>
+													<option value="식물" th:selected="${trade.category} == '식물'">식물</option>
+													<option value="기타" th:selected="${trade.category} == '기타'">기타</option>
+											</select></td>
+										</tr>
+										<tr>
+											<th>거래 지역(시/도)</th>
+											<td><select class="form-select" name="region"
+												aria-label="Default select example">
+													<option value="서울특별시" th:selected="${trade.region} == '서울특별시'">서울특별시</option>
+													<option value="부산광역시" th:selected="${trade.region} == '부산광역시'">부산광역시</option>
+													<option value="대구광역시" th:selected="${trade.region} == '대구광역시'">대구광역시</option>
+													<option value="인천광역시" th:selected="${trade.region} == '인천광역시'">인천광역시</option>
+													<option value="광주광역시" th:selected="${trade.region} == '광주광역시'">광주광역시</option>
+													<option value="대전광역시" th:selected="${trade.region} == '대전광역시'">대전광역시</option>
+													<option value="울산광역시" th:selected="${trade.region} == '울산광역시'">울산광역시</option>
+													<option value="세종특별자치시" th:selected="${trade.region} == '세종특별자치시'">세종특별자치시</option>
+													<option value="경기도" th:selected="${trade.region} == '경기도'">경기도</option>
+													<option value="강원도" th:selected="${trade.region} == '강원도'">강원도</option>
+													<option value="충청북도" th:selected="${trade.region} == '충청북도'">충청북도</option>
+													<option value="충청남도" th:selected="${trade.region} == '충청남도'">충청남도</option>
+													<option value="전라북도" th:selected="${trade.region} == '전라북도'">전라북도</option>
+													<option value="전라남도" th:selected="${trade.region} == '전라남도'">전라남도</option>
+													<option value="경상북도" th:selected="${trade.region} == '경상북도'">경상북도</option>
+													<option value="경상남도" th:selected="${trade.region} == '경상남도'">경상남도</option>
+													<option value="제주특별자치도" th:selected="${trade.region} == '제주특별자치도'">제주특별자치도</option>
+											</select></td>
+										</tr>
+										<tr>
+											<th><label for="title">제목</label></th>
+											<td><input type="text" name="title" id="title"
+												th:value="${trade.title}" required></td>
+										</tr>
+										<tr>
+											<th><label for="condition">상태</label></th>
+											<td><input type="text" name="conditions" id="conditions"
+												th:value="${trade.conditions}" placeholder="사용감, 물건의 상태"
+												required></td>
+										</tr>
+										<tr>
+											<th><label for="price">금액</label></th>
+											<td><input class="text-end" type="text" name="price"
+												id="price" th:value="${trade.price}" style="width: 40%;"
+												required>&ensp;원</td>
+										</tr>
+										<tr>
+											<th>작성자</th>
+											<td><input type="text" class="border-0" name="writerId"
+												th:value="${session.loginMember.id}"readonly></td> 
+										</tr>
+										<tr class="align-middle">
+											<th><label for="file-btn">첨부파일</label></th>
+											<td><label
+												class="position-absolute input-file-button py-1"
+												for="file-btn">파일첨부</label>
+												<input type="file" name="reloadFile" id="file-btn"
+												style="margin-left: 29px;">
+											</td>
+										</tr>
+										<tr class="align-middle">
+											<th></th>
+											<td>현재 업로드 파일 : <a> [[${trade.originalFileName}]] </a>
+											</td>
+										</tr>
+										<tr>
+											<th class="border-bottom-0"><label for="content">내용</label></th>
+										</tr>
+										<tr>
+											<th colspan="4" class="pt-0 border-bottom-0"><textarea
+													class="p-3" name="content" id="content" cols="50" rows="15"
+													placeholder=" 내용을 적는 곳입니다." required>[[${trade.content}]]</textarea></th>
+										</tr>
+										<tr>
+											<td colspan="" class="border-0 pt-0"
+												style="padding-left: 30px;">
+												<!-- <input type="submit" value="등록">
+                                            <input type="reset" value="취소"> -->
+												<button type="button"
+													class="btn btn-outline-purple text-start py-1"
+													onclick="location.replace('/trade')">목록</button>
+
+											</td>
+											<th colspan="" class="border-0 pt-0">
+												<button type="reset"
+													class="btn btn-outline-purple float-end py-1 px-4 me-4">초기화</button>
+												<button type="submit"
+													class="btn btn-purple float-end py-1 me-3">수정하기</button>
+											</th>
+										</tr>
+									</table>
+								</form>
+
+							</div>
+							<!--endt-->
+						</div>
+						<!--end col-->
+					</div>
+			</div>
+			<!--end container-->
+			</section>
+			<!-- END CATEGORIES -->
+
+
+
+		</div>
+		<!-- End Page-content -->
+
+		<!-- START FOOTER -->
+		<footer th:replace="~{common/layout :: #footer}"></footer>
+		<!-- END FOOTER -->
+
+
+		<!--start back-to-top-->
+		<button onclick="topFunction()" id="back-to-top">
+			<i class="mdi mdi-arrow-up"></i>
+		</button>
+		<!--end back-to-top-->
+	</div>
+	<!-- end main content-->
+
+	</div>
+	<!-- END layout-wrapper -->
+
+	<!-- JAVASCRIPT -->
+	<script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script
+		src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
+
+
+	<!-- Choice Js -->
+	<script
+		src="assets/libs/choices.js/public/assets/scripts/choices.min.js"></script>
+
+	<!-- Switcher Js -->
+	<script src="assets/js/pages/switcher.init.js"></script>
+
+	<script src="assets/js/app.js"></script>
+
+</body>
+
+</html>

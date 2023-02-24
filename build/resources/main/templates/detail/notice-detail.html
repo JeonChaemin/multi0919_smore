@@ -1,0 +1,179 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="head" th:replace="~{common/layout :: head}"></head>
+<!--Custom Css-->
+<link th:href="@{/css/notice.css}" id="news" rel="stylesheet" type="text/css" />
+<!-- jquery CDN -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<body>
+	<!--start page Loader -->
+	<div id="preloader">
+		<div id="status">
+			<ul>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>
+	</div>
+	<!--end page Loader -->
+
+	<!-- Begin page -->
+	<header th:replace="~{common/layout :: #header}"></header>
+
+	<div class="main-content">
+
+		<div class="page-content">
+
+			<!-- Start home -->
+			<section class="page-title-box" th:style="'background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(' + @{/images/img/hero_notice.jpg} + '); height: 350px; padding-top: 130px; background-position: center;'">
+				<div class="container">
+					<div class="row justify-content-center">
+						<div class="col-md-6">
+							<div class="text-center text-white">
+								<h3 class="mb-4 hero-title" style="font-weight: 400;">공지사항</h3>
+								<div class="page-next">
+									<nav class="d-inline-block" aria-label="breadcrumb text-center">
+										<ol class="breadcrumb justify-content-center">
+											<li class="breadcrumb-item"><a th:href="@{/index}">HOME</a></li>
+											<li class="breadcrumb-item"><a th:href="@{/board/list?type=notice}">COMMUNITY</a></li>
+											<li class="breadcrumb-item"><a th:href="@{/board/list?type=notice}">NOTICE</a></li>
+											<li class="breadcrumb-item active" aria-current="page">
+												NOTICE DETAIL</li>
+										</ol>
+									</nav>
+								</div>
+							</div>
+						</div>
+						<!--end col-->
+					</div>
+					<!--end row-->
+				</div>
+				<!--end container-->
+			</section>
+			<!-- end home -->
+
+			<!-- START SHAPE -->
+			<div class="position-relative" style="z-index: 1">
+				<div class="shape">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 250">
+                               <path fill="#FFFFFF" fill-opacity="1"
+							d="M0,192L120,202.7C240,213,480,235,720,234.7C960,235,1200,213,1320,202.7L1440,192L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"></path>
+                           </svg>
+				</div>
+			</div>
+			<!-- END SHAPE -->
+
+				<!-- START COMPANY-LIST -->
+				<section class="section">
+					<div class="container">
+						<div class="row align-items-center mb-4">
+							<div class="col-lg-8">
+								<div class="mb-3 mb-lg-0">
+									<h4 class="mb-0"> 공지사항 </h4>
+								</div>
+							</div><!--end col-->
+
+
+						</div><!--end row-->
+						<div class="row mb-4">
+							<div class="col-lg-12 mb-4">
+								<div class="card text">
+									<div class="card-body px-4 py-5">
+										<a href="company-details.html" class="primary-link">
+											<h5>[[${board.title}]]</h5>
+										</a>
+										<p class="text-muted">[[${#dates.format(board.modifyDate, "yyyy-MM-dd HH:mm")}]] <span class="ms-2">조회 [[${board.readCount}]]</span></p>
+										<hr>
+										<div class="mt-2">
+											<img class="m-auto" alt="" style="width: 300px" th:src="|/board/file/${board.renamedFileName}|">
+											<p class="mb-2" style="white-space: pre-line;">[[${board.content}]]</p>
+										</div>
+									</div>
+								</div>
+							</div><!--end col-->
+							<div class="col-lg-6">
+								<a class="btn btn-soft-secondary text-start" th:href="@{/board/list?type=notice}">목록</a>
+							</div>
+							<th:block th:if="${session.loginMember != null && (session.loginMember.id == board.id || session.loginMember.role == 'ROLE_ADMIN')}">
+							<div class="col-lg-6 text-end mb-4">
+								<button type="button" id="btnUpdate" class="btn btn-soft-primary">수정</button>
+								<button type="button" id="btnDelete" class="btn btn-soft-danger">삭제</button>
+							</div>
+							</th:block>
+						</div><!--end row-->
+
+
+					</div><!--end container-->
+				</section>
+				<!-- END COMPANY-LIST -->
+
+			</div>
+			<!-- End Page-content -->
+
+<footer th:replace="~{common/layout :: #footer}"></footer>
+
+		<!-- Style switcher -->
+		<a class="color-list color1" href="javascript: void(0);"
+			onclick="setColorGreen()"></a> <a class="color-list color2"
+			href="javascript: void(0);" onclick="setColor('blue')"></a> <a
+			class="color-list color3" href="javascript: void(0);"
+			onclick="setColor('green')"></a> <a href="javascript: void(0);"
+			id="mode"> <a href="javascript: void(0);"
+			class="settings rounded-end"></a>
+	</div>
+	<!-- end switcher-->
+
+	<!--start back-to-top-->
+	<button onclick="topFunction()" id="back-to-top">
+		<i class="mdi mdi-arrow-up"></i>
+	</button>
+	<!--end back-to-top-->
+		</div>
+		<!-- end main content-->
+
+	</div>
+	<!-- END layout-wrapper -->
+
+	<!-- JAVASCRIPT -->
+	<script th:src="@{/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
+
+	<!-- Choice Js -->
+	<script th:src="@{/libs/choices.js/public/assets/scripts/choices.min.js}"></script>
+
+	<!-- Candidate Init Js -->
+	<script th:src="@{/js/pages/candidate.init.js}"></script>
+
+	<!-- Job-list Init Js -->
+	<script th:src="@{/js/pages/job-list.init.js}"></script>
+
+	<!-- Switcher Js -->
+	<script th:src="@{/js/pages/switcher.init.js}"></script>
+
+	<!-- App Js -->
+	<script th:src="@{/js/app.js}"></script>
+	
+	<script type="text/javascript">
+	$(document).ready(() => {
+		$("#btnUpdate").on("click", (e) => {
+			location.href = "/board/update?no=[[${board.bbNo}]]";
+		});
+		
+		$("#btnDelete").on("click", (e) => {
+			if(confirm("정말로 게시글을 삭제 하시겠습니까?")) {
+				location.replace("/board/delete?boardNo=[[${board.bbNo}]]");
+			}
+		});
+	});
+</script>
+
+</body>
+
+</html>

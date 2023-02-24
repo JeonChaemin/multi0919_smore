@@ -1,0 +1,170 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+
+
+  <meta charset="utf-8" />
+  <title>smore | Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content=" " />
+  <meta name="keywords" content="" />
+  <meta content="Themesdesign" name="author" />
+
+ 	<!-- App favicon -->
+	<link rel="shortcut icon" th:href="@{/images/favicon.ico}">
+
+	<!-- Choise Css -->
+	<link rel="stylesheet" th:href="@{/libs/choices.js/public/assets/styles/choices.min.css}">
+
+	<!-- Swiper Css -->
+	<link rel="stylesheet" th:href="@{/libs/swiper/swiper-bundle.min.css}">
+
+	<!-- Bootstrap Css -->
+	<link th:href="@{/css/bootstrap.min.css}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+	<!-- Icons Css -->
+	<link th:href="@{/css/icons.min.css}" rel="stylesheet" type="text/css" />
+	<!-- App Css-->
+	<link th:href="@{/css/app.min.css}" id="app-style" rel="stylesheet" type="text/css" />
+	<!-- Pretendard Font -->
+	<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard-dynamic-subset.css" />
+	<!-- Font Awesome CSS -->
+  	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  	<script src="https://kit.fontawesome.com/dd4a6a23ab.js" crossorigin="anonymous"></script>
+  
+  <!--Custom Css-->
+  <link href="/css/sign.css" id="custom" rel="stylesheet" type="text/css"/>
+
+</head>
+
+<body>
+  <!--start page Loader -->
+  <div id="preloader">
+    <div id="status">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
+  </div>
+  <!--end page Loader -->
+
+  <!-- Begin page -->
+  <div>
+
+
+    <div class="main-content">
+
+      <div class="page-content">
+
+        <!-- START SIGN-IN -->
+        <section class="bg-auth">
+          <div class="container">
+            <div class="row justify-content-center">
+              <div class="col-xl-10 col-lg-12">
+                <div class="card auth-box">
+                  <div class="row g-0">
+                    <div class="col-lg-6 text-center">
+                      <div class="card-body p-4">
+                        <a th:href="@{/}">
+                        	<img th:src="@{/images/logo-dark.png}" alt="" class="logo-dark" style="margin-top:30px;">
+                        </a>
+                        <div class="mt-5">
+                          <img th:src="@{/images/auth/sign-in.png}" alt="" class="img-fluid">
+                        </div>
+                      </div>
+                    </div><!--end col-->
+                    <div class="col-lg-6">
+                      <div class="auth-content card-body p-5 h-100 text-white " style="background-color: #766df4;">
+                        <div class="w-100">
+                          <div class="text-center mb-4">
+                            <h5>환영합니다 !</h5>
+                            <p class="text-white-70">스모어를 계속 이용하시려면 로그인을 해주세요.</p>
+                          </div>
+                          <form th:action="@{/login}" id="loginFrm" method="post" class="auth-form">
+                            <div class="mb-3">
+                              <label for="usernameInput" class="form-label">아이디</label>
+                              <input type="text" class="form-control" name="userId" id="userId" placeholder="아이디를 입력하세요"
+                                required="required">
+                            </div>
+                            <div class="mb-3">
+                              <label for="passwordInput" class="form-label">비밀번호</label>
+                              <input type="password" class="form-control" name="userPwd" id="userPwd"
+                                placeholder="비밀번호를 입력하세요" required="required">
+                            </div>
+                            <div class="mb-4">
+                              <div class="form-check"><input class="form-check-input" type="checkbox" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">기억하기</label>
+                              </div>
+                            </div>
+                            <div class="text-center">
+                              <button type="submit" class="btn btn-hover btn-white w-100" style="margin-bottom: 10px;">로그인</button>
+                            </div>
+                            
+                         <!-- 
+                             <button class="btn btn-hover naver w-100" style="margin-bottom: 10px;">
+                            <img class="btn-social-icon" th:src="@{/images/naver.svg}"> 네이버 아이디로 <span> 로그인
+                              </span></button>
+                          -->
+
+                            <button class="btn btn-hover kakao w-100" style="margin-bottom: 10px;" onclick="location.href='https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=db9b4636697b685acdb60e2cfea3d1e0&redirect_uri=http://localhost/kakaoLogin';">
+                            <img class="btn-social-icon" th:src="@{/images/kakao.svg}">
+                              <a class="kakao" href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=db9b4636697b685acdb60e2cfea3d1e0&redirect_uri=http://localhost/kakaoLogin">카카오 아이디로 <span> 로그인</span></a></button>
+                          </form>
+                          <div class="mt-4 text-center">
+                            <p class="mb-0">계정이 없으신가요? <a th:href="@{/member/enroll}"
+                                class="fw-medium text-white text-decoration-underline"> 회원가입 </a></p>
+                          </div>
+                        </div>
+                      </div>
+                    </div><!--end col-->
+                  </div><!--end row-->
+                </div><!--end auth-box-->
+              </div><!--end col-->
+            </div><!--end row-->
+          </div><!--end container-->
+        </section>
+        <!-- END SIGN-IN -->
+
+      </div>
+      <!-- End Page-content -->
+
+    </div>
+    <!-- end main content-->
+
+  </div>
+  <!-- END layout-wrapper -->
+
+   <!-- Style switcher -->
+  <a class="color-list color1" href="javascript: void(0);" onclick="setColorGreen()"></a>
+  <a class="color-list color2" href="javascript: void(0);" onclick="setColor('blue')"></a>
+  <a class="color-list color3" href="javascript: void(0);" onclick="setColor('green')"></a>
+  <a href="javascript: void(0);" id="mode">
+  <a href="javascript: void(0);" class="settings rounded-end"></a>
+  </div>
+  <!-- end switcher-->
+
+  <!--start back-to-top-->
+  <button onclick="topFunction()" id="back-to-top">
+    <i class="mdi mdi-arrow-up"></i>
+  </button>
+  <!--end back-to-top-->
+
+  <!-- JAVASCRIPT -->
+  <script th:src="@{/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
+  <script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
+
+
+  <!-- Switcher Js -->
+  <script th:src="@{/js/pages/switcher.init.js}"></script>
+
+</body>
+
+</html>

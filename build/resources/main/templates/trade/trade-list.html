@@ -1,0 +1,692 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="head" th:replace="~{common/layout :: head}"></head>
+<!-- <title>Smore | Trade</title> -->
+<!--Custom Css-->
+<link th:href="@{/css/trade.css}" id="trade" rel="stylesheet" type="text/css" />
+
+<body>
+	<!--start page Loader -->
+	<div id="preloader">
+		<div id="status">
+			<ul>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>
+	</div>
+	<!--end page Loader -->
+
+	<!--Navbar Start-->
+	<header th:replace="~{common/layout :: #header}"></header>
+	<!-- Navbar End -->
+
+	<div>
+		<!-- Begin page -->
+		<div class="main-content">
+			<div class="page-content">
+
+				<!-- Start home -->
+				<!-- <section class="page-title-box" th:style="'background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('+@{/images/img/hero_trade.jpg}+');'" style="height: 350px; padding-top: 130px; background-position: center bottom;">  -->
+				<section class="page-title-box hero-img">
+					<div class="container">
+						<div class="row justify-content-center">
+							<div class="col-md-6">
+								<div class="text-center text-white">
+									<h3 class="mb-4 hero-title">
+										<a class="text-white" th:href="@{/trade}">중고/재능 거래</a>
+									</h3>
+									<div class="page-next">
+										<nav class="d-inline-block"
+											aria-label="breadcrumb text-center">
+											<ol class="breadcrumb justify-content-center">
+												<li class="breadcrumb-item"><a th:href="@{/}">HOME</a></li>
+												<li class="breadcrumb-item"><a th:href="@{/trade}">LIFE</a></li>
+												<li class="breadcrumb-item"><a th:href="@{/trade}">TRADE</a></li>
+											</ol>
+										</nav>
+									</div>
+								</div>
+							</div>
+							<!--end col-->
+						</div>
+						<!--end row-->
+					</div>
+					<!--end container-->
+				</section>
+				<!-- end home -->
+
+				<!-- START SHAPE -->
+				<div class="position-relative" th:style="${'z-index: 1'}">
+					<div class="shape">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 250">
+              <path fill="#FFFFFF" fill-opacity="1"
+								d="M0,192L120,202.7C240,213,480,235,720,234.7C960,235,1200,213,1320,202.7L1440,192L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z">
+              </path>
+            </svg>
+					</div>
+				</div>
+				<!-- END SHAPE -->
+
+				<!-- START JOB-LIST -->
+				<section class="section mt-5">
+					<div class="container">
+						<form th:action="@{/trade}" name="filter-search"
+							id="filter-search" method="get">
+							<div class="row">
+								<div class="col-lg-9">
+									<div class="me-lg-5">
+										<div class="job-list-header">
+											<!-- 검색 폼 form-->
+											<!-- <form th:action="@{/trade}" id="filter-search" method="get"> -->
+											<div class="row g-2">
+												<div class="col-lg-5 col-md-6">
+													<div class="filler-job-form">
+														<i class="mdi mdi-magnify"></i> <input type="search"
+															name="searchValue" id="searchValue"
+															class="form-control filter-job-input-box"
+															placeholder="검색어를 입력하세요" th:value="${param.searchValue}">
+													</div>
+												</div>
+												<!--end col-->
+												<div class="col-lg-4 col-md-6">
+													<div class="filler-job-form">
+														<i class="uil uil-list-ul"></i> 
+														<select class="form-select fs-5" name="searchType"
+															id="searchType" aria-label="Default select example"
+															placeholder="전체">
+															<option value=" ">전체</option>
+															<option value="중고구매"
+																th:selected="${paramMap.searchType} == '중고구매'">중고구매</option>
+															<option value="중고판매"
+																th:selected="${paramMap.searchType} == '중고판매'">중고판매</option>
+															<option value="재능구매"
+																th:selected="${paramMap.searchType} == '재능구매'">재능구매</option>
+															<option value="재능판매"
+																th:selected="${paramMap.searchType} == '재능판매'">재능판매</option>
+															<option value="나눔"
+																th:selected="${paramMap.searchType} == '나눔' ">나눔</option>
+															<option value=" "></option>
+															<!-- 하.. 스크롤이 안내려와서 강제 추가.. -->
+															<option value=" "></option>
+															<!-- 하.. 스크롤이 안내려와서 강제 추가.. -->
+														</select>
+													</div>
+												</div>
+												<!--end col-->
+												<div class="col-lg-3 col-md-6">
+													<a class="btn btn-primary w-100" type="submit"
+														onclick="document.getElementById('filter-search').submit();">
+														<i class="uil uil-filter"></i> 필터 검색
+													</a>
+												</div>
+												<!--end col-->
+											</div>
+											<!--end row-->
+											<!-- </form> -->
+										</div>
+										<!--end job-list-header-->
+
+										<!-- 추천 목록 - 카테고리에 개수 많은순, 5가지-->
+										<div class="wedget-popular-title mt-3">
+											<h6>추천 카테고리</h6>
+											<ul class="list-inline mb-4">
+												<!-- item1 -->
+												<th:block th:each="ctList : ${ctList}">
+													<li class="list-inline-item">
+														<div class="popular-box d-flex align-items-center">
+															<div class="number flex-shrink-0 me-2">
+																<i class="uil uil-award"></i>
+															</div>
+															<a
+																th:href="@{/trade(categories=${ctList.category})}"
+																class="primary-link stretched-link px-1">
+																<h6 class="mb-0" th:text="${ctList.category}"></h6>
+															</a>
+														</div>
+													</li>
+											</ul>
+										</div>
+										<!--end wedget-popular-title-->
+
+										<!-- Job-list -->
+										<div>
+											<!-- 조회된 글이 없을때 -->
+
+											<th:block th:if="${list == null || list.size == 0}">
+												<div class="job-box card mt-3 text-center p-3">
+													<p class=" h6 m-0">조회된 글이 없습니다.</p>
+												</div>
+											</th:block>
+											<!-- 아이템1 -->
+											<th:block th:unless="${list == null}">
+												<th:block th:each="trade : ${list}">
+													<div class="job-box card mt-3">
+														<div class="px-3 pt-3 pb-1">
+															<div class="row">
+																<!-- 첨부파일 -->
+																<th:block
+																	th:if="${trade.renamedFileName == '' || trade.renamedFileName == null}">
+																	<div class="col-lg-3 p-0 mx-3 overflow-hidden">
+																		<img th:src="@{/images/img/noimage.png}"
+																			alt="제품 사진" class="rounded-3 trade-item-img"/> <!-- onclick="window.open(this.src)" /> -->
+																	</div>
+																</th:block>
+																<th:block
+																	th:unless="${trade.renamedFileName == '' || trade.renamedFileName == null}">
+																	<div class="col-lg-3 p-0 mx-3 overflow-hidden">
+																		<a style="cursor: pointer;"> <img
+																			th:src="|/trade/file/${trade.renamedFileName}|"
+																			alt="제품 사진" class="rounded-3 trade-item-img"
+																			onclick="doImgPop(this.src)" /> <!-- onclick="window.open(this.src)" /> -->
+																			<p class="text-center trade-mag mt-n4" style="cursor: pointer;" onclick="$('.trade-item-img').trigger('click');">
+																				<i class="uil uil-search-plus"></i> 크게보기
+																			</p>
+																		</a>
+																	</div>
+																</th:block>
+																<!--end col-->
+																<div class="col-lg-8">
+																	<div class="mt-3 mt-lg-0">
+																		<div class="d-flex flex-row my-4">
+																			<span class="badge bg-soft-info trade-badge">[[${trade.type}]]</span>
+																			<h4 class="p-0 m-0 ms-3 ellipsis" style="height: 25px;">[[${trade.title}]]</h4>
+																		</div>
+																		<div class="d-flex d-flex justify-content-between">
+																			<p class="text-muted mb-1">[[${trade.category}]]</p>
+																			<h5 class="p-0 m-0 ms-3">[[${trade.price}]] 원</h5>
+																		</div>
+																		<ul class="list-inline mb-0">
+																			<li class="list-inline-item mb-0">
+																				<p class="text-muted"><i class="uil uil-user"></i> [[${trade.Id}]]</p>
+																			</li>
+																			<li class="list-inline-item mb-0">
+																				<p class="text-muted"><i class="uil uil-map-pin-alt"></i> [[${trade.region}]]</p>
+																			</li>
+																		</ul>
+																		<ul class="list-inline mb-0">
+																			<li class="list-inline-item mb-0">
+																				<p class="text-muted mb-0">[[${#dates.format(trade.createDate,'yyyy-MM-dd')}]]</p>
+																			</li>
+																			<li class="list-inline-item mb-0">
+																				<p class="text-muted">조회 [[${trade.readCount}]]</p>
+																			</li>
+																			<li class="list-inline-item mb-0" th:id="|countclip${trade.tradeNo}|">
+																				<p class="text-muted">스크랩 [[${trade.clipCount}]]</p>
+																			</li>
+																		</ul>
+																	</div>
+																</div>
+																<!--end col-->
+															</div>
+															<!--end row-->
+															<!-- 스크랩 버튼 -->
+															<th:block th:if="${session.loginMember != null}">
+																<div class="clip clipbtn favorite-icon"
+																	th:id="|clip${trade.tradeNo}|" th:value="${trade.isClip}"
+																	th:onclick="|onClickClip('clip${trade.tradeNo}', '${trade.tradeNo}');|">
+																	<a href="javascript:void(0)">
+																		<i class="uil uil-bookmark-full"></i>
+																	</a>
+																</div>
+															</th:block>
+														</div>
+														<div class="p-2 bg-light">
+															<div class="row justify-content-between">
+																<div class="col-md-8"></div>
+																<!--end col-->
+																<div class="col-md-3">
+																	<div class="text-md-end">
+																		<a th:href="|/trade/detail?no=${trade.tradeNo}|"
+																			class="primary-link">상세보기 <i
+																			class="mdi mdi-chevron-double-right me-3"></i></a>
+																	</div>
+																</div>
+																<!--end col-->
+															</div>
+															<!--end row-->
+														</div>
+													</div>
+												</th:block>
+											</th:block>
+											<!--end job-box-->
+										<th:block th:if="${session.loginMember != null}">
+											<div class="text-end mt-3">
+												<!-- <a th:href="@{/trade/write}" class="btn btn-primary" onclick="location.href='/trade/trade-write'">글쓰기 <i class="uil uil-edit-alt ms-1"></i></a> -->
+												<a class="btn btn-primary"
+													onclick="location.href='/trade/write'">글쓰기 <i
+													class="uil uil-edit-alt ms-1"></i></a>
+											</div>
+										</th:block>
+										</div>
+										<!-- End Job-list -->
+
+										<!-- 페이징-->
+										<div class="row">
+											<div class="col-lg-12 mt-4 mb-5 pt-2">
+												<nav aria-label="Page navigation example">
+													<ul class="pagination job-pagination mb-0 justify-content-center">
+														<th:block th:if="${pageInfo.currentPage == pageInfo.startPage}">
+															<li class="page-item "
+																th:classappend="${pageInfo.currentPage == 1 ? 'disabled' : ''}">
+																<a class="page-link" href="javascript:void(0)"
+																th:onclick="|movePage('/trade?page=${pageInfo.prevPage}');|"
+																tabindex="-1"> <i
+																	class="mdi mdi-chevron-double-left fs-15"></i>
+															</a>
+															</li>
+														</th:block>
+														<th:block th:if="${pageInfo.currentPage != pageInfo.startPage}">
+															<li class="page-item "
+																th:classappend="${pageInfo.currentPage == 1 ? 'disabled' : ''}">
+																<a class="page-link" href="javascript:void(0)"
+																th:onclick="|movePage('/trade?page=${pageInfo.startPage}');|"
+																tabindex="-1"> <i
+																	class="mdi mdi-chevron-double-left fs-15"></i>
+															</a>
+															</li>
+														</th:block>
+						
+														<th:block
+															th:each="num, status : ${#numbers.sequence(pageInfo.startPage, pageInfo.endPage)}">
+															<th:block th:if="${pageInfo.currentPage == status.current}">
+																<li class="page-item active"><a class="page-link"
+																	th:text="${status.current}"></a></li>
+															</th:block>
+															<th:block
+																th:if="${pageInfo.currentPage != status.current && pageInfo.endPage != 0}">
+																<li class="page-item"><a class="page-link"
+																	href="javascript:void(0)"
+																	th:onclick="|movePage('/trade?page=${status.current}');|"
+																	th:text="${status.current}"></a></li>
+															</th:block>
+														</th:block>
+						
+														<th:block th:if="${pageInfo.currentPage == pageInfo.endPage}">
+															<li class="page-item"
+																th:classappend="${pageInfo.currentPage == pageInfo.maxPage ? 'disabled' : ''}">
+																<a class="page-link" href="javascript:void(0)"
+																th:onclick="|movePage('/trade?page=${pageInfo.nextPage}');|">
+																	<i class="mdi mdi-chevron-double-right fs-15"></i>
+															</a>
+															</li>
+														</th:block>
+														<th:block th:if="${pageInfo.currentPage != pageInfo.endPage}">
+															<li class="page-item"
+																th:classappend="${pageInfo.currentPage == pageInfo.maxPage ? 'disabled' : ''}">
+																<a class="page-link" href="javascript:void(0)"
+																th:onclick="|movePage('/trade?page=${pageInfo.endPage}');|">
+																	<i class="mdi mdi-chevron-double-right fs-15"></i>
+															</a>
+															</li>
+														</th:block>
+													</ul>
+												</nav>
+											</div>
+											<!--end col-->
+										</div>
+										<!-- end row -->
+									</div>
+
+								</div>
+								<!-- START SIDE-BAR -->
+								<div class="col-lg-3">
+									<div class="side-bar">
+										<div class="accordion" id="accordionExample">
+											<!-- 카테고리 -->
+											<div class="accordion-item">
+												<h2 class="accordion-header" id="experienceOne">
+													<button class="accordion-button" type="button"
+														data-bs-toggle="collapse" data-bs-target="#experience"
+														aria-expanded="true" aria-controls="experience">
+														카테고리</button>
+												</h2>
+												<div id="experience"
+													class="accordion-collapse collapse show"
+													aria-labelledby="experienceOne">
+													<div class="accordion-body">
+														<div class="form-check mt-2">
+															<input class="form-check-input" type="checkbox" name=""
+																id="checkAll-1" /> <label
+																class="form-check-label ms-2 text-muted"
+																for="checkAll-1">전체</label>
+														</div>
+														<div class="form-check mt-2">
+															<input class="form-check-input" type="checkbox"
+																name="categories" value="디지털기기" id="flexCheckChecked1"
+																th:checked="${#arrays.contains(categories, '디지털기기')  ? 'checked' : null}" />
+															<!-- th:checked="${paramMap.categories == '디지털기기'} ? 'checked' : null "/> -->
+															<label class="form-check-label ms-2 text-muted"
+																for="flexCheckChecked1">디지털기기</label>
+														</div>
+														<div class="form-check mt-2">
+															<input class="form-check-input" type="checkbox"
+																name="categories" value="생활가전" id="flexCheckChecked2"
+																th:checked="${#arrays.contains(categories, '생활가전')  ? 'checked' : null}" />
+															<label class="form-check-label ms-2 text-muted"
+																for="flexCheckChecked2">생활가전</label>
+														</div>
+														<div class="form-check mt-2">
+															<input class="form-check-input" type="checkbox"
+																name="categories" value="가구/인테리어" id="flexCheckChecked3"
+																th:checked="${#arrays.contains(categories, '가구/인테리어')  ? 'checked' : null}" />
+															<label class="form-check-label ms-2 text-muted"
+																for="flexCheckChecked3">가구/인테리어</label>
+														</div>
+														<div class="form-check mt-2">
+															<input class="form-check-input" type="checkbox"
+																name="categories" value="생활/주방" id="flexCheckChecked4"
+																th:checked="${#arrays.contains(categories, '생활/주방')  ? 'checked' : null}" />
+															<label class="form-check-label ms-2 text-muted"
+																for="flexCheckChecked4">생활/주방</label>
+														</div>
+														<div class="form-check mt-2">
+															<input class="form-check-input" type="checkbox"
+																name="categories" value="유아용" id="유아용"
+																th:checked="${#arrays.contains(categories, '유아용')  ? 'checked' : null}" />
+															<label class="form-check-label ms-2 text-muted" for="유아용">유아용</label>
+														</div>
+														<div class="form-check mt-2">
+															<input class="form-check-input" type="checkbox"
+																name="categories" value="여성의류/잡화" id="여성의류/잡화"
+																th:checked="${#arrays.contains(categories, '여성의류/잡화')  ? 'checked' : null}" />
+															<label class="form-check-label ms-2 text-muted"
+																for="여성의류/잡화">여성의류/잡화</label>
+														</div>
+														<div class="form-check mt-2">
+															<input class="form-check-input" type="checkbox"
+																name="categories" value="남성의류/잡화" id="남성의류/잡화"
+																th:checked="${#arrays.contains(categories, '남성의류/잡화')  ? 'checked' : null}" />
+															<label class="form-check-label ms-2 text-muted"
+																for="남성의류/잡화">남성의류/잡화</label>
+														</div>
+														<div class="form-check mt-2">
+															<input class="form-check-input" type="checkbox"
+																name="categories" value="뷰티/미용" id="뷰티/미용"
+																th:checked="${#arrays.contains(categories, '뷰티/미용')  ? 'checked' : null}" />
+															<label class="form-check-label ms-2 text-muted"
+																for="뷰티/미용">뷰티/미용</label>
+														</div>
+														<div class="form-check mt-2">
+															<input class="form-check-input" type="checkbox"
+																name="categories" value="스포츠/레저" id="스포츠/레저"
+																th:checked="${#arrays.contains(categories, '스포츠/레저')  ? 'checked' : null}" />
+															<label class="form-check-label ms-2 text-muted"
+																for="스포츠/레저">스포츠/레저</label>
+														</div>
+														<div class="form-check mt-2">
+															<input class="form-check-input" type="checkbox"
+																name="categories" value="취미/게임/음반" id="취미/게임/음반"
+																th:checked="${#arrays.contains(categories, '취미/게임/음반')  ? 'checked' : null}" />
+															<label class="form-check-label ms-2 text-muted"
+																for="취미/게임/음반">취미/게임/음반</label>
+														</div>
+														<div class="form-check mt-2">
+															<input class="form-check-input" type="checkbox"
+																name="categories" value="도서/티켓/교환권" id="도서/티켓/교환권"
+																th:checked="${#arrays.contains(categories, '도서/티켓/교환권')  ? 'checked' : null}" />
+															<label class="form-check-label ms-2 text-muted"
+																for="도서/티켓/교환권">도서/티켓/교환권</label>
+														</div>
+														<div class="form-check mt-2">
+															<input class="form-check-input" type="checkbox"
+																name="categories" value="가공식품" id="가공식품"
+																th:checked="${#arrays.contains(categories, '가공식품')  ? 'checked' : null}" />
+															<label class="form-check-label ms-2 text-muted"
+																for="가공식품">가공식품</label>
+														</div>
+														<div class="form-check mt-2">
+															<input class="form-check-input" type="checkbox"
+																name="categories" value="반려동물물품" id="반려동물물품"
+																th:checked="${#arrays.contains(categories, '반려동물물품')  ? 'checked' : null}" />
+															<label class="form-check-label ms-2 text-muted"
+																for="반려동물물품">반려동물물품</label>
+														</div>
+														<div class="form-check mt-2">
+															<input class="form-check-input" type="checkbox"
+																name="categories" value="식물" id="식물"
+																th:checked="${#arrays.contains(categories, '식물')  ? 'checked' : null}" />
+															<label class="form-check-label ms-2 text-muted" for="식물">식물</label>
+														</div>
+														<div class="form-check mt-2">
+															<input class="form-check-input" type="checkbox"
+																name="categories" value="기타" id="기타"
+																th:checked="${#arrays.contains(categories, '기타')  ? 'checked' : null}" />
+															<label class="form-check-label ms-2 text-muted" for="기타">기타</label>
+														</div>
+
+													</div>
+												</div>
+											</div>
+										</div>
+										<!-- end accordion-item -->
+										<div class="accordion mb-5" id="accordionExample">
+										<!-- 거래 지역(시/도) -->
+										<div class="accordion-item mt-3">
+											<h2 class="accordion-header" id="datePosted">
+												<button class="accordion-button" type="button"
+													data-bs-toggle="collapse" data-bs-target="#dateposted"
+													aria-expanded="true" aria-controls="dateposted">
+													거래 지역(시/도)</button>
+											</h2>
+											<div id="dateposted" class="accordion-collapse collapse show"
+												aria-labelledby="datePosted">
+												<div class="accordion-body">
+													<div class="side-title form-check-all">
+														<div class="form-check">
+															<input class="form-check-input" type="checkbox"
+																id="checkAll-2" value="" /> <label
+																class="form-check-label ms-2 text-muted"
+																for="checkAll-2"> 전체 </label>
+														</div>
+														<div class="form-check mt-2">
+															<input class="form-check-input" type="checkbox"
+																name="regions" value="서울특별시" id="서울특별시"
+																th:checked="${#arrays.contains(regions, '서울특별시')  ? 'checked' : null}" />
+															<label class="form-check-label ms-2 text-muted"
+																for="서울특별시"> 서울특별시 </label>
+														</div>
+														<div class="form-check mt-2">
+															<input class="form-check-input" type="checkbox"
+																name="regions" value="부산광역시" id="부산광역시"
+																th:checked="${#arrays.contains(regions, '부산광역시')  ? 'checked' : null}" />
+															<label class="form-check-label ms-2 text-muted"
+																for="부산광역시"> 부산광역시 </label>
+														</div>
+														<div class="form-check mt-2">
+															<input class="form-check-input" type="checkbox"
+																name="regions" value="대구광역시" id="대구광역시"
+																th:checked="${#arrays.contains(regions, '부산광역시')  ? 'checked' : null}" />
+															<label class="form-check-label ms-2 text-muted"
+																for="대구광역시"> 대구광역시 </label>
+														</div>
+														<div class="form-check mt-2">
+															<input class="form-check-input" type="checkbox"
+																name="regions" value="인천광역시" id="인천광역시"
+																th:checked="${#arrays.contains(regions, '인천광역시')  ? 'checked' : null}" />
+															<label class="form-check-label ms-2 text-muted"
+																for="인천광역시"> 인천광역시 </label>
+														</div>
+														<div class="form-check mt-2">
+															<input class="form-check-input" type="checkbox"
+																name="regions" value="광주광역시" id="광주광역시"
+																th:checked="${#arrays.contains(regions, '광주광역시')  ? 'checked' : null}" />
+															<label class="form-check-label ms-2 text-muted"
+																for="광주광역시"> 광주광역시 </label>
+														</div>
+														<div class="form-check mt-2">
+															<input class="form-check-input" type="checkbox"
+																name="regions" value="대전광역시" id="대전광역시"
+																th:checked="${#arrays.contains(regions, '대전광역시')  ? 'checked' : null}" />
+															<label class="form-check-label ms-2 text-muted"
+																for="대전광역시"> 대전광역시 </label>
+														</div>
+														<div class="form-check mt-2">
+															<input class="form-check-input" type="checkbox"
+																name="regions" value="울산광역시" id="울산광역시"
+																th:checked="${#arrays.contains(regions, '울산광역시')  ? 'checked' : null}" />
+															<label class="form-check-label ms-2 text-muted"
+																for="울산광역시"> 울산광역시 </label>
+														</div>
+														<div class="form-check mt-2">
+															<input class="form-check-input" type="checkbox"
+																name="regions" value="세종특별자치시" id="세종특별자치시"
+																th:checked="${#arrays.contains(regions, '세종특별자치시')  ? 'checked' : null}" />
+															<label class="form-check-label ms-2 text-muted"
+																for="세종특별자치시"> 세종특별자치시 </label>
+														</div>
+														<div class="form-check mt-2">
+															<input class="form-check-input" type="checkbox"
+																name="regions" value="경기도" id="경기도"
+																th:checked="${#arrays.contains(regions, '경기도')  ? 'checked' : null}" />
+															<label class="form-check-label ms-2 text-muted" for="경기도">
+																경기도 </label>
+														</div>
+														<div class="form-check mt-2">
+															<input class="form-check-input" type="checkbox"
+																name="regions" value="강원도" id="강원도"
+																th:checked="${#arrays.contains(regions, '강원도')  ? 'checked' : null}" />
+															<label class="form-check-label ms-2 text-muted" for="강원도">
+																강원도 </label>
+														</div>
+														<div class="form-check mt-2">
+															<input class="form-check-input" type="checkbox"
+																name="regions" value="충청북도" id="충청북도"
+																th:checked="${#arrays.contains(regions, '충청북도')  ? 'checked' : null}" />
+															<label class="form-check-label ms-2 text-muted"
+																for="충청북도"> 충청북도 </label>
+														</div>
+														<div class="form-check mt-2">
+															<input class="form-check-input" type="checkbox"
+																name="regions" value="충청남도" id="충청남도"
+																th:checked="${#arrays.contains(regions, '충청남도')  ? 'checked' : null}" />
+															<label class="form-check-label ms-2 text-muted"
+																for="충청남도"> 충청남도 </label>
+														</div>
+														<div class="form-check mt-2">
+															<input class="form-check-input" type="checkbox"
+																name="regions" value="전라북도" id="전라북도"
+																th:checked="${#arrays.contains(regions, '전라북도')  ? 'checked' : null}" />
+															<label class="form-check-label ms-2 text-muted"
+																for="전라북도"> 전라북도 </label>
+														</div>
+														<div class="form-check mt-2">
+															<input class="form-check-input" type="checkbox"
+																name="regions" value="전라남도" id="전라남도"
+																th:checked="${#arrays.contains(regions, '전라남도')  ? 'checked' : null}" />
+															<label class="form-check-label ms-2 text-muted"
+																for="전라남도"> 전라남도 </label>
+														</div>
+														<div class="form-check mt-2">
+															<input class="form-check-input" type="checkbox"
+																name="regions" value="경상북도" id="경상북도"
+																th:checked="${#arrays.contains(regions, '경상북도')  ? 'checked' : null}" />
+															<label class="form-check-label ms-2 text-muted"
+																for="경상북도"> 경상북도 </label>
+														</div>
+														<div class="form-check mt-2">
+															<input class="form-check-input" type="checkbox"
+																name="regions" value="경상남도" id="경상남도"
+																th:checked="${#arrays.contains(regions, '경상남도')  ? 'checked' : null}" />
+															<label class="form-check-label ms-2 text-muted"
+																for="경상남도"> 경상남도 </label>
+														</div>
+														<div class="form-check mt-2">
+															<input class="form-check-input" type="checkbox"
+																name="regions" value="제주특별자치도" id="제주특별자치도"
+																th:checked="${#arrays.contains(regions, '제주특별자치도')  ? 'checked' : null}" />
+															<label class="form-check-label ms-2 text-muted"
+																for="제주특별자치도"> 제주특별자치도 </label>
+														</div>
+
+													</div>
+												</div>
+											</div>
+										</div>
+										</div>
+										<!-- end accordion-item -->
+
+									</div>
+									<!--end accordion-->
+
+								</div>
+								<!--end side-bar-->
+							</div>
+							<!-- END SIDE-BAR -->
+						</form>
+					</div>
+				</section>
+				<!-- END JOB-LIST -->
+<!-- 				<div th:replace="~{common/layout :: #chatbot}"></div> -->
+
+			</div>
+			<!-- End Page-content -->
+
+			<!-- START FOOTER -->
+			<footer th:replace="~{common/layout :: #footer}"></footer>
+			<!-- END FOOTER -->
+
+			<!-- Style switcher -->
+			<a class="color-list color1" href="javascript: void(0);"
+				onclick="setColorGreen()"></a> <a class="color-list color2"
+				href="javascript: void(0);" onclick="setColor('blue')"></a> <a
+				class="color-list color3" href="javascript: void(0);"
+				onclick="setColor('green')"></a> <a href="javascript: void(0);"
+				id="mode"> <a href="javascript: void(0);"
+				class="settings rounded-end"></a>
+			</div>
+			<!-- end switcher-->
+		
+			<!--start back-to-top-->
+			<button onclick="topFunction()" id="back-to-top">
+				<i class="mdi mdi-arrow-up"></i>
+			</button>
+			<!--end back-to-top-->
+		</div>
+		<!-- end main content-->
+
+	</div>
+	<!-- END layout-wrapper -->
+
+
+
+	<!-- JAVASCRIPT -->
+	<script th:src="@{/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<script
+		src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
+
+	<!-- jquery  -->
+	<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+
+	<!-- Choice Js -->
+	<script
+		th:src="@{/libs/choices.js/public/assets/scripts/choices.min.js}"></script>
+
+	<!-- Nouislider Js -->
+	<script th:src="@{/libs/nouisliderribute/nouislider.min.js}"></script>
+	<script th:src="@{/js/pages/area-filter-range.init.js}"></script>
+
+	<!-- Checkbox Init Js -->
+	<script th:src="@{/js/pages/checkbox.init.js}"></script>
+
+	<!-- Job Init Js -->
+	<script th:src="@{/js/pages/job-list.init.js}"></script>
+
+	<!-- Switcher Js -->
+	<script th:src="@{/js/pages/switcher.init.js}"></script>
+
+	<!-- App Js -->
+	<script th:src="@{/js/app.js}"></script>
+
+	<!-- Custom Js -->
+	<script th:src="@{/js/pages/trade-list.js}"></script>
+
+</body>
+
+</html>

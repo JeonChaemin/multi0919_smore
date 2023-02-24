@@ -1,0 +1,200 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="head" th:replace="~{common/layout :: head}"></head>
+<!--Custom Css-->
+<link th:href="@{/css/board-write.css}" id="news" rel="stylesheet" type="text/css" />
+
+<body>
+	<!--start page Loader -->
+	<div id="preloader">
+		<div id="status">
+			<ul>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>
+	</div>
+	<!--end page Loader -->
+	
+  <!-- Begin page -->
+  <div>
+
+  	<header th:replace="~{common/layout :: #header}"></header>
+
+    <div class="main-content">
+
+      <div class="page-content">
+
+        <!-- Start home -->
+		<section class="page-title-box"th:style="'background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(' + @{/images/img/hero_community.jpg} + '); height: 350px; padding-top: 130px; background-position: center;'">
+		<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-md-6">
+						<div class="text-center text-white">
+							<h3 class="mb-4 hero-title" style="font-weight: 400;">게시판</h3>
+							<div class="page-next">
+								<nav class="d-inline-block"
+									aria-label="breadcrumb text-center">
+									<ol class="breadcrumb justify-content-center">
+										<li class="breadcrumb-item"><a th:href="@{/}">HOME</a></li>
+										<li class="breadcrumb-item"><a th:href="@{/board/board}">COMMUNITY</a></li>
+										<li class="breadcrumb-item active" aria-current="page">
+											BOARD</li>
+									</ol>
+								</nav>
+							</div>
+						</div>
+					</div>
+					<!--end col-->
+				</div>
+				<!--end row-->
+			</div>
+			<!--end container-->
+		</section>
+		<!-- end home -->
+
+        <!-- START SHAPE -->
+        <div class="position-relative" style="z-index: 1">
+          <div class="shape">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 250">
+              <path fill="#FFFFFF" fill-opacity="1"
+                d="M0,192L120,202.7C240,213,480,235,720,234.7C960,235,1200,213,1320,202.7L1440,192L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z">
+              </path>
+            </svg>
+          </div>
+        </div>
+        <!-- END SHAPE -->
+
+
+        <!-- START CATEGORIES -->
+        <section class="section my-5">
+          <div class="container mb-3">
+            <div class="row justify-content-center">
+              <div class="col-lg-12 align-self-center">
+                <div class="text-start ps-3 align-middle">
+                  <h4 class="m-0 p-0 ">게시글 작성</h4>
+                </div>
+              </div><!--end col-->
+            </div><!--end row-->
+          </div>
+          <!-- 목록 -->
+          <div class="container">
+            <div class="row px-3">
+              <div class="col-lg-12">
+                <form action="/board/write" method="post" enctype="multipart/form-data">
+                <table class="table bw-tbl">
+                  <colgroup>
+                    <col width=20%>
+                    <col width=80%>
+                  </colgroup>
+                  <tr>
+                    <th class="py-4">카테고리</th>
+                    <td class="py-4">
+                      <label class="me-4">
+                        <input class="form-check-input" type="radio" name="type" value="free" th:checked="${type == 'free'}">
+                        자유게시판
+                      </label>
+                      <label class="me-4">
+                        <input class="form-check-input" type="radio" name="type" value="question" th:checked="${type == 'question'}">
+                        건의게시판
+                      </label>
+                      <label class="me-4" th:if="${session.loginMember.role == 'ROLE_ADMIN'}">
+                        <input class="form-check-input" type="radio" name="type" value="notice" th:checked="${type == 'notice'}">
+                        공지사항
+                      </label>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="py-4"><label for="title">제목</label></th>
+                    <td><input class="form-control" type="text" name="title" id="title"></td>
+                  </tr>
+                  <tr>
+                    <th class="py-4">작성자</th>
+                    <td class="py-4" th:text="${session.loginMember.id}"></td>
+                    <input type="hidden" name="memNo" id="memNo" th:value="${session.loginMember.memNo}">
+                  </tr>
+                  <tr class="align-middle">
+                    <th class="py-4"><label for="file-btn">첨부파일</label></th>
+                    <td class="py-4">
+                      <input type="file" name="upfile" id="file-btn">
+                    </td>
+
+                  </tr>
+                  <tr>
+                    <th class="border-bottom-0 py-4"><label for="content">내용</label></th>
+                  </tr>
+                  <tr class="py-4">
+                    <th colspan="5" class="pt-0 border-bottom-0"><textarea class="form-control" style="width: 100%;" name="content" id="content"
+                        rows="15" placeholder="내용을 적어주세요."></textarea></th>
+                  </tr>
+                  <tr>
+                    <td colspan="" class="border-0 pt-0">
+                      <a class="btn btn-soft-primary text-start" th:href="@{/board/list}">목록</a>
+
+                    </td>
+                    <th class="border-0 pt-0">
+                      <button type="reset" class="btn btn-secondary float-end">취소</button>
+                      <button type="submit" class="btn btn-primary float-end me-3"><i class="uil uil-edit-alt"></i> 등록</button>
+                    </th>
+                  </tr>
+                </table>
+                </form>
+
+              </div><!--endt-->
+            </div><!--end col-->
+          </div>
+
+      </div><!--end container-->
+      </section>
+      <!-- END CATEGORIES -->
+
+    </div>
+    <!-- End Page-content -->
+
+    <footer th:replace="~{common/layout :: #footer}"></footer>
+
+			      <!-- Style switcher -->
+              <a class="color-list color1" href="javascript: void(0);" onclick="setColorGreen()"></a>
+              <a class="color-list color2" href="javascript: void(0);" onclick="setColor('blue')"></a>
+              <a class="color-list color3" href="javascript: void(0);" onclick="setColor('green')"></a>
+              <a href="javascript: void(0);" id="mode">
+          <a href="javascript: void(0);" class="settings rounded-end"></a>
+      </div>
+      <!-- end switcher-->
+
+      <!--start back-to-top-->
+      <button onclick="topFunction()" id="back-to-top">
+        <i class="mdi mdi-arrow-up"></i>
+      </button>
+      <!--end back-to-top-->
+  </div>
+  <!-- end main content-->
+
+  </div>
+  <!-- END layout-wrapper -->
+
+	<!-- JAVASCRIPT -->
+	<script th:src="@{/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
+
+	<!-- Choice Js -->
+	<script th:src="@{/libs/choices.js/public/assets/scripts/choices.min.js}"></script>
+
+	<!-- Job-list Init Js -->
+	<script th:src="@{/js/pages/job-list.init.js}"></script>
+
+	<!-- Switcher Js -->
+	<script th:src="@{/js/pages/switcher.init.js}"></script>
+	
+	<!-- App Js -->
+	<script th:src="@{/js/app.js}"></script>
+
+</body>
+
+</html>
